@@ -10,7 +10,6 @@ repositories {
 }
 
 kotlin {
-    explicitApi()
 
     val hostOs = System.getProperty("os.name")
     val isMingwX64 = hostOs.startsWith("Windows")
@@ -25,7 +24,6 @@ kotlin {
         linuxX64("native") {
             val main by compilations.getting
             val gtk by main.cinterops.creating
-            val x11 by main.cinterops.creating
             binaries {
                 executable()
             }
@@ -33,18 +31,16 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting{
+        val nativeMain by getting{
             dependencies{
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
             }
         }
-        val commonTest by getting {
+        val nativeTest by getting{
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val nativeMain by getting
-        val nativeTest by getting
     }
 }

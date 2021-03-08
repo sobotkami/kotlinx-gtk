@@ -1,4 +1,4 @@
-package com.github.doomsdayrs.lib.kotlinx.gtk.gtk
+package kotlin.gtk
 
 /**
  * kotlinx-gtk
