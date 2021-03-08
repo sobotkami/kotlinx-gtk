@@ -18,7 +18,7 @@ class Main {
 					applicationWindow {
 						title = "Window"
 
-						defaultSize = 200 to 200
+						defaultSize = 200 x 200
 
 						horizontalButtonBox {
 							button("Hello World") {
