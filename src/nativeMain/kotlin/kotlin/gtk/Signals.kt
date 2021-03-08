@@ -38,6 +38,5 @@ internal fun VoidPointer.connectSignal(
 internal val staticCallback: GCallback =
 	staticCFunction { _: gpointer?, data: gpointer? ->
 		data?.asStableRef<() -> Unit>()?.get()?.invoke()
-
 		Unit
 	}.reinterpret()

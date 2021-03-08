@@ -6,13 +6,14 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * kotlinx-gtk
  * 08 / 02 / 2021
  */
 class Button internal constructor(
+	@Suppress("MemberVisibilityCanBePrivate")
 	internal val buttonPointer: CPointer<GtkButton>
 ) : Widget(buttonPointer.reinterpret()) {
 
@@ -23,17 +24,17 @@ class Button internal constructor(
 	)
 
 	@ExperimentalUnsignedTypes
-	val clickedSignal: Flow<Int> by lazy {
-		MutableSharedFlow<Int>().apply {
-			pointer.connectSignal(
+	val clickedSignal: Flow<Unit> by lazy {
+		MutableStateFlow(Unit).apply {
+			buttonPointer.connectSignal(
 				Signals.CLICKED,
 				staticCallback,
 				StableRef.create {
-					tryEmit(0)
+					println("Tick ${tryEmit(Unit)}")
 				}.asCPointer()
 			)
-
 		}
+
 	}
 }
 

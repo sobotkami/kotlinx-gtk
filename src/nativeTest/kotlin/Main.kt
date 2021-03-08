@@ -1,3 +1,4 @@
+import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.gtk.*
 import kotlin.test.Test
 
@@ -25,7 +26,9 @@ class Main {
 						horizontalButtonBox {
 							println("Adding Button")
 							button("Hello World") {
-
+								onClicked {
+									println("Clicked!")
+								}
 							}
 						}
 					}
