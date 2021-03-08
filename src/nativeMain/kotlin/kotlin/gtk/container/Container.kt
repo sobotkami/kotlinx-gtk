@@ -1,8 +1,12 @@
-package kotlin.gtk
+package kotlin.gtk.container
 
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import kotlin.gtk.Adjustment
+import kotlin.gtk.Properties
+import kotlin.gtk.gtkValue
+import kotlin.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -15,7 +19,7 @@ open class Container internal constructor(
 
 	fun add(widget: Widget, vararg properties: Properties) {
 		if (properties.isEmpty())
-			gtk_container_add(containerPointer, widget.pointer)
+			gtk_container_add(containerPointer, widget.widgetPointer)
 		else {
 			TODO("Convert varag properties into C representation")
 			//gtk_container_add_with_properties(containerPointer, widget.pointer)
@@ -23,7 +27,7 @@ open class Container internal constructor(
 	}
 
 	fun remove(widget: Widget) {
-		gtk_container_remove(containerPointer, widget.pointer)
+		gtk_container_remove(containerPointer, widget.widgetPointer)
 	}
 
 	var resizeMode: ResizeMode
@@ -51,7 +55,6 @@ open class Container internal constructor(
 
 	fun getPathForChild() {
 		TODO("gtk_container_get_path_for_child")
-		TODO("GtkWidgetPath")
 	}
 
 	fun setReallocateRedraws(needsRedraw: Boolean) {
@@ -67,7 +70,7 @@ open class Container internal constructor(
 		set(value) =
 			gtk_container_set_focus_child(
 				containerPointer,
-				value?.pointer
+				value?.widgetPointer
 			)
 
 	var verticalAdjustment: Adjustment?

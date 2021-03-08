@@ -1,4 +1,4 @@
-package kotlin.gtk
+package kotlin.gtk.container
 
 import gtk.GtkBox
 import kotlinx.cinterop.CPointer

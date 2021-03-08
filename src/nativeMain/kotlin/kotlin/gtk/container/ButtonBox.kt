@@ -1,9 +1,12 @@
-package kotlin.gtk
+package kotlin.gtk.container
 
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlin.gtk.enums.Orientation
+import kotlin.gtk.common.enums.Orientation
+import kotlin.gtk.from
+import kotlin.gtk.gtkValue
+import kotlin.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -29,14 +32,14 @@ open class ButtonBox internal constructor(
 		Boolean.from(
 			gtk_button_box_get_child_secondary(
 				buttonBoxPointer,
-				widget.pointer
+				widget.widgetPointer
 			)
 		)
 
 	fun setChildSecondary(widget: Widget, isSecondary: Boolean) {
 		gtk_button_box_set_child_secondary(
 			buttonBoxPointer,
-			widget.pointer,
+			widget.widgetPointer,
 			isSecondary.gtkValue
 		)
 	}
@@ -45,14 +48,14 @@ open class ButtonBox internal constructor(
 		Boolean.from(
 			gtk_button_box_get_child_non_homogeneous(
 				buttonBoxPointer,
-				widget.pointer
+				widget.widgetPointer
 			)
 		)
 
 	fun setChildNonHomogeneous(widget: Widget, isNonHomogeneous: Boolean) {
 		gtk_button_box_set_child_non_homogeneous(
 			buttonBoxPointer,
-			widget.pointer,
+			widget.widgetPointer,
 			isNonHomogeneous.gtkValue
 		)
 	}

@@ -1,8 +1,11 @@
-package kotlin.gtk
+package kotlin.gtk.windows
 
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import kotlin.gtk.Application
+import kotlin.gtk.from
+import kotlin.gtk.gtkValue
 
 /**
  * kotlinx-gtk

@@ -1,7 +1,6 @@
-package kotlin.gtk.data
+package kotlin.gtk.common.data
 
 import gtk.GtkRequisition
-import kotlinx.cinterop.alloc
 import kotlinx.cinterop.cValue
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.pointed

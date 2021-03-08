@@ -1,8 +1,14 @@
-package kotlin.gtk
+package kotlin.gtk.windows
 
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
+import kotlin.gtk.Application
+import kotlin.gtk.GtkWindowGroup
+import kotlin.gtk.container.Bin
+import kotlin.gtk.from
+import kotlin.gtk.gtkValue
+import kotlin.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -20,7 +26,7 @@ open class Window internal constructor(
 
 	var child: Any
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 
 	var title: String?
 		get() = gtk_window_get_title(windowPointer)?.toKString()
@@ -67,7 +73,7 @@ open class Window internal constructor(
 
 	var hideOnClose: Boolean
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 
 	var destroyWithParent: Boolean
 		get() = Boolean.from(gtk_window_get_destroy_with_parent(windowPointer))
@@ -79,13 +85,13 @@ open class Window internal constructor(
 
 	var application: Application
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 
 	var titleBar: Widget?
 		get() = gtk_window_get_titlebar(windowPointer)?.reinterpret<GtkWidget>()
 			?.let { Widget(it) }
 		set(value) {
-			value?.pointer?.let {
+			value?.widgetPointer?.let {
 				gtk_window_set_titlebar(
 					windowPointer,
 					it
@@ -95,16 +101,16 @@ open class Window internal constructor(
 
 	var isFocusVisible: Boolean
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 	var focus: Widget
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 	var defaultWidget: Widget
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 	var decorated: Boolean
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 
 	var deletable: Boolean
 		get() = Boolean.from(gtk_window_get_deletable(windowPointer))
@@ -116,7 +122,7 @@ open class Window internal constructor(
 
 	var defaultIconName: String
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 	val transientFor: Window
 		get() = TODO()
 
@@ -124,7 +130,7 @@ open class Window internal constructor(
 		get() = TODO()
 	var iconName: String
 		get() = TODO()
-		set(value) = TODO()
+		set(_) = TODO()
 	val areMnemonicsVisible: Boolean
 		get() = TODO()
 

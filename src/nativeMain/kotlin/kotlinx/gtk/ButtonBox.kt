@@ -1,8 +1,8 @@
 package kotlinx.gtk
 
-import kotlin.gtk.ButtonBox
-import kotlin.gtk.Container
-import kotlin.gtk.enums.Orientation
+import kotlin.gtk.container.ButtonBox
+import kotlin.gtk.container.Container
+import kotlin.gtk.common.enums.Orientation
 
 @GtkDsl
 inline fun Container.buttonBox(buttonBox: ButtonBox) {

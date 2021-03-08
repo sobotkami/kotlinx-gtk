@@ -7,6 +7,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
 import kotlin.g.Application
 import kotlin.gtk.g.MenuModel
+import kotlin.gtk.windows.Window
 
 /**
  * kotlinx-gtk
@@ -48,11 +49,11 @@ class Application internal constructor(
 
 	var isRegisterSession: Boolean
 		get() = TODO("Not yet implemented")
-		set(value) {}
+		set(_) {}
 
 	var isScreenSaverActive: Boolean
 		get() = TODO("Not yet implemented")
-		set(value) {}
+		set(_) {}
 
 	fun getWindowById(): Window? {
 		TODO("Not yet implemented")

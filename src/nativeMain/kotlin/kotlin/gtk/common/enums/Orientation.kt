@@ -1,4 +1,4 @@
-package kotlin.gtk.enums
+package kotlin.gtk.common.enums
 
 import gtk.GtkOrientation
 
@@ -14,7 +14,7 @@ enum class Orientation(val key: Int, internal val gtk: GtkOrientation) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		fun valueOf(orientation: GtkOrientation) =
-			values().find { it.gtk == orientation }
+		internal fun valueOf(gtk: GtkOrientation) =
+			values().find { it.gtk == gtk }
 	}
 }

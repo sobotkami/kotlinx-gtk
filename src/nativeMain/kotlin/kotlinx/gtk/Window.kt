@@ -1,8 +1,8 @@
 package kotlinx.gtk
 
 import kotlin.gtk.Application
-import kotlin.gtk.ApplicationWindow
-import kotlin.gtk.Window
+import kotlin.gtk.windows.ApplicationWindow
+import kotlin.gtk.windows.Window
 
 /**
  * kotlinx-gtk
