@@ -3,7 +3,10 @@ package kotlin.gtk
 import gtk.GCallback
 import gtk.g_signal_connect_data
 import gtk.gpointer
-import kotlinx.cinterop.*
+import kotlinx.cinterop.COpaquePointer
+import kotlinx.cinterop.asStableRef
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
 
 /**
  * kotlinx-gtk
@@ -22,7 +25,7 @@ internal fun VoidPointer.connectSignal(
 	handler: GCallback = staticCallback,
 	callbackWrapper: COpaquePointer? = null,
 	flags: UInt = 0u
-) {
+): ULong =
 	g_signal_connect_data(
 		this,
 		signal,
@@ -33,7 +36,7 @@ internal fun VoidPointer.connectSignal(
 		},
 		connect_flags = flags
 	)
-}
+
 
 internal val staticCallback: GCallback =
 	staticCFunction { _: gpointer?, data: gpointer? ->

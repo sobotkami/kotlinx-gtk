@@ -16,16 +16,12 @@ inline fun Container.button(
 
 @GtkDsl
 inline fun Button.onClicked(crossinline onClicked: suspend () -> Unit) {
-	println("Launching")
 	GlobalScope.launch(context = Dispatchers.Unconfined) {
-		println("Collecting")
 		clickedSignal.collectLatest {
-			println("Tock")
 			launchUI {
 				onClicked()
 			}
 		}
-		println("Done")
 	}
 
 }
