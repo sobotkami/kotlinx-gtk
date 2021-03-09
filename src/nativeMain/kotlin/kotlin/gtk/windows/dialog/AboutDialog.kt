@@ -5,8 +5,10 @@ import gtk.GtkLicense.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
+import kotlin.gtk.asStringList
 import kotlin.gtk.from
 import kotlin.gtk.gtkValue
+import kotlin.gtk.toCStringArray
 
 /**
  * kotlinx-gtk
@@ -74,17 +76,31 @@ class AboutDialog internal constructor(
 		set(value) =
 			gtk_about_dialog_set_website_label(aboutDialogPointer, value)
 
-	var authors: Array<String>?
-		get() = TODO("gtk_about_dialog_get_authors")
-		set(value) = TODO("gtk_about_dialog_set_authors")
+	var authors: List<String>
+		get() =
+			gtk_about_dialog_get_authors(aboutDialogPointer).asStringList()
+		set(value) {
+			gtk_about_dialog_set_authors(
+				aboutDialogPointer,
+				value.toCStringArray()
+			)
+		}
 
-	var artists: Array<String>
-		get() = TODO("gtk_about_dialog_get_artists")
-		set(value) = TODO("gtk_about_dialog_set_artists")
+	var artists: List<String>
+		get() =
+			gtk_about_dialog_get_artists(aboutDialogPointer).asStringList()
+		set(value) =
+			gtk_about_dialog_set_artists(
+				aboutDialogPointer,
+				value.toCStringArray()
+			)
 
-	var documenters: String
-		get() = TODO("gtk_about_dialog_get_documenters")
-		set(value) = TODO("gtk_about_dialog_set_documenters")
+	var documenters: List<String>
+		get() = gtk_about_dialog_get_documenters(aboutDialogPointer).asStringList()
+		set(value) = gtk_about_dialog_set_documenters(
+			aboutDialogPointer,
+			value.toCStringArray()
+		)
 
 	var translatorCredits: String?
 		get() =

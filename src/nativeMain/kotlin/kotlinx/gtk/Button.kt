@@ -21,9 +21,7 @@ inline fun Container.button(
 inline fun Button.onClicked(crossinline onClicked: suspend () -> Unit) {
 	GlobalScope.launch(context = Dispatchers.Unconfined) {
 		clickedSignal.collectLatest {
-			launchUI {
 				onClicked()
-			}
 		}
 	}
 

@@ -17,13 +17,16 @@ class MessageDialog internal constructor(
 	internal val messageDialogPointer: CPointer<GtkMessageDialog>
 ) : Dialog(messageDialogPointer.reinterpret()) {
 
+	/**
+	 * TODO vararg management
+	 */
 	constructor(
-		withMarkup: Boolean = false,
 		parent: Window? = null,
 		flags: Flags,
 		messageType: MessageType,
 		buttonsType: ButtonsType,
 		messageFormat: String? = null,
+		withMarkup: Boolean = false,
 		vararg arguments: Any
 	) : this(
 		if (!withMarkup)
@@ -32,8 +35,7 @@ class MessageDialog internal constructor(
 				flags.gtk,
 				messageType.gtk,
 				buttonsType.gtk,
-				messageFormat,
-				arguments
+				messageFormat
 			)!!.reinterpret()
 		else
 			gtk_message_dialog_new_with_markup(
@@ -41,8 +43,7 @@ class MessageDialog internal constructor(
 				flags.gtk,
 				messageType.gtk,
 				buttonsType.gtk,
-				messageFormat,
-				arguments
+				messageFormat
 			)!!.reinterpret()
 	)
 
@@ -63,6 +64,9 @@ class MessageDialog internal constructor(
 		gtk_message_dialog_set_markup(messageDialogPointer, markup)
 	}
 
+	/**
+	 * TODO vararg
+	 */
 	fun formatSecondaryText(
 		messageFormat: String? = null,
 		vararg arguments: Any
@@ -70,10 +74,12 @@ class MessageDialog internal constructor(
 		gtk_message_dialog_format_secondary_text(
 			messageDialogPointer,
 			messageFormat,
-			arguments
 		)
 	}
 
+	/**
+	 * TODO vararg
+	 */
 	fun formatSecondaryMarkup(
 		messageFormat: String? = null,
 		vararg arguments: Any
@@ -81,7 +87,6 @@ class MessageDialog internal constructor(
 		gtk_message_dialog_format_secondary_markup(
 			messageDialogPointer,
 			messageFormat,
-			arguments
 		)
 	}
 

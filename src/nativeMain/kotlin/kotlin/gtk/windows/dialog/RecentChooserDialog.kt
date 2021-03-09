@@ -30,7 +30,6 @@ class RecentChooserDialog internal constructor(
 			title = title,
 			parent = parent?.windowPointer,
 			first_button_text = firstButtonText,
-			arguments
 		)!!.reinterpret()
 	)
 }

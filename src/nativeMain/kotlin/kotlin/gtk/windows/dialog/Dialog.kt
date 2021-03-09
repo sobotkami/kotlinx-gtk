@@ -15,6 +15,11 @@ open class Dialog internal constructor(
 ) : Window(dialogPointer.reinterpret()) {
 	constructor() : this(gtk_dialog_new()!!.reinterpret())
 
+
+	fun run(): Int =
+		gtk_dialog_run(dialogPointer)
+
+
 	enum class Flags(val key: Int, internal val gtk: GtkDialogFlags) {
 		MODAL(0, GTK_DIALOG_MODAL),
 		DESTROY_WITH_PARENT(1, GTK_DIALOG_DESTROY_WITH_PARENT),
