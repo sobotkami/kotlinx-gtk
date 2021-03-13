@@ -8,6 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlin.async.callbackSignalFlow
 import kotlin.gtk.Signals.CLICKED
+import kotlin.gtk.container.Bin
 import kotlin.gtk.widgets.Widget
 
 /**
@@ -17,7 +18,7 @@ import kotlin.gtk.widgets.Widget
 class Button internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val buttonPointer: CPointer<GtkButton>
-) : Widget(buttonPointer.reinterpret()) {
+) : Bin(buttonPointer.reinterpret()) {
 
 	constructor(label: String) : this(
 		gtk_button_new_with_label(
