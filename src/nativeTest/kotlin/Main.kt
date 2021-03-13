@@ -160,6 +160,32 @@ class Main {
 									}
 								}
 
+								button("Dialog test (Unconfinedx2)") {
+									onClicked {
+										GlobalScope.launch(context = Dispatchers.Unconfined) {
+											messageDialog(
+												Dialog.Flags.DESTROY_WITH_PARENT,
+												MessageDialog.MessageType.INFO,
+												MessageDialog.ButtonsType.OK,
+												messageFormat = "Test UNCONFINED"
+											).show()
+										}
+									}
+								}
+
+								button("Dialog test (Unconfined parent)") {
+									onClicked {
+										supervisorScope {
+											messageDialog(
+												Dialog.Flags.DESTROY_WITH_PARENT,
+												MessageDialog.MessageType.INFO,
+												MessageDialog.ButtonsType.OK,
+												messageFormat = "Test UNCONFINED"
+											).show()
+										}
+									}
+								}
+
 								button("Dialog test (IO)") {
 									onClicked {
 										launchIO {

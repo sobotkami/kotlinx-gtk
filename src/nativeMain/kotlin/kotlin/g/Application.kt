@@ -15,7 +15,5 @@ open class Application(
 ) {
 	fun run(argc: Int = 0): Int = memScoped {
 		g_application_run(cPointer, argc, null)
-	}.also {
-		//g_object_unref(cPointer)
 	}
 }

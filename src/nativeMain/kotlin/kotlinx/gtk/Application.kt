@@ -1,7 +1,12 @@
 package kotlinx.gtk
 
+import gtk.g_idle_add
+import gtk.gpointer
+import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 import kotlin.gtk.Application
+import kotlin.native.concurrent.isFrozen
 
 /**
  * kotlinx-gtk
@@ -12,11 +17,11 @@ import kotlin.gtk.Application
 inline fun application(
 	id: String,
 	crossinline builder: Application.() -> Unit
-): Int {
-	return Application(id).apply {
+): Int =
+	Application(id).apply {
 		builder()
 	}.run()
-}
+
 
 
 @GtkDsl
