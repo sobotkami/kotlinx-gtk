@@ -19,8 +19,21 @@ val Dispatchers.IO: CoroutineDispatcher
 	get() = newSingleThreadContext("IO")
 
 @ExperimentalCoroutinesApi
-inline fun launchUI(crossinline block: suspend CoroutineScope.() -> Unit) {
+inline fun launchUI(crossinline block: suspend CoroutineScope.() -> Unit) =
 	GlobalScope.launch(context = Dispatchers.UI) {
 		block()
 	}
-}
+
+@ExperimentalCoroutinesApi
+inline fun launchIO(crossinline block: suspend CoroutineScope.() -> Unit) =
+	GlobalScope.launch(context = Dispatchers.IO) {
+		block()
+	}
+
+@ExperimentalCoroutinesApi
+inline fun launchDefault(crossinline block: suspend CoroutineScope.() -> Unit) =
+	GlobalScope.launch(context = Dispatchers.Default) {
+		block()
+	}
+
+
