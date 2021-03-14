@@ -87,6 +87,10 @@ internal fun CStringList?.toStringListFilterNulls(length: Int): List<String> {
 	}.filterNotNull()
 }
 
+internal fun CPointer<GList>?.free() {
+	g_list_free(this)
+}
+
 internal fun CPointer<GSList>?.free() {
 	g_slist_free(this)
 }
