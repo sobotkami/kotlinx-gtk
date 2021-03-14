@@ -5,8 +5,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.async.launchUI
-import kotlin.gtk.Button
+import kotlin.gtk.container.bin.button.Button
 import kotlin.gtk.container.Container
 
 @GtkDsl

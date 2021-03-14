@@ -1,10 +1,10 @@
-package kotlin.gtk.windows.dialog
+package kotlin.gtk.container.bin.windows.dialog
 
 import gtk.GtkDialog
 import gtk.gtk_color_chooser_dialog_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlin.gtk.windows.Window
+import kotlin.gtk.container.bin.windows.Window
 
 /**
  * kotlinx-gtk

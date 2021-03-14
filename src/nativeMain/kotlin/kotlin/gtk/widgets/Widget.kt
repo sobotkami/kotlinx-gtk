@@ -63,8 +63,8 @@ open class Widget(
 			value.gtkValue
 		)
 
-	var horizontalAlignment: Alignment
-		get() = Alignment.valueOf(gtk_widget_get_halign(widgetPointer))!!
+	var horizontalAlign: Align
+		get() = Align.valueOf(gtk_widget_get_halign(widgetPointer))!!
 		set(value) = gtk_widget_set_halign(widgetPointer, value.gtk)
 
 
@@ -144,8 +144,8 @@ open class Widget(
 	var visual: Visual?
 		get() = gtk_widget_get_visual(widgetPointer)?.let { Visual(it) }
 		set(value) = gtk_widget_set_visual(widgetPointer, value?.pointer)
-	var verticalAlignment: Alignment
-		get() = Alignment.valueOf(gtk_widget_get_valign(widgetPointer))!!
+	var verticalAlign: Align
+		get() = Align.valueOf(gtk_widget_get_valign(widgetPointer))!!
 		set(value) = gtk_widget_set_valign(widgetPointer, value.gtk)
 
 
@@ -333,8 +333,8 @@ open class Widget(
 	fun getAncestor(widgetType: ULong) =
 		gtk_widget_get_ancestor(widgetPointer, widgetType)?.let { Widget(it) }
 
-	fun getVerticalAlignmentWithBaseLine(): Alignment =
-		Alignment.valueOf(gtk_widget_get_valign_with_baseline(widgetPointer))!!
+	fun getVerticalAlignmentWithBaseLine(): Align =
+		Align.valueOf(gtk_widget_get_valign_with_baseline(widgetPointer))!!
 
 	fun queueComputeExpand() {
 		gtk_widget_queue_compute_expand(widgetPointer)
@@ -343,7 +343,7 @@ open class Widget(
 	fun computeExpand(orientation: Orientation): Boolean =
 		Boolean.from(gtk_widget_compute_expand(widgetPointer, orientation.gtk))
 
-	enum class Alignment(val key: Int, internal val gtk: GtkAlign) {
+	enum class Align(val key: Int, internal val gtk: GtkAlign) {
 		FILL(0, GtkAlign.GTK_ALIGN_FILL),
 		START(1, GtkAlign.GTK_ALIGN_START),
 		END(2, GtkAlign.GTK_ALIGN_END),

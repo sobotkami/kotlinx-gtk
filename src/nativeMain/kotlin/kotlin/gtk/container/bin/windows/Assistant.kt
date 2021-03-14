@@ -1,7 +1,6 @@
-package kotlin.gtk.windows
+package kotlin.gtk.container.bin.windows
 
 import gtk.GtkAssistant
-import gtk.GtkDialog
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 

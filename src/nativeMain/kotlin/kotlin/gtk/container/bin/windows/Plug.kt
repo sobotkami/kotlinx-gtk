@@ -1,4 +1,4 @@
-package kotlin.gtk.windows
+package kotlin.gtk.container.bin.windows
 
 import gtk.GtkDialog
 import kotlinx.cinterop.CPointer

@@ -5,7 +5,6 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlin.gtk.Adjustment
 import kotlin.gtk.common.enums.SelectionMode
-import kotlin.gtk.container.Bin
 import kotlin.gtk.from
 import kotlin.gtk.gtkValue
 import kotlin.gtk.widgets.Widget

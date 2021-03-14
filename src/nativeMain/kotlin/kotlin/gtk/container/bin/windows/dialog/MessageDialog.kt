@@ -1,4 +1,4 @@
-package kotlin.gtk.windows.dialog
+package kotlin.gtk.container.bin.windows.dialog
 
 import gtk.*
 import gtk.GtkButtonsType.*
@@ -6,7 +6,7 @@ import gtk.GtkMessageType.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlin.gtk.widgets.Widget
-import kotlin.gtk.windows.Window
+import kotlin.gtk.container.bin.windows.Window
 
 /**
  * kotlinx-gtk

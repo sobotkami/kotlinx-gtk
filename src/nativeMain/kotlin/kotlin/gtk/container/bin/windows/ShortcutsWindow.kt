@@ -1,9 +1,8 @@
-package kotlin.gtk.windows
+package kotlin.gtk.container.bin.windows
 
 import gtk.GtkShortcutsWindow
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlin.gtk.windows.Window
 
 /**
  * kotlinx-gtk

@@ -7,7 +7,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
 import kotlin.g.Application
 import kotlin.gtk.g.MenuModel
-import kotlin.gtk.windows.Window
+import kotlin.gtk.container.bin.windows.Window
 
 /**
  * kotlinx-gtk

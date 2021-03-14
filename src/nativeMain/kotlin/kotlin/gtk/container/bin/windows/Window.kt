@@ -1,11 +1,11 @@
-package kotlin.gtk.windows
+package kotlin.gtk.container.bin.windows
 
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
 import kotlin.gtk.Application
 import kotlin.gtk.GtkWindowGroup
-import kotlin.gtk.container.Bin
+import kotlin.gtk.container.bin.Bin
 import kotlin.gtk.from
 import kotlin.gtk.gtkValue
 import kotlin.gtk.widgets.Widget

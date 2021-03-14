@@ -1,8 +1,8 @@
 package kotlinx.gtk
 
-import kotlin.gtk.windows.Window
-import kotlin.gtk.windows.dialog.Dialog
-import kotlin.gtk.windows.dialog.MessageDialog
+import kotlin.gtk.container.bin.windows.Window
+import kotlin.gtk.container.bin.windows.dialog.Dialog
+import kotlin.gtk.container.bin.windows.dialog.MessageDialog
 
 /**
  * kotlinx-gtk

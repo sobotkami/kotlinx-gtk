@@ -1,4 +1,4 @@
-package kotlin.gtk.windows.dialog
+package kotlin.gtk.container.bin.windows.dialog
 
 import gtk.GtkFileChooserAction
 import gtk.GtkFileChooserAction.*
@@ -6,7 +6,7 @@ import gtk.GtkFileChooserDialog
 import gtk.gtk_file_chooser_dialog_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlin.gtk.windows.Window
+import kotlin.gtk.container.bin.windows.Window
 
 /**
  * kotlinx-gtk

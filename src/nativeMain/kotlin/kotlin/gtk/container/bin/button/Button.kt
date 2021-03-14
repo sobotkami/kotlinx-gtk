@@ -1,4 +1,4 @@
-package kotlin.gtk
+package kotlin.gtk.container.bin.button
 
 import gtk.GtkButton
 import gtk.gtk_button_new_with_label
@@ -8,8 +8,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlin.async.callbackSignalFlow
 import kotlin.gtk.Signals.CLICKED
-import kotlin.gtk.container.Bin
-import kotlin.gtk.widgets.Widget
+import kotlin.gtk.container.bin.Bin
 
 /**
  * kotlinx-gtk

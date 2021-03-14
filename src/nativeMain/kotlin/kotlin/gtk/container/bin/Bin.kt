@@ -1,8 +1,9 @@
-package kotlin.gtk.container
+package kotlin.gtk.container.bin
 
 import gtk.GtkBin
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import kotlin.gtk.container.Container
 
 /**
  * kotlinx-gtk
