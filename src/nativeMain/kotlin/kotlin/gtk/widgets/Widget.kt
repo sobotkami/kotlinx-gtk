@@ -3,6 +3,8 @@ package kotlin.gtk.widgets
 import gtk.*
 import kotlinx.cinterop.*
 import kotlin.g.KotlinGObject
+import kotlin.gdk.Device
+import kotlin.gdk.Event
 import kotlin.gdk.GWindow
 import kotlin.gdk.Visual
 import kotlin.gtk.WidgetPointer
@@ -39,10 +41,6 @@ open class Widget(
 		set(value) = gtk_widget_set_can_focus(widgetPointer, value.gtkValue)
 
 
-	val isCompositeChild: Boolean
-		get() = TODO("composite-child")
-
-
 	var isDoubleBuffered: Boolean
 		get() = Boolean.from(gtk_widget_get_double_buffered(widgetPointer))
 		set(value) = gtk_widget_set_double_buffered(
@@ -52,8 +50,11 @@ open class Widget(
 
 
 	var expand: Boolean
-		get() = TODO("expand")
-		set(_) = TODO("expand")
+		get() = horizontalExpand && verticalExpand
+		set(value) {
+			horizontalExpand = value
+			verticalExpand = value
+		}
 
 
 	var focusOnClick: Boolean
@@ -68,14 +69,11 @@ open class Widget(
 		set(value) = gtk_widget_set_halign(widgetPointer, value.gtk)
 
 
-	var hasDefault: Boolean
-		get() = TODO("has-default")
-		set(_) = TODO("has-default")
+	val hasDefault: Boolean
+		get() = Boolean.from(gtk_widget_has_default(widgetPointer))
 
-	var hasFocus: Boolean
-		get() = TODO("has-focus")
-		set(_) = TODO("has-focus")
-
+	val hasFocus: Boolean
+		get() = Boolean.from(gtk_widget_has_focus(widgetPointer))
 
 	var hasTooltip: Boolean
 		get() = Boolean.from(gtk_widget_get_has_tooltip(widgetPointer))
@@ -285,7 +283,7 @@ open class Widget(
 	fun canActivateAccelerator(signalID: UInt) =
 		Boolean.from(gtk_widget_can_activate_accel(widgetPointer, signalID))
 
-	fun event() {
+	fun event(event: Event) {
 		TODO("gtk_widget_event")
 	}
 
@@ -309,23 +307,23 @@ open class Widget(
 		gtk_widget_add_events(widgetPointer, events)
 	}
 
-	fun setDeviceEvents() {
+	fun setDeviceEvents(device: Device) {
 		TODO("gtk_widget_get_device_events")
 	}
 
-	fun getDeviceEvents() {
+	fun getDeviceEvents(device: Device) {
 		TODO("gtk_widget_set_device_events")
 	}
 
-	fun addDeviceEvents() {
+	fun addDeviceEvents(device: Device) {
 		TODO("gtk_widget_add_device_events")
 	}
 
-	fun setDeviceEnabled() {
+	fun setDeviceEnabled(device: Device, boolean: Boolean) {
 		TODO("gtk_widget_set_device_enabled")
 	}
 
-	fun getDeviceEnabled() {
+	fun getDeviceEnabled(device: Device): Boolean {
 		TODO("gtk_widget_get_device_enabled")
 	}
 
