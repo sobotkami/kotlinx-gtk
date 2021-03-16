@@ -24,10 +24,6 @@ open class Window internal constructor(
 		println("Window created")
 	}
 
-	var child: Any
-		get() = TODO()
-		set(_) = TODO()
-
 	var title: String?
 		get() = gtk_window_get_title(windowPointer)?.toKString()
 		set(value) {
