@@ -118,20 +118,6 @@ inline fun Box.horizontalButtonBoxEnd(
 	padding
 )
 
-class PackStart internal constructor(box: Box) : Box(box.boxPointer)
-
-class PackEnd internal constructor(box: Box) : Box(box.boxPointer)
-
-@GtkDsl
-fun Box.start(builder: PackStart.() -> Unit) {
-	PackStart(this).apply(builder)
-}
-
-@GtkDsl
-fun Box.end(builder: PackEnd.() -> Unit) {
-	PackEnd(this).apply(builder)
-}
-
 @ExperimentalUnsignedTypes
 @GtkDsl
 inline fun PackStart.verticalButtonBox(

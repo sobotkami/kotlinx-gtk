@@ -6,9 +6,12 @@ import kotlinx.gtk.*
 import kotlin.async.launchDefault
 import kotlin.async.launchIO
 import kotlin.async.launchUI
+import kotlin.gtk.IconSize
 import kotlin.gtk.common.enums.Orientation
+import kotlin.gtk.container.ButtonBox
 import kotlin.gtk.container.bin.windows.dialog.Dialog
 import kotlin.gtk.container.bin.windows.dialog.MessageDialog
+import kotlin.system.measureTimeMillis
 import kotlin.test.Test
 
 /**
@@ -77,175 +80,240 @@ class Main {
 		application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {
 			val viewModel = ViewModel()
 			onCreateUI {
-				applicationWindow {
-					title = "Window"
-					defaultSize = 600 x 200
+				measureTimeMillis {
+					applicationWindow {
+						title = "Window"
+						defaultSize = 600 x 200
 
-					box(Orientation.HORIZONTAL, 10) {
-						start {
-							this.verticalButtonBox(
-								expand = true,
-								fill = true,
-								padding = 1u
-							) {
-								button("Start Shared Test") {
-									onClicked {
-										viewModel.startSharedDataTest()
+						box(Orientation.HORIZONTAL, 10) {
+							start {
+								frame(
+									"Concurrent Access Test",
+									expand = true,
+									fill = true,
+									padding = 10u
+								) {
+									verticalButtonBox {
+										buttonBoxStyle =
+											ButtonBox.ButtonBoxStyle.CENTER
+										button("Start") {
+											onClicked {
+												viewModel.startSharedDataTest()
+											}
+										}
+										button("Stop") {
+											onClicked {
+												viewModel.stopSharedDataTest()
+											}
+										}
 									}
 								}
-								button("Stop Shared Test") {
-									onClicked {
-										viewModel.stopSharedDataTest()
-									}
-								}
-							}
-							verticalButtonBox(
-								expand = true,
-								fill = true,
-								padding = 1u
-							) {
-								button("Start Job Test") {
-									onClicked {
-										viewModel.startJobTest()
-									}
-								}
-								button("Stop Job Test") {
-									onClicked {
-										viewModel.stopJobTest()
-									}
-								}
-							}
-						}
 
-						end {
-							verticalButtonBox(
-								expand = true,
-								fill = true,
-								padding = 1u
-							) {
-								button("Increment flow value") {
-									onClicked {
-										viewModel.incrementFlow()
+								frame(
+									"Kotlin Coroutine Job Test",
+									expand = true,
+									fill = true,
+									padding = 10u
+								) {
+									verticalButtonBox {
+										buttonBoxStyle =
+											ButtonBox.ButtonBoxStyle.CENTER
+										button("Start") {
+											onClicked {
+												viewModel.startJobTest()
+											}
+										}
+										button("Stop") {
+											onClicked {
+												viewModel.stopJobTest()
+											}
+										}
 									}
 								}
-								button("Collect flow value") {
-									onClicked {
-										println("Value: ${viewModel.flow.first()}")
-									}
-								}
+
 							}
 
-							verticalButtonBox(
-								expand = true,
-								fill = true,
-								padding = 1u
-							) {
-								button("Dialog test (Default)") {
-									onClicked {
-										launchDefault {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test Default"
-											).show()
+							end {
+								frame(
+									"Flow Test",
+									expand = true,
+									fill = true,
+									padding = 10u
+								) {
+									verticalButtonBox {
+										buttonBoxStyle =
+											ButtonBox.ButtonBoxStyle.CENTER
+										button("Increment flow value") {
+											onClicked {
+												viewModel.incrementFlow()
+											}
 										}
-									}
-								}
-
-								button("Dialog test (Main)") {
-									onClicked {
-										GlobalScope.launch(context = Dispatchers.Main) {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test Main"
-											).show()
-										}
-									}
-								}
-
-								button("Dialog test (Unconfined)") {
-									onClicked {
-										messageDialog(
-											Dialog.Flags.DESTROY_WITH_PARENT,
-											MessageDialog.MessageType.INFO,
-											MessageDialog.ButtonsType.OK,
-											messageFormat = "Test UNCONFINED"
-										).show()
-									}
-								}
-
-								button("Dialog test (Unconfinedx2)") {
-									onClicked {
-										GlobalScope.launch(context = Dispatchers.Unconfined) {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test UNCONFINED"
-											).show()
-										}
-									}
-								}
-
-								button("Dialog test (Unconfined parent)") {
-									onClicked {
-										supervisorScope {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test UNCONFINED"
-											).show()
-										}
-									}
-								}
-
-								button("Dialog test (IO)") {
-									onClicked {
-										launchIO {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test IO"
-											).show()
-										}
-									}
-								}
-
-								button("Dialog test (UI)") {
-									onClicked {
-										launchUI {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test UI"
-											).show()
-										}
-									}
-								}
-
-								button("Dialog test (Empty)") {
-									onClicked {
-										GlobalScope.launch {
-											messageDialog(
-												Dialog.Flags.DESTROY_WITH_PARENT,
-												MessageDialog.MessageType.INFO,
-												MessageDialog.ButtonsType.OK,
-												messageFormat = "Test Empty"
-											).show()
+										button("Collect flow value") {
+											onClicked {
+												println("Value: ${viewModel.flow.first()}")
+											}
 										}
 									}
 								}
 
 
+								frame(
+									"Dialog test (calling UI)",
+									expand = true,
+									fill = true,
+									padding = 10u
+								) {
+									verticalButtonBox {
+										buttonBoxStyle =
+											ButtonBox.ButtonBoxStyle.CENTER
+										button("Dialog test (Default)") {
+											onClicked {
+												launchDefault {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test Default"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (Main)") {
+											onClicked {
+												GlobalScope.launch(context = Dispatchers.Main) {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test Main"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (Unconfined)") {
+											onClicked {
+												messageDialog(
+													Dialog.Flags.DESTROY_WITH_PARENT,
+													MessageDialog.MessageType.INFO,
+													MessageDialog.ButtonsType.OK,
+													messageFormat = "Test UNCONFINED"
+												).show()
+											}
+										}
+
+										button("Dialog test (Unconfinedx2)") {
+											onClicked {
+												GlobalScope.launch(context = Dispatchers.Unconfined) {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test UNCONFINED"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (Unconfined parent)") {
+											onClicked {
+												supervisorScope {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test UNCONFINED"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (IO)") {
+											onClicked {
+												launchIO {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test IO"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (UI)") {
+											onClicked {
+												launchUI {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test UI"
+													).show()
+												}
+											}
+										}
+
+										button("Dialog test (Empty)") {
+											onClicked {
+												GlobalScope.launch {
+													messageDialog(
+														Dialog.Flags.DESTROY_WITH_PARENT,
+														MessageDialog.MessageType.INFO,
+														MessageDialog.ButtonsType.OK,
+														messageFormat = "Test Empty"
+													).show()
+												}
+											}
+										}
+
+
+									}
+								}
+
+								frame(
+									"ButtonTypes",
+									expand = true,
+									fill = true,
+									padding = 10u
+								) {
+									verticalButtonBox {
+										buttonBoxStyle =
+											ButtonBox.ButtonBoxStyle.CENTER
+
+										scaleButton(IconSize.SMALL_TOOLBAR) {
+											onClicked {
+												println("Clicked scale button")
+											}
+										}
+
+										button("Normal Button") {
+											onClicked {
+												println("Clicked normal button")
+											}
+										}
+										linkButton(
+											"https://github.com/Doomsdayrs/kotlinx-gtk",
+											"Link Button"
+										) {
+											onClicked {
+												println("Clicked link button")
+												visited()
+											}
+										}
+										toggleButton("Toggle Button") {
+											onToggle {
+												println("Clicked toggle button ${this.active}")
+											}
+										}
+									}
+								}
 							}
 						}
 					}
+				}.also {
+					println("Created UI in $it ms")
 				}
 			}
 		}.let { finalStatus ->
