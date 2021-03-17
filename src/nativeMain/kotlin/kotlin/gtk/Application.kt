@@ -94,7 +94,7 @@ class Application internal constructor(
 	fun onActivate(onActive: () -> Unit) {
 		pointer.connectSignal(
 			Signals.ACTIVATE,
-			handler = staticCallback,
+			handler = staticNoArgGCallback,
 			callbackWrapper = StableRef.create {
 				onActive()
 			}.asCPointer()

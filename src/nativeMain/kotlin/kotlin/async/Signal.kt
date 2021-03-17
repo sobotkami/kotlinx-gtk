@@ -2,6 +2,7 @@ package kotlin.async
 
 import gtk.g_signal_handler_disconnect
 import kotlinx.cinterop.StableRef
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -10,6 +11,8 @@ import kotlin.gtk.Signals
 import kotlin.gtk.connectSignal
 
 
+@ExperimentalCoroutinesApi
+@ExperimentalUnsignedTypes
 internal inline fun KotlinGObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(

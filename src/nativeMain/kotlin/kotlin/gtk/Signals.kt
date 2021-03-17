@@ -22,23 +22,26 @@ object Signals {
 @ExperimentalUnsignedTypes
 internal fun VoidPointer.connectSignal(
 	signal: String,
-	handler: GCallback = staticCallback,
+	handler: GCallback = staticNoArgGCallback,
 	callbackWrapper: COpaquePointer? = null,
 	flags: UInt = 0u
 ): ULong =
 	g_signal_connect_data(
 		this,
-		signal,
-		handler,
-		callbackWrapper,
-		staticCFunction { void: gpointer?, _ ->
+		detailed_signal = signal,
+		c_handler = handler,
+		data = callbackWrapper,
+		destroy_data = staticCFunction { void: gpointer?, _ ->
 			void?.asStableRef<Any>()?.dispose()
 		},
 		connect_flags = flags
 	)
 
 
-internal val staticCallback: GCallback =
+/**
+ * [GCallback] that calls a function with only no arguments
+ */
+internal val staticNoArgGCallback: GCallback =
 	staticCFunction { _: gpointer?, data: gpointer? ->
 		data?.asStableRef<() -> Unit>()?.get()?.invoke()
 		Unit

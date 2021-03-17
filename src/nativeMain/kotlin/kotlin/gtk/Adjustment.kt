@@ -42,7 +42,7 @@ class Adjustment internal constructor(
 		MutableStateFlow(0).apply {
 			pointer.connectSignal(
 				Signals.CHANGED,
-				handler = staticCallback,
+				handler = staticNoArgGCallback,
 				callbackWrapper = StableRef.create {
 					tryEmit(0)
 				}.asCPointer()
@@ -54,7 +54,7 @@ class Adjustment internal constructor(
 		MutableStateFlow(0).apply {
 			pointer.connectSignal(
 				Signals.VALUE_CHANGED,
-				handler = staticCallback,
+				handler = staticNoArgGCallback,
 				callbackWrapper = StableRef.create {
 					tryEmit(0)
 				}.asCPointer()
