@@ -20,7 +20,7 @@ import kotlin.gtk.widgets.Widget
  * kotlinx-gtk
  * 08 / 02 / 2021
  */
-class Button internal constructor(
+open class Button internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val buttonPointer: CPointer<GtkButton>
 ) : Bin(buttonPointer.reinterpret()) {

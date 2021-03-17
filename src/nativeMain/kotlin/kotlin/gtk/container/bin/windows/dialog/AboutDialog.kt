@@ -8,7 +8,7 @@ import kotlinx.cinterop.toKString
 import kotlin.gtk.asStringList
 import kotlin.gtk.from
 import kotlin.gtk.gtkValue
-import kotlin.gtk.toCStringArray
+import kotlin.gtk.toNullTermCStringArray
 
 /**
  * kotlinx-gtk
@@ -82,7 +82,7 @@ class AboutDialog internal constructor(
 		set(value) {
 			gtk_about_dialog_set_authors(
 				aboutDialogPointer,
-				value.toCStringArray()
+				value.toNullTermCStringArray()
 			)
 		}
 
@@ -92,14 +92,14 @@ class AboutDialog internal constructor(
 		set(value) =
 			gtk_about_dialog_set_artists(
 				aboutDialogPointer,
-				value.toCStringArray()
+				value.toNullTermCStringArray()
 			)
 
 	var documenters: List<String>
 		get() = gtk_about_dialog_get_documenters(aboutDialogPointer).asStringList()
 		set(value) = gtk_about_dialog_set_documenters(
 			aboutDialogPointer,
-			value.toCStringArray()
+			value.toNullTermCStringArray()
 		)
 
 	var translatorCredits: String?

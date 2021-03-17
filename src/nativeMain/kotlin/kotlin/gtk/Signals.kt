@@ -17,6 +17,7 @@ object Signals {
 	const val ACTIVATE = "activate"
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
+	const val TOGGLED = "toggled"
 }
 
 @ExperimentalUnsignedTypes

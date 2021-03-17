@@ -20,10 +20,16 @@ internal typealias CString = CPointer<ByteVar>
 /**Shorthand for C's representation of a list of strings (a pointer to a list of char pointers).*/
 internal typealias CStringList = CPointer<CPointerVar<ByteVar>>
 
-public fun List<String>.toCStringArray(): CPointer<CPointerVar<ByteVar>> =
+fun Array<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
 	memScoped {
-		allocArrayOf(this@toCStringArray.map { it.cstr.getPointer(this) })
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
 	}
+
+public fun List<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
+	memScoped {
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+	}
+
 
 internal inline fun CStringList?.asStringList(): List<String> =
 	this.asSequence()
@@ -31,6 +37,9 @@ internal inline fun CStringList?.asStringList(): List<String> =
 		.map { it.toKString() }
 
 
+/**
+ * Null termination accepting sequence
+ */
 internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
 	this ?: return emptySequence()
 
