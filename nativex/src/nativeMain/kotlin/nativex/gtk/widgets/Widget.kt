@@ -177,6 +177,7 @@ open class Widget(
 
 	 */
 
+	@Deprecated("Removed in GTK4", level = DeprecationLevel.HIDDEN)
 	open fun destroy() {
 		gtk_widget_destroy(widgetPointer)
 	}
@@ -197,6 +198,8 @@ open class Widget(
 		gtk_widget_hide(widgetPointer)
 	}
 
+	@Suppress("DeprecatedCallableAddReplaceWith")
+	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 	fun showAll() {
 		gtk_widget_show_all(widgetPointer)
 	}
@@ -213,6 +216,8 @@ open class Widget(
 		gtk_widget_unrealize(widgetPointer)
 	}
 
+	@Suppress("DeprecatedCallableAddReplaceWith")
+	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 	fun draw() {
 		TODO("cario_t")
 	}
@@ -299,6 +304,8 @@ open class Widget(
 		gtk_widget_grab_focus(widgetPointer)
 	}
 
+	@Suppress("DeprecatedCallableAddReplaceWith")
+	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 	fun grabDefault() {
 		gtk_widget_grab_default(widgetPointer)
 	}

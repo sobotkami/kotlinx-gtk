@@ -19,6 +19,7 @@ object Signals {
 	const val ACTIVATE_FOCUS = "activate-focus"
 	const val KEYS_CHANGED = "keys-changed"
 	const val SET_FOCUS = "set-focus"
+
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
 	const val TOGGLED = "toggled"
@@ -26,6 +27,24 @@ object Signals {
 	const val PREVIOUS_MATCH = "previous-match"
 	const val SEARCH_CHANGED = "search-changed"
 	const val STOP_SEARCH = "stop-search"
+
+	// GtkTextView
+	const val BACKSPACE = "backspace"
+	const val COPY_CLIPBOARD = "copy-clipboard"
+	const val CUT_CLIPBOARD = "cut-clipboard"
+	const val DELETE_FROM_CURSOR = "delete-from-cursor"
+	const val EXTEND_SELECTION = "extend-selection"
+	const val INSERT_AT_CURSOR = "insert-at-cursor"
+	const val INSERT_EMOJI = "insert-emoji"
+	const val MOVE_CURSOR = "move-cursor"
+	const val MOVE_VIEWPORT = "move-viewport"
+	const val PASTE_CLIPBOARD = "paste-clipboard"
+	const val POPULATE_POPUP = "populate-popup"
+	const val PREEDIT_CHANGED = "preedit-changed"
+	const val SELECT_ALL = "select-all"
+	const val SET_ANCHOR = "set-anchor"
+	const val TOGGLE_CURSOR_VISIBLE = "toggle-cursor-visible"
+	const val TOGGLE_OVERWRITE = "toggle-overwrite"
 }
 
 @ExperimentalUnsignedTypes

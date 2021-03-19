@@ -12,6 +12,7 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
+@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 open class Container internal constructor(
 	internal val containerPointer: CPointer<GtkContainer>
 ) : Widget(containerPointer.reinterpret()) {
@@ -137,6 +138,8 @@ open class Container internal constructor(
 		TODO("gtk_container_forall")
 	}
 
+	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
+	@ExperimentalUnsignedTypes
 	var borderWidth: UInt
 		get() = gtk_container_get_border_width(containerPointer)
 		set(value) = gtk_container_set_border_width(containerPointer, value)

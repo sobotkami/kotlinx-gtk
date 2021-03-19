@@ -10,6 +10,7 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
+@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 class EventBox(
 	internal val eventBoxPointer: CPointer<GtkEventBox>
 ) : Bin(eventBoxPointer.reinterpret()) {
