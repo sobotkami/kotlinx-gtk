@@ -4,7 +4,11 @@ import gtk.GtkSearchEntry
 import gtk.gtk_search_entry_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import nativex.async.callbackSignalFlow
 import nativex.gdk.Event
+import nativex.gtk.Signals
 
 /**
  * kotlinx-gtk
@@ -17,5 +21,23 @@ class SearchEntry internal constructor(
 
 	fun handleEvent(event: Event): Boolean {
 		TODO("gtk_search_entry_handle_event")
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val previousMatchEvent: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.PREVIOUS_MATCH)
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val searchChangedEvent: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.SEARCH_CHANGED)
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val stopSearchEvent: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.STOP_SEARCH)
 	}
 }

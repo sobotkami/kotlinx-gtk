@@ -18,6 +18,10 @@ object Signals {
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
 	const val TOGGLED = "toggled"
+
+	const val PREVIOUS_MATCH = "previous-match"
+	const val SEARCH_CHANGED = "search-changed"
+	const val STOP_SEARCH = "stop-search"
 }
 
 @ExperimentalUnsignedTypes
