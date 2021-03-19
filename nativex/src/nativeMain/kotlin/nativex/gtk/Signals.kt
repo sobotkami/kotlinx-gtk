@@ -15,6 +15,10 @@ import kotlinx.cinterop.staticCFunction
 object Signals {
 	const val CLICKED = "clicked"
 	const val ACTIVATE = "activate"
+	const val ACTIVATE_DEFAULT = "activate-default"
+	const val ACTIVATE_FOCUS = "activate-focus"
+	const val KEYS_CHANGED = "keys-changed"
+	const val SET_FOCUS = "set-focus"
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
 	const val TOGGLED = "toggled"

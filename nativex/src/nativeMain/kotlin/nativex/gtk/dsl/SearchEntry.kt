@@ -11,7 +11,7 @@ import nativex.gtk.widgets.entry.SearchEntry
  * 19 / 03 / 2021
  */
 @GtkDsl
-inline fun Container.searchBox(
+inline fun Container.searchEntry(
 	searchEntryBuilder: SearchEntry.() -> Unit = {}
 ) = add(SearchEntry().apply(searchEntryBuilder))
 

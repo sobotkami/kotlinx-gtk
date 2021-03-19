@@ -1,9 +1,14 @@
 package nativex.gtk.widgets.container.bin.windows
 
 import gtk.*
+import gtk.GtkWindowPosition.*
+import gtk.GtkWindowType.GTK_WINDOW_POPUP
+import gtk.GtkWindowType.GTK_WINDOW_TOPLEVEL
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
+import nativex.async.callbackSignalFlow
 import nativex.gtk.Application
+import nativex.gtk.Signals
 import nativex.gtk.bool
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
@@ -17,11 +22,7 @@ open class Window internal constructor(
 	internal val windowPointer: CPointer<GtkWindow>
 ) : Bin(windowPointer.reinterpret()) {
 
-	constructor(application: Application) : this(
-		println("Window creating").let { gtk_application_window_new(application.pointer)!!.reinterpret() }
-	) {
-		println("Window created")
-	}
+	constructor(type: Type) : this(gtk_window_new(type.gtk)!!.reinterpret())
 
 	var title: String?
 		get() = gtk_window_get_title(windowPointer)?.toKString()
@@ -221,11 +222,13 @@ open class Window internal constructor(
 	}
 
 
-	val activeDefaultSignal: Flow<*>
-		get() = TODO()
+	val activeDefaultSignal: Flow<*> by lazy {
+		callbackSignalFlow(Signals.ACTIVATE_DEFAULT)
+	}
 
-	val activeFocusSignal: Flow<*>
-		get() = TODO()
+	val activeFocusSignal: Flow<*> by lazy {
+		callbackSignalFlow(Signals.ACTIVATE_FOCUS)
+	}
 
 	val closeRequestSignal: Flow<Boolean>
 		get() = TODO()
@@ -233,6 +236,31 @@ open class Window internal constructor(
 	val enableDebuggingSignal: Flow<Boolean>
 		get() = TODO()
 
-	val keysChanged: Flow<*>
-		get() = TODO()
+	val keysChanged: Flow<*> by lazy {
+		callbackSignalFlow(Signals.KEYS_CHANGED)
+	}
+
+	enum class Type(val key: Int, internal val gtk: GtkWindowType) {
+		TOP_LEVEL(0, GTK_WINDOW_TOPLEVEL),
+		POPUP(1, GTK_WINDOW_POPUP);
+
+		companion object {
+			fun valueOf(key: Int) = values().find { it.key == key }
+			fun valueOf(gtk: GtkWindowType) = values().find { it.gtk == gtk }
+		}
+	}
+
+	enum class Position(val key: Int, internal val gtk: GtkWindowPosition) {
+		NONE(0, GTK_WIN_POS_NONE),
+		CENTER(1, GTK_WIN_POS_CENTER),
+		MOUSE(2, GTK_WIN_POS_MOUSE),
+		CENTER_ALWAYS(3, GTK_WIN_POS_CENTER_ALWAYS),
+		CENTER_ON_PARENT(4, GTK_WIN_POS_CENTER_ON_PARENT);
+
+		companion object {
+			fun valueOf(key: Int) = values().find { it.key == key }
+			fun valueOf(gtk: GtkWindowPosition) =
+				values().find { it.gtk == gtk }
+		}
+	}
 }

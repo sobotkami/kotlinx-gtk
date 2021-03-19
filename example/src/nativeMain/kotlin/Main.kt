@@ -306,7 +306,7 @@ fun main() {
 								}
 							}
 
-							searchBox {
+							searchEntry {
 								onSearchChanged {
 									println("SearchChanged: ${this.text}")
 								}
