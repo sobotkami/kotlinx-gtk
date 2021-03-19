@@ -16,7 +16,7 @@ import nativex.gtk.connectSignal
 internal inline fun KotlinGObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(
-			signal = Signals.CLICKED,
+			signal = signal,
 			callbackWrapper = StableRef.create {
 				offer(Unit)
 			}.asCPointer()

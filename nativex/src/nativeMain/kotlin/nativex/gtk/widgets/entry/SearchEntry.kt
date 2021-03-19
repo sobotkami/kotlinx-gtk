@@ -25,19 +25,19 @@ class SearchEntry internal constructor(
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
-	val previousMatchEvent: Flow<Unit> by lazy {
+	val previousMatchSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.PREVIOUS_MATCH)
 	}
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
-	val searchChangedEvent: Flow<Unit> by lazy {
+	val searchChangedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.SEARCH_CHANGED)
 	}
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
-	val stopSearchEvent: Flow<Unit> by lazy {
+	val stopSearchSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.STOP_SEARCH)
 	}
 }

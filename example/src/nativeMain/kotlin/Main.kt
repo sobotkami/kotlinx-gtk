@@ -305,6 +305,18 @@ fun main() {
 									}
 								}
 							}
+
+							searchBox {
+								onSearchChanged {
+									println("SearchChanged: ${this.text}")
+								}
+								onPreviousMatch {
+									println("Previous Match: ${this.text}")
+								}
+								onStopSearch {
+									println("Stop search: ${this.text}")
+								}
+							}
 						}
 					}
 				}
