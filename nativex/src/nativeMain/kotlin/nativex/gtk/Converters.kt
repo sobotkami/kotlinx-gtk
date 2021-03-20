@@ -115,6 +115,56 @@ internal fun CPointer<GSList>?.free() {
 	g_slist_free(this)
 }
 
+internal inline fun <I : CPointed, O> CPointer<GSList>?.asKSequence(
+	crossinline wrap: (CPointer<I>) -> O
+): Sequence<O> =
+	object : Sequence<O> {
+		private val gListIterator: Iterator<CPointer<I>> =
+			this@asKSequence.asSequence<I>().iterator()
+
+		private val iterator: Iterator<O> by lazy {
+			object : Iterator<O> {
+				override fun hasNext(): Boolean =
+					gListIterator.hasNext().also {
+						if (!it)
+							this@asKSequence.free()
+					}
+
+				override fun next(): O =
+					wrap(gListIterator.next())
+
+			}
+		}
+
+		override fun iterator(): Iterator<O> =
+			iterator
+	}
+
+internal inline fun <I : CPointed, O> CPointer<GList>?.asKSequence(
+	crossinline wrap: (CPointer<I>) -> O
+): Sequence<O> =
+	object : Sequence<O> {
+		private val gListIterator: Iterator<CPointer<I>> =
+			this@asKSequence.asSequence<I>().iterator()
+
+		private val iterator: Iterator<O> by lazy {
+			object : Iterator<O> {
+				override fun hasNext(): Boolean =
+					gListIterator.hasNext().also {
+						if (!it)
+							this@asKSequence.free()
+					}
+
+				override fun next(): O =
+					wrap(gListIterator.next())
+
+			}
+		}
+
+		override fun iterator(): Iterator<O> =
+			iterator
+	}
+
 internal fun <T : CPointed> CPointer<GSList>?.asSequence(): Sequence<CPointer<T>> {
 	val length = g_slist_length(this).toInt()
 	return sequence {
@@ -139,3 +189,5 @@ internal fun <T : CPointed> CPointer<GList>?.asSequence(): Sequence<CPointer<T>>
 internal inline fun WidgetPointer?.asWidgetOrNull() = this?.let { Widget(it) }
 
 internal inline fun WidgetPointer?.asWidget() = Widget(this!!)
+
+

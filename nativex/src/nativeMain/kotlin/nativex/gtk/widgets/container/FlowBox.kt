@@ -3,8 +3,11 @@ package nativex.gtk.widgets.container
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.*
+import nativex.gtk.Adjustment
+import nativex.gtk.asKSequence
+import nativex.gtk.bool
 import nativex.gtk.common.enums.SelectionMode
+import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
 
@@ -104,31 +107,12 @@ class FlowBox internal constructor(
 		TODO("gtk_flow_box_selected_foreach")
 	}
 
-	fun getSelectedChildren(): Sequence<Widget> = object : Sequence<Widget> {
-		private val gList by lazy {
-			gtk_flow_box_get_selected_children(flowBoxPointer)
+	fun getSelectedChildren(): Sequence<Widget> =
+		gtk_flow_box_get_selected_children(flowBoxPointer).asKSequence<GtkWidget, Widget> {
+			Widget(
+				it
+			)
 		}
-
-		private val gListIterator: Iterator<CPointer<GtkWidget>> =
-			gList.asSequence<GtkWidget>().iterator()
-
-		private val iterator: Iterator<Widget> by lazy {
-			object : Iterator<Widget> {
-				override fun hasNext(): Boolean =
-					gListIterator.hasNext().also {
-						if (!it)
-							gList.free()
-					}
-
-				override fun next(): Widget =
-					Widget(gListIterator.next())
-
-			}
-		}
-
-		override fun iterator(): Iterator<Widget> =
-			iterator
-	}
 
 	fun selectChild(child: Child) =
 		gtk_flow_box_select_child(flowBoxPointer, child.flowBoxChildPointer)

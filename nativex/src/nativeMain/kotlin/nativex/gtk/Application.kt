@@ -6,7 +6,7 @@ import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
 import nativex.g.MenuModel
-import nativex.gdk.Window
+import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
  * kotlinx-gtk
@@ -25,13 +25,9 @@ class Application internal constructor(
 		)!!
 	)
 
-	val windows: List<Window>
+	val windows: Sequence<Window>
 		get() = gtk_application_get_windows(pointer)
-			.asSequence<GtkWindow>()
-			.toList().map {
-				Window(it.reinterpret())
-			}
-
+			.asKSequence<GtkWindow, Window> { Window(it) }
 
 	var menuBar: MenuModel? = null
 		get() =
