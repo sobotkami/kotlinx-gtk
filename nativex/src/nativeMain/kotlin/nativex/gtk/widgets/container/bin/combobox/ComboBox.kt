@@ -61,14 +61,14 @@ class ComboBox(
 		get() = gtk_combo_box_get_active(comboBoxPointer)
 		set(value) = gtk_combo_box_set_active(comboBoxPointer, value)
 
-	fun getActiveIter(treeIter: TreeModel.Iter) = gtk_combo_box_get_active_iter(
+	fun getActiveIter(treeIter: TreeModel.TreeIter) = gtk_combo_box_get_active_iter(
 		comboBoxPointer,
-		treeIter.iter
+		treeIter.treeIterPointer
 	)
 		.bool
 
-	fun setActiveIter(iter: TreeModel.Iter) {
-		gtk_combo_box_set_active_iter(comboBoxPointer, iter.iter)
+	fun setActiveIter(iter: TreeModel.TreeIter) {
+		gtk_combo_box_set_active_iter(comboBoxPointer, iter.treeIterPointer)
 	}
 
 	var idColumn: Int

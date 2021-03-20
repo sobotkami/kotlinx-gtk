@@ -13,4 +13,4 @@ class TreeView internal constructor(
 	internal val treeViewPointer: CPointer<GtkTreeView>
 ) : Container(treeViewPointer.reinterpret())
 
-typealias TreeViewRowSeparatorFunc = (TreeModel, TreeModel.Iter, Any) -> Unit
+typealias TreeViewRowSeparatorFunc = (TreeModel, TreeModel.TreeIter, Any) -> Unit
