@@ -1,15 +1,24 @@
 package nativex.gtk.widgets.container
 
 import gtk.*
+import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_LINE
+import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_WORD
+import gtk.GtkTextViewLayer.*
+import gtk.GtkTextWindowType.*
+import gtk.GtkWrapMode.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
-import nativex.gtk.Scrollable
-import nativex.gtk.Signals
-import nativex.gtk.TextBuffer
+import nativex.gtk.*
+import nativex.gtk.common.enums.DeleteType
+import nativex.gtk.common.enums.MovementStep
+import nativex.gtk.common.enums.ScrollStep
+import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -58,20 +67,45 @@ class TextView internal constructor(
 		callbackSignalFlow(Signals.CUT_CLIPBOARD)
 	}
 
-	val deleteFromCursorSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
+	data class DeleteFromCursorEvent(
+		val type: DeleteType,
+		val count: Int
+	)
 
-	val extentSelectionSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val deleteFromCursorSignal: Flow<DeleteFromCursorEvent> by lazy {
+		callbackSignalFlow(
+			Signals.DELETE_FROM_CURSOR,
+			staticDeleteFromCursorCallback
+		)
+	}
 
-	val insertAtCursorSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
+	data class ExtendSelectionEvent(
+		val granularity: TextExtendSelection,
+		val location: TextIter,
+		val start: TextIter,
+		val end: TextIter,
+	)
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val extentSelectionSignal: Flow<ExtendSelectionEvent> by lazy {
+		callbackSignalFlow(
+			Signals.EXTEND_SELECTION,
+			staticExtendSelectionCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val insertAtCursorSignal: Flow<Char> by lazy {
+		//callbackSignalFlow(
+		//	Signals.INSERT_AT_CURSOR,
+		//	staticInsertAtCursorCallback
+		//)
+		TODO("How to figure out char")
+	}
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
@@ -79,15 +113,29 @@ class TextView internal constructor(
 		callbackSignalFlow(Signals.INSERT_EMOJI)
 	}
 
-	val moveCursorSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
 
-	val moveViewPortSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
+	data class MoveCursorEvent(
+		val step: MovementStep,
+		val count: Int,
+		val extendSelection: Boolean
+	)
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
+		callbackSignalFlow(Signals.MOVE_CURSOR, staticMoveCursorCallback)
+	}
+
+	data class MoveViewPortEvent(
+		val step: ScrollStep,
+		val count: Int
+	)
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val moveViewPortSignal: Flow<MoveViewPortEvent> by lazy {
+		callbackSignalFlow(Signals.MOVE_VIEWPORT, staticMoveViewportCallback)
+	}
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
@@ -95,18 +143,22 @@ class TextView internal constructor(
 		callbackSignalFlow(Signals.PASTE_CLIPBOARD)
 	}
 
-	val populatePopupSignal: Flow<Unit>
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val populatePopupSignal: Flow<Widget> by lazy {
+		callbackSignalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
+	}
+
+	val preeditChangedSignal: Flow<Char>
 		get() {
-			TODO()
+			TODO("Figure out C Char")
 		}
-	val preeditChangedSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
-	val selectAllSignal: Flow<Unit>
-		get() {
-			TODO()
-		}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val selectAllSignal: Flow<Boolean> by lazy {
+		callbackSignalFlow(Signals.SELECT_ALL, staticSelectAllCallback)
+	}
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
@@ -126,5 +178,192 @@ class TextView internal constructor(
 		callbackSignalFlow(Signals.TOGGLE_OVERWRITE)
 	}
 
+	enum class Layer(
+		val key: Int,
+		internal val gtk: GtkTextViewLayer
+	) {
+		BELOW(0, GTK_TEXT_VIEW_LAYER_BELOW),
+		ABOVE(1, GTK_TEXT_VIEW_LAYER_ABOVE),
+		BELOW_TEXT(2, GTK_TEXT_VIEW_LAYER_BELOW_TEXT),
+		ABOVE_TEXT(3, GTK_TEXT_VIEW_LAYER_ABOVE_TEXT);
 
+		companion object {
+			fun valueOf(key: Int) =
+				values().find { it.key == key }
+
+			internal fun valueOf(gtk: GtkTextViewLayer) =
+				values().find { it.gtk == gtk }
+		}
+	}
+
+	enum class TextWindowType(
+		val key: Int,
+		internal val gtk: GtkTextWindowType
+	) {
+		PRIVATE(0, GTK_TEXT_WINDOW_PRIVATE),
+		WIDGET(1, GTK_TEXT_WINDOW_WIDGET),
+		TEXT(2, GTK_TEXT_WINDOW_TEXT),
+		LEFT(3, GTK_TEXT_WINDOW_LEFT),
+		RIGHT(4, GTK_TEXT_WINDOW_RIGHT),
+		TOP(5, GTK_TEXT_WINDOW_TOP),
+		BOTTOM(6, GTK_TEXT_WINDOW_BOTTOM);
+
+		companion object {
+			fun valueOf(key: Int) =
+				values()
+					.find { it.key == key }
+
+			internal fun valueOf(gtk: GtkTextWindowType) =
+				values()
+					.find { it.gtk == gtk }
+		}
+	}
+
+	enum class TextExtendSelection(
+		val key: Int,
+		internal val gtk: GtkTextExtendSelection
+	) {
+		PRIVATE(0, GTK_TEXT_EXTEND_SELECTION_WORD),
+		BOTTOM(1, GTK_TEXT_EXTEND_SELECTION_LINE);
+
+		companion object {
+			fun valueOf(key: Int) =
+				values()
+					.find { it.key == key }
+
+			internal fun valueOf(gtk: GtkTextExtendSelection) =
+				values()
+					.find { it.gtk == gtk }
+		}
+	}
+
+	enum class WrapMode(
+		val key: Int,
+		internal val gtk: GtkWrapMode
+	) {
+		PRIVATE(0, GTK_WRAP_NONE),
+		WIDGET(1, GTK_WRAP_CHAR),
+		TOP(2, GTK_WRAP_WORD),
+		BOTTOM(3, GTK_WRAP_WORD_CHAR);
+
+		companion object {
+			fun valueOf(key: Int) =
+				values()
+					.find { it.key == key }
+
+			internal fun valueOf(gtk: GtkWrapMode) =
+				values()
+					.find { it.gtk == gtk }
+		}
+	}
+
+	companion object {
+		internal val staticDeleteFromCursorCallback: GCallback =
+			staticCFunction { _: gpointer?, type: GtkDeleteType, count: Int, data: gpointer? ->
+				data?.asStableRef<(DeleteFromCursorEvent) -> Unit>()?.get()
+					?.invoke(
+						DeleteFromCursorEvent(
+							type = DeleteType.valueOf(type)!!,
+							count = count
+						)
+					)
+				Unit
+			}.reinterpret()
+
+		internal val staticExtendSelectionCallback: GCallback =
+			staticCFunction { _: gpointer?,
+			                  granularity: GtkTextExtendSelection,
+			                  location: CPointer<GtkTextIter>,
+			                  start: CPointer<GtkTextIter>,
+			                  end: CPointer<GtkTextIter>,
+			                  data: gpointer? ->
+				data?.asStableRef<(ExtendSelectionEvent) -> Unit>()?.get()
+					?.invoke(
+						ExtendSelectionEvent(
+							granularity = TextExtendSelection.valueOf(
+								granularity
+							)!!,
+							location = TextIter(location),
+							start = TextIter(start),
+							end = TextIter(end),
+						)
+					)
+				Unit
+			}.reinterpret()
+
+		internal val staticInsertAtCursorCallback: GCallback
+			get() {
+				/*
+					staticCFunction { _: gpointer?,
+								  string: Char,
+								  data: gpointer? ->
+					data?.asStableRef<(Char) -> Unit>()?.get()?.invoke(string)
+					Unit
+				}.reinterpret()
+				 */
+				TODO("Figure out char")
+			}
+
+		internal val staticSelectAllCallback: GCallback =
+			staticCFunction { _: gpointer?,
+			                  select: gboolean,
+			                  data: gpointer? ->
+				data?.asStableRef<(Boolean) -> Unit>()?.get()
+					?.invoke(select.bool)
+				Unit
+			}.reinterpret()
+
+		internal val staticPreeditChangedCallback: GCallback
+			get() {
+				/*staticCFunction { _: gpointer?,
+								  preedit: CPointer<ByteVar>,
+								  data: gpointer? ->
+					data?.asStableRef<(Char) -> Unit>()?.get()?.invoke(preedit.toKString())
+					Unit
+				}.reinterpret()
+				 */
+				TODO("Figure out char")
+			}
+
+		internal val staticPopulatePopupCallback: GCallback =
+			staticCFunction { _: gpointer?,
+			                  popup: CPointer<GtkWidget>,
+			                  data: gpointer? ->
+				data?.asStableRef<(Widget) -> Unit>()?.get()
+					?.invoke(Widget(popup))
+				Unit
+			}.reinterpret()
+
+		internal val staticMoveCursorCallback: GCallback =
+			staticCFunction { _: gpointer?,
+			                  step: GtkMovementStep,
+			                  count: Int,
+			                  extendSelection: gboolean,
+			                  data: gpointer? ->
+				data?.asStableRef<(MoveCursorEvent) -> Unit>()?.get()
+					?.invoke(
+						MoveCursorEvent(
+							MovementStep.valueOf(step)!!,
+							count,
+							extendSelection.bool
+						)
+					)
+				Unit
+			}.reinterpret()
+
+		internal val staticMoveViewportCallback: GCallback =
+			staticCFunction { _: gpointer?,
+			                  step: GtkScrollStep,
+			                  count: Int,
+			                  data: gpointer? ->
+				data?.asStableRef<(MoveViewPortEvent) -> Unit>()?.get()
+					?.invoke(
+						MoveViewPortEvent(
+							ScrollStep.valueOf(step)!!,
+							count
+						)
+					)
+				Unit
+			}.reinterpret()
+	}
 }

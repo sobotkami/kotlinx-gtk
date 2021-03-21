@@ -1,9 +1,10 @@
 package nativex.gtk
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.pointed
+import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import nativex.async.callbackSignalFlow
 
 /**
  * kotlinx-gtk
@@ -13,55 +14,151 @@ open class TreeModel internal constructor(
 	internal val pointer: CPointer<GtkTreeModel>
 ) {
 
-	val rowChangedSignal: Flow<RowChanged>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val rowChangedSignal: Flow<RowChanged> by lazy {
+		pointer.reinterpret<GObject>().callbackSignalFlow(
+		Signals.ROW_CHANGED,
+		RowChanged.staticCallback
+	)
+	}
 
-	val rowDeletedSignal: Flow<RowDeleted>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val rowDeletedSignal: Flow<RowDeleted> by lazy {
+		pointer.reinterpret<GObject>().callbackSignalFlow(
+		Signals.ROW_DELETED,
+		RowDeleted.staticCallback
+	)
+	}
 
-	val rowHasChildToggled: Flow<RowHasChildToggled>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val rowHasChildToggled: Flow<RowHasChildToggled> by lazy {
+		pointer.reinterpret<GObject>().callbackSignalFlow(
+			Signals.ROW_HAS_CHILD_TOGGLED,
+			RowHasChildToggled.staticCallback
+		)
+	}
 
-	val rowInsertedSignal: Flow<RowInserted>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val rowInsertedSignal: Flow<RowInserted> by lazy {
+		pointer.reinterpret<GObject>().callbackSignalFlow(
+		Signals.ROW_INSERTED,
+		RowInserted.staticCallback
+	)
+	}
 
-	val rowsReordered: Flow<RowsReordered>
-		get() {
-			TODO()
-		}
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val rowsReordered: Flow<RowsReordered> by lazy {
+		pointer.reinterpret<GObject>().callbackSignalFlow(
+		Signals.ROWS_REORDERED,
+		RowsReordered.staticCallback
+	)
+	}
 
 	data class RowChanged(
-		val path: GtkTreePath,
+		val path: TreePath,
 		val iter: TreeIter,
-	)
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
+					data?.asStableRef<(RowChanged) -> Unit>()?.get()
+						?.invoke(
+							RowChanged(
+								TreePath(path),
+								TreeIter(iter)
+							)
+						)
+					Unit
+				}.reinterpret()
+		}
+	}
 
 	data class RowDeleted(
-		val path: GtkTreePath
-	)
+		val path: TreePath
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, data: gpointer? ->
+					data?.asStableRef<(RowDeleted) -> Unit>()?.get()
+						?.invoke(
+							RowDeleted(TreePath(path))
+						)
+					Unit
+				}.reinterpret()
+
+		}
+	}
 
 	data class RowHasChildToggled(
-		val path: GtkTreePath,
+		val path: TreePath,
 		val iter: TreeIter
-	)
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
+					data?.asStableRef<(RowHasChildToggled) -> Unit>()
+						?.get()
+						?.invoke(
+							RowHasChildToggled(
+								TreePath(path),
+								TreeIter(iter)
+							)
+						)
+					Unit
+				}.reinterpret()
+		}
+	}
 
 	data class RowInserted(
-		val path: GtkTreePath,
+		val path: TreePath,
 		val iter: TreeIter
-	)
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
+					data?.asStableRef<(RowInserted) -> Unit>()?.get()
+						?.invoke(
+							RowInserted(
+								TreePath(path),
+								TreeIter(iter)
+							)
+						)
+					Unit
+				}.reinterpret()
+		}
+	}
 
 	data class RowsReordered(
-		val path: GtkTreePath,
+		val path: TreePath,
 		val iter: TreeIter?,
 		val newOrder: Sequence<Pair<Int, Int>>
-	)
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, newOrder: gpointer, data: gpointer? ->
+					data?.asStableRef<(RowsReordered) -> Unit>()
+						?.get()
+						?.invoke(
+							RowsReordered(
+								TreePath(path),
+								TreeIter(iter),
+								newOrder.reinterpret<CPointerVar<IntVar>>()
+									.asSequence()
+									.mapIndexed { index, cPointer ->
+										index to cPointer.pointed.value
+									}
+							)
+						)
+					Unit
+				}.reinterpret()
+
+		}
+	}
 
 	enum class Flags(val key: Int, internal val gtk: GtkTreeModelFlags) {
 		ITERS_PERSIST(0, GTK_TREE_MODEL_ITERS_PERSIST),

@@ -81,7 +81,7 @@ open class Container internal constructor(
 			}
 		set(value) = gtk_container_set_focus_vadjustment(
 			containerPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 	var horizontalAdjustment: Adjustment?
@@ -91,7 +91,7 @@ open class Container internal constructor(
 			}
 		set(value) = gtk_container_set_focus_hadjustment(
 			containerPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 	fun resizeChildren() {

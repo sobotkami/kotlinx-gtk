@@ -36,7 +36,7 @@ open class Range internal constructor(
 
 	var adjustment: Adjustment
 		get() = Adjustment(gtk_range_get_adjustment(rangePointer)!!)
-		set(value) = gtk_range_set_adjustment(rangePointer, value.pointer)
+		set(value) = gtk_range_set_adjustment(rangePointer, value.adjustmentPointer)
 
 	var isInverted: Boolean
 		get() = gtk_range_get_inverted(rangePointer).bool

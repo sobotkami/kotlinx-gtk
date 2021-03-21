@@ -24,8 +24,8 @@ class ScrolledWindow internal constructor(
 		horizontalAdjustment: Adjustment? = null
 	) : this(
 		gtk_scrolled_window_new(
-			horizontalAdjustment?.pointer,
-			verticalAdjustment?.pointer
+			horizontalAdjustment?.adjustmentPointer,
+			verticalAdjustment?.adjustmentPointer
 		)!!.reinterpret()
 	)
 
@@ -37,7 +37,7 @@ class ScrolledWindow internal constructor(
 		}
 		set(value) = gtk_scrolled_window_set_vadjustment(
 			scrolledWindowPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 	var scrollbarHorizontalAdjustment: Adjustment?
@@ -48,7 +48,7 @@ class ScrolledWindow internal constructor(
 		}
 		set(value) = gtk_scrolled_window_set_hadjustment(
 			scrolledWindowPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 

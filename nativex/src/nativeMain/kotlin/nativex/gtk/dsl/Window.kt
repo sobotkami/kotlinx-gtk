@@ -12,7 +12,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
 
 @GtkDsl
 inline fun Application.window(builder: Window.() -> Unit) {
-	Window(this).apply(builder).showAll()
+	ApplicationWindow(this).apply(builder).showAll()
 }
 
 @GtkDsl

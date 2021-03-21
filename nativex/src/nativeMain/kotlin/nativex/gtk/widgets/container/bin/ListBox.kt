@@ -71,7 +71,7 @@ class ListBox internal constructor(
 
 	var adjustment: Adjustment?
 		get() = gtk_list_box_get_adjustment(listPointer)?.let { Adjustment(it) }
-		set(value) = gtk_list_box_set_adjustment(listPointer, value?.pointer)
+		set(value) = gtk_list_box_set_adjustment(listPointer, value?.adjustmentPointer)
 
 
 	fun setPlaceholder(widget: Widget?) =

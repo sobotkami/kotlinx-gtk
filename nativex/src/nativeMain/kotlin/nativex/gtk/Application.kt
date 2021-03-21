@@ -5,6 +5,7 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
+import nativex.async.callbackSignalFlow
 import nativex.g.MenuModel
 import nativex.gtk.widgets.container.bin.windows.Window
 
@@ -13,8 +14,8 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * 08 / 02 / 2021
  */
 class Application internal constructor(
-	val pointer: CPointer<GtkApplication>
-) : nativex.g.Application(pointer.reinterpret()) {
+	val applicationPointer: CPointer<GtkApplication>
+) : nativex.g.Application(applicationPointer.reinterpret()) {
 	constructor(
 		applicationID: String,
 		flags: GApplicationFlags = G_APPLICATION_FLAGS_NONE
@@ -26,21 +27,21 @@ class Application internal constructor(
 	)
 
 	val windows: Sequence<Window>
-		get() = gtk_application_get_windows(pointer)
+		get() = gtk_application_get_windows(applicationPointer)
 			.asKSequence<GtkWindow, Window> { Window(it) }
 
 	var menuBar: MenuModel? = null
 		get() =
-			gtk_application_get_app_menu(pointer)?.let {
+			gtk_application_get_app_menu(applicationPointer)?.let {
 				MenuModel(it)
 			}
 		set(value) {
-			gtk_application_set_menubar(pointer, value?.cPointer)
+			gtk_application_set_menubar(applicationPointer, value?.cPointer)
 			field = value
 		}
 
 	val activeWindow: Window
-		get() = Window(gtk_application_get_active_window(pointer)!!.reinterpret())
+		get() = Window(gtk_application_get_active_window(applicationPointer)!!.reinterpret())
 
 	var isRegisterSession: Boolean
 		get() = TODO("Not yet implemented")
@@ -88,7 +89,7 @@ class Application internal constructor(
 
 	fun onActivate(onActive: () -> Unit) {
 		// Has to be a direct event, to prevent application from shutting down
-		pointer.connectSignal(
+		applicationPointer.connectSignal(
 			Signals.ACTIVATE,
 			handler = staticNoArgGCallback,
 			callbackWrapper = StableRef.create {
@@ -97,14 +98,15 @@ class Application internal constructor(
 		)
 	}
 
-	val queryEndSignal: Flow<*>
-		get() = TODO("Not yet implemented")
+	val queryEndSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.QUERY_END)
+	}
 
-	val windowAddedSignal: Flow<*>
-		get() = TODO("Not yet implemented")
-
-
-	val windowRemovedSignal: Flow<*>
-		get() = TODO("Not yet implemented")
+	val windowAddedSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.WINDOW_ADDED)
+	}
+	val windowRemovedSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.WINDOW_REMOVED)
+	}
 
 }

@@ -53,11 +53,11 @@ class FlowBox internal constructor(
 		gtk_flow_box_get_child_at_pos(flowBoxPointer, x, y)?.let { Child(it) }
 
 	fun setHorizontalAdjustment(adjustment: Adjustment) {
-		gtk_flow_box_set_hadjustment(flowBoxPointer, adjustment.pointer)
+		gtk_flow_box_set_hadjustment(flowBoxPointer, adjustment.adjustmentPointer)
 	}
 
 	fun setVerticalAdjustment(adjustment: Adjustment) {
-		gtk_flow_box_set_vadjustment(flowBoxPointer, adjustment.pointer)
+		gtk_flow_box_set_vadjustment(flowBoxPointer, adjustment.adjustmentPointer)
 	}
 
 	var isHomogeneous: Boolean

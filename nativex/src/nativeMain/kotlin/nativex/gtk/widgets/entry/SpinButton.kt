@@ -24,7 +24,7 @@ class SpinButton internal constructor(
 	) {
 		gtk_spin_button_configure(
 			spinButtonPointer,
-			adjustment?.pointer,
+			adjustment?.adjustmentPointer,
 			climbRate,
 			digits
 		)
@@ -37,7 +37,7 @@ class SpinButton internal constructor(
 		digits: UInt
 	) : this(
 		gtk_spin_button_new(
-			adjustment?.pointer,
+			adjustment?.adjustmentPointer,
 			climbRate,
 			digits
 		)!!.reinterpret()
@@ -57,7 +57,7 @@ class SpinButton internal constructor(
 		}
 		set(value) = gtk_spin_button_set_adjustment(
 			spinButtonPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 	@ExperimentalUnsignedTypes

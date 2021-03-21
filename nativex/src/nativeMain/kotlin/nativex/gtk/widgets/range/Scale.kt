@@ -20,7 +20,7 @@ class Scale internal constructor(
 		orientation: Orientation,
 		adjustment: Adjustment? = null
 	) : this(
-		gtk_scale_new(orientation.gtk, adjustment?.pointer)!!.reinterpret()
+		gtk_scale_new(orientation.gtk, adjustment?.adjustmentPointer)!!.reinterpret()
 	)
 
 	constructor(

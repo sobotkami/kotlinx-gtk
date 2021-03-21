@@ -2,9 +2,11 @@ package nativex.gtk
 
 import gtk.*
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
+import kotlinx.cinterop.reinterpret
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
+import nativex.async.callbackSignalFlow
+import nativex.g.KotlinGObject
 
 /**
  * kotlinx-gtk
@@ -12,54 +14,42 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 class Adjustment internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val pointer: CPointer<GtkAdjustment>
-) {
+	internal val adjustmentPointer: CPointer<GtkAdjustment>
+) : KotlinGObject(adjustmentPointer.reinterpret()) {
 	var value: Double
-		get() = gtk_adjustment_get_value(pointer)
-		set(value) = gtk_adjustment_set_value(pointer, value)
+		get() = gtk_adjustment_get_value(adjustmentPointer)
+		set(value) = gtk_adjustment_set_value(adjustmentPointer, value)
 
 	var pageIncrement: Double
-		get() = gtk_adjustment_get_page_increment(pointer)
-		set(value) = gtk_adjustment_set_page_increment(pointer, value)
+		get() = gtk_adjustment_get_page_increment(adjustmentPointer)
+		set(value) = gtk_adjustment_set_page_increment(adjustmentPointer, value)
 
 	var pageSize: Double
-		get() = gtk_adjustment_get_page_size(pointer)
-		set(value) = gtk_adjustment_set_page_size(pointer, value)
+		get() = gtk_adjustment_get_page_size(adjustmentPointer)
+		set(value) = gtk_adjustment_set_page_size(adjustmentPointer, value)
 
 	var stepIncrement: Double
-		get() = gtk_adjustment_get_step_increment(pointer)
-		set(value) = gtk_adjustment_set_step_increment(pointer, value)
+		get() = gtk_adjustment_get_step_increment(adjustmentPointer)
+		set(value) = gtk_adjustment_set_step_increment(adjustmentPointer, value)
 
 	var upper: Double
-		get() = gtk_adjustment_get_upper(pointer)
-		set(value) = gtk_adjustment_set_upper(pointer, value)
+		get() = gtk_adjustment_get_upper(adjustmentPointer)
+		set(value) = gtk_adjustment_set_upper(adjustmentPointer, value)
 
 	var lower: Double
-		get() = gtk_adjustment_get_lower(pointer)
-		set(value) = gtk_adjustment_set_lower(pointer, value)
+		get() = gtk_adjustment_get_lower(adjustmentPointer)
+		set(value) = gtk_adjustment_set_lower(adjustmentPointer, value)
 
-	val changed: Flow<Int> by lazy {
-		MutableStateFlow(0).apply {
-			pointer.connectSignal(
-				Signals.CHANGED,
-				handler = staticNoArgGCallback,
-				callbackWrapper = StableRef.create {
-					tryEmit(0)
-				}.asCPointer()
-			)
-		}
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val changed: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.CHANGED)
 	}
 
-	val valueChanged: Flow<Int> by lazy {
-		MutableStateFlow(0).apply {
-			pointer.connectSignal(
-				Signals.VALUE_CHANGED,
-				handler = staticNoArgGCallback,
-				callbackWrapper = StableRef.create {
-					tryEmit(0)
-				}.asCPointer()
-			)
-		}
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val valueChanged: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.VALUE_CHANGED)
 	}
 
 	constructor(

@@ -5,12 +5,11 @@ import gtk.GtkWindowPosition.*
 import gtk.GtkWindowType.GTK_WINDOW_POPUP
 import gtk.GtkWindowType.GTK_WINDOW_TOPLEVEL
 import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
-import nativex.gtk.Application
-import nativex.gtk.Signals
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.gtk.*
+import nativex.gtk.GtkWindowGroup
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
 
@@ -222,22 +221,56 @@ open class Window internal constructor(
 	}
 
 
-	val activeDefaultSignal: Flow<*> by lazy {
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val activeDefaultSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE_DEFAULT)
 	}
 
-	val activeFocusSignal: Flow<*> by lazy {
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val activeFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE_FOCUS)
 	}
 
-	val closeRequestSignal: Flow<Boolean>
-		get() = TODO()
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val enableDebuggingSignal: Flow<Boolean> by lazy {
+		callbackSignalFlow(
+			Signals.ENABLE_DEBUGGING,
+			staticEnableDebuggingCallback
+		)
+	}
 
-	val enableDebuggingSignal: Flow<Boolean>
-		get() = TODO()
-
-	val keysChanged: Flow<*> by lazy {
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val keysChangedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.KEYS_CHANGED)
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val setFocusSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(
+			Signals.SET_FOCUS,
+			staticSetFocusCallback
+		)
+	}
+
+	companion object {
+		internal val staticEnableDebuggingCallback: GCallback =
+			staticCFunction { _: gpointer?, toggle: gboolean, data: gpointer? ->
+				data?.asStableRef<(Boolean) -> Unit>()?.get()
+					?.invoke(toggle.bool)
+				Unit
+			}.reinterpret()
+
+		internal val staticSetFocusCallback: GCallback =
+			staticCFunction { _: gpointer?, widget: CPointer<GtkWidget>?, data: gpointer? ->
+				data?.asStableRef<(Widget?) -> Unit>()?.get()
+					?.invoke(widget?.let { Widget(it) })
+				Unit
+			}.reinterpret()
 	}
 
 	enum class Type(val key: Int, internal val gtk: GtkWindowType) {

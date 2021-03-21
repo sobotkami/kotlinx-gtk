@@ -1,9 +1,9 @@
 package nativex.gtk
 
 import gtk.*
-import kotlinx.cinterop.cValue
-import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
+import nativex.async.callbackSignalFlow
 import nativex.gdk.RGBA
 import nativex.gtk.common.enums.Orientation
 
@@ -52,5 +52,12 @@ interface ColorChooser {
 	}
 
 	val colorActivated: Flow<RGBA>
-		get() = TODO("color-activated")
+
+	companion object {
+		internal val staticColorActivatedCallback: GCallback =
+			staticCFunction { _: gpointer?, rgba: CPointer<GdkRGBA>, data: gpointer? ->
+				data?.asStableRef<(RGBA) -> Unit>()?.get()?.invoke(RGBA(rgba))
+				Unit
+			}.reinterpret()
+	}
 }

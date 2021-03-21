@@ -40,7 +40,7 @@ class ScaleButton internal constructor(
 		}
 		set(value) = gtk_scale_button_set_adjustment(
 			scaleButtonPointer,
-			value?.pointer
+			value?.adjustmentPointer
 		)
 
 	fun setIcons(icons: List<String>) {

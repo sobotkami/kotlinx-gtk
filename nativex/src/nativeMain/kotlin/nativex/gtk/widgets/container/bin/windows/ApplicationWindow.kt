@@ -17,7 +17,7 @@ class ApplicationWindow internal constructor(
 	appWindowPointer.reinterpret()
 ) {
 	constructor(application: Application) : this(
-		gtk_application_window_new(application.pointer)!!.reinterpret()
+		gtk_application_window_new(application.applicationPointer)!!.reinterpret()
 	)
 
 	var showMenuBar: Boolean

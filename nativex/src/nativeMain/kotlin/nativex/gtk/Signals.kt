@@ -15,10 +15,7 @@ import kotlinx.cinterop.staticCFunction
 object Signals {
 	const val CLICKED = "clicked"
 	const val ACTIVATE = "activate"
-	const val ACTIVATE_DEFAULT = "activate-default"
-	const val ACTIVATE_FOCUS = "activate-focus"
-	const val KEYS_CHANGED = "keys-changed"
-	const val SET_FOCUS = "set-focus"
+
 
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
@@ -45,8 +42,38 @@ object Signals {
 	const val SET_ANCHOR = "set-anchor"
 	const val TOGGLE_CURSOR_VISIBLE = "toggle-cursor-visible"
 	const val TOGGLE_OVERWRITE = "toggle-overwrite"
+
+	// GtkTreeModel
+	const val ROW_CHANGED = "row-changed"
+	const val ROW_DELETED = "row-deleted"
+	const val ROW_HAS_CHILD_TOGGLED = "row-has-child-toggled"
+	const val ROW_INSERTED = "row-inserted"
+	const val ROWS_REORDERED = "rows-reordered"
+
+	// GtkApplication
+	const val QUERY_END = "query-end"
+	const val WINDOW_ADDED = "window-added"
+	const val WINDOW_REMOVED = "window-removed"
+
+	// GtkWindow
+	const val ACTIVATE_FOCUS = "activate-focus"
+	const val ACTIVATE_DEFAULT = "activate-default"
+	const val ENABLE_DEBUGGING = "enable-debugging"
+	const val KEYS_CHANGED = "keys-changed"
+	const val SET_FOCUS = "set-focus"
+
+	// GtkColorChooser
+	const val COLOR_ACTIVATED = "color-activated"
+
+
 }
 
+/**
+ * @param signal Signal name
+ * @param handler Static C Function that will take event directly from the GTK library, should invoke [callbackWrapper]
+ * @param callbackWrapper Passed as the data parameter to `g_signal_connect_data`. Invoked by [handler]
+ * @param flags Flags
+ */
 @ExperimentalUnsignedTypes
 internal fun VoidPointer.connectSignal(
 	signal: String,
@@ -59,6 +86,7 @@ internal fun VoidPointer.connectSignal(
 		detailed_signal = signal,
 		c_handler = handler,
 		data = callbackWrapper,
+		// Destroys the callbackWrapper
 		destroy_data = staticCFunction { void: gpointer?, _ ->
 			void?.asStableRef<Any>()?.dispose()
 		},

@@ -14,13 +14,13 @@ interface Scrollable {
 	var scrollableHorizontalAdjustment: Adjustment
 		get() = Adjustment(gtk_scrollable_get_hadjustment(scrollablePointer.ptr)!!)
 		set(value) {
-			gtk_scrollable_set_hadjustment(scrollablePointer.ptr, value.pointer)
+			gtk_scrollable_set_hadjustment(scrollablePointer.ptr, value.adjustmentPointer)
 		}
 
 	var scrollableVerticalAdjustment: Adjustment
 		get() = Adjustment(gtk_scrollable_get_vadjustment(scrollablePointer.ptr)!!)
 		set(value) {
-			gtk_scrollable_set_vadjustment(scrollablePointer.ptr, value.pointer)
+			gtk_scrollable_set_vadjustment(scrollablePointer.ptr, value.adjustmentPointer)
 		}
 
 	var horizontalScrollPolicy: Policy
