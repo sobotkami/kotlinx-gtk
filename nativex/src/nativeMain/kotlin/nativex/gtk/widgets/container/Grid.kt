@@ -19,6 +19,25 @@ import nativex.gtk.widgets.Widget
 class Grid internal constructor(
 	internal val gridPointer: CPointer<GtkGrid>
 ) : Container(gridPointer.reinterpret()) {
+	var homogeneous: Boolean
+		get() = gtk_grid_get_row_homogeneous(gridPointer).bool
+		set(value) = gtk_grid_set_row_homogeneous(
+			gridPointer,
+			value.gtk
+		)
+
+	@ExperimentalUnsignedTypes
+	var rowSpacing: UInt
+		get() = gtk_grid_get_row_spacing(gridPointer)
+		set(value) = gtk_grid_set_row_spacing(gridPointer, value)
+
+	@ExperimentalUnsignedTypes
+	var columnSpacing: UInt
+		get() = gtk_grid_get_column_spacing(gridPointer)
+		set(value) = gtk_grid_set_column_spacing(gridPointer, value)
+	var baselineRow: Int
+		get() = gtk_grid_get_baseline_row(gridPointer)
+		set(value) = gtk_grid_set_baseline_row(gridPointer, value)
 
 	constructor() : this(gtk_grid_new()!!.reinterpret())
 
@@ -72,27 +91,6 @@ class Grid internal constructor(
 	fun insertNextTo(sibling: Widget, side: PositionType) {
 		gtk_grid_insert_next_to(gridPointer, sibling.widgetPointer, side.gtk)
 	}
-
-	var homogeneous: Boolean
-		get() = gtk_grid_get_row_homogeneous(gridPointer).bool
-		set(value) = gtk_grid_set_row_homogeneous(
-			gridPointer,
-			value.gtk
-		)
-
-	@ExperimentalUnsignedTypes
-	var rowSpacing: UInt
-		get() = gtk_grid_get_row_spacing(gridPointer)
-		set(value) = gtk_grid_set_row_spacing(gridPointer, value)
-
-	@ExperimentalUnsignedTypes
-	var columnSpacing: UInt
-		get() = gtk_grid_get_column_spacing(gridPointer)
-		set(value) = gtk_grid_set_column_spacing(gridPointer, value)
-
-	var baselineRow: Int
-		get() = gtk_grid_get_baseline_row(gridPointer)
-		set(value) = gtk_grid_set_baseline_row(gridPointer, value)
 
 	fun getRowBaselinePosition(row: Int) {
 		gtk_grid_get_row_baseline_position(gridPointer, row)

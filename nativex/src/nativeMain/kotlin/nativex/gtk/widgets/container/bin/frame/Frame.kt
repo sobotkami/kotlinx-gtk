@@ -1,15 +1,16 @@
-package nativex.gtk.widgets.container.bin
+package nativex.gtk.widgets.container.bin.frame
 
 import gtk.*
 import kotlinx.cinterop.*
 import nativex.gtk.common.enums.ShadowType
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.bin.Bin
 
 /**
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-class Frame(
+open class Frame(
 	internal val framePointer: CPointer<GtkFrame>
 ) : Bin(framePointer.reinterpret()) {
 

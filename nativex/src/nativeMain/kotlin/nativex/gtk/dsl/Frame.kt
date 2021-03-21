@@ -1,7 +1,7 @@
 package nativex.gtk.dsl
 
 import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.Frame
+import nativex.gtk.widgets.container.bin.frame.Frame
 
 /**
  * kotlinx-gtk
