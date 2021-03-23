@@ -13,6 +13,10 @@ import kotlinx.cinterop.staticCFunction
  * 08 / 02 / 2021
  */
 object Signals {
+	const val CREATE_WINDOW = "create-window"
+	const val MOVE_FOCUS_OUT = "move-focus-out"
+	const val CHANGE_CURRENT_PAGE = "change-current-page"
+	const val SWITCH_PAGE = "switch-page"
 	const val CLICKED = "clicked"
 	const val ACTIVATE = "activate"
 

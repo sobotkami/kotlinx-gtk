@@ -2,13 +2,13 @@ package nativex.gtk.widgets.container
 
 import gtk.*
 import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.gtk.asWidgetOrNull
-import nativex.gtk.bool
+import nativex.async.callbackSignalFlow
+import nativex.gtk.*
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.PackType
 import nativex.gtk.common.enums.PositionType
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**
@@ -42,44 +42,83 @@ class Notebook internal constructor(
 	var groupName: String?
 		get() = gtk_notebook_get_group_name(noteBookPointer)?.toKString()
 		set(value) = gtk_notebook_set_group_name(noteBookPointer, value)
-	val changeCurrentPageSignal: Flow<Int>
-		get() {
-			TODO()
-		}
-	val createWindowSignal: Flow<CreateWindowEvent>
-		get() {
-			TODO()
-		}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val changeCurrentPageSignal: Flow<Int> by lazy {
+		callbackSignalFlow(
+			Signals.CHANGE_CURRENT_PAGE,
+			staticChangeCurrentPageCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val createWindowSignal: Flow<CreateWindowEvent> by lazy {
+		callbackSignalFlow(
+			Signals.CREATE_WINDOW,
+			CreateWindowEvent.staticCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
 	val focusTabSignal: Flow<Any>
 		get() = TODO("Figure out GtkNotebookTab")
-	val moveFocusOutSignal: Flow<GtkDirectionType>
-		get() {
-			TODO()
-		}
-	val pageAddedSignal: Flow<PageAddedEvent>
-		get() {
-			TODO()
-		}
-	val pageRemovedSignal: Flow<PageRemovedEvent>
-		get() {
-			TODO()
-		}
-	val pageReorderedSignal: Flow<PageReorderedEvent>
-		get() {
-			TODO()
-		}
-	val reorderTabSignal: Flow<ReorderTabEvent>
-		get() {
-			TODO()
-		}
-	val selectPageSignal: Flow<Boolean>
-		get() {
-			TODO()
-		}
-	val switchPageSignal: Flow<SwitchPageEvent>
-		get() {
-			TODO()
-		}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val moveFocusOutSignal: Flow<GtkDirectionType> by lazy {
+		callbackSignalFlow(Signals.MOVE_FOCUS_OUT, staticMoveFocusOutCallback)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val pageAddedSignal: Flow<PageAddedEvent> by lazy {
+		callbackSignalFlow(
+			Signals.CREATE_WINDOW,
+			PageAddedEvent.staticCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val pageRemovedSignal: Flow<PageRemovedEvent> by lazy {
+		callbackSignalFlow(
+			Signals.CREATE_WINDOW,
+			PageRemovedEvent.staticCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val pageReorderedSignal: Flow<PageReorderedEvent> by lazy {
+		callbackSignalFlow(
+			Signals.CREATE_WINDOW,
+			PageReorderedEvent.staticCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val reorderTabSignal: Flow<ReorderTabEvent> by lazy {
+		callbackSignalFlow(
+			Signals.CREATE_WINDOW,
+			ReorderTabEvent.staticCallback
+		)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val selectPageSignal: Flow<Boolean> by lazy {
+		callbackSignalFlow(Signals.SWITCH_PAGE, staticSelectPageCallback)
+	}
+
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val switchPageSignal: Flow<SwitchPageEvent> by lazy {
+		callbackSignalFlow(Signals.SWITCH_PAGE, SwitchPageEvent.staticCallback)
+	}
 
 	fun appendPage(
 		child: Widget,
@@ -281,7 +320,7 @@ class Notebook internal constructor(
 		val y: Int
 	) {
 		companion object {
-			val staticCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer,
 				                  page: CPointer<GtkWidget>,
 				                  x: Int,
@@ -290,34 +329,156 @@ class Notebook internal constructor(
 					data?.asStableRef<(CreateWindowEvent) -> Unit>()?.get()
 						?.invoke(CreateWindowEvent(Widget(page), x, y))
 					Unit
-				}
+				}.reinterpret()
 		}
 	}
 
 	data class PageAddedEvent @ExperimentalUnsignedTypes constructor(
 		val child: Widget,
 		val pageNumber: UInt
-	)
+	) {
+		companion object {
+			@ExperimentalUnsignedTypes
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
+					data?.asStableRef<(PageAddedEvent) -> Unit>()
+						?.get()
+						?.invoke(
+							PageAddedEvent(
+								Widget(child),
+								pageNum
+							)
+						)
+					Unit
+				}.reinterpret()
+
+		}
+	}
 
 	data class PageRemovedEvent @ExperimentalUnsignedTypes constructor(
 		val child: Widget,
 		val pageNumber: UInt
-	)
+	) {
+		companion object {
+			@ExperimentalUnsignedTypes
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, widget: WidgetPointer, pageNum: UInt, data: gpointer? ->
+					data?.asStableRef<(PageRemovedEvent) -> Unit>()
+						?.get()
+						?.invoke(
+							PageRemovedEvent(
+								Widget(widget),
+								pageNum
+							)
+						)
+					Unit
+				}.reinterpret()
+
+		}
+	}
 
 	data class PageReorderedEvent @ExperimentalUnsignedTypes constructor(
 		val child: Widget,
 		val pageNumber: UInt
-	)
+	) {
+		companion object {
+			@ExperimentalUnsignedTypes
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
+					data?.asStableRef<(PageReorderedEvent) -> Unit>()
+						?.get()
+						?.invoke(
+							PageReorderedEvent(
+								Widget(child),
+								pageNum
+							)
+						)
+					Unit
+				}.reinterpret()
+
+		}
+	}
 
 	data class ReorderTabEvent(
 		val arg1: DirectionType,
 		val arg2: Boolean
-	)
+	) {
+		companion object {
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, arg1: GtkDirectionType, arg2: gboolean, data: gpointer? ->
+					data?.asStableRef<(ReorderTabEvent) -> Unit>()
+						?.get()
+						?.invoke(
+							ReorderTabEvent(
+								DirectionType.valueOf(arg1)!!,
+								arg2.bool
+							)
+						)
+					Unit
+				}.reinterpret()
 
-	data class SwitchPageEvent(
+		}
+	}
+
+	data class SwitchPageEvent @ExperimentalUnsignedTypes constructor(
 		val page: Widget,
-		val pageNumber: Int
-	)
+		val pageNumber: UInt
+	) {
+		companion object {
+			@ExperimentalUnsignedTypes
+			internal val staticCallback: GCallback =
+				staticCFunction { _: gpointer?, page: WidgetPointer, pageNum: UInt, data: gpointer? ->
+					data?.asStableRef<(SwitchPageEvent) -> Unit>()
+						?.get()
+						?.invoke(
+							SwitchPageEvent(
+								Widget(page),
+								pageNum
+							)
+						)
+					Unit
+				}.reinterpret()
 
+		}
+	}
+
+	companion object {
+		internal val staticChangeCurrentPageCallback: GCallback =
+			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
+				data?.asStableRef<(Int) -> Unit>()
+					?.get()
+					?.invoke(arg1)
+				Unit
+			}.reinterpret()
+
+		/**
+		 * TODO Figure out [GtkNotebookTab]
+		 */
+		internal val staticFocusTabCallback: GCallback =
+			staticCFunction { _: gpointer?, arg1: GtkNotebookTab, data: gpointer? ->
+				data?.asStableRef<(GtkNotebookTab) -> Unit>()
+					?.get()
+					?.invoke(arg1)
+				Unit
+			}.reinterpret()
+
+		internal val staticMoveFocusOutCallback: GCallback =
+			staticCFunction { _: gpointer?, arg1: GtkDirectionType, data: gpointer? ->
+				data?.asStableRef<(DirectionType) -> Unit>()
+					?.get()
+					?.invoke(DirectionType.valueOf(arg1)!!)
+				Unit
+			}.reinterpret()
+
+		internal val staticSelectPageCallback: GCallback =
+			staticCFunction { _: gpointer?, arg1: gboolean, data: gpointer? ->
+				data?.asStableRef<(Boolean) -> Unit>()
+					?.get()
+					?.invoke(arg1.bool)
+				Unit
+			}.reinterpret()
+
+
+	}
 
 }

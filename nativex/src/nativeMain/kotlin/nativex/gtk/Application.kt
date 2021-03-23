@@ -1,9 +1,8 @@
 package nativex.gtk
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
-import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.g.MenuModel
@@ -87,6 +86,8 @@ class Application internal constructor(
 		TODO("Not yet implemented")
 	}
 
+
+	@ExperimentalUnsignedTypes
 	fun onActivate(onActive: () -> Unit) {
 		// Has to be a direct event, to prevent application from shutting down
 		applicationPointer.connectSignal(
@@ -98,15 +99,39 @@ class Application internal constructor(
 		)
 	}
 
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
 	val queryEndSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.QUERY_END)
 	}
 
-	val windowAddedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.WINDOW_ADDED)
-	}
-	val windowRemovedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.WINDOW_REMOVED)
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val windowAddedSignal: Flow<Window> by lazy {
+		callbackSignalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
 	}
 
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val windowRemovedSignal: Flow<Window> by lazy {
+		callbackSignalFlow(Signals.WINDOW_REMOVED, staticWindowRemovedCallback)
+	}
+
+	companion object {
+		internal val staticWindowAddedCallback: GCallback =
+			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
+				data?.asStableRef<(Window) -> Unit>()
+					?.get()
+					?.invoke(Window(window))
+				Unit
+			}.reinterpret()
+
+		internal val staticWindowRemovedCallback: GCallback =
+			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
+				data?.asStableRef<(Window) -> Unit>()
+					?.get()
+					?.invoke(Window(window))
+				Unit
+			}.reinterpret()
+	}
 }

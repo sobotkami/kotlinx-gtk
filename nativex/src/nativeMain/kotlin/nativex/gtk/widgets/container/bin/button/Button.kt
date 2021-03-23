@@ -24,6 +24,38 @@ open class Button internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val buttonPointer: CPointer<GtkButton>
 ) : Bin(buttonPointer.reinterpret()) {
+	@ExperimentalCoroutinesApi
+	@ExperimentalUnsignedTypes
+	val clickedSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(CLICKED)
+	}
+
+	var relief: ReliefType
+		get() = ReliefType.valueOf(gtk_button_get_relief(buttonPointer))!!
+		set(value) = gtk_button_set_relief(buttonPointer, value.gtk)
+	var label: String?
+		get() = gtk_button_get_label(buttonPointer)?.toKString()
+		set(value) = gtk_button_set_label(buttonPointer, value)
+	var userUnderline: Boolean
+		get() = gtk_button_get_use_underline(buttonPointer).bool
+		set(value) = gtk_button_set_use_underline(buttonPointer, value.gtk)
+	val image: Widget?
+		get() = gtk_button_get_image(buttonPointer)?.let { Widget(it) }
+	var imagePosition: PositionType
+		get() = PositionType.valueOf(gtk_button_get_image_position(buttonPointer))!!
+		set(value) = gtk_button_set_image_position(buttonPointer, value.gtk)
+	var alwaysShowImage: Boolean
+		get() = gtk_button_get_always_show_image(buttonPointer).bool
+		set(value) = gtk_button_set_always_show_image(
+			buttonPointer,
+			value.gtk
+		)
+	val eventWindow: nativex.gdk.Window?
+		get() = gtk_button_get_event_window(buttonPointer)?.let {
+			nativex.gdk.Window(
+				it
+			)
+		}
 
 	constructor() : this(
 		gtk_button_new()!!.reinterpret()
@@ -44,47 +76,8 @@ open class Button internal constructor(
 		size: IconSize
 	) : this(gtk_button_new_from_icon_name(icon, size.gtk)!!.reinterpret())
 
-	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
-	val clickedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(CLICKED)
-	}
-
 	fun clicked() {
 		gtk_button_clicked(buttonPointer)
 	}
-
-	var relief: ReliefType
-		get() = ReliefType.valueOf(gtk_button_get_relief(buttonPointer))!!
-		set(value) = gtk_button_set_relief(buttonPointer, value.gtk)
-
-	var label: String?
-		get() = gtk_button_get_label(buttonPointer)?.toKString()
-		set(value) = gtk_button_set_label(buttonPointer, value)
-
-	var userUnderline: Boolean
-		get() = gtk_button_get_use_underline(buttonPointer).bool
-		set(value) = gtk_button_set_use_underline(buttonPointer, value.gtk)
-
-	val image: Widget?
-		get() = gtk_button_get_image(buttonPointer)?.let { Widget(it) }
-
-	var imagePosition: PositionType
-		get() = PositionType.valueOf(gtk_button_get_image_position(buttonPointer))!!
-		set(value) = gtk_button_set_image_position(buttonPointer, value.gtk)
-
-	var alwaysShowImage: Boolean
-		get() = gtk_button_get_always_show_image(buttonPointer).bool
-		set(value) = gtk_button_set_always_show_image(
-			buttonPointer,
-			value.gtk
-		)
-
-	val eventWindow: nativex.gdk.Window?
-		get() = gtk_button_get_event_window(buttonPointer)?.let {
-			nativex.gdk.Window(
-				it
-			)
-		}
 }
 

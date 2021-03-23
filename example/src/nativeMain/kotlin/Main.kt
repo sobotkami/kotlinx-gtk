@@ -74,6 +74,13 @@ class ViewModel {
 @Test
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {
+		onWindowAdded {
+			println("Added new window ${it.title}")
+		}
+
+		onWindowRemoved {
+			println("Removed window ${it.title}")
+		}
 		val viewModel = ViewModel()
 		onCreateUI {
 			measureTimeMillis {
