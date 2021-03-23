@@ -199,8 +199,8 @@ open class Widget(
 	}
 
 	@Suppress("DeprecatedCallableAddReplaceWith")
-	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 	fun showAll() {
+		//@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 		gtk_widget_show_all(widgetPointer)
 	}
 

@@ -10,7 +10,7 @@ import nativex.gtk.widgets.container.bin.button.Button
 inline fun Container.button(
 	label: String,
 	buttonBuilder: Button.() -> Unit = {}
-) = add(Button(label).apply(buttonBuilder))
+) = Button(label).apply(buttonBuilder).also { add(it) }
 
 @ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi

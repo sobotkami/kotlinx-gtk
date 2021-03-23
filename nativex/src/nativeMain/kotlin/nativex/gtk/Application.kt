@@ -86,6 +86,13 @@ class Application internal constructor(
 		TODO("Not yet implemented")
 	}
 
+	fun addWindow(window: Window) {
+		gtk_application_add_window(applicationPointer,window.windowPointer)
+	}
+
+	fun removeWindow(window: Window){
+		gtk_application_remove_window(applicationPointer,window.windowPointer)
+	}
 
 	@ExperimentalUnsignedTypes
 	fun onActivate(onActive: () -> Unit) {

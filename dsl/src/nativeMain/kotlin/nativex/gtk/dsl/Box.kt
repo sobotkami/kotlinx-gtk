@@ -82,7 +82,8 @@ inline fun Container.box(
 	orientation: Orientation,
 	spacing: Int,
 	buttonBoxBuilder: Box.() -> Unit
-) = add(Box(orientation, spacing).apply(buttonBoxBuilder))
+) = Box(orientation, spacing).apply(buttonBoxBuilder).also { add(it) }
+
 
 class PackStart internal constructor(box: Box) : Box(box)
 
