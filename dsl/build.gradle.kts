@@ -10,7 +10,7 @@ kotlin {
 	linuxX64("native") {
 		val main by compilations.getting
 		binaries {
-			staticLib()
+			sharedLib()
 		}
 	}
 

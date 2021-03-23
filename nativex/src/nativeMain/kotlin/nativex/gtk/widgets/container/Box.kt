@@ -16,6 +16,7 @@ import nativex.gtk.widgets.Widget
 open class Box internal constructor(
 	internal val boxPointer: CPointer<GtkBox>
 ) : Container(boxPointer.reinterpret()) {
+	constructor(other: Box) : this(other.boxPointer)
 	constructor(
 		orientation: Orientation,
 		spacing: Int

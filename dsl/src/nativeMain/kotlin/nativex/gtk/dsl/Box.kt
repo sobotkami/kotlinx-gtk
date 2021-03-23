@@ -84,9 +84,9 @@ inline fun Container.box(
 	buttonBoxBuilder: Box.() -> Unit
 ) = add(Box(orientation, spacing).apply(buttonBoxBuilder))
 
-class PackStart internal constructor(box: Box) : Box(box.boxPointer)
+class PackStart internal constructor(box: Box) : Box(box)
 
-class PackEnd internal constructor(box: Box) : Box(box.boxPointer)
+class PackEnd internal constructor(box: Box) : Box(box)
 
 @GtkDsl
 fun Box.start(builder: PackStart.() -> Unit) {
