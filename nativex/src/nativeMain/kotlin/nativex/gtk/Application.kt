@@ -17,11 +17,11 @@ class Application internal constructor(
 ) : nativex.g.Application(applicationPointer.reinterpret()) {
 	constructor(
 		applicationID: String,
-		flags: GApplicationFlags = G_APPLICATION_FLAGS_NONE
+		flags: Flags = Flags.NONE
 	) : this(
 		gtk_application_new(
 			applicationID,
-			flags
+			flags.gtk
 		)!!
 	)
 

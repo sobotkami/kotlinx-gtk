@@ -3,6 +3,7 @@ package nativex.gtk.dsl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import nativex.async.launchUnconfined
+import nativex.g.Application.*
 import nativex.gtk.Application
 import nativex.gtk.widgets.container.bin.windows.Window
 
@@ -14,13 +15,15 @@ import nativex.gtk.widgets.container.bin.windows.Window
 @GtkDsl
 inline fun application(
 	id: String,
+	flags: Flags = Flags.NONE,
 	crossinline builder: Application.() -> Unit
 ): Int =
-	Application(id).apply {
+	Application(id, flags).apply {
 		builder()
 	}.run()
 
 
+@ExperimentalUnsignedTypes
 @GtkDsl
 /**
  * Invokes [uiBuilder] when [Application.onActivate] occurs
