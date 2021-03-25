@@ -13,10 +13,11 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 24 / 03 / 2021
  */
-class HeaderBar internal constructor(
+open class HeaderBar internal constructor(
 	internal val headerBarPointer: CPointer<GtkHeaderBar>
 ) : Container(headerBarPointer.reinterpret()) {
 	constructor() : this(gtk_header_bar_new()!!.reinterpret())
+	constructor(headerBar: HeaderBar) : this(headerBar.headerBarPointer)
 
 	var title: String?
 		get() = gtk_header_bar_get_title(headerBarPointer)?.toKString()

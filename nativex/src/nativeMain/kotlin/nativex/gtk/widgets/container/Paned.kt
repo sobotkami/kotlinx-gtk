@@ -21,10 +21,11 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 24 / 03 / 2021
  */
-class Paned internal constructor(
+open class Paned internal constructor(
 	internal val panedPointer: CPointer<GtkPaned>
 ) : Container(panedPointer.reinterpret()) {
 	constructor(orientation: Orientation) : this(gtk_paned_new(orientation.gtk)!!.reinterpret())
+	constructor(paned: Paned) : this(paned.panedPointer)
 
 	fun add1(widget: Widget) =
 		gtk_paned_add1(panedPointer, widget.widgetPointer)

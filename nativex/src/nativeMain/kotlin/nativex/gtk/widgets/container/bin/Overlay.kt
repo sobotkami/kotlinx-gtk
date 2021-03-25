@@ -29,8 +29,7 @@ class Overlay(
 		gtk_overlay_get_overlay_pass_through(
 			overlayPointer,
 			widget.widgetPointer
-		)
-			.bool
+		).bool
 
 	fun overlayPassThrough(widget: Widget, passThrough: Boolean) {
 		gtk_overlay_set_overlay_pass_through(

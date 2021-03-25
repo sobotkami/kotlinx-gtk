@@ -15,27 +15,13 @@ inline fun Container.grid(
 
 @ExperimentalUnsignedTypes
 @GtkDsl
-inline fun PackStart.grid(
+inline fun BoxPackable.grid(
 	expand: Boolean,
 	fill: Boolean,
 	padding: UInt,
 	gridBuilder: Grid.() -> Unit,
-) = packStart(
+) = pack(
 	grid(gridBuilder),
-	expand,
-	fill,
-	padding
-)
-
-@ExperimentalUnsignedTypes
-@GtkDsl
-inline fun PackEnd.grid(
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	frameBuilder: Grid.() -> Unit,
-) = packEnd(
-	grid(frameBuilder),
 	expand,
 	fill,
 	padding

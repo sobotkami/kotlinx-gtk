@@ -120,12 +120,12 @@ inline fun Box.horizontalButtonBoxEnd(
 
 @ExperimentalUnsignedTypes
 @GtkDsl
-inline fun PackStart.verticalButtonBox(
+inline fun BoxPackable.verticalButtonBox(
 	expand: Boolean,
 	fill: Boolean,
 	padding: UInt,
 	buttonBoxBuilder: ButtonBox.VerticalButtonBox.() -> Unit,
-) = packStart(
+) = pack(
 	ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder),
 	expand,
 	fill,
@@ -134,46 +134,15 @@ inline fun PackStart.verticalButtonBox(
 
 @ExperimentalUnsignedTypes
 @GtkDsl
-inline fun PackStart.horizontalButtonBox(
+inline fun BoxPackable.horizontalButtonBox(
 	expand: Boolean,
 	fill: Boolean,
 	padding: UInt,
 	buttonBoxBuilder: ButtonBox.HorizontalButtonBox.() -> Unit
-) = packStart(
+) = pack(
 	ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder),
 	expand,
 	fill,
 	padding
 )
-
-@ExperimentalUnsignedTypes
-@GtkDsl
-inline fun PackEnd.verticalButtonBox(
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	buttonBoxBuilder: ButtonBox.VerticalButtonBox.() -> Unit,
-) = packEnd(
-	ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder),
-	expand,
-	fill,
-	padding
-)
-
-@ExperimentalUnsignedTypes
-@GtkDsl
-inline fun PackEnd.horizontalButtonBox(
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	buttonBoxBuilder: ButtonBox.HorizontalButtonBox.() -> Unit,
-) = packEnd(
-	ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder),
-	expand,
-	fill,
-	padding
-)
-
-
-
 

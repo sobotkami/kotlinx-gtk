@@ -212,7 +212,9 @@ class Notebook internal constructor(
 		position
 	)
 
-	fun popupEnable() = gtk_notebook_popup_enable(noteBookPointer)
+	fun popupEnable() {
+		gtk_notebook_popup_enable(noteBookPointer)
+	}
 	fun popupDisable() {
 		gtk_notebook_popup_disable(noteBookPointer)
 	}

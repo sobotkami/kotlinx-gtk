@@ -18,48 +18,6 @@ import nativex.gtk.widgets.container.bin.Bin
 class FlowBox internal constructor(
 	internal val flowBoxPointer: CPointer<GtkFlowBox>
 ) : Bin(flowBoxPointer.reinterpret()) {
-	constructor() : this(gtk_flow_box_new()!!.reinterpret())
-
-	class Child(
-		internal val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
-	) : Bin(flowBoxChildPointer.reinterpret()) {
-		constructor() : this(gtk_flow_box_child_new()!!.reinterpret())
-
-		val index: Int
-			get() = gtk_flow_box_child_get_index(flowBoxChildPointer)
-
-		val isSelected: Boolean
-			get() = gtk_flow_box_child_is_selected(
-				flowBoxChildPointer
-			)
-				.bool
-
-		fun childChanged() {
-			gtk_flow_box_child_changed(flowBoxChildPointer)
-		}
-	}
-
-	fun insert(widget: Widget, position: Int) {
-		gtk_flow_box_insert(flowBoxPointer, widget.widgetPointer, position)
-	}
-
-	fun getChildAtIndex(index: Int): Child? =
-		gtk_flow_box_get_child_at_index(
-			flowBoxPointer,
-			index
-		)?.let { Child(it) }
-
-	fun getChildAtPosition(x: Int, y: Int) =
-		gtk_flow_box_get_child_at_pos(flowBoxPointer, x, y)?.let { Child(it) }
-
-	fun setHorizontalAdjustment(adjustment: Adjustment) {
-		gtk_flow_box_set_hadjustment(flowBoxPointer, adjustment.adjustmentPointer)
-	}
-
-	fun setVerticalAdjustment(adjustment: Adjustment) {
-		gtk_flow_box_set_vadjustment(flowBoxPointer, adjustment.adjustmentPointer)
-	}
-
 	var isHomogeneous: Boolean
 		get() = gtk_flow_box_get_homogeneous(flowBoxPointer).bool
 		set(value) = gtk_flow_box_set_homogeneous(
@@ -92,7 +50,6 @@ class FlowBox internal constructor(
 			flowBoxPointer,
 			value
 		)
-
 	var activateOnSingleClick: Boolean
 		get() = gtk_flow_box_get_activate_on_single_click(
 			flowBoxPointer
@@ -102,6 +59,40 @@ class FlowBox internal constructor(
 			flowBoxPointer,
 			value.gtk
 		)
+	var selectionMode: SelectionMode
+		get() = SelectionMode.valueOf(
+			gtk_flow_box_get_selection_mode(flowBoxPointer)
+		)!!
+		set(value) = gtk_flow_box_set_selection_mode(flowBoxPointer, value.gtk)
+
+	constructor() : this(gtk_flow_box_new()!!.reinterpret())
+
+	fun insert(widget: Widget, position: Int) {
+		gtk_flow_box_insert(flowBoxPointer, widget.widgetPointer, position)
+	}
+
+	fun getChildAtIndex(index: Int): Child? =
+		gtk_flow_box_get_child_at_index(
+			flowBoxPointer,
+			index
+		)?.let { Child(it) }
+
+	fun getChildAtPosition(x: Int, y: Int) =
+		gtk_flow_box_get_child_at_pos(flowBoxPointer, x, y)?.let { Child(it) }
+
+	fun setHorizontalAdjustment(adjustment: Adjustment) {
+		gtk_flow_box_set_hadjustment(
+			flowBoxPointer,
+			adjustment.adjustmentPointer
+		)
+	}
+
+	fun setVerticalAdjustment(adjustment: Adjustment) {
+		gtk_flow_box_set_vadjustment(
+			flowBoxPointer,
+			adjustment.adjustmentPointer
+		)
+	}
 
 	fun forEachSelected() {
 		TODO("gtk_flow_box_selected_foreach")
@@ -129,12 +120,6 @@ class FlowBox internal constructor(
 		gtk_flow_box_unselect_all(flowBoxPointer)
 	}
 
-	var selectionMode: SelectionMode
-		get() = SelectionMode.valueOf(
-			gtk_flow_box_get_selection_mode(flowBoxPointer)
-		)!!
-		set(value) = gtk_flow_box_set_selection_mode(flowBoxPointer, value.gtk)
-
 	fun setFilterFunction() {
 		TODO("gtk_flow_box_set_filter_func")
 	}
@@ -153,5 +138,23 @@ class FlowBox internal constructor(
 
 	fun bindModel() {
 		TODO("gtk_flow_box_bind_model")
+	}
+
+	class Child(
+		internal val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
+	) : Bin(flowBoxChildPointer.reinterpret()) {
+
+		val index: Int
+			get() = gtk_flow_box_child_get_index(flowBoxChildPointer)
+		val isSelected: Boolean
+			get() = gtk_flow_box_child_is_selected(
+				flowBoxChildPointer
+			).bool
+
+		constructor() : this(gtk_flow_box_child_new()!!.reinterpret())
+
+		fun childChanged() {
+			gtk_flow_box_child_changed(flowBoxChildPointer)
+		}
 	}
 }

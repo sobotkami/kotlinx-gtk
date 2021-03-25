@@ -17,29 +17,13 @@ fun Container.frame(
 
 @ExperimentalUnsignedTypes
 @GtkDsl
-inline fun PackStart.frame(
+inline fun BoxPackable.frame(
 	label: String? = null,
 	expand: Boolean,
 	fill: Boolean,
 	padding: UInt,
 	frameBuilder: Frame.() -> Unit,
-) = packStart(
-	Frame(label).apply(frameBuilder),
-	expand,
-	fill,
-	padding
-)
-
-
-@ExperimentalUnsignedTypes
-@GtkDsl
-inline fun PackEnd.frame(
-	label: String? = null,
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	frameBuilder: Frame.() -> Unit,
-) = packEnd(
+) = pack(
 	Frame(label).apply(frameBuilder),
 	expand,
 	fill,
