@@ -3,7 +3,7 @@ package nativex.gtk.dsl
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
 import nativex.async.launchUnconfined
-import nativex.g.Application.*
+import nativex.gio.Application.*
 import nativex.gtk.Application
 import nativex.gtk.widgets.container.bin.windows.Window
 

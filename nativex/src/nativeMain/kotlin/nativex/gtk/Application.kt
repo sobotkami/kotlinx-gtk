@@ -5,7 +5,8 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
-import nativex.g.MenuModel
+import nativex.gio.Application
+import nativex.gio.MenuModel
 import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
@@ -14,7 +15,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
  */
 class Application internal constructor(
 	val applicationPointer: CPointer<GtkApplication>
-) : nativex.g.Application(applicationPointer.reinterpret()) {
+) : Application(applicationPointer.reinterpret()) {
 	constructor(
 		applicationID: String,
 		flags: Flags = Flags.NONE

@@ -9,7 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import nativex.g.KotlinGObject
+import nativex.gio.KotlinGObject
 import nativex.gtk.connectSignal
 
 

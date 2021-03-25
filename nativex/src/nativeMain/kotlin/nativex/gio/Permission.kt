@@ -1,4 +1,4 @@
-package nativex.g
+package nativex.gio
 
 import gtk.GPermission
 import kotlinx.cinterop.CPointer

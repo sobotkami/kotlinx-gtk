@@ -1,6 +1,5 @@
-import nativex.g.Application
+import nativex.gio.Application
 import nativex.gio.ActionMap
-import nativex.gio.SimpleAction.Companion.safeCast
 import nativex.gio.dsl.*
 import nativex.gtk.dsl.application
 import nativex.gtk.dsl.applicationWindow

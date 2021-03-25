@@ -6,7 +6,6 @@ import kotlinx.cinterop.interpretCPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
-import nativex.g.KotlinGObject
 import nativex.glib.Variant
 import nativex.glib.VariantType
 import nativex.gtk.gtk

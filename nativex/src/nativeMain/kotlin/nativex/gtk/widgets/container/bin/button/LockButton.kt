@@ -6,7 +6,7 @@ import gtk.gtk_lock_button_new
 import gtk.gtk_lock_button_set_permission
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.g.Permission
+import nativex.gio.Permission
 
 /**
  * kotlinx-gtk

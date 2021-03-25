@@ -5,6 +5,10 @@ plugins {
 group = "com.github.doomsdayrs.lib"
 version = "0.0.0"
 
+repositories{
+	mavenCentral()
+}
+
 kotlin {
 
 	val hostOs = System.getProperty("os.name")

@@ -6,7 +6,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
-import nativex.g.KotlinGObject
+import nativex.gio.KotlinGObject
 
 /**
  * kotlinx-gtk

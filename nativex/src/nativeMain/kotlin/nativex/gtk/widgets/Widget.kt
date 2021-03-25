@@ -2,7 +2,7 @@ package nativex.gtk.widgets
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.g.KotlinGObject
+import nativex.gio.KotlinGObject
 import nativex.gdk.Device
 import nativex.gdk.Event
 import nativex.gdk.GWindow

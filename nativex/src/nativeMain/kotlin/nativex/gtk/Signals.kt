@@ -69,6 +69,13 @@ object Signals {
 	// GtkColorChooser
 	const val COLOR_ACTIVATED = "color-activated"
 
+	// GtkPaned
+	const val ACCEPT_POSITION = "accept-position"
+	const val CANCEL_POSITION = "cancel-position"
+	const val CYCLE_CHILD_FOCUS = "cycle-child-focus"
+	const val CYCLE_HANDLE_FOCUS = "cycle-handle-focus"
+	const val MOVE_HANDLE = "move-handle"
+	const val TOGGLE_HANDLE_FOCUS = "toggle-handle-focus"
 
 }
 

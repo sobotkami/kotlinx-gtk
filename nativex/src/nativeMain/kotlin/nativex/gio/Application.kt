@@ -1,11 +1,10 @@
-package nativex.g
+package nativex.gio
 
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.reinterpret
 import nativex.PointerHolder
-import nativex.gio.ActionMap
 import nativex.glib.OptionArg
 import nativex.glib.OptionFlags
 

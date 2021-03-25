@@ -54,8 +54,8 @@ class Revealer(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html#gtk-revealer-get-transition-type">gtk_revealer_get_transition_type</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html#gtk-revealer-set-transition-type">gtk_revealer_set_transition_type</a>
 	 */
-	var transitionType: Transition
-		get() = Transition.valueOf(
+	var transitionType: TransitionType
+		get() = TransitionType.valueOf(
 			gtk_revealer_get_transition_type(
 				revealerPointer
 			)
@@ -68,7 +68,7 @@ class Revealer(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html#GtkRevealerTransitionType">GtkRevealerTransitionType</a>
 	 */
-	enum class Transition(
+	enum class TransitionType(
 		val key: Int,
 		internal val gtk: GtkRevealerTransitionType
 	) {

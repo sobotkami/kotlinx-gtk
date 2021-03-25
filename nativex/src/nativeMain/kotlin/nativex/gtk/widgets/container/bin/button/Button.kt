@@ -11,7 +11,7 @@ import nativex.gtk.IconSize
 import nativex.gtk.Signals.CLICKED
 import nativex.gtk.bool
 import nativex.gtk.common.enums.PositionType
-import nativex.gtk.common.enums.ReliefType
+import nativex.gtk.common.enums.ReliefStyle
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
@@ -30,8 +30,8 @@ open class Button internal constructor(
 		callbackSignalFlow(CLICKED)
 	}
 
-	var relief: ReliefType
-		get() = ReliefType.valueOf(gtk_button_get_relief(buttonPointer))!!
+	var relief: ReliefStyle
+		get() = ReliefStyle.valueOf(gtk_button_get_relief(buttonPointer))!!
 		set(value) = gtk_button_set_relief(buttonPointer, value.gtk)
 	var label: String?
 		get() = gtk_button_get_label(buttonPointer)?.toKString()
