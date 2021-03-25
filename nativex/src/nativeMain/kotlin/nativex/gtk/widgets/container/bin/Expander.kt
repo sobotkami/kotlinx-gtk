@@ -4,6 +4,7 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.gtk.Signals
@@ -69,6 +70,8 @@ class Expander(
 			value.gtk
 		)
 
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
 	val activate: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE)
 	}

@@ -1,11 +1,11 @@
 package nativex.gtk.widgets.container
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.*
 import nativex.gtk.bool
 import nativex.gtk.common.enums.BaselinePosition
 import nativex.gtk.common.enums.Orientation
+import nativex.gtk.common.enums.PackType
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
@@ -68,13 +68,47 @@ open class Box internal constructor(
 		gtk_box_reorder_child(boxPointer, child.widgetPointer, position)
 	}
 
+	data class ChildPacking @ExperimentalUnsignedTypes constructor(
+		val expand: Boolean,
+		val fill: Boolean,
+		val padding: UInt,
+		val packType: PackType
+	)
 
-	fun queryChildPacking() {
-		TODO("gtk_box_query_child_packing")
-	}
+	@ExperimentalUnsignedTypes
+	fun queryChildPacking(child: Widget): ChildPacking =
+		memScoped {
+			val cExpand = cValue<gbooleanVar>()
+			val cFill = cValue<gbooleanVar>()
+			val cPadding = cValue<UIntVar>()
+			val pack = cValue<GtkPackType.Var>()
 
-	fun setChildPacking() {
-		TODO("gtk_box_set_child_packing")
+			gtk_box_query_child_packing(
+				boxPointer,
+				child.widgetPointer,
+				cExpand,
+				cFill,
+				cPadding,
+				pack
+			)
+
+			ChildPacking(
+				cExpand.ptr.pointed.value.bool,
+				cFill.ptr.pointed.value.bool,
+				cPadding.ptr.pointed.value,
+				PackType.valueOf(pack.ptr.pointed.value)!!
+			)
+		}
+
+	fun setChildPacking(child: Widget, childPacking: ChildPacking) {
+		gtk_box_set_child_packing(
+			boxPointer,
+			child.widgetPointer,
+			childPacking.expand.gtk,
+			childPacking.fill.gtk,
+			childPacking.padding,
+			childPacking.packType.gtk
+		)
 	}
 
 	var baselinePosition: BaselinePosition

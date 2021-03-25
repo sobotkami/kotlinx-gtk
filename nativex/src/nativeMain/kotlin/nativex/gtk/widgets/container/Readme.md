@@ -8,8 +8,8 @@ Each container will have DSL to create itself, and the rest inside itself.
 - Notebook          x
 - Frame             x
 - AspectFrame       x
-- ListBox           x
-- FlowBox           x
+- ListBox           -
+- FlowBox           -
 - Overlay           x
 - MenuBar           x
 - Toolbar           x
