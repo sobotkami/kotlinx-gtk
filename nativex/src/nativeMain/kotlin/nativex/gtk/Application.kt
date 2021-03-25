@@ -33,7 +33,7 @@ class Application internal constructor(
 	var menuBar: MenuModel? = null
 		get() =
 			gtk_application_get_app_menu(applicationPointer)?.let {
-				MenuModel(it)
+				MenuModel.Impl(it)
 			}
 		set(value) {
 			gtk_application_set_menubar(applicationPointer, value?.cPointer)
@@ -88,11 +88,11 @@ class Application internal constructor(
 	}
 
 	fun addWindow(window: Window) {
-		gtk_application_add_window(applicationPointer,window.windowPointer)
+		gtk_application_add_window(applicationPointer, window.windowPointer)
 	}
 
-	fun removeWindow(window: Window){
-		gtk_application_remove_window(applicationPointer,window.windowPointer)
+	fun removeWindow(window: Window) {
+		gtk_application_remove_window(applicationPointer, window.windowPointer)
 	}
 
 	@ExperimentalUnsignedTypes
