@@ -2,9 +2,6 @@ plugins {
 	kotlin("multiplatform") version "1.4.31"
 }
 
-group = "com.github.doomsdayrs.lib"
-version = "0.0.0"
-
 kotlin {
 	val hostOs = System.getProperty("os.name")
 	//val isMingwX64 = hostOs.startsWith("Windows")

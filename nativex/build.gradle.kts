@@ -1,10 +1,14 @@
 plugins {
 	kotlin("multiplatform")
+	id("maven-publish")
 }
 
 repositories {
 	mavenCentral()
 }
+
+group = "org.gnome.kotlin.nativex"
+version = "0.0.0"
 
 kotlin {
 
