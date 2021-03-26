@@ -2,11 +2,11 @@ package nativex.gtk.widgets
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.gio.KotlinGObject
 import nativex.gdk.Device
 import nativex.gdk.Event
 import nativex.gdk.GWindow
 import nativex.gdk.Visual
+import nativex.gio.KotlinGObject
 import nativex.gtk.WidgetPointer
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
@@ -334,6 +334,7 @@ open class Widget(
 		TODO("gtk_widget_get_device_enabled")
 	}
 
+
 	@ExperimentalUnsignedTypes
 	fun getAncestor(widgetType: ULong) =
 		gtk_widget_get_ancestor(widgetPointer, widgetType)?.let { Widget(it) }
@@ -347,6 +348,11 @@ open class Widget(
 
 	fun computeExpand(orientation: Orientation): Boolean =
 		gtk_widget_compute_expand(widgetPointer, orientation.gtk).bool
+
+	fun initTemplate() {
+		gtk_widget_init_template(widgetPointer)
+	}
+
 
 	enum class Align(val key: Int, internal val gtk: GtkAlign) {
 		FILL(0, GtkAlign.GTK_ALIGN_FILL),
