@@ -4,6 +4,7 @@ import gtk.*
 import gtk.GtkLevelBarMode.GTK_LEVEL_BAR_MODE_CONTINUOUS
 import gtk.GtkLevelBarMode.GTK_LEVEL_BAR_MODE_DISCRETE
 import kotlinx.cinterop.*
+import kotlinx.coroutines.flow.Flow
 import nativex.gtk.bool
 import nativex.gtk.gtk
 
@@ -84,6 +85,14 @@ class LevelBar internal constructor(
 				values().find { it.gtk == gtk }
 		}
 	}
+
+	/**
+	 * TODO Figure out char signals
+	 */
+	val offsetChangedSignal: Flow<Char>
+		get() {
+			TODO()
+		}
 
 	companion object {
 		@Target(AnnotationTarget.PROPERTY, AnnotationTarget.VALUE_PARAMETER)
