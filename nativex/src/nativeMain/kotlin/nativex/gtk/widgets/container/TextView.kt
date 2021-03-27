@@ -16,8 +16,8 @@ import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
 import nativex.gtk.*
 import nativex.gtk.common.enums.DeleteType
-import nativex.gtk.common.enums.MovementStep
 import nativex.gtk.common.enums.ScrollStep
+import nativex.gtk.common.events.MoveCursorEvent
 import nativex.gtk.widgets.Widget
 
 /**
@@ -114,16 +114,13 @@ class TextView internal constructor(
 	}
 
 
-	data class MoveCursorEvent(
-		val step: MovementStep,
-		val count: Int,
-		val extendSelection: Boolean
-	)
-
 	@ExperimentalCoroutinesApi
 	@ExperimentalUnsignedTypes
 	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
-		callbackSignalFlow(Signals.MOVE_CURSOR, staticMoveCursorCallback)
+		callbackSignalFlow(
+			Signals.MOVE_CURSOR,
+			MoveCursorEvent.staticMoveCursorCallback
+		)
 	}
 
 	data class MoveViewPortEvent(
@@ -334,22 +331,6 @@ class TextView internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticMoveCursorCallback: GCallback =
-			staticCFunction { _: gpointer?,
-			                  step: GtkMovementStep,
-			                  count: Int,
-			                  extendSelection: gboolean,
-			                  data: gpointer? ->
-				data?.asStableRef<(MoveCursorEvent) -> Unit>()?.get()
-					?.invoke(
-						MoveCursorEvent(
-							MovementStep.valueOf(step)!!,
-							count,
-							extendSelection.bool
-						)
-					)
-				Unit
-			}.reinterpret()
 
 		internal val staticMoveViewportCallback: GCallback =
 			staticCFunction { _: gpointer?,
