@@ -1,6 +1,6 @@
 package nativex.gtk.dsl
 
-import nativex.gtk.widgets.container.Box
+import nativex.gtk.widgets.container.box.Box
 import nativex.gtk.widgets.container.ButtonBox
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.container.Fixed

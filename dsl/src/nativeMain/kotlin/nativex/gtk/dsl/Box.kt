@@ -7,6 +7,7 @@ import nativex.gtk.widgets.container.*
 import nativex.gtk.widgets.container.bin.ActionBar
 import nativex.gtk.widgets.container.bin.Overlay
 import nativex.gtk.widgets.container.bin.frame.AspectFrame
+import nativex.gtk.widgets.container.box.Box
 
 
 @GtkDsl

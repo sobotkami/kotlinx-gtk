@@ -7,6 +7,7 @@ import nativex.gtk.bool
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.box.Box
 
 /**
  * kotlinx-gtk

@@ -78,6 +78,11 @@ object Signals {
 	const val MOVE_HANDLE = "move-handle"
 	const val TOGGLE_HANDLE_FOCUS = "toggle-handle-focus"
 
+	// GtkInfoBar
+	const val CLOSE = "close"
+	const val RESPONSE = "response"
+
+
 }
 
 /**

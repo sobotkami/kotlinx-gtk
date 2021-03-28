@@ -1,4 +1,4 @@
-package nativex.gtk.widgets.container
+package nativex.gtk.widgets.container.box
 
 import gtk.*
 import kotlinx.cinterop.*
@@ -8,6 +8,7 @@ import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PackType
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.Container
 
 /**
  * kotlinx-gtk

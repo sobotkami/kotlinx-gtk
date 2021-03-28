@@ -1,0 +1,25 @@
+# This relates to the all "Control" widgets in GTK
+- Button
+- Entry
+- SearchEntry
+- SpinButton
+- ToggleButton
+- CheckButton
+- RadioButton
+- MenuButton
+- LockButton
+- Switch
+- ModelButton
+- StackSwitcher
+- StackSidebar
+- ComboBox
+- ComboBoxText
+- FileChooserButton
+- ColorButton
+- FontButton
+- LinkButton
+- ScaleButton
+- VolumeButton
+- AppChooserButton
+- Scale
+- Scrollbar
