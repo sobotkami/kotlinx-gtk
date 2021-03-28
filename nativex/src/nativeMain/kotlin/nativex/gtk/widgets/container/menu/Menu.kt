@@ -8,7 +8,7 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-class Menu internal constructor(
+open class Menu internal constructor(
 	internal val menuPointer: CPointer<GtkMenu>
 ) : MenuShell(menuPointer.reinterpret()) {
 

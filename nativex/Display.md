@@ -12,9 +12,9 @@
 | LevelBar      | Wrapped   |           |
 | Spinner       | Wrapped   |           |
 | Menu          | Wrapped   |           |
-| Calendar      | Wrapped   |           |
-| Separator     | Wrapped   |           |
-| DrawingArea   | Wrapped   |           |
+| Calendar      | -         | -         |
+| Separator     | Wrapped   | N/A       |
+| DrawingArea   | Wrapped   | N/A       |
 | GLArea        | -         |           |
 | InfoBar       | Wrapped*  | Wrapped   |
 
