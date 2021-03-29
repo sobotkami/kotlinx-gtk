@@ -36,7 +36,7 @@ class MenuBar internal constructor(
 	constructor() : this(gtk_menu_bar_new()!!.reinterpret())
 	constructor(menuModel: MenuModel) : this(
 		gtk_menu_bar_new_from_model(
-			menuModel.cPointer
+			menuModel.menuModelPointer
 		)!!.reinterpret()
 	)
 

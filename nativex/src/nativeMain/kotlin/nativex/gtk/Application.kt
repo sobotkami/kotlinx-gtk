@@ -36,7 +36,7 @@ class Application internal constructor(
 				MenuModel.Impl(it)
 			}
 		set(value) {
-			gtk_application_set_menubar(applicationPointer, value?.cPointer)
+			gtk_application_set_menubar(applicationPointer, value?.menuModelPointer)
 			field = value
 		}
 

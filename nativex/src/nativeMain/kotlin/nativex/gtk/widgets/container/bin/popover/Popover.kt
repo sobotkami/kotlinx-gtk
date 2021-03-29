@@ -29,7 +29,7 @@ open class Popover(
 	constructor(relativeTo: Widget, model: MenuModel) : this(
 		gtk_popover_new_from_model(
 			relativeTo.widgetPointer,
-			model.cPointer
+			model.menuModelPointer
 		)!!.reinterpret()
 	)
 
