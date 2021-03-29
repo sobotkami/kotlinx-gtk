@@ -1,11 +1,8 @@
 package nativex.gtk.dsl
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
-import nativex.async.launchUnconfined
+import nativex.GtkDsl
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.container.bin.SearchBar
-import nativex.gtk.widgets.entry.SearchEntry
 
 /**
  * kotlinx-gtk

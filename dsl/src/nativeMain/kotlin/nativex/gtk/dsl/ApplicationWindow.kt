@@ -1,5 +1,6 @@
 package nativex.gtk.dsl
 
+import nativex.GtkDsl
 import nativex.gtk.Application
 import nativex.gtk.widgets.container.bin.windows.ApplicationWindow
 

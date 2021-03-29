@@ -2,11 +2,18 @@ package nativex.gio
 
 import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.reinterpret
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
+import nativex.async.callbackSignalFlow
 import nativex.glib.OptionArg
 import nativex.glib.OptionFlags
+import nativex.gtk.Signals
+import nativex.gtk.connectSignal
+import nativex.gtk.staticNoArgGCallback
 
 /**
  * kotlinx-gtk
@@ -36,6 +43,63 @@ open class Application(
 			description,
 			argDescription
 		)
+	}
+
+	/**
+	 * Direct connection to [activateSignal] source
+	 *
+	 * This should not be used by developers
+	 */
+	@ExperimentalUnsignedTypes
+	fun onActivate(onActive: () -> Unit) {
+		// Has to be a direct event, to prevent application from shutting down
+		gApplicationPointer.connectSignal(
+			Signals.ACTIVATE,
+			handler = staticNoArgGCallback,
+			callbackWrapper = StableRef.create {
+				onActive()
+			}.asCPointer()
+		)
+	}
+
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val activateSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.ACTIVATE)
+	}
+
+	val commandLineSignal: Flow<GApplicationCommandLine>
+		get() = TODO()
+
+	val handleLocalOptions: Flow<GVariantDict>
+		get() = TODO()
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val nameLostSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.NAME_LOST)
+	}
+
+	data class OpenEvent(
+		val files: Sequence<File>,
+		val hint: String,
+	)
+
+	val openSignal: Flow<OpenEvent>
+		get() = TODO()
+
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val shutdownSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.SHUTDOWN)
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val startupSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.STARTUP)
 	}
 
 	enum class Flags constructor(

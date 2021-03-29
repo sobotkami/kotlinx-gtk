@@ -1,4 +1,4 @@
-package nativex.gtk.dsl
+package nativex
 
 /**
  * kotlinx-gtk

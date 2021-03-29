@@ -21,6 +21,13 @@ object Signals {
 	const val CLICKED = "clicked"
 	const val ACTIVATE = "activate"
 
+	// Gtk Application
+	const val STARTUP = "startup"
+	const val SHUTDOWN = "shutdown"
+	const val OPEN = "open"
+	const val NAME_LOST = "name-lost"
+	const val HANDLE_LOCAL_OPTIONS = "handle-location-options"
+	const val COMMAND_LINE = "command-line"
 
 	const val CHANGED = "changed"
 	const val VALUE_CHANGED = "value-changed"
@@ -81,6 +88,9 @@ object Signals {
 	// GtkInfoBar
 	const val CLOSE = "close"
 	const val RESPONSE = "response"
+
+	// GMenuModel
+	const val ITEMS_CHANGED = "items-changed"
 
 
 }

@@ -3,7 +3,7 @@ package nativex.gio.dsl
 import nativex.gio.ActionMap
 import nativex.gio.SimpleAction
 import nativex.gio.SimpleAction.Companion.safeCast
-import nativex.gtk.dsl.GtkDsl
+import nativex.GtkDsl
 
 /**
  * kotlinx-gtk

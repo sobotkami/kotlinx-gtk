@@ -2,6 +2,7 @@ package nativex.gtk.dsl
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
+import nativex.GtkDsl
 import nativex.async.launchUnconfined
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.entry.SearchEntry

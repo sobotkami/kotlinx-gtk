@@ -95,17 +95,7 @@ class Application internal constructor(
 		gtk_application_remove_window(applicationPointer, window.windowPointer)
 	}
 
-	@ExperimentalUnsignedTypes
-	fun onActivate(onActive: () -> Unit) {
-		// Has to be a direct event, to prevent application from shutting down
-		applicationPointer.connectSignal(
-			Signals.ACTIVATE,
-			handler = staticNoArgGCallback,
-			callbackWrapper = StableRef.create {
-				onActive()
-			}.asCPointer()
-		)
-	}
+
 
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi

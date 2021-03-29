@@ -2,6 +2,7 @@ package nativex.gtk.dsl
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
+import nativex.GtkDsl
 import nativex.async.launchUnconfined
 import nativex.gio.Application.*
 import nativex.gtk.Application
@@ -23,17 +24,16 @@ inline fun application(
 	}.run()
 
 
+
+
 @ExperimentalUnsignedTypes
+@ExperimentalCoroutinesApi
 @GtkDsl
-/**
- * Invokes [uiBuilder] when [Application.onActivate] occurs
- *
- * This will only occur once
- */
-inline fun Application.onCreateUI(crossinline uiBuilder: Application.() -> Unit) {
-	// Building the UI has to occur on the main thread
-	onActivate {
-		this@onCreateUI.apply(uiBuilder)
+inline fun Application.onQueryEnd(crossinline onQueryEnd: suspend () -> Unit) {
+	launchUnconfined {
+		queryEndSignal.collectLatest {
+			onQueryEnd()
+		}
 	}
 }
 

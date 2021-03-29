@@ -1,5 +1,6 @@
 package nativex.gtk.dsl
 
+import nativex.GtkDsl
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.container.Fixed
 

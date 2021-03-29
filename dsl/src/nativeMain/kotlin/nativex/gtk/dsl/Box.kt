@@ -1,5 +1,6 @@
 package nativex.gtk.dsl
 
+import nativex.GtkDsl
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.widgets.Widget

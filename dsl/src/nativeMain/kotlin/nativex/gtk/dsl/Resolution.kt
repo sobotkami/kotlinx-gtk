@@ -1,5 +1,7 @@
 package nativex.gtk.dsl
 
+import nativex.GtkDsl
+
 
 typealias Resolution = Pair<Int, Int>
 
