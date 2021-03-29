@@ -5,6 +5,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import nativex.async.launchDefault
+import nativex.gio.Menu
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
 import nativex.gtk.widgets.container.bin.windows.Window
@@ -73,6 +74,7 @@ val viewModel = ViewModel()
 @Test
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {
+
 		onWindowAdded {
 			println("Added new window ${it.title}")
 		}
@@ -81,11 +83,16 @@ fun main() {
 			println("Removed window ${it.title}")
 		}
 		onCreateUI {
+			menuBar = Menu().apply {
+				appendItem(Menu.Item("File"))
+			}
 			measureTimeMillis {
 				applicationWindow {
 					title = "Kotlin/Native Gtk Test"
 					defaultSize = 600 x 200
 					add(mainKotlinTestBox)
+
+
 				}.showAll()
 			}.also {
 				println("Created UI in $it ms")
