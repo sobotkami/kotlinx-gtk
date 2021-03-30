@@ -13,7 +13,6 @@ import nativex.gtk.widgets.container.box.Box
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 open class ButtonBox internal constructor(
 	internal val buttonBoxPointer: CPointer<GtkButtonBox>
 ) : Box(

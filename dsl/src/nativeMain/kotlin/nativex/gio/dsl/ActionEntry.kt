@@ -10,7 +10,13 @@ fun actionEntry(
 	parameterType: String? = null,
 	state: String? = null,
 	changeState: ActionMapEntryFunction = null
-) = ActionMap.Entry(name, onActivate, parameterType, state, changeState)
+) = ActionMap.Entry(
+	name = name,
+	onActivate = onActivate,
+	parameterType = parameterType,
+	state = state,
+	changeState = changeState
+)
 
 
 fun stringActionEntry(

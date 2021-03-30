@@ -17,19 +17,24 @@ interface ActionMap {
 			ImplAction(it)
 		}
 
+	fun addActionEntries(vararg entries: Entry){
+		addActionEntries(entries.toList())
+	}
+
 	fun addActionEntries(
 		entries: List<Entry>,
-		userData: Any
+		userData: Any? = null
 	) {
 		g_action_map_add_action_entries(
 			actionMapPointer.ptr,
 			memScoped<CValuesRef<GActionEntry>?> {
-				allocArrayOf(entries.map { it.actionEntryPointer } + null).pointed.value
+				allocArrayOf(entries.map { it.actionEntryPointer }).pointed.value
 			},
-			-1,
-			StableRef.create { actionPointer: CPointer<GSimpleAction>?,
-			                   parameterPointer: CPointer<GVariant>?,
-			                   type: Int ->
+			entries.size,
+			@Suppress("RemoveExplicitTypeArguments")
+			StableRef.create<NativeActionMapEntryFunction> { actionPointer: CPointer<GSimpleAction>?,
+			                                                 parameterPointer: CPointer<GVariant>?,
+			                                                 type: Int ->
 				entries.find { it.actionEntryPointer == actionPointer }
 					?.let { entry ->
 						when (type) {
@@ -101,7 +106,6 @@ interface ActionMap {
 		init {
 			actionEntryPointer.pointed.activate = activateCallback
 			actionEntryPointer.pointed.change_state = changeStateCallback
-
 		}
 
 		constructor(

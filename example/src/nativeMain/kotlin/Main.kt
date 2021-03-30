@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import nativex.async.launchDefault
 import nativex.gio.dsl.*
+import nativex.glib.Variant
 import nativex.gtk.dsl.*
 import kotlin.system.measureTimeMillis
 import kotlin.test.Test
@@ -67,6 +68,8 @@ class ViewModel {
 
 val viewModel = ViewModel()
 
+const val ACTION_QUIT = "actionquit"
+
 @ExperimentalCoroutinesApi
 @ExperimentalUnsignedTypes
 @Test
@@ -84,14 +87,32 @@ fun main() {
 			println("Removed window ${it.title}")
 		}
 
+
+
+
 		onCreateUI {
 			menuBar {
 				submenu("File", menu {
 					item("Open")
+					submenu("Recent", menu {
+						item("A")
+						item("B")
+						item("C")
+					})
+
+					item("Quit") {
+						setActionAndTargetValue(ACTION_QUIT,Variant.BooleanVariant(true))
+					}
 				})
+
 				item("Edit")
 				item("View")
 				item("Help")
+			}
+
+
+			lookUpSimpleAction(ACTION_QUIT) {
+				enable()
 			}
 
 			measureTimeMillis {

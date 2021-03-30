@@ -1,9 +1,9 @@
 package nativex.gio.dsl
 
+import nativex.GtkDsl
 import nativex.gio.Menu
 import nativex.gio.MenuModel
 import nativex.gtk.Application
-import nativex.GtkDsl
 
 /**
  * kotlinx-gtk
@@ -30,7 +30,14 @@ fun Menu.item(
 fun Menu.submenu(
 	label: String?,
 	menu: MenuModel,
-	subMenuBuilder: Menu.Item.Submenu.() -> Unit = {},
+	builder: Menu.Item.Submenu.() -> Unit = {},
 ): Menu.Item.Submenu =
-	Menu.Item.Submenu(label, menu).apply(subMenuBuilder).also { appendItem(it) }
+	Menu.Item.Submenu(label, menu).apply(builder).also { appendItem(it) }
 
+@GtkDsl
+fun Menu.section(
+	label: String?,
+	menu: MenuModel,
+	builder: Menu.Item.Section.() -> Unit = {}
+): Menu.Item.Section =
+	Menu.Item.Section(label, menu).apply(builder).also { appendItem(it) }
