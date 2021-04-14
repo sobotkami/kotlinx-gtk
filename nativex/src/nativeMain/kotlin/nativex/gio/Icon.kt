@@ -1,8 +1,10 @@
 package nativex.gio
 
 import gtk.*
+import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.toKString
 import nativex.PointerHolder
+import nativex.gdk.Pixbuf
 import nativex.glib.Variant
 import nativex.gtk.bool
 
@@ -42,4 +44,14 @@ interface Icon {
 
 }
 
-internal class ImplIcon(override val pointer: PointerHolder<GIcon>) : Icon
+internal class ImplIcon(override val pointer: PointerHolder<GIcon>) : Icon {
+	constructor(pointer: CPointer<GIcon>) : this(PointerHolder(pointer))
+
+	companion object {
+		internal inline fun CPointer<GIcon>?.wrap() =
+			this?.let { ImplIcon(it) }
+
+		internal inline fun CPointer<GIcon>.wrap() =
+			ImplIcon(this)
+	}
+}

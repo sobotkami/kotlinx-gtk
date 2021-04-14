@@ -27,7 +27,7 @@ class RecentChooserMenu internal constructor(
 	 *     gtk_recent_chooser_menu_new_for_manager</a>
 	 */
 	constructor(manager: RecentManager) : this(
-		gtk_recent_chooser_menu_new_for_manager(manager.recentManagerPointer)!!.reinterpret()
+		gtk_recent_chooser_menu_new_for_manager(manager.managerPointer)!!.reinterpret()
 	)
 
 	/**
