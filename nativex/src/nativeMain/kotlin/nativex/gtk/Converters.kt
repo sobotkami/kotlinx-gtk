@@ -47,26 +47,42 @@ internal inline fun CStringList?.asStringList(): List<String> =
 		.toList()
 		.map { it.toKString() }
 
+internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable(): Iterator<CPointer<T>> =
+	object : Iterator<CPointer<T>> {
+		var index = 0
+
+		override fun hasNext(): Boolean =
+			get(index + 1) != null
+
+		override fun next(): CPointer<T> = get(index++)!!
+	}
 
 /**
  * Null termination accepting sequence
  */
 internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
 	this ?: return emptySequence()
-
 	return object : Sequence<CPointer<T>> {
-		private val iterator: Iterator<CPointer<T>> by lazy {
-			object : Iterator<CPointer<T>> {
-				var index = 0
+		override fun iterator(): Iterator<CPointer<T>> =
+			this@asSequence.asIterable()
+	}
+}
 
-				override fun hasNext(): Boolean =
-					get(index + 1) != null
+/**
+ * Null termination accepting sequence
+ */
+internal inline fun CStringList?.asKSequence(): Sequence<String> {
+	this ?: return emptySequence()
 
-				override fun next(): CPointer<T> = get(index++)!!
+	return object : Sequence<String> {
+		override fun iterator(): Iterator<String> = object : Iterator<String> {
+			private val iterator: Iterator<CString> by lazy {
+				this@asKSequence.asIterable()
 			}
-		}
 
-		override fun iterator(): Iterator<CPointer<T>> = iterator
+			override fun hasNext(): Boolean = iterator.hasNext()
+			override fun next(): String = iterator.next().toKString()
+		}
 	}
 }
 

@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.gtk.Signals
+import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
  * kotlinx-gtk
@@ -37,7 +38,15 @@ abstract class MenuModel internal constructor(
 	 * Impl classes are used to purely wrap pointers returned for [MenuModel]
 	 */
 	internal class Impl(menuModelPointer: CPointer<GMenuModel>) :
-		MenuModel(menuModelPointer)
+		MenuModel(menuModelPointer) {
+		companion object {
+			internal inline fun CPointer<GMenuModel>?.wrap() =
+				this?.let { Impl(it) }
+
+			internal inline fun CPointer<GMenuModel>.wrap() =
+				Impl(this)
+		}
+	}
 
 	companion object {
 		internal val staticItemsChangedSignal: GCallback =

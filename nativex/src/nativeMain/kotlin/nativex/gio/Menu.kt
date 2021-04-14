@@ -206,5 +206,11 @@ class Menu internal constructor(
 
 		fun MenuModel.asMenu(): Menu? =
 			from(this)
+
+		internal inline fun CPointer<GMenu>?.wrap() =
+			this?.let { Menu(it) }
+
+		internal inline fun CPointer<GMenu>.wrap() =
+			Menu(this)
 	}
 }

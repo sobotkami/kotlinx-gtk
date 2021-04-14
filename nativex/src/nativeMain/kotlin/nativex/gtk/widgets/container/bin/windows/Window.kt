@@ -8,6 +8,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.glib.Variant
 import nativex.gtk.*
 import nativex.gtk.GtkWindowGroup
 import nativex.gtk.widgets.Widget
@@ -271,6 +272,13 @@ open class Window internal constructor(
 					?.invoke(widget?.let { Widget(it) })
 				Unit
 			}.reinterpret()
+
+
+		internal inline fun CPointer<GtkWindow>?.wrap() =
+			this?.let { Window(it) }
+
+		internal inline fun CPointer<GtkWindow>.wrap() =
+			Window(this)
 	}
 
 	enum class Type(val key: Int, internal val gtk: GtkWindowType) {
