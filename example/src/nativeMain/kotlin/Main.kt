@@ -101,7 +101,10 @@ fun main() {
 					})
 
 					item("Quit") {
-						setActionAndTargetValue(ACTION_QUIT,Variant.BooleanVariant(true))
+						setActionAndTargetValue(
+							ACTION_QUIT,
+							Variant.BooleanVariant(true)
+						)
 					}
 				})
 
@@ -119,9 +122,7 @@ fun main() {
 				applicationWindow {
 					title = "Kotlin/Native Gtk Test"
 					defaultSize = 600 x 200
-					mainKotlinTestBox
-
-
+					mainKotlinTestBox(this@onCreateUI)
 				}.showAll()
 			}.also {
 				println("Created UI in $it ms")

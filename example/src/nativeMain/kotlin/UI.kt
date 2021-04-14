@@ -3,6 +3,9 @@ import kotlinx.coroutines.flow.first
 import nativex.async.launchDefault
 import nativex.async.launchIO
 import nativex.async.launchUI
+import nativex.gio.Notification
+import nativex.gio.dsl.sendNotification
+import nativex.gtk.Application
 import nativex.gtk.IconSize
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
@@ -17,8 +20,8 @@ import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
  */
 @ExperimentalCoroutinesApi
 @ExperimentalUnsignedTypes
-internal val Window.mainKotlinTestBox
-	get() = box(Orientation.HORIZONTAL, 10) {
+internal fun Window.mainKotlinTestBox(application: Application) =
+	box(Orientation.HORIZONTAL, 10) {
 		start {
 			frame(
 				"Concurrent Access Test",
@@ -59,6 +62,32 @@ internal val Window.mainKotlinTestBox
 					button("Stop") {
 						onClicked {
 							viewModel.stopJobTest()
+						}
+					}
+				}
+			}
+
+			frame("Notification Test") {
+				verticalButtonBox {
+					buttonBoxStyle =
+						ButtonBox.ButtonBoxStyle.CENTER
+
+					button("Send") {
+						onClicked {
+							println("Sending notification")
+							application.sendNotification(
+								id = "kotlinx",
+								title = "Test",
+								body = "This is a test notification",
+								priority = Notification.Priority.URGENT
+							)
+						}
+					}
+
+					button("Withdraw") {
+						onClicked {
+							println("Withdrawing notification")
+							application.withdrawNotification("kotlinx")
 						}
 					}
 				}

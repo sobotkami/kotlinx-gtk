@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
 import nativex.async.launchUnconfined
 import nativex.gio.Application
+import nativex.gio.Icon
+import nativex.gio.Notification
 
 @ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
@@ -51,6 +53,24 @@ inline fun <T> T.onCreateUI(crossinline uiBuilder: T.() -> Unit) where T : Appli
 	onActivate {
 		this@onCreateUI.apply(uiBuilder)
 	}
+}
+
+
+@GtkDsl
+inline fun Application.sendNotification(
+	title: String,
+	id: String? = null,
+	body: String = "",
+	icon: Icon? = null,
+	priority: Notification.Priority = Notification.Priority.NORMAL,
+	builder: Notification.() -> Unit = {}
+) = Notification(title).apply {
+	setBody(body)
+	icon?.let { setIcon(it) }
+	setPriority(priority)
+	builder()
+}.also {
+	sendNotification(it, id)
 }
 
 
