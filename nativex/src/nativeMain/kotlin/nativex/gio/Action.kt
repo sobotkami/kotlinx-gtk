@@ -4,7 +4,9 @@ import gtk.*
 import kotlinx.cinterop.toKString
 import nativex.PointerHolder
 import nativex.glib.Variant
+import nativex.glib.Variant.Companion.wrap
 import nativex.glib.VariantType
+import nativex.glib.VariantType.Companion.wrap
 import nativex.gtk.bool
 
 /**
@@ -20,27 +22,19 @@ interface Action {
 			g_action_get_name(actionPointer.ptr)!!.toKString()
 
 	val parameterType: VariantType?
-		get() = g_action_get_parameter_type(actionPointer.ptr)?.let {
-			VariantType(it)
-		}
+		get() = g_action_get_parameter_type(actionPointer.ptr).wrap()
 
 	val stateType: VariantType?
-		get() = g_action_get_state_type(actionPointer.ptr)?.let {
-			VariantType(it)
-		}
+		get() = g_action_get_state_type(actionPointer.ptr).wrap()
 
 	val stateHint: Variant?
-		get() = g_action_get_state_hint(actionPointer.ptr)?.let {
-			Variant(it)
-		}
+		get() = g_action_get_state_hint(actionPointer.ptr).wrap()
 
 	val enabled: Boolean
 		get() = g_action_get_enabled(actionPointer.ptr).bool
 
 	val state: Variant?
-		get() = g_action_get_state(actionPointer.ptr)?.let {
-			Variant(it)
-		}
+		get() = g_action_get_state(actionPointer.ptr).wrap()
 
 	fun changeState(value: Variant) {
 		@Suppress("UNCHECKED_CAST")

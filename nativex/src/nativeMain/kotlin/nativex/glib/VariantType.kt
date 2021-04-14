@@ -112,6 +112,11 @@ sealed class VariantType(
 		fun scanString(string: String, limit: String? = null): Boolean =
 			g_variant_type_string_scan(string, limit, null).bool
 
+		internal inline fun CPointer<GVariantType>?.wrap(): VariantType? =
+			this?.let { OpenVariant(it) }
+
+		internal inline fun CPointer<GVariantType>.wrap(): VariantType =
+			OpenVariant(this)
 	}
 
 }

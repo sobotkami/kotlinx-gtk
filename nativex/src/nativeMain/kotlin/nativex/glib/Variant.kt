@@ -1,12 +1,11 @@
 package nativex.glib
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.toCStringArray
-import kotlinx.cinterop.toKString
+import kotlinx.cinterop.*
 import nativex.gtk.bool
 import nativex.gtk.gtk
+import nativex.gtk.toNullTermCStringArray
+import platform.posix.va_list
 
 /**
  * kotlinx-gtk
@@ -44,17 +43,24 @@ open class Variant internal constructor(
 	 * @see <a href="https://developer.gnome.org/glib/stable/glib-GVariant.html#g-variant-get-va">
 	 *     g_variant_get_va</a>
 	 */
-	fun get(formatString: String, vararg args: Any) {
-		TODO("g_variant_get_va")
+	fun get(format: String, vararg args: String) {
+		val v: va_list = args.toList().toNullTermCStringArray()
+			.reinterpret()
+		g_variant_get_va(
+			variantPointer,
+			format,
+			null,
+			null, //TODO Solve va_list issue
+		)
 	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/glib/stable/glib-GVariant.html#g-variant-new-va">
 	 *     g_variant_new_va</a>
 	 */
-	constructor(formatString: String, vararg args: Any) : this(
+	constructor(format: String, vararg args: Any) : this(
 		g_variant_new_va(
-			formatString,
+			format,
 			null,
 			null
 		)!!
@@ -134,5 +140,12 @@ open class Variant internal constructor(
 
 		val String.isSignature: Boolean
 			get() = isSignature(this)
+
+		internal inline fun CPointer<GVariant>?.wrap() =
+			this?.let { Variant(it) }
+
+		internal inline fun CPointer<GVariant>.wrap() =
+			Variant(this)
 	}
+
 }
