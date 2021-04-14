@@ -81,18 +81,27 @@ class Application internal constructor(
 			applicationPointer
 		)!!.asCloseableKSequence()
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-query-end">query-end</a>
+	 */
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
 	val queryEndSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.QUERY_END)
 	}
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-added">window-added</a>
+	 */
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
 	val windowAddedSignal: Flow<Window> by lazy {
 		callbackSignalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
 	}
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-removed">window-removed</a>
+	 */
 	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
 	val windowRemovedSignal: Flow<Window> by lazy {
