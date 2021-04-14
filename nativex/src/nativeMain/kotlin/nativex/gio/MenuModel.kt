@@ -11,7 +11,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.gtk.Signals
-import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
  * kotlinx-gtk
@@ -19,7 +18,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
  */
 abstract class MenuModel internal constructor(
 	internal val menuModelPointer: CPointer<GMenuModel>
-) : KotlinGObject(menuModelPointer.reinterpret()) {
+) : KObject(menuModelPointer.reinterpret()) {
 
 
 	data class ItemsChangedEvent(

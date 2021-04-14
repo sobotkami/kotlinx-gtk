@@ -31,6 +31,8 @@ internal typealias CString = CPointer<ByteVar>
 /**Shorthand for C's representation of a list of strings (a pointer to a list of char pointers).*/
 internal typealias CStringList = CPointer<CPointerVar<ByteVar>>
 
+
+
 fun Array<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
 	memScoped {
 		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)

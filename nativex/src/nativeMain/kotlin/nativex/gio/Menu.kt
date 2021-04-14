@@ -109,7 +109,7 @@ class Menu internal constructor(
 
 	open class Item internal constructor(
 		internal val menuItemPointer: CPointer<GMenuItem>
-	) : KotlinGObject(menuItemPointer.reinterpret()) {
+	) : KObject(menuItemPointer.reinterpret()) {
 		constructor(label: String? = null, detailedAction: String? = null) : this(
 			g_menu_item_new(label, detailedAction)!!.reinterpret()
 		)

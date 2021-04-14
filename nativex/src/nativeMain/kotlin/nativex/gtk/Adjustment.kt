@@ -6,7 +6,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 
 /**
  * kotlinx-gtk
@@ -15,7 +15,7 @@ import nativex.gio.KotlinGObject
 class Adjustment internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val adjustmentPointer: CPointer<GtkAdjustment>
-) : KotlinGObject(adjustmentPointer.reinterpret()) {
+) : KObject(adjustmentPointer.reinterpret()) {
 	var value: Double
 		get() = gtk_adjustment_get_value(adjustmentPointer)
 		set(value) = gtk_adjustment_set_value(adjustmentPointer, value)

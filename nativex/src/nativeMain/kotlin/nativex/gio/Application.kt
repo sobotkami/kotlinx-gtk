@@ -1,17 +1,18 @@
 package nativex.gio
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
-import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
+import nativex.gio.DBusConnection.Companion.wrap
+import nativex.gio.File.Companion.toCArray
 import nativex.glib.OptionArg
 import nativex.glib.OptionFlags
 import nativex.gtk.Signals
+import nativex.gtk.bool
+import nativex.gtk.common.ext.unwrap
 import nativex.gtk.connectSignal
 import nativex.gtk.staticNoArgGCallback
 
@@ -21,9 +22,109 @@ import nativex.gtk.staticNoArgGCallback
  */
 open class Application(
 	private val gApplicationPointer: CPointer<GApplication>
-) : KotlinGObject(gApplicationPointer.reinterpret()), ActionMap {
-	fun run(argc: Int = 0): Int = memScoped {
-		g_application_run(gApplicationPointer, argc, null)
+) : KObject(gApplicationPointer.reinterpret()), ActionMap {
+
+	constructor(applicationID: String?, flags: Flags) : this(
+		g_application_new(
+			applicationID,
+			flags.gtk
+		)!!.reinterpret()
+	)
+
+	var applicationID: String?
+		get() = g_application_get_application_id(gApplicationPointer)?.toKString()
+		set(value) = g_application_set_application_id(
+			gApplicationPointer,
+			value
+		)
+
+	@ExperimentalUnsignedTypes
+	var inactivityTimeout: UInt
+		get() = g_application_get_inactivity_timeout(gApplicationPointer)
+		set(value) = g_application_set_inactivity_timeout(
+			gApplicationPointer,
+			value
+		)
+
+	@ExperimentalUnsignedTypes
+	var flags: Flags
+		get() = Flags.valueOf(g_application_get_flags(gApplicationPointer))!!
+		set(value) = g_application_set_flags(gApplicationPointer, value.gtk)
+
+	var resourceBasePath: String?
+		get() = g_application_get_resource_base_path(gApplicationPointer)?.toKString()
+		set(value) = g_application_set_resource_base_path(
+			gApplicationPointer,
+			value
+		)
+
+	val dbusConnection: DBusConnection?
+		get() = g_application_get_dbus_connection(gApplicationPointer).wrap()
+
+
+	val dbusObjectPath: String?
+		get() = g_application_get_dbus_object_path(gApplicationPointer)?.toKString()
+
+	val isRegistered: Boolean
+		get() = g_application_get_is_registered(gApplicationPointer).bool
+
+	val isRemote: Boolean
+		get() = g_application_get_is_remote(gApplicationPointer).bool
+
+	fun register(cancellable: KCancellable): Boolean = memScoped {
+		val err = allocPointerTo<GError>().ptr
+		val r = g_application_register(
+			gApplicationPointer,
+			cancellable.cancellablePointer,
+			err
+		)
+		err.unwrap()
+		r.bool
+	}
+
+	fun hold() {
+		g_application_hold(gApplicationPointer)
+	}
+
+	fun release() {
+		g_application_release(gApplicationPointer)
+	}
+
+	fun quit() {
+		g_application_quit(gApplicationPointer)
+	}
+
+	fun activate() {
+		g_application_activate(gApplicationPointer)
+	}
+
+	fun open(files: Array<File>, hint: String = "") {
+		g_application_open(
+			gApplicationPointer,
+			files.toCArray(),
+			files.size,
+			hint
+		)
+	}
+
+	fun sendNotification(notification: Notification, id: String? = null) {
+		g_application_send_notification(
+			gApplicationPointer,
+			id,
+			notification.notificationPointer
+		)
+	}
+
+	fun withdrawNotification(id: String) {
+		g_application_withdraw_notification(gApplicationPointer, id)
+	}
+
+
+	fun run(argc: Int = 0, argv: Array<String> = arrayOf()): Int = memScoped {
+		g_application_run(
+			gApplicationPointer,
+			argc,
+			memScoped { argv.toCStringArray(this) })
 	}
 
 	fun addMainOption(
@@ -129,4 +230,9 @@ open class Application(
 
 	override val actionMapPointer: PointerHolder<GActionMap>
 		get() = PointerHolder(gApplicationPointer.reinterpret())
+
+	companion object {
+		fun isIdValid(applicationID: String): Boolean =
+			g_application_id_is_valid(applicationID).bool
+	}
 }

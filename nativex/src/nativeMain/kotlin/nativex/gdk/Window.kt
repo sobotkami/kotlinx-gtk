@@ -3,7 +3,7 @@ package nativex.gdk
 import gtk.GdkWindow
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 
 /**
  * kotlinx-gtk
@@ -11,4 +11,4 @@ import nativex.gio.KotlinGObject
  */
 class Window internal constructor(
 	internal val windowPointer: CPointer<GdkWindow>
-) : KotlinGObject(windowPointer.reinterpret())
+) : KObject(windowPointer.reinterpret())

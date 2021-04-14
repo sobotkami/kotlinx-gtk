@@ -12,7 +12,7 @@ import nativex.gio.AppInfo
 import nativex.gio.AppInfo.Companion.wrap
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 import nativex.gtk.RecentManager.RecentInfo.Companion.wrap
 import nativex.gtk.common.ext.unwrap
 
@@ -22,7 +22,7 @@ import nativex.gtk.common.ext.unwrap
  */
 class RecentManager internal constructor(
 	internal val managerPointer: CPointer<GtkRecentManager>
-) : KotlinGObject(managerPointer.reinterpret()) {
+) : KObject(managerPointer.reinterpret()) {
 
 	val items: Sequence<RecentInfo>
 		get() = gtk_recent_manager_get_items(managerPointer)

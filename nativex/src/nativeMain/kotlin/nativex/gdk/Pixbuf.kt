@@ -3,8 +3,7 @@ package nativex.gdk
 import gtk.GdkPixbuf
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.AppInfo
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 
 /**
  * kotlinx-gtk
@@ -12,7 +11,7 @@ import nativex.gio.KotlinGObject
  */
 class Pixbuf internal constructor(
 	internal val pixbufPointer: CPointer<GdkPixbuf>
-) : KotlinGObject(pixbufPointer.reinterpret()) {
+) : KObject(pixbufPointer.reinterpret()) {
 
 	companion object {
 		internal inline fun CPointer<GdkPixbuf>?.wrap() =

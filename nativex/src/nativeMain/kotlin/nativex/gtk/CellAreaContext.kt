@@ -3,7 +3,7 @@ package nativex.gtk
 import gtk.GtkCellAreaContext
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 
 /**
  * kotlinx-gtk
@@ -11,7 +11,7 @@ import nativex.gio.KotlinGObject
  */
 class CellAreaContext internal constructor(
 	internal val cellAreaContextPointer: CPointer<GtkCellAreaContext>
-) : KotlinGObject(cellAreaContextPointer.reinterpret()) {
+) : KObject(cellAreaContextPointer.reinterpret()) {
 
 
 }

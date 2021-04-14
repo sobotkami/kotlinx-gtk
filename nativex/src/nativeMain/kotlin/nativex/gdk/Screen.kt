@@ -3,7 +3,7 @@ package nativex.gdk
 import gtk.GdkScreen
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 
 /**
  * kotlinx-gtk
@@ -11,6 +11,6 @@ import nativex.gio.KotlinGObject
  */
 class Screen internal constructor(
 	internal val screenPointer: CPointer<GdkScreen>
-) : KotlinGObject(screenPointer.reinterpret()) {
+) : KObject(screenPointer.reinterpret()) {
 
 }

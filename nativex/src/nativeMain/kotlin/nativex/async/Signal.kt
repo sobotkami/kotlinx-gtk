@@ -9,13 +9,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 import nativex.gtk.connectSignal
 
 
 @ExperimentalCoroutinesApi
 @ExperimentalUnsignedTypes
-internal inline fun KotlinGObject.callbackSignalFlow(signal: String): Flow<Unit> =
+internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(
 			signal = signal,
@@ -35,7 +35,7 @@ internal inline fun KotlinGObject.callbackSignalFlow(signal: String): Flow<Unit>
  */
 @ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
-internal inline fun <T> KotlinGObject.callbackSignalFlow(
+internal inline fun <T> KObject.callbackSignalFlow(
 	signal: String,
 	handler: GCallback,
 ): Flow<T> = pointer.callbackSignalFlow(signal, handler)

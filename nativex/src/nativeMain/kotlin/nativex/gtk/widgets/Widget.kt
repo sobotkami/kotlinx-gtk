@@ -6,7 +6,7 @@ import nativex.gdk.Device
 import nativex.gdk.Event
 import nativex.gdk.GWindow
 import nativex.gdk.Visual
-import nativex.gio.KotlinGObject
+import nativex.gio.KObject
 import nativex.gtk.WidgetPointer
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
@@ -21,7 +21,7 @@ import nativex.gtk.gtk
 
 open class Widget(
 	internal open val widgetPointer: WidgetPointer
-) : KotlinGObject(
+) : KObject(
 	widgetPointer.reinterpret()
 ) {
 

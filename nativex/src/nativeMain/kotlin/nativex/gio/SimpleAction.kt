@@ -17,7 +17,7 @@ import nativex.gtk.gtk
 class SimpleAction internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val simpleActionPointer: CPointer<GSimpleAction>
-) : KotlinGObject(simpleActionPointer.reinterpret()), Action {
+) : KObject(simpleActionPointer.reinterpret()), Action {
 	companion object {
 		/**
 		 * Convert an [Action] safely as an
