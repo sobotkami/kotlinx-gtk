@@ -9,7 +9,9 @@ import nativex.async.callbackSignalFlow
 import nativex.gio.DBusConnection.Companion.wrap
 import nativex.gio.File.Companion.toCArray
 import nativex.glib.OptionArg
+import nativex.glib.OptionEntry
 import nativex.glib.OptionFlags
+import nativex.glib.OptionGroup
 import nativex.gtk.Signals
 import nativex.gtk.bool
 import nativex.gtk.common.ext.unwrap
@@ -23,13 +25,8 @@ import nativex.gtk.staticNoArgGCallback
 open class Application(
 	private val gApplicationPointer: CPointer<GApplication>
 ) : KObject(gApplicationPointer.reinterpret()), ActionMap {
-
-	constructor(applicationID: String?, flags: Flags) : this(
-		g_application_new(
-			applicationID,
-			flags.gtk
-		)!!.reinterpret()
-	)
+	// TODO g_application_bind_busy_property
+	// TODO g_application_unbind_busy_property
 
 	var applicationID: String?
 		get() = g_application_get_application_id(gApplicationPointer)?.toKString()
@@ -50,26 +47,61 @@ open class Application(
 	var flags: Flags
 		get() = Flags.valueOf(g_application_get_flags(gApplicationPointer))!!
 		set(value) = g_application_set_flags(gApplicationPointer, value.gtk)
-
 	var resourceBasePath: String?
 		get() = g_application_get_resource_base_path(gApplicationPointer)?.toKString()
 		set(value) = g_application_set_resource_base_path(
 			gApplicationPointer,
 			value
 		)
-
 	val dbusConnection: DBusConnection?
 		get() = g_application_get_dbus_connection(gApplicationPointer).wrap()
-
-
 	val dbusObjectPath: String?
 		get() = g_application_get_dbus_object_path(gApplicationPointer)?.toKString()
-
 	val isRegistered: Boolean
 		get() = g_application_get_is_registered(gApplicationPointer).bool
-
 	val isRemote: Boolean
 		get() = g_application_get_is_remote(gApplicationPointer).bool
+	val isBusy: Boolean
+		get() = g_application_get_is_busy(gApplicationPointer).bool
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val activateSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.ACTIVATE)
+	}
+	val commandLineSignal: Flow<GApplicationCommandLine>
+		get() = TODO()
+	val handleLocalOptions: Flow<GVariantDict>
+		get() = TODO()
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val nameLostSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.NAME_LOST)
+	}
+	val openSignal: Flow<OpenEvent>
+		get() = TODO()
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val shutdownSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.SHUTDOWN)
+	}
+
+	@ExperimentalUnsignedTypes
+	@ExperimentalCoroutinesApi
+	val startupSignal: Flow<Unit> by lazy {
+		callbackSignalFlow(Signals.STARTUP)
+	}
+	override val actionMapPointer: PointerHolder<GActionMap>
+		get() = PointerHolder(gApplicationPointer.reinterpret())
+
+	constructor(applicationID: String?, flags: Flags) : this(
+		g_application_new(
+			applicationID,
+			flags.gtk
+		)!!.reinterpret()
+	)
 
 	fun register(cancellable: KCancellable): Boolean = memScoped {
 		val err = allocPointerTo<GError>().ptr
@@ -119,12 +151,15 @@ open class Application(
 		g_application_withdraw_notification(gApplicationPointer, id)
 	}
 
-
 	fun run(argc: Int = 0, argv: Array<String> = arrayOf()): Int = memScoped {
 		g_application_run(
 			gApplicationPointer,
 			argc,
 			memScoped { argv.toCStringArray(this) })
+	}
+
+	fun addMainOptionEntries(entries: Array<OptionEntry>) {
+		TODO("g_application_add_main_option_entries")
 	}
 
 	fun addMainOption(
@@ -138,13 +173,51 @@ open class Application(
 		g_application_add_main_option(
 			gApplicationPointer,
 			longName,
-			shortName.toByte(),
+			shortName.code.toByte(),
 			flags.gtk,
 			arg.gtk,
 			description,
 			argDescription
 		)
 	}
+
+	fun addOptionGroup(optionGroup: OptionGroup) {
+		g_application_add_option_group(
+			gApplicationPointer,
+			optionGroup.optionPointer
+		)
+	}
+
+	fun setOptionContextParameterString(parameterString: String?) {
+		g_application_set_option_context_parameter_string(
+			gApplicationPointer,
+			parameterString
+		)
+	}
+
+	fun setOptionContextSummary(summary: String?) {
+		g_application_set_option_context_summary(
+			gApplicationPointer,
+			summary
+		)
+	}
+
+	fun setOptionContextDescription(description: String?) {
+		g_application_set_option_context_description(
+			gApplicationPointer,
+			description
+		)
+	}
+
+	fun setDefault() {
+		g_application_set_default(gApplicationPointer)
+	}
+
+	fun markBusy() =
+		g_application_mark_busy(gApplicationPointer)
+
+	fun markNotBusy() =
+		g_application_unmark_busy(gApplicationPointer)
 
 	/**
 	 * Direct connection to [activateSignal] source
@@ -163,45 +236,10 @@ open class Application(
 		)
 	}
 
-
-	@ExperimentalUnsignedTypes
-	@ExperimentalCoroutinesApi
-	val activateSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE)
-	}
-
-	val commandLineSignal: Flow<GApplicationCommandLine>
-		get() = TODO()
-
-	val handleLocalOptions: Flow<GVariantDict>
-		get() = TODO()
-
-	@ExperimentalUnsignedTypes
-	@ExperimentalCoroutinesApi
-	val nameLostSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.NAME_LOST)
-	}
-
 	data class OpenEvent(
 		val files: Sequence<File>,
 		val hint: String,
 	)
-
-	val openSignal: Flow<OpenEvent>
-		get() = TODO()
-
-
-	@ExperimentalUnsignedTypes
-	@ExperimentalCoroutinesApi
-	val shutdownSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.SHUTDOWN)
-	}
-
-	@ExperimentalUnsignedTypes
-	@ExperimentalCoroutinesApi
-	val startupSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.STARTUP)
-	}
 
 	enum class Flags constructor(
 		val key: Int,
@@ -228,11 +266,19 @@ open class Application(
 		}
 	}
 
-	override val actionMapPointer: PointerHolder<GActionMap>
-		get() = PointerHolder(gApplicationPointer.reinterpret())
-
 	companion object {
+		val default: Application?
+			get() = g_application_get_default().wrap()
+
 		fun isIdValid(applicationID: String): Boolean =
 			g_application_id_is_valid(applicationID).bool
+
+		internal inline fun CPointer<GApplication>?.wrap() =
+			this?.let { Application(it) }
+
+		internal inline fun CPointer<GApplication>.wrap() =
+			Application(this)
+
+
 	}
 }
