@@ -92,6 +92,14 @@ object Signals {
 	// GMenuModel
 	const val ITEMS_CHANGED = "items-changed"
 
+	// GdkFrameClock
+	const val AFTER_PAINT = "after-paint"
+	const val BEFORE_PAINT = "before-paint"
+	const val FLUSH_EVENTS = "flush-events"
+	const val LAYOUT = "layout"
+	const val PAINT = "paint"
+	const val RESUME_EVENTS = "resume-events"
+	const val UPDATE = "update"
 
 }
 
