@@ -49,6 +49,9 @@ internal inline fun CStringList?.asStringList(): List<String> =
 		.toList()
 		.map { it.toKString() }
 
+/**
+ * For null terminated C arrays
+ */
 internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable(): Iterator<CPointer<T>> =
 	object : Iterator<CPointer<T>> {
 		var index = 0
@@ -60,7 +63,7 @@ internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable()
 	}
 
 /**
- * Null termination accepting sequence
+ * For null terminated C arrays
  */
 internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
 	this ?: return emptySequence()
