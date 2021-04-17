@@ -62,4 +62,13 @@ class FrameTimings internal constructor(
 	 */
 	val predictedPresentationTime: Long
 		get() = gdk_frame_timings_get_predicted_presentation_time(pointer)
+
+
+	companion object {
+		internal inline fun CPointer<GdkFrameTimings>?.wrap() =
+			this?.let { FrameTimings(it) }
+
+		internal inline fun CPointer<GdkFrameTimings>.wrap() =
+			FrameTimings(this)
+	}
 }
