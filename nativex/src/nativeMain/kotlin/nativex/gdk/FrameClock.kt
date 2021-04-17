@@ -164,4 +164,12 @@ class FrameClock internal constructor(
 				values().find { it.gdk == gdk }!!
 		}
 	}
+
+	companion object{
+		internal inline fun CPointer<GdkFrameClock>?.wrap() =
+			this?.let { FrameClock(it) }
+
+		internal inline fun CPointer<GdkFrameClock>.wrap() =
+			FrameClock(this)
+	}
 }

@@ -10,4 +10,14 @@ import kotlinx.cinterop.CPointer
 @Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 class Visual internal constructor(
 	internal val pointer: CPointer<GdkVisual>
-)
+) {
+
+	companion object {
+		internal inline fun CPointer<GdkVisual>?.wrap() =
+			this?.let { Visual(it) }
+
+		internal inline fun CPointer<GdkVisual>.wrap() =
+			Visual(this)
+
+	}
+}
