@@ -25,12 +25,12 @@ class AccelLabel internal constructor(
 			value?.widgetPointer
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	val accelWidth: UInt
 		get() = gtk_accel_label_get_accel_width(accelLabelPointer)
 
 
-	data class Accelerator @ExperimentalUnsignedTypes constructor(
+	data class Accelerator  constructor(
 		val key: UInt,
 		val modifierType: UInt
 	)
@@ -43,7 +43,7 @@ class AccelLabel internal constructor(
 		)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	fun getAccel(): Accelerator = memScoped {
 		val k = cValue<UIntVar>()
 		val m = cValue<UIntVar>()

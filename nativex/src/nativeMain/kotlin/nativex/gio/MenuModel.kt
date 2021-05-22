@@ -28,7 +28,7 @@ abstract class MenuModel internal constructor(
 	)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val itemsChangedSignal: Flow<ItemsChangedEvent> by lazy {
 		callbackSignalFlow(Signals.ITEMS_CHANGED, staticItemsChangedSignal)
 	}

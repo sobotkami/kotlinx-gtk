@@ -26,12 +26,12 @@ class Grid internal constructor(
 			value.gtk
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	var rowSpacing: UInt
 		get() = gtk_grid_get_row_spacing(gridPointer)
 		set(value) = gtk_grid_set_row_spacing(gridPointer, value)
 
-	@ExperimentalUnsignedTypes
+	
 	var columnSpacing: UInt
 		get() = gtk_grid_get_column_spacing(gridPointer)
 		set(value) = gtk_grid_set_column_spacing(gridPointer, value)

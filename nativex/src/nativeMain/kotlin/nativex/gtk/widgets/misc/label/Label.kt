@@ -30,7 +30,7 @@ open class Label internal constructor(
 		get() = gtk_label_get_text(labelPointer)!!.toKString()
 		set(value) = gtk_label_set_text(labelPointer, value)
 
-	@ExperimentalUnsignedTypes
+	
 	val mnemonicKeyval: UInt
 		get() = gtk_label_get_mnemonic_keyval(labelPointer)
 
@@ -138,7 +138,7 @@ open class Label internal constructor(
 		set(value) = gtk_label_set_selectable(labelPointer, value.gtk)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val activateCurrentLinkSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE_CURRENT_LINK)
 	}
@@ -146,13 +146,13 @@ open class Label internal constructor(
 		get() = TODO("Figure out char")
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val copyClipboardSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.COPY_CLIPBOARD)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
 		callbackSignalFlow(
 			Signals.MOVE_CURSOR,
@@ -161,7 +161,7 @@ open class Label internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val populatePopup: Flow<Menu> by lazy {
 		callbackSignalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
 	}

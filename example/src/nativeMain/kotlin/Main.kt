@@ -71,7 +71,7 @@ val viewModel = ViewModel()
 const val ACTION_QUIT = "actionquit"
 
 @ExperimentalCoroutinesApi
-@ExperimentalUnsignedTypes
+
 @Test
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {

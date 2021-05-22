@@ -20,7 +20,7 @@ enum class OptionFlags(val key: Int, internal val gtk: GOptionFlags) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		@ExperimentalUnsignedTypes
+		
 		fun valueOf(gtk: GOptionFlags) =
 			values().find { it.gtk == gtk }
 	}

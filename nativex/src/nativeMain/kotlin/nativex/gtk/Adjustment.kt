@@ -40,13 +40,13 @@ class Adjustment internal constructor(
 		get() = gtk_adjustment_get_lower(adjustmentPointer)
 		set(value) = gtk_adjustment_set_lower(adjustmentPointer, value)
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val changed: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CHANGED)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val valueChanged: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.VALUE_CHANGED)

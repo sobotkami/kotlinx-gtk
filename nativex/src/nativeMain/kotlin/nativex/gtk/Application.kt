@@ -84,7 +84,7 @@ class Application internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-query-end">query-end</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val queryEndSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.QUERY_END)
@@ -93,7 +93,6 @@ class Application internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-added">window-added</a>
 	 */
-	@ExperimentalUnsignedTypes
 	@ExperimentalCoroutinesApi
 	val windowAddedSignal: Flow<Window> by lazy {
 		callbackSignalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
@@ -102,7 +101,7 @@ class Application internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-removed">window-removed</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val windowRemovedSignal: Flow<Window> by lazy {
 		callbackSignalFlow(Signals.WINDOW_REMOVED, staticWindowRemovedCallback)
@@ -124,14 +123,14 @@ class Application internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-window-by-id">gtk_application_get_window_by_id</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun getWindowById(id: UInt): Window? =
 		gtk_application_get_window_by_id(applicationPointer, id).wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-inhibit">gtk_application_inhibit</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun inhibit(window: Window, flags: InhibitFlags, reason: String): UInt =
 		gtk_application_inhibit(
 			applicationPointer,
@@ -149,7 +148,7 @@ class Application internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-uninhibit">gtk_application_uninhibit</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun unInhibit(cookie: UInt) =
 		gtk_application_uninhibit(applicationPointer, cookie)
 
@@ -211,7 +210,7 @@ class Application internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkApplicationInhibitFlags) =
 				values().find { it.gtk == gtk }
 		}

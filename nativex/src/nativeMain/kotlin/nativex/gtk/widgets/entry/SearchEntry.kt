@@ -23,19 +23,19 @@ class SearchEntry internal constructor(
 		TODO("gtk_search_entry_handle_event")
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val previousMatchSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.PREVIOUS_MATCH)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val searchChangedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.SEARCH_CHANGED)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val stopSearchSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.STOP_SEARCH)

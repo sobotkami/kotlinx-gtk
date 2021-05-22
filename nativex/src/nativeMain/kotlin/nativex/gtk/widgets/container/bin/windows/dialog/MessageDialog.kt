@@ -107,7 +107,7 @@ class MessageDialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkMessageType) =
 				values().find { it.gtk == gtk }
 		}
@@ -124,7 +124,7 @@ class MessageDialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkButtonsType) =
 				values().find { it.gtk == gtk }
 		}

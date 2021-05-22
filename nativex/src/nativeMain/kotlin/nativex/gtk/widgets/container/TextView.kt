@@ -49,19 +49,19 @@ class TextView internal constructor(
 		)
 
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val backSpaceSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.BACKSPACE)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val copyClipboardSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.COPY_CLIPBOARD)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val cutClipBoardSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CUT_CLIPBOARD)
@@ -73,7 +73,7 @@ class TextView internal constructor(
 	)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val deleteFromCursorSignal: Flow<DeleteFromCursorEvent> by lazy {
 		callbackSignalFlow(
 			Signals.DELETE_FROM_CURSOR,
@@ -89,7 +89,7 @@ class TextView internal constructor(
 	)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val extentSelectionSignal: Flow<ExtendSelectionEvent> by lazy {
 		callbackSignalFlow(
 			Signals.EXTEND_SELECTION,
@@ -98,7 +98,7 @@ class TextView internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val insertAtCursorSignal: Flow<Char> by lazy {
 		//callbackSignalFlow(
 		//	Signals.INSERT_AT_CURSOR,
@@ -107,7 +107,7 @@ class TextView internal constructor(
 		TODO("How to figure out char")
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val insertEmojiSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.INSERT_EMOJI)
@@ -115,7 +115,7 @@ class TextView internal constructor(
 
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
 		callbackSignalFlow(
 			Signals.MOVE_CURSOR,
@@ -129,19 +129,19 @@ class TextView internal constructor(
 	)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val moveViewPortSignal: Flow<MoveViewPortEvent> by lazy {
 		callbackSignalFlow(Signals.MOVE_VIEWPORT, staticMoveViewportCallback)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val pasteClipboardSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.PASTE_CLIPBOARD)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val populatePopupSignal: Flow<Widget> by lazy {
 		callbackSignalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
 	}
@@ -151,25 +151,25 @@ class TextView internal constructor(
 			TODO("Figure out C Char")
 		}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val selectAllSignal: Flow<Boolean> by lazy {
 		callbackSignalFlow(Signals.SELECT_ALL, staticSelectAllCallback)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val setAnchorSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.SET_ANCHOR)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val toggleCursorVisibleSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.TOGGLE_CURSOR_VISIBLE)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val toggleOverwriteSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.TOGGLE_OVERWRITE)

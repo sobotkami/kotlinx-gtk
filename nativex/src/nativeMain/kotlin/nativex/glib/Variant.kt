@@ -35,7 +35,7 @@ open class Variant internal constructor(
 	val isContainer: Boolean
 		get() = g_variant_is_container(variantPointer).bool
 
-	@ExperimentalUnsignedTypes
+	
 	fun classify(): UInt =
 		g_variant_classify(variantPointer)
 
@@ -71,25 +71,25 @@ open class Variant internal constructor(
 	class BooleanVariant(value: Boolean) :
 		Variant(g_variant_new_boolean(value.gtk)!!)
 
-	class ByteVariant @ExperimentalUnsignedTypes constructor(value: UByte) :
+	class ByteVariant  constructor(value: UByte) :
 		Variant(g_variant_new_byte(value)!!)
 
 	class ShortVariant(value: Short) :
 		Variant(g_variant_new_int16(value)!!)
 
-	class UShortVariant @ExperimentalUnsignedTypes constructor(value: UShort) :
+	class UShortVariant  constructor(value: UShort) :
 		Variant(g_variant_new_uint16(value)!!)
 
 	class IntVariant(value: Int) :
 		Variant(g_variant_new_int32(value)!!)
 
-	class UIntVariant @ExperimentalUnsignedTypes constructor(value: UInt) :
+	class UIntVariant  constructor(value: UInt) :
 		Variant(g_variant_new_uint32(value)!!)
 
 	class LongVariant(value: Long) :
 		Variant(g_variant_new_int64(value)!!)
 
-	class ULongVariant @ExperimentalUnsignedTypes constructor(value: ULong) :
+	class ULongVariant  constructor(value: ULong) :
 		Variant(g_variant_new_uint64(value)!!)
 
 	class HandleVariant(value: Int) :

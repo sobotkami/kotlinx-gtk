@@ -70,7 +70,7 @@ class Expander(
 			value.gtk
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val activate: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE)

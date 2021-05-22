@@ -52,7 +52,7 @@ class Stack internal constructor(
 		get() = gtk_stack_get_vhomogeneous(stackPointer).bool
 		set(value) = gtk_stack_set_vhomogeneous(stackPointer, value.gtk)
 
-	@ExperimentalUnsignedTypes
+	
 	var transitionDuration: UInt
 		get() = gtk_stack_get_transition_duration(stackPointer)
 		set(value) = gtk_stack_set_transition_duration(stackPointer, value)

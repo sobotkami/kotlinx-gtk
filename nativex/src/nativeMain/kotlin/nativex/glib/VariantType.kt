@@ -47,7 +47,7 @@ sealed class VariantType(
 	object ByteStringArrayType : VariantType(G_VARIANT_TYPE_BYTESTRING_ARRAY!!)
 	object VardictType : VariantType(G_VARIANT_TYPE_VARDICT!!)
 
-	@ExperimentalUnsignedTypes
+	
 	val stringLength: ULong
 		get() = g_variant_type_get_string_length(variantTypePointer)
 
@@ -80,7 +80,7 @@ sealed class VariantType(
 	val isVariant: Boolean
 		get() = g_variant_type_is_variant(variantTypePointer).bool
 
-	@ExperimentalUnsignedTypes
+	
 	override fun hashCode(): Int =
 		g_variant_type_hash(variantTypePointer).toInt()
 

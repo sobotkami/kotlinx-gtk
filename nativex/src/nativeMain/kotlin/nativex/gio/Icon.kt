@@ -15,7 +15,7 @@ import nativex.gtk.bool
 interface Icon {
 	val pointer: PointerHolder<GIcon>
 
-	@ExperimentalUnsignedTypes
+	
 	val hash: UInt
 		get() = g_icon_hash(pointer.ptr)
 

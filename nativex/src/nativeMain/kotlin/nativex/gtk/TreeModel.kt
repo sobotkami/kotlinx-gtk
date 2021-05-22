@@ -15,7 +15,6 @@ open class TreeModel internal constructor(
 ) {
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val rowChangedSignal: Flow<RowChanged> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
 		Signals.ROW_CHANGED,
@@ -24,7 +23,6 @@ open class TreeModel internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val rowDeletedSignal: Flow<RowDeleted> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
 		Signals.ROW_DELETED,
@@ -33,7 +31,6 @@ open class TreeModel internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val rowHasChildToggled: Flow<RowHasChildToggled> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROW_HAS_CHILD_TOGGLED,
@@ -42,7 +39,6 @@ open class TreeModel internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val rowInsertedSignal: Flow<RowInserted> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
 		Signals.ROW_INSERTED,
@@ -51,7 +47,6 @@ open class TreeModel internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val rowsReordered: Flow<RowsReordered> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
 		Signals.ROWS_REORDERED,
@@ -168,7 +163,7 @@ open class TreeModel internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkTreeModelFlags) =
 				values().find { it.gtk == gtk }
 		}

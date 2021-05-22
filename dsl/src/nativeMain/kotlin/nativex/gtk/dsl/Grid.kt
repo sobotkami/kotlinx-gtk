@@ -14,7 +14,7 @@ inline fun Container.grid(
 	gridBuilder: Grid.() -> Unit = {}
 ) = nativex.gtk.dsl.grid(gridBuilder).also { add(it) }
 
-@ExperimentalUnsignedTypes
+
 @GtkDsl
 inline fun BoxPackable.grid(
 	expand: Boolean,

@@ -67,7 +67,7 @@ inline fun AspectFrame.box(
  * @see SimplePacking
  */
 interface BoxPackable {
-	@ExperimentalUnsignedTypes
+	
 	fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -77,7 +77,7 @@ interface BoxPackable {
 }
 
 class BoxPackStart internal constructor(box: Box) : Box(box), BoxPackable {
-	@ExperimentalUnsignedTypes
+	
 	override fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -88,7 +88,7 @@ class BoxPackStart internal constructor(box: Box) : Box(box), BoxPackable {
 }
 
 class BoxPackEnd internal constructor(box: Box) : Box(box), BoxPackable {
-	@ExperimentalUnsignedTypes
+	
 	override fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -106,7 +106,7 @@ fun Box.end(builder: BoxPackEnd.() -> Unit): BoxPackEnd =
 	BoxPackEnd(this).apply(builder)
 
 @GtkDsl
-@ExperimentalUnsignedTypes
+
 inline fun BoxPackable.box(
 	orientation: Orientation,
 	spacing: Int,

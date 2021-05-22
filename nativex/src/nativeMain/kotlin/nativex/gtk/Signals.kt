@@ -109,7 +109,6 @@ object Signals {
  * @param callbackWrapper Passed as the data parameter to `g_signal_connect_data`. Invoked by [handler]
  * @param flags Flags
  */
-@ExperimentalUnsignedTypes
 internal fun VoidPointer.connectSignal(
 	signal: String,
 	handler: GCallback = staticNoArgGCallback,

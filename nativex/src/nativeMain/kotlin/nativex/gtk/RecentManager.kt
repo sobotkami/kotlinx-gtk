@@ -28,7 +28,7 @@ class RecentManager internal constructor(
 		get() = gtk_recent_manager_get_items(managerPointer)
 			.asKSequence<GtkRecentInfo, RecentInfo> { RecentInfo(it) }
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val changedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CHANGED)
@@ -94,7 +94,7 @@ class RecentManager internal constructor(
 		val privateHint: Boolean
 			get() = gtk_recent_info_get_private_hint(struct).bool
 
-		@ExperimentalUnsignedTypes
+		
 		val applications: List<String>
 			get() = memScoped {
 				val cSize = cValue<ULongVar>()
@@ -108,7 +108,7 @@ class RecentManager internal constructor(
 		val lastApplication: String
 			get() = gtk_recent_info_last_application(struct)!!.toKString()
 
-		@ExperimentalUnsignedTypes
+		
 		val groups: List<String>
 			get() = memScoped {
 				val cSize = cValue<ULongVar>()
@@ -132,7 +132,7 @@ class RecentManager internal constructor(
 		val exists: Boolean
 			get() = gtk_recent_info_exists(struct).bool
 
-		@ExperimentalUnsignedTypes
+		
 		fun getApplicationInfo(appName: String): ApplicationInfo? =
 			memScoped {
 				val appExec = cValue<CPointerVar<ByteVarOf<Byte>>>()
@@ -182,7 +182,7 @@ class RecentManager internal constructor(
 			return struct.hashCode()
 		}
 
-		data class ApplicationInfo @ExperimentalUnsignedTypes constructor(
+		data class ApplicationInfo  constructor(
 			val appExec: String,
 			val count: UInt,
 			val time: Long

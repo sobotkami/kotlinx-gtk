@@ -16,7 +16,7 @@ fun Container.frame(
 	Frame(label).apply(frameBuilder).also { add(it) }
 
 
-@ExperimentalUnsignedTypes
+
 @GtkDsl
 inline fun BoxPackable.frame(
 	label: String? = null,

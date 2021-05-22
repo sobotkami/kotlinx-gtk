@@ -74,7 +74,7 @@ open class ButtonBox internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkButtonBoxStyle) =
 				values().find { it.gtk == gtk }
 		}

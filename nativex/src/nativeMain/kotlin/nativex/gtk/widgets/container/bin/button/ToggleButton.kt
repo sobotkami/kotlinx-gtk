@@ -60,7 +60,7 @@ class ToggleButton internal constructor(
 		)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val toggledSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.TOGGLED)
 	}

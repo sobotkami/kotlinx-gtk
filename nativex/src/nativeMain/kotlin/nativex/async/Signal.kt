@@ -14,7 +14,7 @@ import nativex.gtk.connectSignal
 
 
 @ExperimentalCoroutinesApi
-@ExperimentalUnsignedTypes
+
 internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(
@@ -33,7 +33,6 @@ internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
  * @param signal Signal name
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
-@ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
 internal inline fun <T> KObject.callbackSignalFlow(
 	signal: String,
@@ -44,7 +43,6 @@ internal inline fun <T> KObject.callbackSignalFlow(
  * @param signal Signal name
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
-@ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
 internal inline fun <T> CPointer<GObject>.callbackSignalFlow(
 	signal: String,

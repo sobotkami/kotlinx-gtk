@@ -19,7 +19,7 @@ class KGError internal constructor(
 		pointer.pointed.pointed?.code ?: Int.MIN_VALUE
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	val domain: UInt by lazy {
 		pointer.pointed.pointed?.domain ?: UInt.MIN_VALUE
 	}

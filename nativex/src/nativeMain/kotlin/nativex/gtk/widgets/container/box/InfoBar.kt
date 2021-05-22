@@ -103,7 +103,7 @@ class InfoBar internal constructor(
 		gtk_info_bar_response(infoBarPointer, responseID)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	var messageType: MessageDialog.MessageType
 		get() = MessageDialog.MessageType.valueOf(
 			gtk_info_bar_get_message_type(
@@ -132,13 +132,13 @@ class InfoBar internal constructor(
 			value.gtk
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val closeSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CLOSE)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val responseSignal: Flow<Int> by lazy {
 		callbackSignalFlow(Signals.RESPONSE, staticCallback)

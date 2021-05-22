@@ -98,7 +98,7 @@ open class Container internal constructor(
 		gtk_container_resize_children(containerPointer)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	val childType: ULong
 		get() = gtk_container_child_type(containerPointer)
 
@@ -139,7 +139,7 @@ open class Container internal constructor(
 	}
 
 	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
-	@ExperimentalUnsignedTypes
+	
 	var borderWidth: UInt
 		get() = gtk_container_get_border_width(containerPointer)
 		set(value) = gtk_container_set_border_width(containerPointer, value)

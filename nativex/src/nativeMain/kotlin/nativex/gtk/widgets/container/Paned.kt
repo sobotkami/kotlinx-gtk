@@ -67,37 +67,37 @@ open class Paned internal constructor(
 		set(value) = gtk_paned_set_wide_handle(panedPointer, value.gtk)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val acceptPositionSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACCEPT_POSITION)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val cancelPositionSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CANCEL_POSITION)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val cycleChildFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CYCLE_CHILD_FOCUS)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val cycleHandleFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.CYCLE_HANDLE_FOCUS)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val moveHandleSignal: Flow<ScrollType> by lazy {
 		callbackSignalFlow(Signals.MOVE_HANDLE, staticMoveHandleCallback)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val toggleHandleFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.TOGGLE_HANDLE_FOCUS)
 	}

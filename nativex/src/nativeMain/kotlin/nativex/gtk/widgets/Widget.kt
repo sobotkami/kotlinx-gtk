@@ -263,7 +263,7 @@ open class Widget(
 
 	/*
 	TODO Figure out constructor
-	@ExperimentalUnsignedTypes
+	
 	constructor(
 		type: ULong,
 		vararg properties: Properties
@@ -480,7 +480,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-can-activate-accel">gtk_widget_can_activate_accel</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun canActivateAccelerator(signalID: UInt) =
 		gtk_widget_can_activate_accel(widgetPointer, signalID).bool
 
@@ -571,7 +571,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-ancestor">gtk_widget_get_ancestor</a>
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun getAncestor(widgetType: ULong) =
 		gtk_widget_get_ancestor(widgetPointer, widgetType)?.let { Widget(it) }
 

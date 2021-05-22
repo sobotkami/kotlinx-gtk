@@ -24,7 +24,7 @@ class ColorButton internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	override val colorActivated: Flow<RGBA> by lazy {
 		callbackSignalFlow(
 			Signals.COLOR_ACTIVATED,

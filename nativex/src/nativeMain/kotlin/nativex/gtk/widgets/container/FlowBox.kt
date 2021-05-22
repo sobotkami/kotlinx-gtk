@@ -25,17 +25,17 @@ class FlowBox internal constructor(
 			value.gtk
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	var rowSpacing: UInt
 		get() = gtk_flow_box_get_row_spacing(flowBoxPointer)
 		set(value) = gtk_flow_box_set_row_spacing(flowBoxPointer, value)
 
-	@ExperimentalUnsignedTypes
+	
 	var columnSpacing: UInt
 		get() = gtk_flow_box_get_column_spacing(flowBoxPointer)
 		set(value) = gtk_flow_box_set_column_spacing(flowBoxPointer, value)
 
-	@ExperimentalUnsignedTypes
+	
 	var minChildrenPerLine: UInt
 		get() = gtk_flow_box_get_min_children_per_line(flowBoxPointer)
 		set(value) = gtk_flow_box_set_min_children_per_line(
@@ -43,7 +43,7 @@ class FlowBox internal constructor(
 			value
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	var maxChildrenPerLine: UInt
 		get() = gtk_flow_box_get_max_children_per_line(flowBoxPointer)
 		set(value) = gtk_flow_box_set_max_children_per_line(

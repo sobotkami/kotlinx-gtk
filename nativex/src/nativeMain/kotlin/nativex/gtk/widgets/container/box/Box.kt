@@ -24,7 +24,7 @@ open class Box internal constructor(
 	) : this(gtk_box_new(orientation.gtk, spacing)!!.reinterpret())
 
 
-	@ExperimentalUnsignedTypes
+	
 	fun packStart(
 		child: Widget,
 		expand: Boolean,
@@ -40,7 +40,7 @@ open class Box internal constructor(
 		)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	fun packEnd(
 		child: Widget,
 		expand: Boolean,
@@ -69,14 +69,14 @@ open class Box internal constructor(
 		gtk_box_reorder_child(boxPointer, child.widgetPointer, position)
 	}
 
-	data class ChildPacking @ExperimentalUnsignedTypes constructor(
+	data class ChildPacking  constructor(
 		val expand: Boolean,
 		val fill: Boolean,
 		val padding: UInt,
 		val packType: PackType
 	)
 
-	@ExperimentalUnsignedTypes
+	
 	fun queryChildPacking(child: Widget): ChildPacking =
 		memScoped {
 			val cExpand = cValue<gbooleanVar>()

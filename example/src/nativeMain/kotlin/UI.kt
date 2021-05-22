@@ -19,7 +19,7 @@ import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
  * 23 / 03 / 2021
  */
 @ExperimentalCoroutinesApi
-@ExperimentalUnsignedTypes
+
 internal fun Window.mainKotlinTestBox(application: Application) =
 	box(Orientation.HORIZONTAL, 10) {
 		start {

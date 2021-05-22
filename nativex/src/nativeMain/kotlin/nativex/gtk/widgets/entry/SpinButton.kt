@@ -16,7 +16,7 @@ import nativex.gtk.gtk
 class SpinButton internal constructor(
 	internal val spinButtonPointer: CPointer<GtkSpinButton>
 ) : Entry(spinButtonPointer.reinterpret()) {
-	@ExperimentalUnsignedTypes
+	
 	fun configure(
 		adjustment: Adjustment? = null,
 		climbRate: Double,
@@ -30,7 +30,7 @@ class SpinButton internal constructor(
 		)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	constructor(
 		adjustment: Adjustment? = null,
 		climbRate: Double,
@@ -60,7 +60,7 @@ class SpinButton internal constructor(
 			value?.adjustmentPointer
 		)
 
-	@ExperimentalUnsignedTypes
+	
 	var digits: UInt
 		get() = gtk_spin_button_get_digits(spinButtonPointer)
 		set(value) = gtk_spin_button_set_digits(spinButtonPointer, value)

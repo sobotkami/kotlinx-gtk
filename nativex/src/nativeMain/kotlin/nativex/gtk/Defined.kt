@@ -10,7 +10,7 @@ import gtk.gpointer
  */
 
 @Suppress("FunctionName")
-@ExperimentalUnsignedTypes
+
 internal fun g_signal_connect(
 	instance: gpointer,
 	detailedSignal: String,

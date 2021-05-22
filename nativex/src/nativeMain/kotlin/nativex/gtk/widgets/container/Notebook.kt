@@ -44,7 +44,7 @@ class Notebook internal constructor(
 		set(value) = gtk_notebook_set_group_name(noteBookPointer, value)
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val changeCurrentPageSignal: Flow<Int> by lazy {
 		callbackSignalFlow(
 			Signals.CHANGE_CURRENT_PAGE,
@@ -53,7 +53,7 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val createWindowSignal: Flow<CreateWindowEvent> by lazy {
 		callbackSignalFlow(
 			Signals.CREATE_WINDOW,
@@ -62,18 +62,18 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val focusTabSignal: Flow<Any>
 		get() = TODO("Figure out GtkNotebookTab")
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val moveFocusOutSignal: Flow<GtkDirectionType> by lazy {
 		callbackSignalFlow(Signals.MOVE_FOCUS_OUT, staticMoveFocusOutCallback)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val pageAddedSignal: Flow<PageAddedEvent> by lazy {
 		callbackSignalFlow(
 			Signals.CREATE_WINDOW,
@@ -82,7 +82,7 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val pageRemovedSignal: Flow<PageRemovedEvent> by lazy {
 		callbackSignalFlow(
 			Signals.CREATE_WINDOW,
@@ -91,7 +91,7 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val pageReorderedSignal: Flow<PageReorderedEvent> by lazy {
 		callbackSignalFlow(
 			Signals.CREATE_WINDOW,
@@ -100,7 +100,7 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val reorderTabSignal: Flow<ReorderTabEvent> by lazy {
 		callbackSignalFlow(
 			Signals.CREATE_WINDOW,
@@ -109,13 +109,13 @@ class Notebook internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val selectPageSignal: Flow<Boolean> by lazy {
 		callbackSignalFlow(Signals.SWITCH_PAGE, staticSelectPageCallback)
 	}
 
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
+	
 	val switchPageSignal: Flow<SwitchPageEvent> by lazy {
 		callbackSignalFlow(Signals.SWITCH_PAGE, SwitchPageEvent.staticCallback)
 	}
@@ -335,12 +335,12 @@ class Notebook internal constructor(
 		}
 	}
 
-	data class PageAddedEvent @ExperimentalUnsignedTypes constructor(
+	data class PageAddedEvent  constructor(
 		val child: Widget,
 		val pageNumber: UInt
 	) {
 		companion object {
-			@ExperimentalUnsignedTypes
+			
 			internal val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageAddedEvent) -> Unit>()
@@ -357,12 +357,12 @@ class Notebook internal constructor(
 		}
 	}
 
-	data class PageRemovedEvent @ExperimentalUnsignedTypes constructor(
+	data class PageRemovedEvent  constructor(
 		val child: Widget,
 		val pageNumber: UInt
 	) {
 		companion object {
-			@ExperimentalUnsignedTypes
+			
 			internal val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, widget: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageRemovedEvent) -> Unit>()
@@ -379,12 +379,12 @@ class Notebook internal constructor(
 		}
 	}
 
-	data class PageReorderedEvent @ExperimentalUnsignedTypes constructor(
+	data class PageReorderedEvent  constructor(
 		val child: Widget,
 		val pageNumber: UInt
 	) {
 		companion object {
-			@ExperimentalUnsignedTypes
+			
 			internal val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageReorderedEvent) -> Unit>()
@@ -422,12 +422,12 @@ class Notebook internal constructor(
 		}
 	}
 
-	data class SwitchPageEvent @ExperimentalUnsignedTypes constructor(
+	data class SwitchPageEvent  constructor(
 		val page: Widget,
 		val pageNumber: UInt
 	) {
 		companion object {
-			@ExperimentalUnsignedTypes
+			
 			internal val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, page: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(SwitchPageEvent) -> Unit>()

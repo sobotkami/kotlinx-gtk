@@ -21,7 +21,7 @@ fun Container.toggleButton(
 		.apply(buttonBuilder)
 		.also { add(it) }
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun ToggleButton.onToggle(crossinline onToggle: suspend () -> Unit) {

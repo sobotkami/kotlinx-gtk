@@ -25,7 +25,6 @@ open class Button internal constructor(
 	internal val buttonPointer: CPointer<GtkButton>
 ) : Bin(buttonPointer.reinterpret()) {
 	@ExperimentalCoroutinesApi
-	@ExperimentalUnsignedTypes
 	val clickedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(CLICKED)
 	}

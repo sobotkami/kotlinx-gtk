@@ -36,7 +36,7 @@ class Layout internal constructor(
 		gtk_layout_move(layoutPointer, widget.widgetPointer, x, y)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	var size: Pair<UInt, UInt>
 		get() = memScoped {
 			val w = cValue<UIntVar>()

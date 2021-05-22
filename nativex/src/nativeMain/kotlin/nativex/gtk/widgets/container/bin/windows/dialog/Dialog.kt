@@ -28,7 +28,7 @@ open class Dialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkDialogFlags) =
 				values().find { it.gtk == gtk }
 		}
@@ -60,7 +60,7 @@ open class Dialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOfGtk(gtk: GtkResponseType) =
 				values().find { it.gtk == gtk }
 		}

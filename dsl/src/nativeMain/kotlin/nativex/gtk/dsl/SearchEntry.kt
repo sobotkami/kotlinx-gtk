@@ -16,7 +16,7 @@ inline fun Container.searchEntry(
 	searchEntryBuilder: SearchEntry.() -> Unit = {}
 ) = add(SearchEntry().apply(searchEntryBuilder))
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun SearchEntry.onPreviousMatch(crossinline onPreviousMatch: suspend () -> Unit) {
@@ -27,7 +27,7 @@ inline fun SearchEntry.onPreviousMatch(crossinline onPreviousMatch: suspend () -
 	}
 }
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun SearchEntry.onSearchChanged(crossinline onSearchChanged: suspend () -> Unit) {
@@ -38,7 +38,7 @@ inline fun SearchEntry.onSearchChanged(crossinline onSearchChanged: suspend () -
 	}
 }
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun SearchEntry.onStopSearch(crossinline onStopSearch: suspend () -> Unit) {

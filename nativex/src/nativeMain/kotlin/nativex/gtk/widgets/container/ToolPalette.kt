@@ -131,7 +131,7 @@ class ToolPalette internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
+			
 			internal fun valueOf(gtk: GtkToolPaletteDragTargets) =
 				values().find { it.gtk == gtk }
 		}

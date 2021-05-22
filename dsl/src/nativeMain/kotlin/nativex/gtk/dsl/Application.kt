@@ -26,7 +26,7 @@ inline fun application(
 
 
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun Application.onQueryEnd(crossinline onQueryEnd: suspend () -> Unit) {
@@ -37,7 +37,6 @@ inline fun Application.onQueryEnd(crossinline onQueryEnd: suspend () -> Unit) {
 	}
 }
 
-@ExperimentalUnsignedTypes
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun Application.onWindowAdded(crossinline onWindowAdded: suspend (Window) -> Unit) {
@@ -49,7 +48,7 @@ inline fun Application.onWindowAdded(crossinline onWindowAdded: suspend (Window)
 }
 
 
-@ExperimentalUnsignedTypes
+
 @ExperimentalCoroutinesApi
 @GtkDsl
 inline fun Application.onWindowRemoved(crossinline onWindowRemoved: suspend (Window) -> Unit) {

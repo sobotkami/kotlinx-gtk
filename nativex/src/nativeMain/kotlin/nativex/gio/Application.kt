@@ -35,7 +35,6 @@ open class Application(
 			value
 		)
 
-	@ExperimentalUnsignedTypes
 	var inactivityTimeout: UInt
 		get() = g_application_get_inactivity_timeout(gApplicationPointer)
 		set(value) = g_application_set_inactivity_timeout(
@@ -43,7 +42,6 @@ open class Application(
 			value
 		)
 
-	@ExperimentalUnsignedTypes
 	var flags: Flags
 		get() = Flags.valueOf(g_application_get_flags(gApplicationPointer))!!
 		set(value) = g_application_set_flags(gApplicationPointer, value.gtk)
@@ -64,7 +62,7 @@ open class Application(
 	val isBusy: Boolean
 		get() = g_application_get_is_busy(gApplicationPointer).bool
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val activateSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE)
@@ -74,7 +72,7 @@ open class Application(
 	val handleLocalOptions: Flow<GVariantDict>
 		get() = TODO()
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val nameLostSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.NAME_LOST)
@@ -82,13 +80,13 @@ open class Application(
 	val openSignal: Flow<OpenEvent>
 		get() = TODO()
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val shutdownSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.SHUTDOWN)
 	}
 
-	@ExperimentalUnsignedTypes
+	
 	@ExperimentalCoroutinesApi
 	val startupSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.STARTUP)
@@ -224,7 +222,7 @@ open class Application(
 	 *
 	 * This should not be used by developers
 	 */
-	@ExperimentalUnsignedTypes
+	
 	fun onActivate(onActive: () -> Unit) {
 		// Has to be a direct event, to prevent application from shutting down
 		gApplicationPointer.connectSignal(
@@ -260,7 +258,6 @@ open class Application(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			@ExperimentalUnsignedTypes
 			internal fun valueOf(gtk: GApplicationFlags) =
 				values().find { it.gtk == gtk }
 		}
