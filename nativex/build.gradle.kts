@@ -1,6 +1,5 @@
 plugins {
 	kotlin("multiplatform")
-	id("maven-publish")
 }
 
 repositories {
@@ -8,7 +7,7 @@ repositories {
 }
 
 group = "org.gnome.kotlin.nativex"
-version = "0.0.0"
+version = "0.1.0"
 
 kotlin {
 
@@ -25,7 +24,7 @@ kotlin {
 	sourceSets {
 		val nativeMain by getting {
 			dependencies {
-				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
+				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 			}
 		}
 	}

@@ -59,7 +59,7 @@ class MenuItem internal constructor(
 		gtk_menu_item_deselect(menuItemPointer)
 	}
 
-	fun activate() {
+	fun emitActivate() {
 		gtk_menu_item_activate(menuItemPointer)
 	}
 
