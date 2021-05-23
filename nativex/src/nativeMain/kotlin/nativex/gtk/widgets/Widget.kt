@@ -2,7 +2,9 @@ package nativex.gtk.widgets
 
 import gtk.*
 import kotlinx.cinterop.*
+import nativex.cairo.CairoFontOptionsT
 import nativex.cairo.CairoT
+import nativex.cairo.RegionT
 import nativex.gdk.*
 import nativex.gdk.FrameClock.Companion.wrap
 import nativex.gdk.Visual.Companion.wrap
@@ -11,7 +13,12 @@ import nativex.gtk.WidgetPointer
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
 import nativex.gtk.common.enums.Orientation
+import nativex.gtk.common.enums.StateFlags
 import nativex.gtk.gtk
+import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.pango.Context
+import nativex.pango.FontMap
+import nativex.pango.Layout
 
 
 /**
@@ -480,7 +487,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-can-activate-accel">gtk_widget_can_activate_accel</a>
 	 */
-	
+
 	fun canActivateAccelerator(signalID: UInt) =
 		gtk_widget_can_activate_accel(widgetPointer, signalID).bool
 
@@ -571,7 +578,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-ancestor">gtk_widget_get_ancestor</a>
 	 */
-	
+
 	fun getAncestor(widgetType: ULong) =
 		gtk_widget_get_ancestor(widgetPointer, widgetType)?.let { Widget(it) }
 
@@ -606,6 +613,163 @@ open class Widget(
 	 */
 	fun isAncestor(widget: Widget): Boolean =
 		gtk_widget_is_ancestor(widgetPointer, widget.widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-translate-coordinates">gtk_widget_translate_coordinates</a>
+	 */
+	fun translateCoordinates(destination: Widget): Pair<Int, Int> = TODO("")
+
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-hide-on-delete">gtk_widget_hide_on_delete</a>
+	 */
+	fun hideOnDelete() {
+		gtk_widget_hide_on_delete(widgetPointer)
+	}
+
+	var direction: StateFlags
+		get() {
+			TODO()
+		}
+		set(value) {}
+
+
+	fun combineRegion(region: RegionT) : Unit= TODO("")
+	fun shapeCombineRegion(region: RegionT): Unit = TODO("")
+
+	fun createPangoContext(): Context = TODO("")
+
+	val pangoContext: Context
+		get() {
+			TODO()
+		}
+
+	var fontOptions: CairoFontOptionsT
+		get() {
+			TODO()
+		}
+		set(value) {}
+
+	var fontMap: FontMap
+		get() {
+			TODO()
+		}
+		set(value) {}
+
+	fun createPangoLayout(text: String? = null): Layout = TODO("")
+	fun drawArea(x: Int, y: Int, width: Int, height: Int): Unit = TODO("")
+	fun drawRegion(region: RegionT): Unit = TODO("")
+	fun setPaintable(isPaintable: Boolean): Unit = TODO("")
+	fun setRedrawOnAllocate(redrawOnAllocate: Boolean): Unit = TODO("")
+	fun mnemonicActivate(groupCycling: Boolean): Unit = TODO("")
+	fun installStyleProperty(): Unit = TODO("gtk_widget_class_install_style_property")
+
+	fun installStylePropertyParser(): Unit = TODO("gtk_widget_class_install_style_property")
+
+	fun findStyleProperty(): Unit = TODO("gtk_widget_class_find_style_property")
+
+	fun listStyleProperties(): Unit = TODO("gtk_widget_class_list_style_properties")
+
+	fun sendFocusChange(): Unit = TODO("gtk_widget_send_focus_change")
+
+	fun getStyle() : Unit= TODO("gtk_widget_style_get_valist")
+
+	fun getProperty(name: String): Any = TODO("gtk_widget_style_get_property")
+
+	fun setAccessibleType() : Unit= TODO("gtk_widget_class_set_accessible_type")
+
+	fun setAccessibleRole() : Unit= TODO("gtk_widget_class_set_accessible_role")
+
+	fun getAccessible(): Unit = TODO("gtk_widget_get_accessible")
+
+	fun childFocus(direction: StateFlags): Unit = TODO("gtk_widget_child_focus")
+
+	fun childNotify(property: String): Unit = TODO("gtk_widget_child_notify")
+
+	fun freezeChildNotify(): Unit = TODO("gtk_widget_freeze_child_notify")
+
+	var isChildVisible: Boolean
+		get() = TODO("gtk_widget_get_child_visible")
+		set(value) = TODO("gtk_widget_set_child_visible")
+
+	val settings: Any
+		get() = TODO("gtk_widget_get_settings")
+
+	val clipboard: Any
+		get() = TODO("gtk_widget_get_clipboard")
+
+	val display: Any
+		get() = TODO("gtk_widget_get_display")
+
+	val screen: Screen
+		get() = TODO("gtk_widget_get_screen")
+
+	val hasScreen: Boolean
+		get() = TODO("gtk_widget_has_screen")
+
+	var size: Pair<Int, Int>
+		get() = TODO("gtk_widget_get_size_request")
+		set(value) = TODO("gtk_widget_set_size_request")
+
+	fun thawChildNotify(): Unit = TODO("gtk_widget_thaw_child_notify")
+
+	var noShowAll: Boolean
+		get() = TODO("gtk_widget_get_no_show_all")
+		set(value) = TODO("gtk_widget_set_no_show_all")
+
+	val mnemonicLabels: List<Widget>
+		get() = TODO("gtk_widget_list_mnemonic_labels")
+
+	fun addMnemonicLabel(label: Widget): Unit = TODO("gtk_widget_add_mnemonic_label")
+	fun removeMnemoicLabel(label: Widget): Unit = TODO("gtk_widget_remove_mnemonic_label")
+
+	fun errorBell(widget: Widget): Unit = TODO("gtk_widget_error_bell")
+
+	fun keynavFailed(direction: StateFlags): Boolean = TODO("gtk_widget_keynav_failed")
+
+	var tooltipMarkup: String
+		get() = TODO("gtk_widget_get_tooltip_markup")
+		set(value) = TODO("gtk_widget_set_tooltip_markup")
+
+	var tooltipText: String
+		get() = TODO("gtk_widget_get_tooltip_text")
+		set(value) = TODO("gtk_widget_set_tooltip_text")
+
+
+	var tooltipWindow: Window
+		get() = TODO("gtk_widget_get_tooltip_window")
+		set(value) = TODO("gtk_widget_set_tooltip_window")
+
+	var tooltip: Boolean
+		get() = TODO("gtk_widget_get_has_tooltip")
+		set(value) = TODO("gtk_widget_set_has_tooltip")
+
+	fun triggerTooltipQuery(): Unit = TODO("gtk_widget_trigger_tooltip_query")
+
+	val window: Window?
+		get() = TODO("gtk_widget_get_window")
+
+	fun registerWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_register_window")
+
+	fun unregisterWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_unregister_window")
+
+	val allocatedWidth: Int
+		get() = TODO("gtk_widget_get_allocated_width")
+	val allocatedHeight: Int
+		get() = TODO("gtk_widget_get_allocated_height")
+
+	var allocation: Any
+		get() = TODO("gtk_widget_get_allocation")
+		set(value) = TODO("gtk_widget_set_allocation")
+
+	var allocatedBaseline: Int
+		get() = TODO("gtk_widget_get_allocated_baseline")
+		set(value) {}
+
 
 	enum class Align(val key: Int, internal val gtk: GtkAlign) {
 		FILL(0, GtkAlign.GTK_ALIGN_FILL),
@@ -643,7 +807,18 @@ open class Widget(
 		}
 	}
 
+
 	companion object {
+		var defaultDirection: StateFlags
+			get() {
+				TODO()
+			}
+			set(value) {}
+
+		fun shouldDrawWindow(cairoT: CairoT, window: nativex.gdk.Window): Boolean = TODO("gtk_cairo_should_draw_window")
+
+		fun cairoTransformToWindow() : Unit= TODO("gtk_cairo_transform_to_window")
+
 		internal val staticTickCallback: GtkTickCallback =
 			staticCFunction { _: gpointer?, frameClock: CPointer<GdkFrameClock>, data: gpointer ->
 				data.asStableRef<(FrameClock) -> Boolean>().get()
