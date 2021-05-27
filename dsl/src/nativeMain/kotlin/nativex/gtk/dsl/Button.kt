@@ -1,7 +1,7 @@
 package nativex.gtk.dsl
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.collect
 import nativex.GtkDsl
 import nativex.async.launchUnconfined
 import nativex.gtk.widgets.container.Container
@@ -18,9 +18,8 @@ inline fun Container.button(
 @GtkDsl
 inline fun Button.onClicked(crossinline onClicked: suspend () -> Unit) {
 	launchUnconfined {
-		clickedSignal.collectLatest {
+		clickedSignal.collect {
 			onClicked()
 		}
 	}
-
 }

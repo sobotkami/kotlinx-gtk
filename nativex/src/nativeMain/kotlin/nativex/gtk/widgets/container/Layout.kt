@@ -37,7 +37,7 @@ class Layout internal constructor(
 	}
 
 	
-	var size: Pair<UInt, UInt>
+	var layoutSize: Pair<UInt, UInt>
 		get() = memScoped {
 			val w = cValue<UIntVar>()
 			val h = cValue<UIntVar>()

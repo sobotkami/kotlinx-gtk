@@ -113,7 +113,6 @@ fun main() {
 				item("Help")
 			}
 
-
 			lookUpSimpleAction(ACTION_QUIT) {
 				enable()
 			}

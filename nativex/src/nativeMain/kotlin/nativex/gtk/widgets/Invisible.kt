@@ -15,7 +15,7 @@ class Invisible internal constructor(
 	constructor() : this(gtk_invisible_new()!!.reinterpret())
 	constructor(screen: Screen) : this(gtk_invisible_new_for_screen(screen.screenPointer)!!.reinterpret())
 
-	var screen: Screen
+	var invScreen: Screen
 		get() = Screen(gtk_invisible_get_screen(invisiblePointer)!!)
 		set(value) = gtk_invisible_set_screen(
 			invisiblePointer,
