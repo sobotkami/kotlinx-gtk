@@ -1,14 +1,17 @@
 package nativex.gtk.widgets
 
 import gtk.*
+import gtk.GtkTextDirection.*
 import kotlinx.cinterop.*
-import nativex.cairo.CairoFontOptionsT
+import nativex.cairo.FontOptionsT
+import nativex.cairo.FontOptionsT.Companion.wrap
 import nativex.cairo.CairoT
 import nativex.cairo.RegionT
 import nativex.gdk.*
 import nativex.gdk.FrameClock.Companion.wrap
 import nativex.gdk.Visual.Companion.wrap
 import nativex.gio.KObject
+import nativex.glib.KGValue
 import nativex.gtk.WidgetPointer
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
@@ -18,8 +21,8 @@ import nativex.gtk.gtk
 import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.pango.Context
 import nativex.pango.FontMap
+import nativex.pango.FontMap.Companion.wrap
 import nativex.pango.Layout
-
 
 /**
  * kotlinx-gtk
@@ -631,146 +634,319 @@ open class Widget(
 		gtk_widget_hide_on_delete(widgetPointer)
 	}
 
-	var direction: StateFlags
-		get() {
-			TODO()
-		}
-		set(value) {}
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-direction">
+	 *     gtk_widget_set_direction
+	 *     </a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-direction">
+	 *     gtk_widget_get_direction
+	 *     </a>
+	 */
+	var direction: TextDirection
+		get() = TextDirection.valueOf(gtk_widget_get_direction(widgetPointer))!!
+		set(value) = gtk_widget_set_direction(widgetPointer, value.gtk)
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-shape-combine-region">gtk_widget_shape_combine_region</a>
+	 */
+	fun shapeCombineRegion(region: RegionT): Unit =
+		gtk_widget_shape_combine_region(widgetPointer, region.pointer)
 
-	fun combineRegion(region: RegionT) : Unit= TODO("")
-	fun shapeCombineRegion(region: RegionT): Unit = TODO("")
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-input-shape-combine-region">gtk_widget_input_shape_combine_region</a>
+	 */
+	fun inputShapeCombineRegion(region: RegionT): Unit =
+		gtk_widget_input_shape_combine_region(widgetPointer, region.pointer)
 
-	fun createPangoContext(): Context = TODO("")
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-create-pango-context">gtk_widget_create_pango_context</a>
+	 */
+	fun createPangoContext(): Context =
+		Context(gtk_widget_create_pango_context(widgetPointer)!!)
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-pango-context">gtk_widget_get_pango_context</a>
+	 */
 	val pangoContext: Context
-		get() {
-			TODO()
-		}
+		get() = Context(gtk_widget_get_pango_context(widgetPointer)!!)
 
-	var fontOptions: CairoFontOptionsT
-		get() {
-			TODO()
-		}
-		set(value) {}
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-font-options">gtk_widget_get_font_options</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-font-options">gtk_widget_set_font_options</a>
+	 */
+	var fontOptions: FontOptionsT?
+		get() = gtk_widget_get_font_options(widgetPointer).wrap()
+		set(value) = gtk_widget_set_font_options(widgetPointer, value?.pointer)
 
-	var fontMap: FontMap
-		get() {
-			TODO()
-		}
-		set(value) {}
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-font-map">gtk_widget_get_font_map</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-font-map">gtk_widget_set_font_map</a>
+	 */
+	var fontMap: FontMap?
+		get() = gtk_widget_get_font_map(widgetPointer).wrap()
+		set(value) = gtk_widget_set_font_map(widgetPointer, value?.pointer)
 
-	fun createPangoLayout(text: String? = null): Layout = TODO("")
-	fun drawArea(x: Int, y: Int, width: Int, height: Int): Unit = TODO("")
-	fun drawRegion(region: RegionT): Unit = TODO("")
-	fun setPaintable(isPaintable: Boolean): Unit = TODO("")
-	fun setRedrawOnAllocate(redrawOnAllocate: Boolean): Unit = TODO("")
-	fun mnemonicActivate(groupCycling: Boolean): Unit = TODO("")
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-create-pango-layout">gtk_widget_create_pango_layout</a>
+	 */
+	fun createPangoLayout(text: String? = null): Layout =
+		Layout(gtk_widget_create_pango_layout(widgetPointer, text)!!)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun queueDrawArea(x: Int, y: Int, width: Int, height: Int): Unit = TODO("")
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun queueDrawRegion(region: RegionT): Unit = TODO("")
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-app-paintable">gtk_widget_set_app_paintable</a>
+	 */
+	fun setPaintable(isPaintable: Boolean): Unit =
+		gtk_widget_set_app_paintable(widgetPointer, isPaintable.gtk)
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-redraw-on-allocate">gtk_widget_set_redraw_on_allocate</a>
+	 */
+	fun setRedrawOnAllocate(redrawOnAllocate: Boolean): Unit =
+		gtk_widget_set_redraw_on_allocate(widgetPointer, redrawOnAllocate.gtk)
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-mnemonic-activate">gtk_widget_mnemonic_activate</a>
+	 */
+	fun mnemonicActivate(groupCycling: Boolean): Boolean =
+		gtk_widget_mnemonic_activate(widgetPointer, groupCycling.gtk).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun installStyleProperty(): Unit = TODO("gtk_widget_class_install_style_property")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun installStylePropertyParser(): Unit = TODO("gtk_widget_class_install_style_property")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun findStyleProperty(): Unit = TODO("gtk_widget_class_find_style_property")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun listStyleProperties(): Unit = TODO("gtk_widget_class_list_style_properties")
 
-	fun sendFocusChange(): Unit = TODO("gtk_widget_send_focus_change")
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-send-focus-change">gtk_widget_send_focus_change</a>
+	 */
+	fun sendFocusChange(): Boolean = TODO("gtk_widget_send_focus_change")
 
-	fun getStyle() : Unit= TODO("gtk_widget_style_get_valist")
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun setAccessibleType(): Unit = TODO("gtk_widget_class_set_accessible_type")
 
-	fun getProperty(name: String): Any = TODO("gtk_widget_style_get_property")
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun setAccessibleRole(): Unit = TODO("gtk_widget_class_set_accessible_role")
 
-	fun setAccessibleType() : Unit= TODO("gtk_widget_class_set_accessible_type")
-
-	fun setAccessibleRole() : Unit= TODO("gtk_widget_class_set_accessible_role")
-
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun getAccessible(): Unit = TODO("gtk_widget_get_accessible")
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-property">gtk_widget_style_get_property</a>
+	 */
+	fun getStyleProperty(propertyName: String): KGValue = TODO("gtk_widget_style_get_property")
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-valist">gtk_widget_style_get_valist</a>
+	 */
+	fun getStyle(values: Array<String>): Map<String, KGValue> = TODO("gtk_widget_style_get_valist")
+
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun childFocus(direction: StateFlags): Unit = TODO("gtk_widget_child_focus")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun childNotify(property: String): Unit = TODO("gtk_widget_child_notify")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun freezeChildNotify(): Unit = TODO("gtk_widget_freeze_child_notify")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var isChildVisible: Boolean
 		get() = TODO("gtk_widget_get_child_visible")
 		set(value) = TODO("gtk_widget_set_child_visible")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val settings: Any
 		get() = TODO("gtk_widget_get_settings")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val clipboard: Any
 		get() = TODO("gtk_widget_get_clipboard")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val display: Any
 		get() = TODO("gtk_widget_get_display")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val screen: Screen
 		get() = TODO("gtk_widget_get_screen")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val hasScreen: Boolean
 		get() = TODO("gtk_widget_has_screen")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var size: Pair<Int, Int>
 		get() = TODO("gtk_widget_get_size_request")
 		set(value) = TODO("gtk_widget_set_size_request")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun thawChildNotify(): Unit = TODO("gtk_widget_thaw_child_notify")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var noShowAll: Boolean
 		get() = TODO("gtk_widget_get_no_show_all")
 		set(value) = TODO("gtk_widget_set_no_show_all")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val mnemonicLabels: List<Widget>
 		get() = TODO("gtk_widget_list_mnemonic_labels")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun addMnemonicLabel(label: Widget): Unit = TODO("gtk_widget_add_mnemonic_label")
+
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun removeMnemoicLabel(label: Widget): Unit = TODO("gtk_widget_remove_mnemonic_label")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun errorBell(widget: Widget): Unit = TODO("gtk_widget_error_bell")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun keynavFailed(direction: StateFlags): Boolean = TODO("gtk_widget_keynav_failed")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var tooltipMarkup: String
 		get() = TODO("gtk_widget_get_tooltip_markup")
 		set(value) = TODO("gtk_widget_set_tooltip_markup")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var tooltipText: String
 		get() = TODO("gtk_widget_get_tooltip_text")
 		set(value) = TODO("gtk_widget_set_tooltip_text")
 
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var tooltipWindow: Window
 		get() = TODO("gtk_widget_get_tooltip_window")
 		set(value) = TODO("gtk_widget_set_tooltip_window")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var tooltip: Boolean
 		get() = TODO("gtk_widget_get_has_tooltip")
 		set(value) = TODO("gtk_widget_set_has_tooltip")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun triggerTooltipQuery(): Unit = TODO("gtk_widget_trigger_tooltip_query")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val window: Window?
 		get() = TODO("gtk_widget_get_window")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun registerWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_register_window")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	fun unregisterWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_unregister_window")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	val allocatedWidth: Int
 		get() = TODO("gtk_widget_get_allocated_width")
+
+	/**
+	 * @see <a href=""></a>
+	 */
 	val allocatedHeight: Int
 		get() = TODO("gtk_widget_get_allocated_height")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var allocation: Any
 		get() = TODO("gtk_widget_get_allocation")
 		set(value) = TODO("gtk_widget_set_allocation")
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	var allocatedBaseline: Int
 		get() = TODO("gtk_widget_get_allocated_baseline")
 		set(value) {}
 
 
+	/**
+	 * @see <a href=""></a>
+	 */
 	enum class Align(val key: Int, internal val gtk: GtkAlign) {
 		FILL(0, GtkAlign.GTK_ALIGN_FILL),
 		START(1, GtkAlign.GTK_ALIGN_START),
@@ -785,6 +961,25 @@ open class Widget(
 		}
 	}
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkTextDirection">GtkTextDirection</a>
+	 */
+	enum class TextDirection(val key: Int, internal val gtk: GtkTextDirection) {
+		NONE(0, GTK_TEXT_DIR_NONE),
+		LTR(1, GTK_TEXT_DIR_LTR),
+		RTL(2, GTK_TEXT_DIR_RTL);
+
+		companion object {
+			fun valueOf(key: Int) = values().find { it.key == key }
+			internal fun valueOf(gtk: GtkTextDirection) =
+				values().find { it.gtk == gtk }
+		}
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	@Deprecated("Replace with StateType")
 	enum class StateType(val key: Int, internal val gtk: GtkStateType) {
 		NORMAL(0, GtkStateType.GTK_STATE_NORMAL),
 
@@ -809,15 +1004,23 @@ open class Widget(
 
 
 	companion object {
-		var defaultDirection: StateFlags
-			get() {
-				TODO()
-			}
-			set(value) {}
+		/**
+		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-default-direction">gtk_widget_get_default_direction</a>
+		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-default-direction">gtk_widget_set_default_direction</a>
+		 */
+		var defaultDirection: TextDirection
+			get() = TextDirection.valueOf(gtk_widget_get_default_direction())!!
+			set(value) = gtk_widget_set_default_direction(value.gtk)
 
+		/**
+		 * @see <a href=""></a>
+		 */
 		fun shouldDrawWindow(cairoT: CairoT, window: nativex.gdk.Window): Boolean = TODO("gtk_cairo_should_draw_window")
 
-		fun cairoTransformToWindow() : Unit= TODO("gtk_cairo_transform_to_window")
+		/**
+		 * @see <a href=""></a>
+		 */
+		fun cairoTransformToWindow(): Unit = TODO("gtk_cairo_transform_to_window")
 
 		internal val staticTickCallback: GtkTickCallback =
 			staticCFunction { _: gpointer?, frameClock: CPointer<GdkFrameClock>, data: gpointer ->
