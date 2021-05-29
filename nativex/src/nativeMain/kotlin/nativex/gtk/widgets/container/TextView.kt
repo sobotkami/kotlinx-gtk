@@ -14,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
+import nativex.async.staticBooleanCallback
 import nativex.gtk.*
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.enums.ScrollStep
@@ -154,7 +155,7 @@ class TextView internal constructor(
 	
 	@ExperimentalCoroutinesApi
 	val selectAllSignal: Flow<Boolean> by lazy {
-		callbackSignalFlow(Signals.SELECT_ALL, staticSelectAllCallback)
+		callbackSignalFlow(Signals.SELECT_ALL, staticBooleanCallback)
 	}
 
 	
@@ -300,7 +301,7 @@ class TextView internal constructor(
 				 */
 				TODO("Figure out char")
 			}
-
+/*
 		internal val staticSelectAllCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  select: gboolean,
@@ -309,7 +310,7 @@ class TextView internal constructor(
 					?.invoke(select.bool)
 				Unit
 			}.reinterpret()
-
+*/
 		internal val staticPreeditChangedCallback: GCallback
 			get() {
 				/*staticCFunction { _: gpointer?,

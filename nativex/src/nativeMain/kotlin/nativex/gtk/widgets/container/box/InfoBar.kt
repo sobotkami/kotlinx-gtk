@@ -8,6 +8,7 @@ import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.staticIntCallback
 import nativex.gtk.Signals
 import nativex.gtk.asWidget
 import nativex.gtk.bool
@@ -141,9 +142,10 @@ class InfoBar internal constructor(
 	
 	@ExperimentalCoroutinesApi
 	val responseSignal: Flow<Int> by lazy {
-		callbackSignalFlow(Signals.RESPONSE, staticCallback)
+		callbackSignalFlow(Signals.RESPONSE, staticIntCallback)
 	}
 
+	/*
 	companion object {
 		internal val staticCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
@@ -154,4 +156,6 @@ class InfoBar internal constructor(
 			}.reinterpret()
 
 	}
+
+	 */
 }

@@ -20,7 +20,7 @@ internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 		val id = pointer.connectSignal(
 			signal = signal,
 			callbackWrapper = StableRef.create {
-				offer(Unit)
+				trySend(Unit)
 			}.asCPointer()
 		)
 
@@ -51,7 +51,7 @@ internal inline fun <T> CPointer<GObject>.callbackSignalFlow(
 	val id = this@callbackSignalFlow.connectSignal(
 		signal = signal,
 		callbackWrapper = StableRef.create { t: T ->
-			offer(t)
+			trySend(t)
 		}.asCPointer(),
 		handler = handler
 	)

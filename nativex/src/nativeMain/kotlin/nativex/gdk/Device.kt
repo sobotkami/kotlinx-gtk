@@ -9,4 +9,13 @@ import kotlinx.cinterop.CPointer
  */
 class Device internal constructor(
 	internal val pointer: CPointer<GdkDevice>
-)
+){
+	companion object{
+		internal inline fun CPointer<GdkDevice>?.wrap() =
+			this?.let { Device(it) }
+
+		internal inline fun CPointer<GdkDevice>.wrap() =
+			Device(this)
+
+	}
+}

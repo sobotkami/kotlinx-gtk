@@ -101,6 +101,16 @@ object Signals {
 	const val RESUME_EVENTS = "resume-events"
 	const val UPDATE = "update"
 
+	// GdkMonitor
+	const val INVALIDATE = "invalidate"
+
+	// GdkDisplay
+	const val CLOSED = CLOSE + "d"
+	const val OPENED = OPEN + "ed"
+	const val MONITOR_ADDED = "monitor-added"
+	const val MONITOR_REMOVED = "monitor-removed"
+	const val SEAT_ADDED = "seat-added"
+	const val SEAT_REMOVED = "seat-removed"
 }
 
 /**

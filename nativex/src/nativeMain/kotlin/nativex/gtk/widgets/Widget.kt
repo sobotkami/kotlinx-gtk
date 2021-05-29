@@ -3,18 +3,24 @@ package nativex.gtk.widgets
 import gtk.*
 import gtk.GtkTextDirection.*
 import kotlinx.cinterop.*
+import nativex.atk.KAtkObject
+import nativex.atk.KAtkObject.Companion.wrap
 import nativex.cairo.FontOptionsT
 import nativex.cairo.FontOptionsT.Companion.wrap
 import nativex.cairo.CairoT
 import nativex.cairo.RegionT
 import nativex.gdk.*
+import nativex.gdk.Display.Companion.wrap
 import nativex.gdk.FrameClock.Companion.wrap
+import nativex.gdk.Screen.Companion.wrap
 import nativex.gdk.Visual.Companion.wrap
 import nativex.gio.KObject
 import nativex.glib.KGValue
-import nativex.gtk.WidgetPointer
+import nativex.gtk.*
+import nativex.gtk.Settings.Companion.wrap
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
+import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.StateFlags
 import nativex.gtk.gtk
@@ -746,6 +752,18 @@ open class Widget(
 	fun sendFocusChange(): Boolean = TODO("gtk_widget_send_focus_change")
 
 	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-property">
+	 *     gtk_widget_style_get_property</a>
+	 */
+	fun getStyleProperty(propertyName: String): KGValue = TODO("gtk_widget_style_get_property")
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-valist">
+	 *     gtk_widget_style_get_valist</a>
+	 */
+	fun getStyle(values: Array<String>): Map<String, KGValue> = TODO("gtk_widget_style_get_valist")
+
+	/**
 	 * @see <a href=""></a>
 	 */
 	fun setAccessibleType(): Unit = TODO("gtk_widget_class_set_accessible_type")
@@ -756,71 +774,73 @@ open class Widget(
 	fun setAccessibleRole(): Unit = TODO("gtk_widget_class_set_accessible_role")
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-accessible">
+	 *     gtk_widget_get_accessible</a>
 	 */
-	fun getAccessible(): Unit = TODO("gtk_widget_get_accessible")
+	val accessible: KAtkObject
+		get() = gtk_widget_get_accessible(widgetPointer)!!.wrap()
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-property">gtk_widget_style_get_property</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-child-focus">
+	 *     gtk_widget_child_focus</a>
 	 */
-	fun getStyleProperty(propertyName: String): KGValue = TODO("gtk_widget_style_get_property")
+	fun childFocus(direction: DirectionType) {
+		gtk_widget_child_focus(widgetPointer, direction.gtk)
+	}
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-style-get-valist">gtk_widget_style_get_valist</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-child-notify">
+	 *     gtk_widget_child_notify</a>
 	 */
-	fun getStyle(values: Array<String>): Map<String, KGValue> = TODO("gtk_widget_style_get_valist")
+	fun childNotify(property: String) {
+		gtk_widget_child_notify(widgetPointer, property)
+	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-freeze-child-notify">
+	 *     gtk_widget_freeze_child_notify</a>
 	 */
-	fun childFocus(direction: StateFlags): Unit = TODO("gtk_widget_child_focus")
+	fun freezeChildNotify() {
+		gtk_widget_freeze_child_notify(widgetPointer)
+	}
 
 	/**
-	 * @see <a href=""></a>
-	 */
-	fun childNotify(property: String): Unit = TODO("gtk_widget_child_notify")
-
-	/**
-	 * @see <a href=""></a>
-	 */
-	fun freezeChildNotify(): Unit = TODO("gtk_widget_freeze_child_notify")
-
-	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-child-visible">gtk_widget_get_child_visible</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-child-visible">gtk_widget_set_child_visible</a>
 	 */
 	var isChildVisible: Boolean
-		get() = TODO("gtk_widget_get_child_visible")
-		set(value) = TODO("gtk_widget_set_child_visible")
+		get() = gtk_widget_get_child_visible(widgetPointer).bool
+		set(value) = gtk_widget_set_child_visible(widgetPointer, value.gtk)
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	val settings: Any
-		get() = TODO("gtk_widget_get_settings")
+	val settings: Settings
+		get() = gtk_widget_get_settings(widgetPointer)!!.wrap()
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="">gtk_widget_get_clipboard</a>
 	 */
-	val clipboard: Any
+	val clipboard: Clipboard
 		get() = TODO("gtk_widget_get_clipboard")
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="">gtk_widget_get_display</a>
 	 */
-	val display: Any
-		get() = TODO("gtk_widget_get_display")
+	val display: Display
+		get() = gtk_widget_get_display(widgetPointer)!!.wrap()
 
 	/**
 	 * @see <a href=""></a>
 	 */
 	val screen: Screen
-		get() = TODO("gtk_widget_get_screen")
+		get() = gtk_widget_get_screen(widgetPointer)!!.wrap()
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="">gtk_widget_has_screen</a>
 	 */
 	val hasScreen: Boolean
-		get() = TODO("gtk_widget_has_screen")
+		get() = gtk_widget_has_screen(widgetPointer).bool
 
 	/**
 	 * @see <a href=""></a>
@@ -829,10 +849,16 @@ open class Widget(
 		get() = TODO("gtk_widget_get_size_request")
 		set(value) = TODO("gtk_widget_set_size_request")
 
+	fun setChildVisible(isVisible: Boolean) {
+		gtk_widget_set_child_visible(widgetPointer, isVisible.gtk)
+	}
+
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun thawChildNotify(): Unit = TODO("gtk_widget_thaw_child_notify")
+	fun thawChildNotify(){
+		gtk_widget_thaw_child_notify(widgetPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>

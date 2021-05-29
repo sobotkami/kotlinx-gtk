@@ -13,4 +13,11 @@ class Screen internal constructor(
 	internal val screenPointer: CPointer<GdkScreen>
 ) : KObject(screenPointer.reinterpret()) {
 
+	companion object{
+		internal inline fun CPointer<GdkScreen>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GdkScreen>.wrap() =
+			Screen(this)
+	}
 }

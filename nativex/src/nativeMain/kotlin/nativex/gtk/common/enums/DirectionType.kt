@@ -6,6 +6,9 @@ import gtk.GtkDirectionType.*
 /**
  * kotlinx-gtk
  * 06 / 03 / 2021
+ *
+ * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-Standard-Enumerations.html#GtkDirectionType">
+ *     GtkDirectionType</a>
  */
 enum class DirectionType(val key: Int, internal val gtk: GtkDirectionType) {
 	FORWARD(0, GTK_DIR_TAB_FORWARD),
