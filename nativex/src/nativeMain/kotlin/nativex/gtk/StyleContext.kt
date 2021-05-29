@@ -4,6 +4,7 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
 import kotlinx.cinterop.reinterpret
+import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -12,6 +13,14 @@ import kotlinx.cinterop.reinterpret
 class StyleContext internal constructor(
 	internal val styleContextPointer: CPointer<GtkStyleContext>
 ) {
+	companion object{
+		internal inline fun CPointer<GtkStyleContext>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GtkStyleContext>.wrap() =
+			StyleContext(this)
+
+	}
 
 	class Border internal constructor(
 		internal val borderPointer: CPointer<GtkBorder>?

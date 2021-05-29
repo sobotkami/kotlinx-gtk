@@ -9,17 +9,8 @@ typealias WidgetPointer = CPointer<GtkWidget>
 
 internal typealias VoidPointer = COpaquePointer
 
-
-@Deprecated("Bulky", ReplaceWith("gtk", "nativex.gtk.gtk"))
-internal inline val Boolean.gtkValue: gboolean
-	get() = if (this) 1 else 0
-
 internal inline val Boolean.gtk: gboolean
 	get() = if (this) 1 else 0
-
-@Deprecated("Bulky", ReplaceWith("gtkValue.bool", "nativex.gtk.bool"))
-internal inline infix fun Boolean.Companion.from(gtkValue: gboolean): Boolean =
-	gtkValue == 1
 
 internal inline val gboolean.bool
 	get() = this == 1
@@ -30,7 +21,6 @@ internal typealias CString = CPointer<ByteVar>
 
 /**Shorthand for C's representation of a list of strings (a pointer to a list of char pointers).*/
 internal typealias CStringList = CPointer<CPointerVar<ByteVar>>
-
 
 
 fun Array<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
@@ -44,6 +34,7 @@ fun List<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
 	}
 
 
+@Deprecated("Replace with sequences")
 internal inline fun CStringList?.asStringList(): List<String> =
 	this.asSequence()
 		.toList()
@@ -64,6 +55,7 @@ internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable()
 
 /**
  * For null terminated C arrays
+ * @see asIterable
  */
 internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
 	this ?: return emptySequence()
@@ -91,6 +83,7 @@ internal inline fun CStringList?.asKSequence(): Sequence<String> {
 	}
 }
 
+@Deprecated("Replace with sequences")
 internal fun CStringList?.toStringList(length: Int): List<String?> {
 	this ?: return emptyList()
 	return List(length) { index ->
@@ -101,6 +94,7 @@ internal fun CStringList?.toStringList(length: Int): List<String?> {
 /**
  * Will throw an exception on a nullable
  */
+@Deprecated("Replace with sequences")
 internal fun CStringList?.toStringListNoNulls(length: Int): List<String> {
 	this ?: return emptyList()
 	return List(length) { index ->
@@ -111,6 +105,7 @@ internal fun CStringList?.toStringListNoNulls(length: Int): List<String> {
 /**
  * Will simply replace null with ["null"]
  */
+@Deprecated("Replace with sequences")
 internal fun CStringList?.toStringListFillNulls(length: Int): List<String> {
 	this ?: return emptyList()
 	return List(length) { index ->

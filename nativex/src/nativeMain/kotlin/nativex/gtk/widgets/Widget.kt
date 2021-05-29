@@ -14,17 +14,21 @@ import nativex.gdk.Display.Companion.wrap
 import nativex.gdk.FrameClock.Companion.wrap
 import nativex.gdk.Screen.Companion.wrap
 import nativex.gdk.Visual.Companion.wrap
+import nativex.gdk.Window.Companion.wrap
 import nativex.gio.KObject
 import nativex.glib.KGValue
 import nativex.gtk.*
 import nativex.gtk.Settings.Companion.wrap
+import nativex.gtk.StyleContext.Companion.wrap
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.StateFlags
 import nativex.gtk.gtk
+import nativex.gtk.widgets.Widget.Path.Companion.wrap
 import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
 import nativex.pango.Context
 import nativex.pango.FontMap
 import nativex.pango.FontMap.Companion.wrap
@@ -218,9 +222,9 @@ open class Widget(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-parent-window">gtk_widget_set_parent_window</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-parent-window">gtk_widget_get_parent_window</a>
 	 */
-	var parentWindow: GWindow?
-		get() = gtk_widget_get_parent_window(widgetPointer)?.let { GWindow(it) }
-		set(value) = gtk_widget_set_parent_window(widgetPointer, value?.pointer)
+	var parentWindow: nativex.gdk.Window?
+		get() = gtk_widget_get_parent_window(widgetPointer)?.wrap()
+		set(value) = gtk_widget_set_parent_window(widgetPointer, value?.windowPointer)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-events">gtk_widget_get_events</a>
@@ -845,9 +849,14 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	var size: Pair<Int, Int>
-		get() = TODO("gtk_widget_get_size_request")
-		set(value) = TODO("gtk_widget_set_size_request")
+	var sizeRequest: Pair<Int, Int>
+		get() = memScoped {
+			val w = cValue<IntVar>()
+			val h = cValue<IntVar>()
+			gtk_widget_get_size_request(widgetPointer, w, h)
+			w.ptr.pointed.value to h.ptr.pointed.value
+		}
+		set(value) = gtk_widget_set_size_request(widgetPointer, value.first, value.second)
 
 	fun setChildVisible(isVisible: Boolean) {
 		gtk_widget_set_child_visible(widgetPointer, isVisible.gtk)
@@ -856,7 +865,7 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun thawChildNotify(){
+	fun thawChildNotify() {
 		gtk_widget_thaw_child_notify(widgetPointer)
 	}
 
@@ -864,96 +873,101 @@ open class Widget(
 	 * @see <a href=""></a>
 	 */
 	var noShowAll: Boolean
-		get() = TODO("gtk_widget_get_no_show_all")
-		set(value) = TODO("gtk_widget_set_no_show_all")
+		get() = gtk_widget_get_no_show_all(widgetPointer).bool
+		set(value) = gtk_widget_set_no_show_all(widgetPointer, value.gtk)
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	val mnemonicLabels: List<Widget>
-		get() = TODO("gtk_widget_list_mnemonic_labels")
+	val mnemonicLabels: Sequence<Widget>
+		get() = gtk_widget_list_mnemonic_labels(widgetPointer).asKSequence<GtkWidget, Widget> { it.wrap() }
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun addMnemonicLabel(label: Widget): Unit = TODO("gtk_widget_add_mnemonic_label")
+	fun addMnemonicLabel(label: Widget) {
+		gtk_widget_add_mnemonic_label(widgetPointer, label.widgetPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun removeMnemoicLabel(label: Widget): Unit = TODO("gtk_widget_remove_mnemonic_label")
+	fun removeMnemonicLabel(label: Widget) {
+		gtk_widget_remove_mnemonic_label(widgetPointer, label.widgetPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun errorBell(widget: Widget): Unit = TODO("gtk_widget_error_bell")
+	fun errorBell(widget: Widget) {
+		gtk_widget_error_bell(widgetPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun keynavFailed(direction: StateFlags): Boolean = TODO("gtk_widget_keynav_failed")
+	fun keynavFailed(direction: DirectionType): Boolean =
+		gtk_widget_keynav_failed(widgetPointer, direction.gtk).bool
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	var tooltipMarkup: String
-		get() = TODO("gtk_widget_get_tooltip_markup")
-		set(value) = TODO("gtk_widget_set_tooltip_markup")
+	var tooltipMarkup: String?
+		get() = gtk_widget_get_tooltip_markup(widgetPointer)?.toKString()
+		set(value) = gtk_widget_set_tooltip_markup(widgetPointer, value)
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	var tooltipText: String
-		get() = TODO("gtk_widget_get_tooltip_text")
-		set(value) = TODO("gtk_widget_set_tooltip_text")
-
+	var tooltipText: String?
+		get() = gtk_widget_get_tooltip_text(widgetPointer)?.toKString()
+		set(value) = gtk_widget_set_tooltip_text(widgetPointer, value)
 
 	/**
 	 * @see <a href=""></a>
 	 */
 	var tooltipWindow: Window
-		get() = TODO("gtk_widget_get_tooltip_window")
-		set(value) = TODO("gtk_widget_set_tooltip_window")
+		get() = gtk_widget_get_tooltip_window(widgetPointer)!!.wrap()
+		set(value) = gtk_widget_set_tooltip_window(widgetPointer, value.windowPointer)
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	var tooltip: Boolean
-		get() = TODO("gtk_widget_get_has_tooltip")
-		set(value) = TODO("gtk_widget_set_has_tooltip")
+	fun triggerTooltipQuery() {
+		gtk_widget_trigger_tooltip_query(widgetPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun triggerTooltipQuery(): Unit = TODO("gtk_widget_trigger_tooltip_query")
+	val window: nativex.gdk.Window?
+		get() = gtk_widget_get_window(widgetPointer)?.wrap()
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	val window: Window?
-		get() = TODO("gtk_widget_get_window")
+	fun registerWindow(window: nativex.gdk.Window) {
+		gtk_widget_register_window(widgetPointer, window.windowPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
-	fun registerWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_register_window")
-
-	/**
-	 * @see <a href=""></a>
-	 */
-	fun unregisterWindow(window: nativex.gdk.Window): Unit = TODO("gtk_widget_unregister_window")
+	fun unregisterWindow(window: nativex.gdk.Window) {
+		gtk_widget_unregister_window(widgetPointer, window.windowPointer)
+	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
 	val allocatedWidth: Int
-		get() = TODO("gtk_widget_get_allocated_width")
+		get() = gtk_widget_get_allocated_width(widgetPointer)
 
 	/**
 	 * @see <a href=""></a>
 	 */
 	val allocatedHeight: Int
-		get() = TODO("gtk_widget_get_allocated_height")
+		get() = gtk_widget_get_allocated_height(widgetPointer)
 
 	/**
 	 * @see <a href=""></a>
@@ -965,10 +979,178 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	var allocatedBaseline: Int
-		get() = TODO("gtk_widget_get_allocated_baseline")
-		set(value) {}
+	val allocatedBaseline: Int
+		get() = gtk_widget_get_allocated_baseline(widgetPointer)
 
+	/**
+	 * @see <a href=""></a>
+	 */
+	var hasWindow: Boolean
+		get() = gtk_widget_get_has_window(widgetPointer).bool
+		set(value) = gtk_widget_set_has_window(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val isSensitive: Boolean
+		get() = gtk_widget_is_sensitive(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+
+	val isVisible: Boolean
+		get() = gtk_widget_is_visible(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+
+	var visible: Boolean
+		get() = gtk_widget_get_visible(widgetPointer).bool
+		set(value) = gtk_widget_set_visible(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun setStateFlags(flags: StateFlags, clear: Boolean) {
+		gtk_widget_set_state_flags(widgetPointer, flags.gtk, clear.gtk)
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun unsetStateFlags(flags: StateFlags) {
+		gtk_widget_unset_state_flags(widgetPointer, flags.gtk)
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val hasVisibleFocus: Boolean
+		get() = gtk_widget_has_visible_focus(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val hasGrab: Boolean
+		get() = gtk_widget_has_grab(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val isDrawable: Boolean
+		get() = gtk_widget_is_drawable(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val isToplevel: Boolean
+		get() = gtk_widget_is_toplevel(widgetPointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun setWindow(window: nativex.gdk.Window) {
+		gtk_widget_set_window(widgetPointer, window.windowPointer)
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	var receivesDefault: Boolean
+		get() = gtk_widget_get_receives_default(widgetPointer).bool
+		set(value) = gtk_widget_set_receives_default(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	var supportMultidevice: Boolean
+		get() = gtk_widget_get_support_multidevice(widgetPointer).bool
+		set(value) = gtk_widget_set_support_multidevice(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	var realized: Boolean
+		get() = gtk_widget_get_realized(widgetPointer).bool
+		set(value) = gtk_widget_set_realized(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	var mapped: Boolean
+		get() = gtk_widget_get_mapped(widgetPointer).bool
+		set(value) = gtk_widget_set_mapped(widgetPointer, value.gtk)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun isDeviceShadowed(device: Device): Boolean =
+		gtk_widget_device_is_shadowed(widgetPointer, device.pointer).bool
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun getModifierMask() {
+		TODO("gtk_widget_get_modifier_mask")
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun insertActionGroup() {
+		TODO("gtk_widget_insert_action_group")
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	var opacity: Double
+		get() = gtk_widget_get_opacity(widgetPointer)
+		set(value) = gtk_widget_set_opacity(widgetPointer, value)
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val actionPrefixes: Sequence<String>
+		get() = gtk_widget_list_action_prefixes(widgetPointer).asKSequence()
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun getActionGroup() {
+		TODO("gtk_widget_get_action_group")
+	}
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val path: Path
+		get() = gtk_widget_get_path(widgetPointer)!!.wrap()
+
+
+	val styleContext: StyleContext
+		get() = gtk_widget_get_style_context(widgetPointer)!!.wrap()
+
+	fun resetStyle(){
+		gtk_widget_reset_style(widgetPointer)
+	}
+
+	/**
+	 * @see <a href="">GtkWidgetPath</a>
+	 */
+	class Path internal constructor(
+		internal val pointer: CPointer<GtkWidgetPath>
+	) {
+		companion object {
+			internal inline fun CPointer<GtkWidgetPath>?.wrap() =
+				this?.wrap()
+
+			internal inline fun CPointer<GtkWidgetPath>.wrap() =
+				Path(this)
+		}
+	}
 
 	/**
 	 * @see <a href=""></a>

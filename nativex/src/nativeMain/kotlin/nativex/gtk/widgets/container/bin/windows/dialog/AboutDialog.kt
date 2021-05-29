@@ -7,7 +7,6 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.gtk.*
 import nativex.gtk.asStringList
-import nativex.gtk.from
 import nativex.gtk.gtk
 
 /**
