@@ -22,6 +22,7 @@ import nativex.gtk.Settings.Companion.wrap
 import nativex.gtk.StyleContext.Companion.wrap
 import nativex.gtk.bool
 import nativex.gtk.common.data.Requisition
+import nativex.gtk.common.data.Requisition.Companion.wrap
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.StateFlags
@@ -103,6 +104,24 @@ open class Widget(
 			widgetPointer,
 			value.gtk
 		)
+
+	data class PreferredSize(
+		val minimmum: Requisition,
+		val maximum: Requisition
+	)
+
+	val preferredSize: PreferredSize
+	get() = memScoped {
+		val min = cValue<GtkRequisition>()
+		val nat = cValue<GtkRequisition>()
+
+		gtk_widget_get_preferred_size(widgetPointer,min,nat)
+
+		PreferredSize(
+			min.ptr.wrap(),
+			nat.ptr.wrap()
+		)
+	}
 
 	/**
 	 * @see <a href=""></a>
@@ -446,11 +465,7 @@ open class Widget(
 	fun sizeRequest(): Requisition {
 		val gtkRequisition = cValue<GtkRequisition>()
 		gtk_widget_size_request(widgetPointer, gtkRequisition)
-		return memScoped {
-			gtkRequisition.ptr.pointed.let {
-				Requisition(it.width, it.height)
-			}
-		}
+		return memScoped { gtkRequisition.ptr.wrap() }
 	}
 
 	/**
@@ -1133,7 +1148,7 @@ open class Widget(
 	val styleContext: StyleContext
 		get() = gtk_widget_get_style_context(widgetPointer)!!.wrap()
 
-	fun resetStyle(){
+	fun resetStyle() {
 		gtk_widget_reset_style(widgetPointer)
 	}
 
