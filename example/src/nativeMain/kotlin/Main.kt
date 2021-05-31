@@ -69,10 +69,7 @@ class ViewModel {
 val viewModel = ViewModel()
 
 const val ACTION_QUIT = "actionquit"
-
 @ExperimentalCoroutinesApi
-
-@Test
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {
 		onQueryEnd {
