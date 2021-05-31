@@ -11,8 +11,12 @@ import nativex.gdk.Window
  * 06 / 03 / 2021
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkRequisition">GtkRequisition</a>
+ *
+ * After being used, should be closed
  */
-class Requisition internal constructor(internal val requisitionPointer: CPointer<GtkRequisition>) : Closeable {
+class Requisition internal constructor(
+	internal val requisitionPointer: CPointer<GtkRequisition>
+) : Closeable {
 	constructor() : this(gtk_requisition_new()!!)
 
 	private var isClosed = false
@@ -52,12 +56,13 @@ class Requisition internal constructor(internal val requisitionPointer: CPointer
 	override fun close() {
 		free()
 	}
-	companion object{
+
+	companion object {
 		internal inline fun CPointer<GtkRequisition>?.wrap() =
 			this?.wrap()
 
 		internal inline fun CPointer<GtkRequisition>.wrap() =
-			Requisition (this)
+			Requisition(this)
 
 	}
 }

@@ -17,6 +17,7 @@ import nativex.gdk.Visual.Companion.wrap
 import nativex.gdk.Window.Companion.wrap
 import nativex.gio.KObject
 import nativex.glib.KGValue
+import nativex.gmodule.KGBytes
 import nativex.gtk.*
 import nativex.gtk.Settings.Companion.wrap
 import nativex.gtk.StyleContext.Companion.wrap
@@ -111,17 +112,17 @@ open class Widget(
 	)
 
 	val preferredSize: PreferredSize
-	get() = memScoped {
-		val min = cValue<GtkRequisition>()
-		val nat = cValue<GtkRequisition>()
+		get() = memScoped {
+			val min = cValue<GtkRequisition>()
+			val nat = cValue<GtkRequisition>()
 
-		gtk_widget_get_preferred_size(widgetPointer,min,nat)
+			gtk_widget_get_preferred_size(widgetPointer, min, nat)
 
-		PreferredSize(
-			min.ptr.wrap(),
-			nat.ptr.wrap()
-		)
-	}
+			PreferredSize(
+				min.ptr.wrap(),
+				nat.ptr.wrap()
+			)
+		}
 
 	/**
 	 * @see <a href=""></a>
@@ -689,6 +690,7 @@ open class Widget(
 	fun createPangoContext(): Context =
 		Context(gtk_widget_create_pango_context(widgetPointer)!!)
 
+
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-get-pango-context">gtk_widget_get_pango_context</a>
 	 */
@@ -718,14 +720,19 @@ open class Widget(
 		Layout(gtk_widget_create_pango_layout(widgetPointer, text)!!)
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-queue-draw-area">
+	 *     gtk_widget_queue_draw_area</a>
 	 */
-	fun queueDrawArea(x: Int, y: Int, width: Int, height: Int): Unit = TODO("")
+	fun queueDrawArea(x: Int, y: Int, width: Int, height: Int) {
+		gtk_widget_queue_draw_area(widgetPointer, x, y, width, height)
+	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-queue-draw-region">gtk_widget_queue_draw_region</a>
 	 */
-	fun queueDrawRegion(region: RegionT): Unit = TODO("")
+	fun queueDrawRegion(region: RegionT) {
+		gtk_widget_queue_draw_region(widgetPointer, region.pointer)
+	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-set-app-paintable">gtk_widget_set_app_paintable</a>
@@ -1222,6 +1229,15 @@ open class Widget(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 			fun valueOf(gtk: GtkStateType) = values().find { it.gtk == gtk }
+		}
+	}
+
+
+	class Class internal constructor(
+		internal val classPointer: CPointer<GtkWidgetClass>
+	) {
+		fun setTemplate(templateBytes: KGBytes) {
+			gtk_widget_class_set_template(classPointer, templateBytes.pointer)
 		}
 	}
 
