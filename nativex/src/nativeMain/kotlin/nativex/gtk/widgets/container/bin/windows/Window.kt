@@ -8,6 +8,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.gdk.Screen
 import nativex.glib.Variant
 import nativex.gtk.*
 import nativex.gtk.GtkWindowGroup
@@ -129,29 +130,15 @@ open class Window internal constructor(
 	val areMnemonicsVisible: Boolean
 		get() = TODO()
 
-	override fun destroy() {
-		TODO("")
+	fun setTransientFor(window: Window) {
+		gtk_window_set_transient_for(windowPointer, window.windowPointer)
 	}
 
-	fun setTransientFor() {
-		TODO("")
-	}
+	val isActive: Boolean
+		get() = gtk_window_is_active(windowPointer).bool
 
-	fun setDisplay() {
-		TODO("")
-	}
-
-	fun isActive(): Boolean {
-		TODO("")
-	}
-
-	fun isMaximized(): Boolean {
-		TODO("")
-	}
-
-	fun isFullScreen(): Boolean {
-		TODO("")
-	}
+	val isMaximized: Boolean
+		get() = gtk_window_is_maximized(windowPointer).bool
 
 	fun getTopLevels() {
 		TODO("")
@@ -173,32 +160,24 @@ open class Window internal constructor(
 		TODO("")
 	}
 
-	fun minimize() {
-		TODO("")
-	}
-
-	fun unMinimize() {
-		TODO("")
-	}
-
 	fun maximize() {
-		TODO("")
+		gtk_window_maximize(windowPointer)
 	}
 
 	fun unMaximize() {
-		TODO("")
+		gtk_window_unmaximize(windowPointer)
 	}
 
 	fun fullScreen() {
-		TODO("")
+		gtk_window_fullscreen(windowPointer)
 	}
 
-	fun fullScreenOnMonitor() {
-		TODO("")
+	fun fullScreenOnMonitor(screen: Screen, monitor: Int) {
+		gtk_window_fullscreen_on_monitor(windowPointer, screen.screenPointer, monitor)
 	}
 
 	fun unFullScreen() {
-		TODO("")
+		gtk_window_unfullscreen(windowPointer)
 	}
 
 	fun setStartupId() {
@@ -222,19 +201,18 @@ open class Window internal constructor(
 	}
 
 
-	
 	@ExperimentalCoroutinesApi
 	val activeDefaultSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE_DEFAULT)
 	}
 
-	
+
 	@ExperimentalCoroutinesApi
 	val activeFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.ACTIVATE_FOCUS)
 	}
 
-	
+
 	@ExperimentalCoroutinesApi
 	val enableDebuggingSignal: Flow<Boolean> by lazy {
 		callbackSignalFlow(
@@ -243,13 +221,13 @@ open class Window internal constructor(
 		)
 	}
 
-	
+
 	@ExperimentalCoroutinesApi
 	val keysChangedSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.KEYS_CHANGED)
 	}
 
-	
+
 	@ExperimentalCoroutinesApi
 	val setFocusSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(

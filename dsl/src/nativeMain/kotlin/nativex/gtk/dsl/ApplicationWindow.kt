@@ -9,5 +9,5 @@ import nativex.gtk.widgets.container.bin.windows.ApplicationWindow
  * 23 / 03 / 2021
  */
 @GtkDsl
-inline fun Application.applicationWindow(builder: ApplicationWindow.() -> Unit) =
+inline fun Application.applicationWindow(builder: ApplicationWindow.() -> Unit): ApplicationWindow =
 	ApplicationWindow(this).apply(builder)
