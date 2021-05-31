@@ -20,7 +20,7 @@ kotlin {
 			dependencies {
 				implementation(project(":nativex"))
 				implementation(project(":dsl"))
-				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3-native-mt")
+				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 			}
 		}
 	}
