@@ -11,8 +11,6 @@ import kotlin.native.concurrent.isFrozen
  * Defines the UI thread
  * All events from [nativex] will be translated into this context
  */
-@Suppress("unused")
-@ExperimentalCoroutinesApi
 val Dispatchers.UI: CoroutineDispatcher
 	get() = glibExecution
 
@@ -53,25 +51,26 @@ private val glibExecution by lazy {
 val Dispatchers.IO: CoroutineDispatcher
 	get() = newSingleThreadContext("IO")
 
-@ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
 inline fun launchUI(crossinline block: suspend CoroutineScope.() -> Unit) =
 	GlobalScope.launch(context = Dispatchers.UI) {
 		block()
 	}
 
 @ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
 inline fun launchIO(crossinline block: suspend CoroutineScope.() -> Unit) =
 	GlobalScope.launch(context = Dispatchers.IO) {
 		block()
 	}
 
-@ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
 inline fun launchDefault(crossinline block: suspend CoroutineScope.() -> Unit) =
 	GlobalScope.launch(context = Dispatchers.Default) {
 		block()
 	}
 
-@ExperimentalCoroutinesApi
+@DelicateCoroutinesApi
 inline fun launchUnconfined(crossinline block: suspend CoroutineScope.() -> Unit) =
 	GlobalScope.launch(context = Dispatchers.Unconfined) {
 		block()
