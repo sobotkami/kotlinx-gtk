@@ -1,7 +1,5 @@
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.delay
+
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import nativex.async.launchDefault
@@ -9,12 +7,12 @@ import nativex.gio.dsl.*
 import nativex.glib.Variant
 import nativex.gtk.dsl.*
 import kotlin.system.measureTimeMillis
-import kotlin.test.Test
 
 /**
  * kotlinx-gtk
  * 08 / 02 / 2021
  */
+@DelicateCoroutinesApi
 class ViewModel {
 	private val _flow: MutableStateFlow<List<String>> = MutableStateFlow(
 		listOf()
@@ -66,9 +64,13 @@ class ViewModel {
 	}
 }
 
+@DelicateCoroutinesApi
 val viewModel = ViewModel()
 
+
 const val ACTION_QUIT = "actionquit"
+
+@DelicateCoroutinesApi
 @ExperimentalCoroutinesApi
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {

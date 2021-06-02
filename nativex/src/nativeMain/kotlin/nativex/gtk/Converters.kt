@@ -2,7 +2,6 @@ package nativex.gtk
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.*
 import nativex.gtk.widgets.Widget
 
 typealias WidgetPointer = CPointer<GtkWidget>
@@ -23,12 +22,16 @@ internal typealias CString = CPointer<ByteVar>
 internal typealias CStringList = CPointer<CPointerVar<ByteVar>>
 
 
-fun Array<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
-	memScoped {
-		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+fun Array<Int>.toCArray(scope: MemScope): CPointer<CPointerVar<IntVar>> =
+	with(scope) {
+		allocArrayOf(this@toCArray.map { value ->
+			cValue<IntVar>().apply {
+				this.ptr.pointed.value = value
+			}.getPointer(this)
+		})
 	}
 
-fun List<String>.toNullTermCStringArray(): CPointer<CPointerVar<ByteVar>> =
+fun List<String>.toNullTermCStringArray(): CStringList =
 	memScoped {
 		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
 	}

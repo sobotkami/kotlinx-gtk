@@ -14,7 +14,6 @@ import nativex.gtk.connectSignal
 
 
 @ExperimentalCoroutinesApi
-
 internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(

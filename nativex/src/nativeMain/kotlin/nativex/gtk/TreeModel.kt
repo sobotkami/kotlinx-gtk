@@ -17,17 +17,17 @@ open class TreeModel internal constructor(
 	@ExperimentalCoroutinesApi
 	val rowChangedSignal: Flow<RowChanged> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
-		Signals.ROW_CHANGED,
-		RowChanged.staticCallback
-	)
+			Signals.ROW_CHANGED,
+			RowChanged.staticCallback
+		)
 	}
 
 	@ExperimentalCoroutinesApi
 	val rowDeletedSignal: Flow<RowDeleted> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
-		Signals.ROW_DELETED,
-		RowDeleted.staticCallback
-	)
+			Signals.ROW_DELETED,
+			RowDeleted.staticCallback
+		)
 	}
 
 	@ExperimentalCoroutinesApi
@@ -41,17 +41,17 @@ open class TreeModel internal constructor(
 	@ExperimentalCoroutinesApi
 	val rowInsertedSignal: Flow<RowInserted> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
-		Signals.ROW_INSERTED,
-		RowInserted.staticCallback
-	)
+			Signals.ROW_INSERTED,
+			RowInserted.staticCallback
+		)
 	}
 
 	@ExperimentalCoroutinesApi
 	val rowsReordered: Flow<RowsReordered> by lazy {
 		pointer.reinterpret<GObject>().callbackSignalFlow(
-		Signals.ROWS_REORDERED,
-		RowsReordered.staticCallback
-	)
+			Signals.ROWS_REORDERED,
+			RowsReordered.staticCallback
+		)
 	}
 
 	data class RowChanged(
@@ -163,7 +163,7 @@ open class TreeModel internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			
+
 			internal fun valueOf(gtk: GtkTreeModelFlags) =
 				values().find { it.gtk == gtk }
 		}
@@ -172,6 +172,8 @@ open class TreeModel internal constructor(
 	data class TreeIter internal constructor(
 		internal val treeIterPointer: CPointer<GtkTreeIter>
 	) {
+		constructor() : this(memScoped { alloc<GtkTreeIter>().ptr })
+
 		val stamp: Int
 			get() = treeIterPointer.pointed.stamp
 

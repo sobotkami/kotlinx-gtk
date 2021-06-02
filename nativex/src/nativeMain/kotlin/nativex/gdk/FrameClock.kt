@@ -2,6 +2,7 @@ package nativex.gdk
 
 import gtk.*
 import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.gdk.FrameTimings.Companion.wrap
@@ -44,6 +45,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-after-paint">after-paint</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val afterPaintSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.AFTER_PAINT)
 	}
@@ -51,6 +53,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-before-paint">before-paint</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val beforePaintSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.BEFORE_PAINT)
 	}
@@ -58,6 +61,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-flush-events">flush-events</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val flushEvents: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.FLUSH_EVENTS)
 	}
@@ -65,6 +69,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-layout">layout</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val layoutSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.LAYOUT)
 	}
@@ -72,6 +77,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-paint">paint</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val paintSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.PAINT)
 	}
@@ -79,6 +85,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-resume-events">resume-events</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val resumeEventsSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.RESUME_EVENTS)
 	}
@@ -86,6 +93,7 @@ class FrameClock internal constructor(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-update">update</a>
 	 */
+	@ExperimentalCoroutinesApi
 	val updateSignal: Flow<Unit> by lazy {
 		callbackSignalFlow(Signals.UPDATE)
 	}

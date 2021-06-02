@@ -1,6 +1,42 @@
 package nativex.glib
 
-import gtk.GValue
+import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.alloc
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.ptr
 
-class KGValue internal constructor(internal val pointer: CPointer<GValue>)
+class KGValue internal constructor(internal val pointer: CPointer<GValue>) {
+	constructor(type: KGType) : this(memScoped { g_value_init(alloc<GValue>().ptr, type.glib)!! })
+
+	constructor(value: Int) : this(
+		memScoped {
+			val gValue = alloc<GValue>()
+			g_value_init(gValue.ptr, KGType.INT.glib)
+			g_value_set_int(gValue.ptr, value)
+			gValue.ptr
+		}
+	)
+
+	constructor(value: String) : this(
+		memScoped {
+			val gValue = alloc<GValue>()
+			g_value_init(gValue.ptr, KGType.STRING.glib)
+			g_value_set_string(gValue.ptr, value)
+			gValue.ptr
+		}
+	)
+
+
+	fun set(value: Int) {
+		g_value_set_int(pointer, value)
+	}
+
+	fun set(value: String) {
+		g_value_set_string(pointer, value)
+	}
+
+	fun unset() {
+		g_value_unset(pointer)
+	}
+}
