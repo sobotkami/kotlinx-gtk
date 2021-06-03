@@ -7,8 +7,8 @@ repositories {
 	mavenCentral()
 }
 
-group = "org.gnome.kotlin.dsl"
-version = "0.1.0"
+group = "org.gnome.kotlinx-gtk"
+version = "0.1.0-alpha"
 
 kotlin {
 	linuxX64("native") {
