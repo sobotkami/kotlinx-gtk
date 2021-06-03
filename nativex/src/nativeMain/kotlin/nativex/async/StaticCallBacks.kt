@@ -6,6 +6,8 @@ import gtk.gpointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
+import kotlinx.cinterop.toKString
+import nativex.gtk.CString
 import nativex.gtk.bool
 
 // This file contains generic static callbacks that are frequently used in the program
@@ -20,9 +22,18 @@ internal val staticIntCallback: GCallback =
 
 internal val staticBooleanCallback: GCallback =
 	staticCFunction { _: gpointer?,
-	                  select: gboolean,
+	                  arg1: gboolean,
 	                  data: gpointer? ->
 		data?.asStableRef<(Boolean) -> Unit>()?.get()
-			?.invoke(select.bool)
+			?.invoke(arg1.bool)
+		Unit
+	}.reinterpret()
+
+internal val staticCStringCallback: GCallback =
+	staticCFunction { _: gpointer?,
+	                  arg1: CString,
+	                  data: gpointer? ->
+		data?.asStableRef<(String) -> Unit>()?.get()
+			?.invoke(arg1.toKString())
 		Unit
 	}.reinterpret()

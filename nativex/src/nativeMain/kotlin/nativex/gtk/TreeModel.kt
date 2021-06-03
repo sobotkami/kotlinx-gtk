@@ -64,6 +64,12 @@ open class TreeModel internal constructor(
 		)
 	}
 
+	fun getIter(path: TreePath): TreeIter = TreeIter(memScoped {
+		val iter = cValue<GtkTreeIter>()
+		gtk_tree_model_get_iter(treeModelPointer, iter.ptr, path.treePathPointer)
+		iter.ptr
+	})
+
 	data class RowChanged(
 		val path: TreePath,
 		val iter: TreeIter,
@@ -220,6 +226,13 @@ open class TreeModel internal constructor(
 
 		constructor() : this(gtk_tree_path_new()!!)
 
+		constructor(vararg indices: Int) : this(
+			gtk_tree_path_new_from_indicesv(
+				indices.toCValues(),
+				indices.size.toULong()
+			)!!
+		)
+
 		override fun close() {
 			free()
 		}
@@ -229,5 +242,4 @@ open class TreeModel internal constructor(
 		fun TreeModel.asKObject(): KObject? =
 			this.treeModelPointer.reinterpretOrNull<GObject>().wrap()
 	}
-
 }

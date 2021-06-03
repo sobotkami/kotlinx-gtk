@@ -1,10 +1,14 @@
 package nativex.gio
 
+import gtk.GBinding
 import gtk.GObject
 import gtk.g_object_set_property
 import gtk.g_object_unref
 import kotlinx.cinterop.CPointer
+import nativex.glib.KGBinding
+import nativex.glib.KGBinding.Companion.wrap
 import nativex.glib.KGValue
+import nativex.reinterpretOrNull
 
 /**
  * kotlinx-gtk
@@ -21,6 +25,7 @@ open class KObject internal constructor(
 		g_object_unref(pointer)
 	}
 
+
 	@Target(AnnotationTarget.VALUE_PARAMETER)
 	annotation class Property()
 
@@ -32,4 +37,7 @@ open class KObject internal constructor(
 		internal fun CPointer<GObject>.wrap() =
 			KObject(this)
 	}
+
+	fun asKGBinding(): KGBinding? =
+		pointer.reinterpretOrNull<GBinding>().wrap()
 }

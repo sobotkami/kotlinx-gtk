@@ -1,10 +1,7 @@
 package nativex.gtk.widgets.container.bin.combobox
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.toKString
+import kotlinx.cinterop.*
 import nativex.PointerHolder
 import nativex.gdk.Device
 import nativex.gtk.*
@@ -17,7 +14,7 @@ import nativex.gtk.widgets.range.Range
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-class ComboBox(
+open class ComboBox(
 	internal val comboBoxPointer: CPointer<GtkComboBox>
 ) : Bin(comboBoxPointer.reinterpret()), CellLayout {
 	override val cellLayoutHolder: PointerHolder<GtkCellLayout> by lazy {
@@ -108,14 +105,6 @@ class ComboBox(
 		TODO("gtk_combo_box_get_popup_accessible")
 	}
 
-	var rowSeperatorFunc: TreeViewRowSeparatorFunc
-		get() {
-			TODO("gtk_combo_box_get_row_separator_func")
-		}
-		set(value) {
-			TODO("gtk_combo_box_set_row_separator_func")
-		}
-
 	var buttonSensitivity: Range.SensitivityType
 		get() = Range.SensitivityType.valueOf(
 			gtk_combo_box_get_button_sensitivity(comboBoxPointer)
@@ -143,13 +132,16 @@ class ComboBox(
 		)
 
 
+	//TODO Create getter
 	fun setRowSeparatorFunc(function: TreeViewRowSeparatorFunc) {
 		gtk_combo_box_set_row_separator_func(
 			comboBoxPointer,
 			staticTreeViewRowSeparatorFunc,
-			StableRef.create<TreeViewRowSeparatorFunc> {
-
-			},
+			StableRef.create(function).asCPointer(),
+			staticCFunction { destroy: gpointer? ->
+				destroy?.asStableRef<Any>()?.dispose()
+				Unit
+			}
 		)
 	}
 

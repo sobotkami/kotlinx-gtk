@@ -21,13 +21,11 @@ interface CellLayout {
 			                  treeModel: CPointer<GtkTreeModel>?,
 			                  iter: CPointer<GtkTreeIter>?,
 			                  data: gpointer? ->
-				data?.asStableRef<(DataFunc) -> Unit>()?.get()?.invoke(
-					DataFunc(
-						Impl(PointerHolder(cellLayout!!)),
-						CellRenderer(cell!!),
-						TreeModel(treeModel!!),
-						TreeIter(iter!!)
-					)
+				data?.asStableRef<(CellLayout, CellRenderer, TreeModel, TreeIter) -> Unit>()?.get()?.invoke(
+					Impl(PointerHolder(cellLayout!!)),
+					CellRenderer(cell!!),
+					TreeModel(treeModel!!),
+					TreeIter(iter!!)
 				)
 				Unit
 			}
@@ -37,20 +35,22 @@ interface CellLayout {
 
 	val cellLayoutHolder: PointerHolder<GtkCellLayout>
 
-	data class DataFunc(
-		val layout: CellLayout,
-		val cell: CellRenderer,
-		val treeModel: TreeModel,
-		val iter: TreeIter
-	)
 
-	fun setCellDataFunc(renderer: CellRenderer, function: (DataFunc) -> Unit) {
+	fun setCellDataFunc(
+		renderer: CellRenderer, function: (
+			CellLayout,
+			CellRenderer,
+			TreeModel,
+			TreeIter
+		) -> Unit
+	) {
 		gtk_cell_layout_set_cell_data_func(
 			cell_layout = cellLayoutHolder.ptr,
 			cell = renderer.cellRendererPointer,
 			func = staticCellDataFunc,
-			func_data = StableRef.create { data: DataFunc ->
-				function(data)
+			func_data = StableRef.create { layout: CellLayout, cell: CellRenderer, treeModel: TreeModel, iter: TreeIter ->
+				function(layout, cell, treeModel, iter)
+				Unit
 			}.asCPointer(),
 			destroy = staticCFunction { void: gpointer? ->
 				void?.asStableRef<Any>()?.dispose()

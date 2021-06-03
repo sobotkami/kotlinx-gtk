@@ -1,3 +1,4 @@
+import nativex.glib.KGBinding
 import nativex.glib.KGType
 import nativex.glib.KGValue
 import nativex.gtk.CellLayout
@@ -15,6 +16,9 @@ import nativex.gtk.widgets.container.bin.combobox.ComboBoxText
 import nativex.gtk.widgets.container.bin.frame.Frame
 import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.gtk.widgets.container.box.Box
+import nativex.gtk.widgets.entry.Entry
+import nativex.use
+import kotlin.test.assertNotNull
 
 const val ICON_NAME_COL = 0
 const val TEXT_COL = 1
@@ -60,6 +64,13 @@ fun setSensitive(
 	val sensitive: Boolean = indices.first() != 1
 	path.free()
 	cell.set("sensitive", sensitive)
+}
+
+fun isSeparator(model: TreeModel, iter: TreeIter): Boolean {
+	val path = model.getPath(iter)
+	val result = path.indices.first() == 4
+	path.free()
+	return result
 }
 
 fun createCapitalStore(): TreeModel {
@@ -141,6 +152,7 @@ fun createCapitalStore(): TreeModel {
 }
 
 fun isCapitalSensitive(
+	cellLayout: CellLayout,
 	cell: CellRenderer,
 	treeModel: TreeModel,
 	iter: TreeIter
@@ -156,38 +168,117 @@ fun fillComboEntry(combo: ComboBoxText) {
 	combo.appendText("Three")
 }
 
+private var window :Window? = null
+
 fun doCombobox(doWidget: Widget): Widget {
-	val window = Window(Window.Type.TOP_LEVEL)
-	window.windowScreen = doWidget.screen
-	window.title = "Combo Boxes"
 
-	// TODO Destroy signal
+	if (window==null){
+		window = Window(Window.Type.TOP_LEVEL)
 
-	window.borderWidth = 10u
+		window?.windowScreen = doWidget.screen
+		window?.title = "Combo Boxes"
 
-	val vbox = Box(Orientation.VERTICAL, 2)
-	window.add(vbox)
+		// TODO Destroy signal
 
-	val frame = Frame("Items with icons")
-	vbox.packStart(frame, expand = false, fill = false, padding = 0u)
+		window?.borderWidth = 10u
 
-	val box = Box(Orientation.VERTICAL, 0)
-	box.borderWidth = 5u
-	frame.add(box)
+		val vbox = Box(Orientation.VERTICAL, 2)
+		window?.add(vbox)
 
-	val model = createIconStore()
-	val combo = ComboBox(model)
-	model.asKObject()?.unref()
-	box.add(combo)
+		var frame = Frame("Items with icons")
+		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
 
-	val renderer = CellRenderer()
-	combo.apply {
-		packStart(renderer, false)
-		addAttribute(renderer, "icon-name", ICON_NAME_COL)
-		setCellDataFunc(renderer) { (layout, cell, treeModel, iter) ->
-			setSensitive(layout, cell, treeModel, iter)
+		var box = Box(Orientation.VERTICAL, 0)
+		box.borderWidth = 5u
+		frame.add(box)
 
+		var model = createIconStore()
+		var combo = ComboBox(model)
+		model.asKObject()?.unref()
+		box.add(combo)
+
+		var renderer: CellRenderer = CellRenderer.Pixbuf()
+		combo.apply {
+			packStart(renderer, false)
+			addAttribute(renderer, "icon-name", ICON_NAME_COL)
+			setCellDataFunc(renderer, ::setSensitive)
 		}
+
+
+		renderer = CellRenderer.Text()
+		combo.apply {
+			packStart(renderer, true)
+			addAttribute(renderer, "text", TEXT_COL)
+			setCellDataFunc(renderer, ::setSensitive)
+			setRowSeparatorFunc(::isSeparator)
+			combo.active = 0
+		}
+
+		// A combobox demonstrating trees
+		frame = Frame("Where are we ?")
+		vbox.packStart(frame, false, fill = false, padding = 0u)
+
+		box = Box(Orientation.VERTICAL, 0)
+		box.borderWidth = 5u
+		frame.add(box)
+
+		model = createCapitalStore()
+		combo = ComboBox(model)
+		model.asKObject()?.unref()
+		box.add(combo)
+
+		renderer = CellRenderer.Text()
+		combo.apply {
+			packStart(renderer, true)
+			addAttribute(renderer, "text", 0)
+			setCellDataFunc(renderer, ::isCapitalSensitive)
+		}
+
+		TreePath(0, 8, -1).use {
+			combo.setActiveIter(model.getIter(it))
+		}
+
+		// A ComboBoxEntry with validation
+		frame = Frame("Editable")
+		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
+
+		box = Box(Orientation.VERTICAL, 0)
+		box.borderWidth = 5u
+		frame.add(box)
+
+		combo = ComboBoxText(true)
+		fillComboEntry(combo)
+		box.add(combo)
+
+		// ENTRY
+		// MASK ENTRY
+
+		// REMOVE
+		// ADD
+
+		/// A combobox with string IDs
+		frame = Frame("String IDs")
+		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
+
+		box = Box(Orientation.VERTICAL, 0)
+		box.borderWidth = 5u
+		frame.add(box)
+
+		combo = ComboBoxText().apply {
+			append("never", "Not visible")
+			append("when-active", "Visible when active")
+			append("always", "Always visible")
+			box.add(this)
+		}
+
+		val entry = Entry()
+		entry.asKGBinding()?.bind("active-id", entry, "text", KGBinding.Flags.BIDIRECTIONAL)
+		box.add(entry)
 	}
 
+	if (!window!!.visible) {
+		window!!.showAll()
+	} else window!!.destroy()
+
+	return window!!
 }
