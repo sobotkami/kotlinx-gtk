@@ -4,19 +4,29 @@ import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import nativex.Closeable
+import nativex.ClosedException
 import nativex.async.callbackSignalFlow
+import nativex.gio.KObject
+import nativex.gio.KObject.Companion.wrap
+import nativex.reinterpretOrNull
 
 /**
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
 open class TreeModel internal constructor(
-	internal val pointer: CPointer<GtkTreeModel>
+	internal val treeModelPointer: CPointer<GtkTreeModel>
 ) {
+	fun getPath(iter: TreeIter): TreePath =
+		TreePath(gtk_tree_model_get_path(treeModelPointer, iter.treeIterPointer)!!)
+
+	fun iterHasChild(iter: TreeIter): Boolean =
+		gtk_tree_model_iter_has_child(treeModelPointer, iter.treeIterPointer).bool
 
 	@ExperimentalCoroutinesApi
 	val rowChangedSignal: Flow<RowChanged> by lazy {
-		pointer.reinterpret<GObject>().callbackSignalFlow(
+		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROW_CHANGED,
 			RowChanged.staticCallback
 		)
@@ -24,7 +34,7 @@ open class TreeModel internal constructor(
 
 	@ExperimentalCoroutinesApi
 	val rowDeletedSignal: Flow<RowDeleted> by lazy {
-		pointer.reinterpret<GObject>().callbackSignalFlow(
+		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROW_DELETED,
 			RowDeleted.staticCallback
 		)
@@ -32,7 +42,7 @@ open class TreeModel internal constructor(
 
 	@ExperimentalCoroutinesApi
 	val rowHasChildToggled: Flow<RowHasChildToggled> by lazy {
-		pointer.reinterpret<GObject>().callbackSignalFlow(
+		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROW_HAS_CHILD_TOGGLED,
 			RowHasChildToggled.staticCallback
 		)
@@ -40,7 +50,7 @@ open class TreeModel internal constructor(
 
 	@ExperimentalCoroutinesApi
 	val rowInsertedSignal: Flow<RowInserted> by lazy {
-		pointer.reinterpret<GObject>().callbackSignalFlow(
+		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROW_INSERTED,
 			RowInserted.staticCallback
 		)
@@ -48,7 +58,7 @@ open class TreeModel internal constructor(
 
 	@ExperimentalCoroutinesApi
 	val rowsReordered: Flow<RowsReordered> by lazy {
-		pointer.reinterpret<GObject>().callbackSignalFlow(
+		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
 			Signals.ROWS_REORDERED,
 			RowsReordered.staticCallback
 		)
@@ -182,10 +192,42 @@ open class TreeModel internal constructor(
 		var userData3: Any? = null
 	}
 
-	data class TreePath internal constructor(
+	class TreePath internal constructor(
 		internal val treePathPointer: CPointer<GtkTreePath>
-	) {
+	) : Closeable {
+		private var isClosed = false
+		private inline fun getCloseException() =
+			ClosedException("TreePath has been freed")
 
+		fun free() {
+			if (isClosed) throw getCloseException()
+			gtk_tree_path_free(treePathPointer)
+			isClosed = true
+		}
+
+
+		val indices: Sequence<Int>
+			get() {
+				if (isClosed) throw getCloseException()
+				return gtk_tree_path_get_indices(treePathPointer).asSequence(depth)
+			}
+
+		val depth: Int
+			get() {
+				if (isClosed) throw getCloseException()
+				return gtk_tree_path_get_depth(treePathPointer)
+			}
+
+		constructor() : this(gtk_tree_path_new()!!)
+
+		override fun close() {
+			free()
+		}
+	}
+
+	companion object {
+		fun TreeModel.asKObject(): KObject? =
+			this.treeModelPointer.reinterpretOrNull<GObject>().wrap()
 	}
 
 }

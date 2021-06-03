@@ -9,6 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.gdk.Screen
+import nativex.gdk.Screen.Companion.wrap
 import nativex.glib.Variant
 import nativex.gtk.*
 import nativex.gtk.GtkWindowGroup
@@ -129,6 +130,10 @@ open class Window internal constructor(
 		set(_) = TODO()
 	val areMnemonicsVisible: Boolean
 		get() = TODO()
+
+	var windowScreen: Screen
+		get() = gtk_window_get_screen(windowPointer)!!.wrap()
+		set(value) = gtk_window_set_screen(windowPointer, value.screenPointer)
 
 	fun setTransientFor(window: Window) {
 		gtk_window_set_transient_for(windowPointer, window.windowPointer)

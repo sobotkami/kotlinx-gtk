@@ -5,6 +5,7 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.alloc
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
+import nativex.gtk.gtk
 
 class KGValue internal constructor(internal val pointer: CPointer<GValue>) {
 	constructor(type: KGType) : this(memScoped { g_value_init(alloc<GValue>().ptr, type.glib)!! })
@@ -23,6 +24,15 @@ class KGValue internal constructor(internal val pointer: CPointer<GValue>) {
 			val gValue = alloc<GValue>()
 			g_value_init(gValue.ptr, KGType.STRING.glib)
 			g_value_set_string(gValue.ptr, value)
+			gValue.ptr
+		}
+	)
+
+	constructor(value: Boolean) : this(
+		memScoped {
+			val gValue = alloc<GValue>()
+			g_value_init(gValue.ptr, KGType.BOOLEAN.glib)
+			g_value_set_boolean(gValue.ptr, value.gtk)
 			gValue.ptr
 		}
 	)

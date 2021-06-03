@@ -184,6 +184,19 @@ internal inline fun <I : CPointed, O> CPointer<GList>?.asKSequence(
 			iterator
 	}
 
+internal fun CPointer<gintVar>?.asSequence(length: Int): Sequence<Int> {
+	this ?: return emptySequence()
+	return object : Sequence<Int> {
+		override fun iterator(): Iterator<Int> = object : Iterator<Int> {
+			private var index = 0;
+
+			override fun hasNext(): Boolean = index < length
+
+			override fun next(): Int = this@asSequence[index]
+		}
+	}
+}
+
 internal fun <T : CPointed> CPointer<GSList>?.asSequence(): Sequence<CPointer<T>> {
 	val length = g_slist_length(this).toInt()
 	return sequence {

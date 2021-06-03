@@ -2,13 +2,13 @@ package nativex.gtk.widgets.container.bin.combobox
 
 import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
+import nativex.PointerHolder
 import nativex.gdk.Device
-import nativex.gtk.CellArea
-import nativex.gtk.TreeModel
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.gtk.*
+import nativex.gtk.widgets.container.TreeView.Companion.staticTreeViewRowSeparatorFunc
 import nativex.gtk.widgets.container.TreeViewRowSeparatorFunc
 import nativex.gtk.widgets.container.bin.Bin
 import nativex.gtk.widgets.range.Range
@@ -19,7 +19,11 @@ import nativex.gtk.widgets.range.Range
  */
 class ComboBox(
 	internal val comboBoxPointer: CPointer<GtkComboBox>
-) : Bin(comboBoxPointer.reinterpret()) {
+) : Bin(comboBoxPointer.reinterpret()), CellLayout {
+	override val cellLayoutHolder: PointerHolder<GtkCellLayout> by lazy {
+		PointerHolder(comboBoxPointer.reinterpret())
+	}
+
 	constructor(
 		withEntry: Boolean = false
 	) : this((if (withEntry) gtk_combo_box_new_with_entry() else gtk_combo_box_new())!!.reinterpret())
@@ -29,8 +33,8 @@ class ComboBox(
 		withEntry: Boolean = false
 	) : this(
 		(if (withEntry)
-			gtk_combo_box_new_with_model_and_entry(model.pointer)
-		else gtk_combo_box_new_with_model(model.pointer))!!.reinterpret()
+			gtk_combo_box_new_with_model_and_entry(model.treeModelPointer)
+		else gtk_combo_box_new_with_model(model.treeModelPointer))!!.reinterpret()
 	)
 
 	constructor(
@@ -85,7 +89,7 @@ class ComboBox(
 
 	var model: TreeModel?
 		get() = gtk_combo_box_get_model(comboBoxPointer)?.let { TreeModel(it) }
-		set(value) = gtk_combo_box_set_model(comboBoxPointer, value?.pointer)
+		set(value) = gtk_combo_box_set_model(comboBoxPointer, value?.treeModelPointer)
 
 
 	fun popupForDevice(device: Device) {
@@ -138,5 +142,15 @@ class ComboBox(
 			value.gtk
 		)
 
+
+	fun setRowSeparatorFunc(function: TreeViewRowSeparatorFunc) {
+		gtk_combo_box_set_row_separator_func(
+			comboBoxPointer,
+			staticTreeViewRowSeparatorFunc,
+			StableRef.create<TreeViewRowSeparatorFunc> {
+
+			},
+		)
+	}
 
 }

@@ -32,7 +32,7 @@ class CellView internal constructor(
 
 	var model: TreeModel?
 		get() = gtk_cell_view_get_model(cellViewPointer)?.let { TreeModel(it) }
-		set(value) = gtk_cell_view_set_model(cellViewPointer, value?.pointer)
+		set(value) = gtk_cell_view_set_model(cellViewPointer, value?.treeModelPointer)
 
 	var displayedRow: TreeModel.TreePath?
 		get() = gtk_cell_view_get_displayed_row(cellViewPointer)?.let {

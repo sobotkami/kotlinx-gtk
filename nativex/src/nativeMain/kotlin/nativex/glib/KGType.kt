@@ -8,7 +8,8 @@ enum class KGType constructor(
 ) {
 	INVALID(G_TYPE_INVALID),
 	INT(G_TYPE_INT),
-	STRING(G_TYPE_STRING);
+	STRING(G_TYPE_STRING),
+	BOOLEAN(G_TYPE_BOOLEAN);
 
 	companion object {
 		fun Array<out KGType>.toCArray(memScope: MemScope): CPointer<GTypeVar> =
