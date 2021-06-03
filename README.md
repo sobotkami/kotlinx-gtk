@@ -48,7 +48,7 @@ After you published to your local maven repository, we will have to configure yo
 
 ## Contribution
 
-Just help lol
+Just help or ask me to implement something
 
 ## Future plans
 
