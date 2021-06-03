@@ -5,7 +5,7 @@ import nativex.gtk.ListStore
 import nativex.gtk.TreeModel
 import nativex.gtk.dsl.application
 import nativex.gtk.dsl.applicationWindow
-import nativex.gtk.dsl.comboBox
+import nativex.gtk.dsl.comboBoxText
 import nativex.gtk.dsl.grid
 
 const val ICON_NAME_COL = 0
@@ -46,13 +46,16 @@ fun main() {
 		onCreateUI {
 			applicationWindow {
 				grid {
-					comboBox(
-						createIconStore(),
+					comboBoxText(
 						0,
 						0,
 						1,
 						1
 					) {
+						appendText("A")
+						appendText("B")
+						appendText("C")
+						appendText("D")
 					}
 				}
 			}.showAll()

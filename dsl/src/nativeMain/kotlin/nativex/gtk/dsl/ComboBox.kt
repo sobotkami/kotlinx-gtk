@@ -5,6 +5,7 @@ import nativex.gtk.TreeModel
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.container.Grid
 import nativex.gtk.widgets.container.bin.combobox.ComboBox
+import nativex.gtk.widgets.container.bin.combobox.ComboBoxText
 
 @GtkDsl
 inline fun Container.comboBox(
@@ -28,3 +29,13 @@ inline fun Grid.comboBox(
 	withEntry: Boolean = false,
 	buttonBuilder: ComboBox.() -> Unit = {}
 ) = ComboBox(treeModel, withEntry).apply(buttonBuilder).also { attach(it, left, right, width, height) }
+
+@GtkDsl
+inline fun Grid.comboBoxText(
+	left: Int,
+	right: Int,
+	width: Int,
+	height: Int,
+	withEntry: Boolean = false,
+	buttonBuilder: ComboBoxText.() -> Unit = {}
+) = ComboBoxText(withEntry).apply(buttonBuilder).also { attach(it, left, right, width, height) }
