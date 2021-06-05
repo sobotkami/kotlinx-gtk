@@ -5,7 +5,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
-import nativex.async.staticDestroyNotifyFunction
+import nativex.async.staticDestroyStableRefFunction
 import nativex.gio.KObject
 import nativex.gio.ListModel
 import nativex.gtk.*
@@ -205,7 +205,7 @@ class FlowBox internal constructor(
 			flowBoxPointer,
 			staticFlowBoxFilterFunction,
 			StableRef.create(filter).asCPointer(),
-			staticDestroyNotifyFunction
+			staticDestroyStableRefFunction
 		)
 	}
 
@@ -224,7 +224,7 @@ class FlowBox internal constructor(
 			flowBoxPointer,
 			staticFlowBoxSortFunction,
 			StableRef.create(sort).asCPointer(),
-			staticDestroyNotifyFunction
+			staticDestroyStableRefFunction
 		)
 	}
 
@@ -244,7 +244,7 @@ class FlowBox internal constructor(
 			model = model.listModelPointer,
 			staticFlowBoxCreateWidgetFunction,
 			user_data = StableRef.create(createWidget).asCPointer(),
-			staticDestroyNotifyFunction
+			staticDestroyStableRefFunction
 		)
 	}
 

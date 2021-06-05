@@ -17,7 +17,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Grid                | yes       |
 | HeaderBar           | yes       |
 | Layout              | yes       |
-| ListBox             | no        |
+| ListBox             | yes       | no        | partial
 | MenuBar             | yes       |
 | Notebook            | yes       |
 | Overlay             | yes       |

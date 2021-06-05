@@ -42,6 +42,6 @@ internal val staticCStringCallback: GCallback =
 /**
  * Most of the library uses a stable reference as the user data. This is just a generic destroy for it
  */
-internal val staticDestroyNotifyFunction: GDestroyNotify = staticCFunction { pointer ->
+internal val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer ->
 	pointer?.asStableRef<Any>()?.dispose()
 }

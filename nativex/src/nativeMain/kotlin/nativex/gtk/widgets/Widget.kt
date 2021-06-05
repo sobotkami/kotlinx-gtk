@@ -3,7 +3,7 @@ package nativex.gtk.widgets
 import gtk.*
 import gtk.GtkTextDirection.*
 import kotlinx.cinterop.*
-import nativex.async.staticDestroyNotifyFunction
+import nativex.async.staticDestroyStableRefFunction
 import nativex.atk.KAtkObject
 import nativex.atk.KAtkObject.Companion.wrap
 import nativex.cairo.FontOptionsT
@@ -451,7 +451,7 @@ open class Widget(
 			widgetPointer,
 			staticTickCallback,
 			StableRef.create(callback).asCPointer(),
-			staticDestroyNotifyFunction
+			staticDestroyStableRefFunction
 		)
 
 	/**
