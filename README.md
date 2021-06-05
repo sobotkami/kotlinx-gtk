@@ -2,7 +2,7 @@
 
 GTK bindings for Kotlin via DSL
 
-Version: 0.1.0-alpha
+Version: `0.1.0-alpha`
 
 ## Usage
 
@@ -48,7 +48,7 @@ After you published to your local maven repository, we will have to configure yo
 
 ## Contribution
 
-Just help lol
+Just help or ask me to implement something
 
 ## Future plans
 
