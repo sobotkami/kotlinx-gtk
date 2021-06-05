@@ -3,7 +3,8 @@ package nativex.gtk.widgets.container
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.*
+import nativex.gtk.IconSize
+import nativex.gtk.SelectionData
 import nativex.gtk.bool
 import nativex.gtk.common.enums.ToolbarStyle
 import nativex.gtk.gtk
@@ -131,48 +132,48 @@ class ToolPalette internal constructor(
 				)
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-add-drag-dest">gtk_tool_palette_add_drag_dest</a>
 	 */
 	fun addDragDest() {
 		TODO("gtk_tool_palette_add_drag_dest")
 	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-drag-item"></a>
 	 */
 	fun getDragItem(selectionData: SelectionData): Widget =
 		gtk_tool_palette_get_drag_item(toolPalettePointer, selectionData.selectionDataPointer)!!.wrap()
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-drag-target-group">gtk_tool_palette_get_drag_target_group</a>
 	 */
 	fun getDragTargetGroup() {
 		TODO("gtk_tool_palette_get_drag_target_group")
 	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-drag-target-item">gtk_tool_palette_get_drag_target_item</a>
 	 */
 	fun getDragTargetItem() {
 		TODO("gtk_tool_palette_get_drag_target_item")
 	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-drop-group">gtk_tool_palette_get_drop_group</a>
 	 */
 	fun paletteGetDropGroup() {
 		TODO("gtk_tool_palette_get_drop_group")
 	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-drop-item">gtk_tool_palette_get_drop_item</a>
 	 */
 	fun getDropItem() {
 		TODO("gtk_tool_palette_get_drop_item")
 	}
 
 	/**
-	 * @see <a href=""></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-set-drag-source">gtk_tool_palette_set_drag_source</a>
 	 */
 	fun getDragSource() {
 		TODO("gtk_tool_palette_set_drag_source")
