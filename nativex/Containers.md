@@ -21,7 +21,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | MenuBar             | yes       |
 | Notebook            | yes       |
 | Overlay             | yes       |
-| Paned               | yes       |
+| Paned               | yes       | yes       | yes
 | Popover             | yes       |
 | PopoverMenu         | yes       |
 | Revealer            | yes       |
