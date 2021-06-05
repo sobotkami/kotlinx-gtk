@@ -21,5 +21,7 @@ enum class KGType constructor(
 					}
 				}
 			}
+
+		internal fun valueOf(glib: GType) = values().find { it.glib == glib } ?: INVALID
 	}
 }

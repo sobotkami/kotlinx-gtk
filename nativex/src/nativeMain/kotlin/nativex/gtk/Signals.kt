@@ -13,6 +13,7 @@ import kotlinx.cinterop.staticCFunction
  * 08 / 02 / 2021
  */
 object Signals {
+
 	const val ACTIVATE_CURRENT_LINK = "activate-current-link"
 	const val CREATE_WINDOW = "create-window"
 	const val MOVE_FOCUS_OUT = "move-focus-out"
@@ -111,6 +112,14 @@ object Signals {
 	const val MONITOR_REMOVED = "monitor-removed"
 	const val SEAT_ADDED = "seat-added"
 	const val SEAT_REMOVED = "seat-removed"
+
+	// GtkFlowBox
+	const val UNSELECT_ALL = "unselect-all"
+	const val SELECTED_CHILDREN_CHANGED = "selected-children-changed"
+	const val TOGGLE_CURSOR_CHILD = "toggle-cursor-child"
+	const val CHILD_ACTIVATED: String = "child-activated"
+	const val ACTIVATE_CURSOR_CHILD: String = "activate-cursor-child"
+
 }
 
 /**

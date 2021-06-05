@@ -14,6 +14,36 @@ import nativex.gtk.connectSignal
 
 
 @ExperimentalCoroutinesApi
+internal inline fun KObject.signalFlow(signal: String): Lazy<Flow<Unit>> = lazy(LazyThreadSafetyMode.NONE) {
+	callbackFlow {
+		val id = pointer.connectSignal(
+			signal = signal,
+			callbackWrapper = StableRef.create {
+				trySend(Unit)
+			}.asCPointer()
+		)
+
+		awaitClose {
+			g_signal_handler_disconnect(pointer, id)
+		}
+	}
+}
+
+/**
+ * @param signal Signal name
+ * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
+ */
+@ExperimentalCoroutinesApi
+internal inline fun <T> KObject.signalFlow(
+	signal: String,
+	handler: GCallback,
+): Lazy<Flow<T>> = lazy(LazyThreadSafetyMode.NONE) {
+	pointer.callbackSignalFlow(signal, handler)
+}
+
+
+@Deprecated("simplify codebase with lazy inlined", ReplaceWith("signalFlow(signal)", "nativex.async.signalFlow"))
+@ExperimentalCoroutinesApi
 internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(
@@ -32,6 +62,7 @@ internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
  * @param signal Signal name
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
+@Deprecated("simplify codebase with lazy inlined", ReplaceWith("signalFlow(signal,handler)", "nativex.async.signalFlow"))
 @ExperimentalCoroutinesApi
 internal inline fun <T> KObject.callbackSignalFlow(
 	signal: String,

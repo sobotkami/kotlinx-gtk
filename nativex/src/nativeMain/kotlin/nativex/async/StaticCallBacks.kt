@@ -1,6 +1,7 @@
 package nativex.async
 
 import gtk.GCallback
+import gtk.GDestroyNotify
 import gtk.gboolean
 import gtk.gpointer
 import kotlinx.cinterop.asStableRef
@@ -37,3 +38,10 @@ internal val staticCStringCallback: GCallback =
 			?.invoke(arg1.toKString())
 		Unit
 	}.reinterpret()
+
+/**
+ * Most of the library uses a stable reference as the user data. This is just a generic destroy for it
+ */
+internal val staticDestroyNotifyFunction: GDestroyNotify = staticCFunction { pointer ->
+	pointer?.asStableRef<Any>()?.dispose()
+}
