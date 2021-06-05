@@ -14,7 +14,7 @@ import nativex.glib.KGType
  *
  * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html">GListModel</a>
  */
-class ListModel internal constructor(
+open class ListModel internal constructor(
 	internal val listModelPointer: CPointer<GListModel>
 ) {
 
