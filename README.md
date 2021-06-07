@@ -39,11 +39,11 @@ After you published to your local maven repository, we will have to configure yo
    ```
 3. Add the dependencies, replacing {VERSION} with the current version
    ```kotlin 
-	   // Core library
-	   implementation("org.gnome.kotlinx-gtk:nativex:{VERSION}")
+   // Core library
+   implementation("org.gnome.kotlinx-gtk:nativex:{VERSION}")
 	   
-	   // DSL library
-	   implementation("org.gnome.kotlinx-gtk:dsl:{VERSION}")
+   // DSL library
+   implementation("org.gnome.kotlinx-gtk:dsl:{VERSION}")
    ```
 
 ## Contribution
