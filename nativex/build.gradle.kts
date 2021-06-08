@@ -16,6 +16,8 @@ kotlin {
 		linuxX64("native") {
 			val main by compilations.getting
 			val gtk by main.cinterops.creating
+			val gtkunixprint by main.cinterops.creating
+
 			binaries {
 				sharedLib()
 			}
