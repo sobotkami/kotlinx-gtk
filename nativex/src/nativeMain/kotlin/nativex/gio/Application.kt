@@ -222,7 +222,6 @@ open class Application(
 	 *
 	 * This should not be used by developers
 	 */
-	
 	fun onActivate(onActive: () -> Unit) {
 		// Has to be a direct event, to prevent application from shutting down
 		gApplicationPointer.connectSignal(

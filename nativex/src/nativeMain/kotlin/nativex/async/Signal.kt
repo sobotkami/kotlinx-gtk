@@ -10,6 +10,7 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import nativex.gio.KObject
+import nativex.gtk.VoidPointer
 import nativex.gtk.connectSignal
 
 
@@ -62,7 +63,10 @@ internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
  * @param signal Signal name
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
-@Deprecated("simplify codebase with lazy inlined", ReplaceWith("signalFlow(signal,handler)", "nativex.async.signalFlow"))
+@Deprecated(
+	"simplify codebase with lazy inlined",
+	ReplaceWith("signalFlow(signal,handler)", "nativex.async.signalFlow")
+)
 @ExperimentalCoroutinesApi
 internal inline fun <T> KObject.callbackSignalFlow(
 	signal: String,
@@ -88,5 +92,12 @@ internal inline fun <T> CPointer<GObject>.callbackSignalFlow(
 
 	awaitClose {
 		g_signal_handler_disconnect(this@callbackSignalFlow, id)
+	}
+}
+
+
+class SignalManager internal constructor(internal val pointer: VoidPointer, internal val signalId: ULong) {
+	fun disconnect() {
+		g_signal_handler_disconnect(pointer, signalId)
 	}
 }

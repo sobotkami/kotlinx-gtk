@@ -120,6 +120,13 @@ object Signals {
 	const val CHILD_ACTIVATED: String = "child-activated"
 	const val ACTIVATE_CURSOR_CHILD: String = "activate-cursor-child"
 
+	// GtkNotebook
+	const val FOCUS_TAB = "focus-tab"
+	const val REORDER_TAB = "reorder-tab"
+	const val SELECT_PAGE = "select-page"
+	const val PAGE_ADDED = "page-added"
+	const val PAGE_REMOVED = "page-removed"
+	const val PAGE_REORDERED = "page-reordered"
 }
 
 /**
