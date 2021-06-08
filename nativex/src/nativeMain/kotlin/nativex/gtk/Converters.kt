@@ -8,6 +8,9 @@ typealias WidgetPointer = CPointer<GtkWidget>
 
 internal typealias VoidPointer = COpaquePointer
 
+internal inline val Boolean?.gtk: gboolean
+	get() = this?.gtk ?: 0
+
 internal inline val Boolean.gtk: gboolean
 	get() = if (this) 1 else 0
 
