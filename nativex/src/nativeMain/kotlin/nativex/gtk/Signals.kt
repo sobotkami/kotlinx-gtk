@@ -124,7 +124,9 @@ object Signals {
 	const val FOCUS_TAB = "focus-tab"
 	const val REORDER_TAB = "reorder-tab"
 	const val SELECT_PAGE = "select-page"
-
+	const val PAGE_ADDED = "page-added"
+	const val PAGE_REMOVED = "page-removed"
+	const val PAGE_REORDERED = "page-reordered"
 }
 
 /**

@@ -1,27 +1,18 @@
 package nativex.gtk.widgets.container
 
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.asStableRef
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.staticCFunction
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
-import nativex.async.signalFlow
+import kotlinx.cinterop.*
+import nativex.async.SignalManager
 import nativex.gdk.Window
-import nativex.gtk.Signals
-import nativex.gtk.asWidgetOrNull
-import nativex.gtk.bool
+import nativex.gtk.*
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.ScrollType
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
  * 24 / 03 / 2021
- * @see <a href=""></a>
+ * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html">GtkPaned</a>
  */
 open class Paned internal constructor(
 	internal val panedPointer: CPointer<GtkPaned>
@@ -104,53 +95,129 @@ open class Paned internal constructor(
 		get() = gtk_paned_get_wide_handle(panedPointer).bool
 		set(value) = gtk_paned_set_wide_handle(panedPointer, value.gtk)
 
+	private var acceptPositionManager: SignalManager? = null
+
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-accept-position"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val acceptPositionSignal: Flow<Unit> by signalFlow(Signals.ACCEPT_POSITION)
+	fun setAcceptPositionCallback(action: GenericNoArgForBooleanFunction) {
+		acceptPositionManager?.disconnect()
+		acceptPositionManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.CANCEL_POSITION,
+				handler = staticNoArgBooleanCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
 
+	private var cancelPositionManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-cancel-position"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val cancelPositionSignal: Flow<Unit> by signalFlow(Signals.CANCEL_POSITION)
+	fun setCancelPositionCallback(action: GenericNoArgForBooleanFunction) {
+		cancelPositionManager?.disconnect()
+		cancelPositionManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.CANCEL_POSITION,
+				handler = staticNoArgBooleanCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
 
+	private var cycleChildFocusManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-cycle-child-focus"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val cycleChildFocusSignal: Flow<Unit> by signalFlow(Signals.CYCLE_CHILD_FOCUS)
+	fun setCycleChildFocusCallback(action: GenericCycleFunction) {
+		cycleChildFocusManager?.disconnect()
+		cycleChildFocusManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.CYCLE_CHILD_FOCUS,
+				handler = staticCycleCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
 
+	private var cycleHandleFocusManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-cycle-handle-focus"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val cycleHandleFocusSignal: Flow<Unit> by signalFlow(Signals.CYCLE_HANDLE_FOCUS)
+	fun setCycleHandleFocusCallback(action: GenericCycleFunction) {
+		cycleHandleFocusManager?.disconnect()
+		cycleHandleFocusManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.CYCLE_HANDLE_FOCUS,
+				handler = staticCycleCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
+
+	private var moveHandleManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-move-handle"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveHandleSignal: Flow<ScrollType> by signalFlow(Signals.MOVE_HANDLE, staticMoveHandleCallback)
+	fun setMoveHandleCallback(action: MoveHandleFunction) {
+		moveHandleManager?.disconnect()
+		moveHandleManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.MOVE_HANDLE,
+				handler = staticMoveHandleCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
+
+	private var toggleHandleFocusManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#GtkPaned-toggle-handle-focus"></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val toggleHandleFocusSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_HANDLE_FOCUS)
+	fun setToggleHandleFocusCallback(action: GenericNoArgForBooleanFunction) {
+		toggleHandleFocusManager?.disconnect()
+		toggleHandleFocusManager = SignalManager(
+			panedPointer,
+			panedPointer.connectSignal(
+				Signals.TOGGLE_HANDLE_FOCUS,
+				handler = staticNoArgBooleanCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
+	}
 
 
 	companion object {
 		private val staticMoveHandleCallback: GCallback =
 			staticCFunction { _: gpointer?, scrollType: GtkScrollType, data: gpointer? ->
-				data?.asStableRef<(ScrollType) -> Unit>()
+				data?.asStableRef<MoveHandleFunction>()
 					?.get()
-					?.invoke(ScrollType.valueOf(scrollType)!!)
-				Unit
+					?.invoke(ScrollType.valueOf(scrollType)!!).gtk
+			}.reinterpret()
+
+		private val staticNoArgBooleanCallback: GCallback =
+			staticCFunction { _: CPointer<GtkPaned>, data: gpointer? ->
+				data?.asStableRef<GenericNoArgForBooleanFunction>()?.get()?.invoke().gtk
+			}.reinterpret()
+
+		private val staticCycleCallback: GCallback =
+			staticCFunction { _: CPointer<GtkPaned>, reversed: gboolean, data: gpointer? ->
+				data?.asStableRef<GenericCycleFunction>()?.get()?.invoke(reversed.bool).gtk
 			}.reinterpret()
 	}
 }
+
+typealias GenericNoArgForBooleanFunction = () -> Boolean
+typealias GenericCycleFunction = (@ParameterName("reversed") Boolean) -> Boolean
+typealias MoveHandleFunction = (ScrollType) -> Boolean

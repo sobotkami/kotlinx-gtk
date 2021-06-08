@@ -19,7 +19,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Layout              | yes       |
 | ListBox             | yes       | no        | partial
 | MenuBar             | yes       |
-| Notebook            | yes       |
+| Notebook            | yes       | yes       | yes
 | Overlay             | yes       |
 | Paned               | yes       | yes       | yes
 | Popover             | yes       |
