@@ -127,6 +127,9 @@ object Signals {
 	const val PAGE_ADDED = "page-added"
 	const val PAGE_REMOVED = "page-removed"
 	const val PAGE_REORDERED = "page-reordered"
+
+	// GtkPrinter
+	const val DETAILS_ACQUIRED = "details-acquired"
 }
 
 /**
