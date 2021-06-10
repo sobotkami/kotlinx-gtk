@@ -18,7 +18,7 @@ import nativex.async.staticBooleanCallback
 import nativex.gtk.*
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.enums.ScrollStep
-import nativex.gtk.common.events.MoveCursorEvent
+import nativex.gtk.common.events.ExtenedMoveCursorEvent
 import nativex.gtk.widgets.Widget
 
 /**
@@ -117,10 +117,10 @@ class TextView internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
+	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by lazy {
 		callbackSignalFlow(
 			Signals.MOVE_CURSOR,
-			MoveCursorEvent.staticMoveCursorCallback
+			ExtenedMoveCursorEvent.staticMoveCursorCallback
 		)
 	}
 

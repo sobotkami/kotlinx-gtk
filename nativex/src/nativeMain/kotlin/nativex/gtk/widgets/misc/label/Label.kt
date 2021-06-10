@@ -9,7 +9,7 @@ import nativex.gtk.Signals
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.bool
 import nativex.gtk.common.enums.Justification
-import nativex.gtk.common.events.MoveCursorEvent
+import nativex.gtk.common.events.ExtenedMoveCursorEvent
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.menu.Menu
@@ -153,10 +153,10 @@ open class Label internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
+	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by lazy {
 		callbackSignalFlow(
 			Signals.MOVE_CURSOR,
-			MoveCursorEvent.staticMoveCursorCallback
+			ExtenedMoveCursorEvent.staticMoveCursorCallback
 		)
 	}
 

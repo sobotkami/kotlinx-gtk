@@ -3,6 +3,7 @@ package nativex.gdk
 import gtk.GdkRectangle
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
+import nativex.gtk.Tooltip
 
 /**
  * kotlinx-gtk
@@ -35,4 +36,12 @@ class Rectangle internal constructor(
 		set(value) {
 			rectanglePointer.pointed.height = value
 		}
+
+	companion object{
+		internal inline fun CPointer<GdkRectangle>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GdkRectangle>.wrap() =
+			Rectangle(this)
+	}
 }

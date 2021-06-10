@@ -9,8 +9,8 @@ import nativex.async.staticDestroyStableRefFunction
 import nativex.gio.KObject
 import nativex.gio.ListModel
 import nativex.gtk.*
-import nativex.gtk.common.enums.MovementStep
 import nativex.gtk.common.enums.SelectionMode
+import nativex.gtk.common.events.MoveCursorEvent
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.FlowBox.Child.Companion.wrap
 import nativex.gtk.widgets.container.bin.Bin
@@ -310,16 +310,11 @@ class FlowBox internal constructor(
 	@ExperimentalCoroutinesApi
 	val childActivatedSignal: Flow<Child> by signalFlow(Signals.CHILD_ACTIVATED, staticChildActivatedCallback)
 
-	data class MoveCursorEvent(
-		val step: MovementStep,
-		val count: Int
-	)
-
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-move-cursor">move-cursor</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val moveCursor: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, staticMoveCursorCallback);
+	val moveCursor: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback);
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-select-all">select-all</a>
@@ -352,15 +347,6 @@ class FlowBox internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticMoveCursorCallback: GCallback =
-			staticCFunction { _: CPointer<GtkFlowBox>, step: GtkMovementStep, count: Int, data: gpointer? ->
-				data?.asStableRef<(MoveCursorEvent) -> Unit>()?.get()?.invoke(
-					MoveCursorEvent(
-						MovementStep.valueOf(step)!!,
-						count
-					)
-				)
-			}.reinterpret()
 
 		internal val staticFlowBoxForeachFunction: GtkFlowBoxForeachFunc = staticCFunction { _, child, data ->
 			data?.asStableRef<FlowBoxForEachFunction>()?.get()?.invoke(child!!.wrap())
