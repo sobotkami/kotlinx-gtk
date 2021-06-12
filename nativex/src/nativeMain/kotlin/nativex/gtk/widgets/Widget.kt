@@ -1309,6 +1309,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-direction-changed"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val directionChangedSignal: Flow<TextDirection> by signalFlow(
 		Signals.DIRECTION_CHANGED,
 		staticDirectionChangedCallback
@@ -1750,11 +1751,13 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-move-focus"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val moveFocusSignal: Flow<DirectionType> by signalFlow(Signals.MOVE_FOCUS, staticMoveFocusFunction)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-parent-set"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val parentSetSignal: Flow<Widget?> by signalFlow(Signals.PARENT_SET, staticWidgetForUnitFunction)
 
 	private var popupMenuManager: SignalManager? = null
@@ -1853,6 +1856,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-screen-changed"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val screenChangedSignal: Flow<Screen?> by signalFlow(Signals.SCREEN_CHANGED, staticScreenChangedFunction)
 
 	private var scrollEventManager: SignalManager? = null
@@ -1898,6 +1902,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-selection-get"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val selectionGetSignal: Flow<SelectionGetData> by signalFlow(Signals.SELECTION_GET, staticSelectionGetFunction)
 
 	private var selectionNotifyEventManager: SignalManager? = null
@@ -1925,6 +1930,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-selection-received"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val selectionReceivedSignal: Flow<SelectionReceivedData> by signalFlow(
 		Signals.SELECTION_RECEIVED,
 		staticSelectionReceivedCallback
@@ -1973,11 +1979,13 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-size-allocate"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val sizeAllocateSignal: Flow<Rectangle> by signalFlow(Signals.SIZE_ALLOCATE, staticSizeAllocateCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-state-flags-changed"></a>
 	 */
+	@ExperimentalCoroutinesApi
 	val stateFlagsChangedSignal: Flow<StateFlags> by signalFlow(
 		Signals.STATE_FLAGS_CHANGED,
 		staticStateFlagsChangedCallback
