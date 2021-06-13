@@ -10,6 +10,7 @@ import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
 import nativex.gtk.widgets.container.ButtonBox
 import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.container.bin.windows.dialog.AboutDialog
 import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
 import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
 
@@ -126,24 +127,92 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				verticalButtonBox {
 					buttonBoxStyle =
 						ButtonBox.ButtonBoxStyle.CENTER
+					button("About Dialog") {
+						onClicked {
+							launchUI {
+								val dialog = aboutDialog {
+									title = "This is an about dialog"
+									programName = "Gtk3 Test"
+									version = "Version something"
+									licenseType = AboutDialog.License.AGPL_3_0
+									website = "https://github.com/Doomsdayrs/kotlinx-gtk"
+									websiteLabel = "Github"
+									authors("Doomsdayrs", "Me")
+									artists("Doomsdayrs", "Me")
+									documenters("Doomsdayrs", "Me")
+									translatorCredits = "Thanks!"
+									addCreditSection("Who made this", "Me", "Me", "Me")
+								}
+								println(dialog.run())
+							}
+						}
+					}
+
+					button("App Chooser Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("Color Chooser Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("Color Selection Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("File Chooser Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("Font Chooser Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("Font Selection Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
 					button("Message Dialog") {
 						onClicked {
 							launchUI {
-								messageDialog(
+								val dialog = messageDialog(
 									Dialog.Flags.DESTROY_WITH_PARENT,
 									MessageDialog.MessageType.INFO,
 									MessageDialog.ButtonsType.OK,
 									messageFormat = "This is a message dialog"
-								).run()
+								)
+								println(dialog.run())
+								dialog.destroy()
 							}
 						}
 					}
-					button("About Dialog") {
+					button("Page Setup Unix Dialog") {
 						onClicked {
 							launchUI {
-								aboutDialog {
-									title = "This is an about dialog"
-								}.run()
+							}
+						}
+					}
+					button("Print Unix Dialog") {
+						onClicked {
+							launchUI {
+							}
+						}
+					}
+					button("Recent Chooser Dialog") {
+						onClicked {
+							launchUI {
 							}
 						}
 					}

@@ -119,7 +119,7 @@ class AboutDialog internal constructor(
 
 	constructor() : this(gtk_about_dialog_new()!!.reinterpret())
 
-	fun addCreditSection(sectionName: String, people: Array<String>) {
+	fun addCreditSection(sectionName: String, vararg people: String) {
 		gtk_about_dialog_add_credit_section(
 			aboutDialogPointer,
 			sectionName,

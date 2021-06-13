@@ -39,6 +39,11 @@ fun Array<String>.toNullTermCStringArray(): CStringList =
 		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
 	}
 
+fun Array<out String>.toNullTermCStringArray(): CStringList =
+	memScoped {
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+	}
+
 fun List<String>.toNullTermCStringArray(): CStringList =
 	memScoped {
 		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)

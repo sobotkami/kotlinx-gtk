@@ -341,7 +341,6 @@ open class Widget(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-destroy">gtk_widget_destroy</a>
 	 */
 	@Suppress("DeprecatedCallableAddReplaceWith")
-	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 	open fun destroy() {
 		gtk_widget_destroy(widgetPointer)
 	}

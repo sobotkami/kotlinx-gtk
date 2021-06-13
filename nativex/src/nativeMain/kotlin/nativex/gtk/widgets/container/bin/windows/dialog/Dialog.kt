@@ -30,7 +30,7 @@ open class Dialog internal constructor(
 	constructor() : this(gtk_dialog_new()!!.reinterpret())
 
 	fun run(): ResponseType =
-		ResponseType.valueOf(gtk_dialog_run(dialogPointer))!!
+		ResponseType.valueOfGtk(gtk_dialog_run(dialogPointer))!!
 
 	fun response(responseId: ResponseType) {
 		gtk_dialog_response(dialogPointer, responseId.gtk)
@@ -52,7 +52,7 @@ open class Dialog internal constructor(
 	}
 
 	fun getResponseForWidget(widget: Widget): ResponseType =
-		ResponseType.valueOf(gtk_dialog_get_response_for_widget(dialogPointer, widget.widgetPointer))!!
+		ResponseType.valueOfGtk(gtk_dialog_get_response_for_widget(dialogPointer, widget.widgetPointer))!!
 
 	fun getWidgetForResponse(responseId: ResponseType): Widget? =
 		gtk_dialog_get_widget_for_response(dialogPointer, responseId.gtk).wrap()
@@ -83,7 +83,7 @@ open class Dialog internal constructor(
 	companion object {
 		internal val staticResponseCallback: GCallback =
 			staticCFunction { _: CPointer<GtkDialog>, id: Int, data: gpointer ->
-				data.asStableRef<(ResponseType) -> Unit>().get().invoke(ResponseType.valueOf(id)!!)
+				data.asStableRef<(ResponseType) -> Unit>().get().invoke(ResponseType.valueOfGtk(id)!!)
 			}.reinterpret()
 	}
 
