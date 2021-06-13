@@ -1,5 +1,5 @@
 package nativex.gtk
-
+/*
 import gtk.GtkPrintBackend
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
@@ -23,3 +23,5 @@ class PrintBackend internal constructor(
 			PrintBackend(this)
 	}
 }
+
+ */

@@ -1,4 +1,5 @@
 package nativex.gtk
+/*
 
 import gtk.*
 import kotlinx.cinterop.*
@@ -11,6 +12,8 @@ import nativex.gtk.PageSetup.Companion.wrap
 import nativex.gtk.PrintBackend.Companion.wrap
 import nativex.gtk.widgets.container.bin.windows.dialog.PrintUnixDialog
 
+
+// This class was decoupled from the code due to errors running it, You can still figure it out if you want
 /**
  * kotlinx-gtk
  * 08 / 06 / 2021
@@ -218,3 +221,4 @@ class Printer internal constructor(
  * @return true to stop enumeration, false to continue
  */
 typealias PrinterFunction = (Printer) -> Boolean
+ */

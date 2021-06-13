@@ -1,5 +1,5 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
-
+/*
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
@@ -45,3 +45,5 @@ class PrintUnixDialog internal constructor(
 		}
 	}
 }
+
+ */
