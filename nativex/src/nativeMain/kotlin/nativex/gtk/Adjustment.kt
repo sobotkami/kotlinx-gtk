@@ -6,6 +6,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gio.KObject
 
 /**
@@ -42,15 +43,13 @@ class Adjustment internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val changed: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.CHANGED)
-	}
+	val changed: Flow<Unit> by signalFlow(Signals.CHANGED)
+
 
 	
 	@ExperimentalCoroutinesApi
-	val valueChanged: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.VALUE_CHANGED)
-	}
+	val valueChanged: Flow<Unit> by signalFlow(Signals.VALUE_CHANGED)
+
 
 	constructor(
 		value: Double,

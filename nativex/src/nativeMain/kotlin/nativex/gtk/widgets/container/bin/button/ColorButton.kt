@@ -6,7 +6,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.RGBA
 import nativex.gtk.ColorChooser
 import nativex.gtk.Signals
@@ -24,13 +24,12 @@ class ColorButton internal constructor(
 	}
 
 	@ExperimentalCoroutinesApi
-	
-	override val colorActivated: Flow<RGBA> by lazy {
-		callbackSignalFlow(
-			Signals.COLOR_ACTIVATED,
-			ColorChooser.staticColorActivatedCallback
-		)
-	}
+
+	override val colorActivated: Flow<RGBA> by signalFlow(
+		Signals.COLOR_ACTIVATED,
+		ColorChooser.staticColorActivatedCallback
+	)
+
 	var title: String?
 		get() = gtk_color_button_get_title(colorButtonPointer)?.toKString()
 		set(value) = gtk_color_button_set_title(colorButtonPointer, value)

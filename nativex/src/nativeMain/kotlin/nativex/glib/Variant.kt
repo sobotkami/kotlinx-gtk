@@ -13,7 +13,7 @@ import platform.posix.va_list
  */
 open class Variant internal constructor(
 	internal val variantPointer: CPointer<GVariant>
-) {
+) : Comparable<Variant> {
 
 	val type: VariantType
 		get() = VariantType.OpenVariant(g_variant_get_type(variantPointer)!!)
@@ -21,11 +21,10 @@ open class Variant internal constructor(
 	val typeString: String
 		get() = g_variant_get_type_string(variantPointer)!!.toKString()
 
+	override fun compareTo(other: Variant): Int =
+		g_variant_compare(variantPointer, other.variantPointer)
 
-	override operator fun equals(other: Any?): Boolean {
-		if (other is Variant)
-			return g_variant_compare(variantPointer, other.variantPointer).bool
-
+	override fun equals(other: Any?): Boolean {
 		if (other is VariantType)
 			g_variant_is_of_type(variantPointer, other.variantTypePointer).bool
 
@@ -35,7 +34,7 @@ open class Variant internal constructor(
 	val isContainer: Boolean
 		get() = g_variant_is_container(variantPointer).bool
 
-	
+
 	fun classify(): UInt =
 		g_variant_classify(variantPointer)
 
@@ -71,25 +70,25 @@ open class Variant internal constructor(
 	class BooleanVariant(value: Boolean) :
 		Variant(g_variant_new_boolean(value.gtk)!!)
 
-	class ByteVariant  constructor(value: UByte) :
+	class ByteVariant constructor(value: UByte) :
 		Variant(g_variant_new_byte(value)!!)
 
 	class ShortVariant(value: Short) :
 		Variant(g_variant_new_int16(value)!!)
 
-	class UShortVariant  constructor(value: UShort) :
+	class UShortVariant constructor(value: UShort) :
 		Variant(g_variant_new_uint16(value)!!)
 
 	class IntVariant(value: Int) :
 		Variant(g_variant_new_int32(value)!!)
 
-	class UIntVariant  constructor(value: UInt) :
+	class UIntVariant constructor(value: UInt) :
 		Variant(g_variant_new_uint32(value)!!)
 
 	class LongVariant(value: Long) :
 		Variant(g_variant_new_int64(value)!!)
 
-	class ULongVariant  constructor(value: ULong) :
+	class ULongVariant constructor(value: ULong) :
 		Variant(g_variant_new_uint64(value)!!)
 
 	class HandleVariant(value: Int) :

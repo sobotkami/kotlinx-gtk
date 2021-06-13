@@ -80,7 +80,7 @@ class Toolbar internal constructor(
 			if (value == null)
 				unsetStyle()
 			else
-				gtk_toolbar_set_style(toolbarPointer, value!!.gtk)
+				gtk_toolbar_set_style(toolbarPointer, value.gtk)
 
 	fun unsetStyle() {
 		gtk_toolbar_unset_style(toolbarPointer)

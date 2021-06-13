@@ -2,8 +2,22 @@ package nativex.gtk.widgets.container.bin.windows.dialog
 
 import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import nativex.async.signalFlow
+import nativex.gtk.Signals
+import nativex.gtk.gtk
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.HeaderBar
+import nativex.gtk.widgets.container.HeaderBar.Companion.wrap
+import nativex.gtk.widgets.container.bin.button.Button
+import nativex.gtk.widgets.container.bin.button.Button.Companion.wrap
 import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.container.box.Box
+import nativex.gtk.widgets.container.box.Box.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -15,10 +29,42 @@ open class Dialog internal constructor(
 ) : Window(dialogPointer.reinterpret()) {
 	constructor() : this(gtk_dialog_new()!!.reinterpret())
 
+	fun run(): ResponseType =
+		ResponseType.valueOf(gtk_dialog_run(dialogPointer))!!
 
-	fun run(): Int =
-		gtk_dialog_run(dialogPointer)
+	fun response(responseId: ResponseType) {
+		gtk_dialog_response(dialogPointer, responseId.gtk)
+	}
 
+	fun addButton(text: String, responseId: ResponseType): Button =
+		gtk_dialog_add_button(dialogPointer, text, responseId.gtk)!!.reinterpret<GtkButton>().wrap()
+
+	fun addActionWidget(child: Widget, responseId: ResponseType) {
+		gtk_dialog_add_action_widget(dialogPointer, child.widgetPointer, responseId.gtk)
+	}
+
+	fun setDefaultResponse(responseId: ResponseType) {
+		gtk_dialog_set_default_response(dialogPointer, responseId.gtk)
+	}
+
+	fun setResponseSensitive(responseId: ResponseType, setting: Boolean) {
+		gtk_dialog_set_response_sensitive(dialogPointer, responseId.gtk, setting.gtk)
+	}
+
+	fun getResponseForWidget(widget: Widget): ResponseType =
+		ResponseType.valueOf(gtk_dialog_get_response_for_widget(dialogPointer, widget.widgetPointer))!!
+
+	fun getWidgetForResponse(responseId: ResponseType): Widget? =
+		gtk_dialog_get_widget_for_response(dialogPointer, responseId.gtk).wrap()
+
+	val contentArea: Box
+		get() = gtk_dialog_get_content_area(dialogPointer)!!.reinterpret<GtkBox>().wrap()
+
+	val headerBar: HeaderBar
+		get() = gtk_dialog_get_header_bar(dialogPointer)!!.reinterpret<GtkHeaderBar>().wrap()
+
+	@ExperimentalCoroutinesApi
+	val responseSignal: Flow<ResponseType> by signalFlow(Signals.RESPONSE, staticResponseCallback)
 
 	enum class Flags(val key: Int, internal val gtk: GtkDialogFlags) {
 		MODAL(0, GTK_DIALOG_MODAL),
@@ -28,10 +74,17 @@ open class Dialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			
+
 			internal fun valueOf(gtk: GtkDialogFlags) =
 				values().find { it.gtk == gtk }
 		}
+	}
+
+	companion object {
+		internal val staticResponseCallback: GCallback =
+			staticCFunction { _: CPointer<GtkDialog>, id: Int, data: gpointer ->
+				data.asStableRef<(ResponseType) -> Unit>().get().invoke(ResponseType.valueOf(id)!!)
+			}.reinterpret()
 	}
 
 	enum class ResponseType(val key: Int, internal val gtk: GtkResponseType) {
@@ -60,7 +113,6 @@ open class Dialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			
 			internal fun valueOfGtk(gtk: GtkResponseType) =
 				values().find { it.gtk == gtk }
 		}

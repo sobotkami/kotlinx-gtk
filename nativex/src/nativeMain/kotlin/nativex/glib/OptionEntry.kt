@@ -19,7 +19,7 @@ class OptionEntry internal constructor(
 
 	//var arg_data: gtk.gpointer?
 
-	var arg_description: String
+	var argDescription: String
 		get() {
 			TODO()
 		}
@@ -36,13 +36,13 @@ class OptionEntry internal constructor(
 		}
 		set(value) {}
 
-	var long_name: String
+	var longName: String
 		get() {
 			TODO()
 		}
 		set(value) {}
 
-	var short_name: Char
+	var shortName: Char
 		get() {
 			TODO()
 		}

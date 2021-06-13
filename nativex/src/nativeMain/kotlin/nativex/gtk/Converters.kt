@@ -34,17 +34,16 @@ fun Array<Int>.toCArray(scope: MemScope): CPointer<CPointerVar<IntVar>> =
 		})
 	}
 
+fun Array<String>.toNullTermCStringArray(): CStringList =
+	memScoped {
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+	}
+
 fun List<String>.toNullTermCStringArray(): CStringList =
 	memScoped {
 		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
 	}
 
-
-@Deprecated("Replace with sequences")
-internal inline fun CStringList?.asStringList(): List<String> =
-	this.asSequence()
-		.toList()
-		.map { it.toKString() }
 
 /**
  * For null terminated C arrays

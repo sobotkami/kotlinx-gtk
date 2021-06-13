@@ -1,7 +1,6 @@
-import kotlinx.coroutines.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import nativex.async.launchDefault
-import nativex.async.launchIO
 import nativex.async.launchUI
 import nativex.gio.Notification
 import nativex.gio.dsl.sendNotification
@@ -118,9 +117,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				}
 			}
 
-
 			frame(
-				"Dialog test (calling UI)",
+				"Dialogs",
 				expand = true,
 				fill = true,
 				padding = 10u
@@ -128,109 +126,27 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				verticalButtonBox {
 					buttonBoxStyle =
 						ButtonBox.ButtonBoxStyle.CENTER
-					button("Dialog test (Default)") {
-						onClicked {
-							launchDefault {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test Default"
-								).show()
-							}
-						}
-					}
-
-					button("Dialog test (Main)") {
-						onClicked {
-							GlobalScope.launch(context = Dispatchers.Main) {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test Main"
-								).show()
-							}
-						}
-					}
-
-					button("Dialog test (Unconfined)") {
-						onClicked {
-							messageDialog(
-								Dialog.Flags.DESTROY_WITH_PARENT,
-								MessageDialog.MessageType.INFO,
-								MessageDialog.ButtonsType.OK,
-								messageFormat = "Test UNCONFINED"
-							).show()
-						}
-					}
-
-					button("Dialog test (Unconfinedx2)") {
-						onClicked {
-							GlobalScope.launch(context = Dispatchers.Unconfined) {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test UNCONFINED"
-								).show()
-							}
-						}
-					}
-
-					button("Dialog test (Unconfined parent)") {
-						onClicked {
-							supervisorScope {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test UNCONFINED"
-								).show()
-							}
-						}
-					}
-
-					button("Dialog test (IO)") {
-						onClicked {
-							launchIO {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test IO"
-								).show()
-							}
-						}
-					}
-
-					button("Dialog test (UI)") {
+					button("Message Dialog") {
 						onClicked {
 							launchUI {
 								messageDialog(
 									Dialog.Flags.DESTROY_WITH_PARENT,
 									MessageDialog.MessageType.INFO,
 									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test UI"
-								).show()
+									messageFormat = "This is a message dialog"
+								).run()
 							}
 						}
 					}
-
-					button("Dialog test (Empty)") {
+					button("About Dialog") {
 						onClicked {
-							GlobalScope.launch {
-								messageDialog(
-									Dialog.Flags.DESTROY_WITH_PARENT,
-									MessageDialog.MessageType.INFO,
-									MessageDialog.ButtonsType.OK,
-									messageFormat = "Test Empty"
-								).show()
+							launchUI {
+								aboutDialog {
+									title = "This is an about dialog"
+								}.run()
 							}
 						}
 					}
-
-
 				}
 			}
 

@@ -14,6 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
 import nativex.gtk.*
 import nativex.gtk.common.enums.DeleteType
@@ -52,21 +53,13 @@ class TextView internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val backSpaceSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.BACKSPACE)
-	}
+	val backSpaceSignal: Flow<Unit> by signalFlow(Signals.BACKSPACE)
 
-	
 	@ExperimentalCoroutinesApi
-	val copyClipboardSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.COPY_CLIPBOARD)
-	}
+	val copyClipboardSignal: Flow<Unit> by signalFlow(Signals.COPY_CLIPBOARD)
 
-	
 	@ExperimentalCoroutinesApi
-	val cutClipBoardSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.CUT_CLIPBOARD)
-	}
+	val cutClipBoardSignal: Flow<Unit> by signalFlow(Signals.CUT_CLIPBOARD)
 
 	data class DeleteFromCursorEvent(
 		val type: DeleteType,
@@ -75,12 +68,10 @@ class TextView internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val deleteFromCursorSignal: Flow<DeleteFromCursorEvent> by lazy {
-		callbackSignalFlow(
+	val deleteFromCursorSignal: Flow<DeleteFromCursorEvent> by signalFlow(
 			Signals.DELETE_FROM_CURSOR,
 			staticDeleteFromCursorCallback
 		)
-	}
 
 	data class ExtendSelectionEvent(
 		val granularity: TextExtendSelection,
@@ -91,12 +82,10 @@ class TextView internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val extentSelectionSignal: Flow<ExtendSelectionEvent> by lazy {
-		callbackSignalFlow(
+	val extentSelectionSignal: Flow<ExtendSelectionEvent> by signalFlow(
 			Signals.EXTEND_SELECTION,
 			staticExtendSelectionCallback
 		)
-	}
 
 	@ExperimentalCoroutinesApi
 	
@@ -110,19 +99,15 @@ class TextView internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val insertEmojiSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.INSERT_EMOJI)
-	}
+	val insertEmojiSignal: Flow<Unit> by signalFlow(Signals.INSERT_EMOJI)
 
 
 	@ExperimentalCoroutinesApi
 	
-	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by lazy {
-		callbackSignalFlow(
+	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by signalFlow(
 			Signals.MOVE_CURSOR,
 			ExtenedMoveCursorEvent.staticMoveCursorCallback
 		)
-	}
 
 	data class MoveViewPortEvent(
 		val step: ScrollStep,
@@ -131,21 +116,15 @@ class TextView internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val moveViewPortSignal: Flow<MoveViewPortEvent> by lazy {
-		callbackSignalFlow(Signals.MOVE_VIEWPORT, staticMoveViewportCallback)
-	}
+	val moveViewPortSignal: Flow<MoveViewPortEvent> by signalFlow(Signals.MOVE_VIEWPORT, staticMoveViewportCallback)
 
 	
 	@ExperimentalCoroutinesApi
-	val pasteClipboardSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.PASTE_CLIPBOARD)
-	}
+	val pasteClipboardSignal: Flow<Unit> by signalFlow(Signals.PASTE_CLIPBOARD)
 
 	@ExperimentalCoroutinesApi
 	
-	val populatePopupSignal: Flow<Widget> by lazy {
-		callbackSignalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
-	}
+	val populatePopupSignal: Flow<Widget> by signalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
 
 	val preeditChangedSignal: Flow<Char>
 		get() {
@@ -154,27 +133,19 @@ class TextView internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Boolean> by lazy {
-		callbackSignalFlow(Signals.SELECT_ALL, staticBooleanCallback)
-	}
+	val selectAllSignal: Flow<Boolean> by signalFlow(Signals.SELECT_ALL, staticBooleanCallback)
 
 	
 	@ExperimentalCoroutinesApi
-	val setAnchorSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.SET_ANCHOR)
-	}
+	val setAnchorSignal: Flow<Unit> by signalFlow(Signals.SET_ANCHOR)
 
 	
 	@ExperimentalCoroutinesApi
-	val toggleCursorVisibleSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.TOGGLE_CURSOR_VISIBLE)
-	}
+	val toggleCursorVisibleSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_CURSOR_VISIBLE)
 
 	
 	@ExperimentalCoroutinesApi
-	val toggleOverwriteSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.TOGGLE_OVERWRITE)
-	}
+	val toggleOverwriteSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_OVERWRITE)
 
 	enum class Layer(
 		val key: Int,

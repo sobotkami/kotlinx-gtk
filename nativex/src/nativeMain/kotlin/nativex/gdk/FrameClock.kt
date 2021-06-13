@@ -5,6 +5,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.FrameTimings.Companion.wrap
 import nativex.gio.KObject
 import nativex.gtk.Signals
@@ -46,57 +47,44 @@ class FrameClock internal constructor(
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-after-paint">after-paint</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val afterPaintSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.AFTER_PAINT)
-	}
+	val afterPaintSignal: Flow<Unit> by signalFlow(Signals.AFTER_PAINT)
+
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-before-paint">before-paint</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val beforePaintSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.BEFORE_PAINT)
-	}
+	val beforePaintSignal: Flow<Unit> by signalFlow(Signals.BEFORE_PAINT)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-flush-events">flush-events</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val flushEvents: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.FLUSH_EVENTS)
-	}
+	val flushEvents: Flow<Unit> by signalFlow(Signals.FLUSH_EVENTS)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-layout">layout</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val layoutSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.LAYOUT)
-	}
+	val layoutSignal: Flow<Unit> by signalFlow(Signals.LAYOUT)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-paint">paint</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val paintSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.PAINT)
-	}
+	val paintSignal: Flow<Unit> by signalFlow(Signals.PAINT)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-resume-events">resume-events</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val resumeEventsSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.RESUME_EVENTS)
-	}
+	val resumeEventsSignal: Flow<Unit> by signalFlow(Signals.RESUME_EVENTS)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-update">update</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val updateSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.UPDATE)
-	}
+	val updateSignal: Flow<Unit> by signalFlow(Signals.UPDATE)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#gdk-frame-clock-request-phase">gdk_frame_clock_request_phase</a>

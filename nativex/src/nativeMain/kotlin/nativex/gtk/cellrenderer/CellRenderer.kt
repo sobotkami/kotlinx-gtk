@@ -7,6 +7,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.async.staticCStringCallback
 import nativex.gdk.Window
 import nativex.gio.KObject
@@ -101,9 +102,7 @@ open class CellRenderer internal constructor(
 
 
 		@ExperimentalCoroutinesApi
-		val toggledSignal: Flow<String> by lazy {
-			callbackSignalFlow(Signals.TOGGLED, staticCStringCallback)
-		}
+		val toggledSignal: Flow<String> by signalFlow(Signals.TOGGLED, staticCStringCallback)
 	}
 
 	class Spinner() : CellRenderer(gtk_cell_renderer_spinner_new()!!)

@@ -15,6 +15,7 @@ import kotlinx.cinterop.staticCFunction
 object Signals {
 
 	const val ACTIVATE_CURRENT_LINK = "activate-current-link"
+
 	const val CREATE_WINDOW = "create-window"
 	const val MOVE_FOCUS_OUT = "move-focus-out"
 	const val CHANGE_CURRENT_PAGE = "change-current-page"
@@ -199,6 +200,10 @@ object Signals {
 	const val POPUP_MENU = "popup-menu"
 	const val QUERY_TOOLTIP = "query-tooltip"
 	const val SHOW_HELP = "show-help"
+
+	// GtkAboutDialog
+	const val ACTIVATE_LINK = "activate-link"
+
 }
 
 /**

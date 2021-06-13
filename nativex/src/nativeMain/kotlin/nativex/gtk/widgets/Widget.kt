@@ -2364,7 +2364,7 @@ typealias KeynavFailedFunction = (DirectionType) -> Boolean
 internal val staticKeynavFailedFunction: GCallback = staticCFunction { _: WidgetPointer,
                                                                        direction: GtkDirectionType,
                                                                        data: gpointer ->
-	data.asStableRef<KeynavFailedFunction>().get().invoke(DirectionType.valueOf(direction)!!)
+	data.asStableRef<KeynavFailedFunction>().get().invoke(DirectionType.valueOf(direction)!!).gtk
 }.reinterpret()
 
 /**
@@ -2392,6 +2392,7 @@ typealias MapFunction = () -> Unit
 
 internal val staticMapFunction: GCallback = staticCFunction { _: WidgetPointer, data: gpointer ->
 	data.asStableRef<MapFunction>().get().invoke()
+	Unit
 }.reinterpret()
 
 /**

@@ -2,12 +2,12 @@ package nativex.gtk.widgets.container.bin.windows.dialog
 
 import gtk.*
 import gtk.GtkLicense.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.toKString
+import kotlinx.cinterop.*
+import nativex.async.SignalManager
+import nativex.gdk.Pixbuf
+import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gtk.*
-import nativex.gtk.asStringList
-import nativex.gtk.gtk
+import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
  * kotlinx-gtk
@@ -77,7 +77,7 @@ class AboutDialog internal constructor(
 
 	var authors: List<String>
 		get() =
-			gtk_about_dialog_get_authors(aboutDialogPointer).asStringList()
+			gtk_about_dialog_get_authors(aboutDialogPointer).asSequence().toList().map { it.toKString() }
 		set(value) {
 			gtk_about_dialog_set_authors(
 				aboutDialogPointer,
@@ -87,7 +87,7 @@ class AboutDialog internal constructor(
 
 	var artists: List<String>
 		get() =
-			gtk_about_dialog_get_artists(aboutDialogPointer).asStringList()
+			gtk_about_dialog_get_artists(aboutDialogPointer).asSequence().toList().map { it.toKString() }
 		set(value) =
 			gtk_about_dialog_set_artists(
 				aboutDialogPointer,
@@ -95,7 +95,7 @@ class AboutDialog internal constructor(
 			)
 
 	var documenters: List<String>
-		get() = gtk_about_dialog_get_documenters(aboutDialogPointer).asStringList()
+		get() = gtk_about_dialog_get_documenters(aboutDialogPointer).asSequence().toList().map { it.toKString() }
 		set(value) = gtk_about_dialog_set_documenters(
 			aboutDialogPointer,
 			value.toNullTermCStringArray()
@@ -107,9 +107,9 @@ class AboutDialog internal constructor(
 		set(value) =
 			gtk_about_dialog_set_translator_credits(aboutDialogPointer, value)
 
-	var logo: Any
-		get() = TODO("gtk_about_dialog_get_logo")
-		set(value) = TODO("gtk_about_dialog_set_logo")
+	var logo: Pixbuf
+		get() = gtk_about_dialog_get_logo(aboutDialogPointer)!!.wrap()
+		set(value) = gtk_about_dialog_set_logo(aboutDialogPointer, value.pixbufPointer)
 
 	var logoIconName: String?
 		get() =
@@ -120,19 +120,25 @@ class AboutDialog internal constructor(
 	constructor() : this(gtk_about_dialog_new()!!.reinterpret())
 
 	fun addCreditSection(sectionName: String, people: Array<String>) {
-		TODO("gtk_about_dialog_add_credit_section")
-
-		/*
 		gtk_about_dialog_add_credit_section(
 			aboutDialogPointer,
 			sectionName,
-			people.
+			people.toNullTermCStringArray()
 		)
-		*/
 	}
 
-	fun dialog() {
+	private var activateLinkManager: SignalManager? = null
 
+	fun setActivateLinkCallback(action: ActivateLinkFunction) {
+		activateLinkManager?.disconnect()
+		activateLinkManager = SignalManager(
+			aboutDialogPointer,
+			aboutDialogPointer.connectSignal(
+				Signals.ACTIVATE_LINK,
+				handler = staticActivateLinkCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
 	}
 
 	enum class License(val key: Int, internal val gtk: GtkLicense) {
@@ -180,4 +186,17 @@ class AboutDialog internal constructor(
 		}
 
 	}
+
+	companion object {
+		@Deprecated("No VA", level = DeprecationLevel.HIDDEN)
+		fun Window.showAboutDialog() {
+		}
+	}
 }
+
+internal val staticActivateLinkCallback: GCallback =
+	staticCFunction { _: CPointer<GtkAboutDialog>, char: CString, data: gpointer ->
+		data.asStableRef<ActivateLinkFunction>().get().invoke(char.toKString()).gtk
+	}.reinterpret()
+
+typealias ActivateLinkFunction = (@ParameterName("uri") String) -> Boolean

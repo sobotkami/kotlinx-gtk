@@ -10,6 +10,7 @@ import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gtk.Signals
 
 /**
@@ -29,9 +30,8 @@ abstract class MenuModel internal constructor(
 
 	@ExperimentalCoroutinesApi
 	
-	val itemsChangedSignal: Flow<ItemsChangedEvent> by lazy {
-		callbackSignalFlow(Signals.ITEMS_CHANGED, staticItemsChangedSignal)
-	}
+	val itemsChangedSignal: Flow<ItemsChangedEvent> by signalFlow(Signals.ITEMS_CHANGED, staticItemsChangedSignal)
+
 
 	/**
 	 * Impl classes are used to purely wrap pointers returned for [MenuModel]

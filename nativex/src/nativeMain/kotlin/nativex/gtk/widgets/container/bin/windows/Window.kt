@@ -8,6 +8,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.Screen
 import nativex.gdk.Screen.Companion.wrap
 import nativex.glib.Variant
@@ -207,39 +208,35 @@ open class Window internal constructor(
 
 
 	@ExperimentalCoroutinesApi
-	val activeDefaultSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE_DEFAULT)
-	}
+	val activeDefaultSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_DEFAULT)
 
 
 	@ExperimentalCoroutinesApi
-	val activeFocusSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE_FOCUS)
-	}
+	val activeFocusSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_FOCUS)
 
-
-	@ExperimentalCoroutinesApi
-	val enableDebuggingSignal: Flow<Boolean> by lazy {
-		callbackSignalFlow(
-			Signals.ENABLE_DEBUGGING,
-			staticEnableDebuggingCallback
-		)
-	}
 
 
 	@ExperimentalCoroutinesApi
-	val keysChangedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.KEYS_CHANGED)
-	}
+	val enableDebuggingSignal: Flow<Boolean> by signalFlow(
+		Signals.ENABLE_DEBUGGING,
+		staticEnableDebuggingCallback
+	)
+
 
 
 	@ExperimentalCoroutinesApi
-	val setFocusSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(
-			Signals.SET_FOCUS,
-			staticSetFocusCallback
-		)
-	}
+	val keysChangedSignal: Flow<Unit> by
+		signalFlow(Signals.KEYS_CHANGED)
+
+
+
+	@ExperimentalCoroutinesApi
+	val setFocusSignal: Flow<Unit> by
+	signalFlow(
+		Signals.SET_FOCUS,
+		staticSetFocusCallback
+	)
+
 
 	companion object {
 		internal val staticEnableDebuggingCallback: GCallback =

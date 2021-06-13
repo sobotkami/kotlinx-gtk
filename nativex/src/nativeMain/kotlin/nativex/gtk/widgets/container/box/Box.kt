@@ -9,6 +9,7 @@ import nativex.gtk.common.enums.PackType
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.Container
+import nativex.gtk.widgets.container.bin.button.Button
 
 /**
  * kotlinx-gtk
@@ -23,6 +24,7 @@ open class Box internal constructor(
 		spacing: Int
 	) : this(gtk_box_new(orientation.gtk, spacing)!!.reinterpret())
 
+	constructor(widget: Widget) : this(widget.widgetPointer.reinterpret())
 
 	
 	fun packStart(
@@ -124,4 +126,11 @@ open class Box internal constructor(
 		get() = gtk_box_get_center_widget(boxPointer)?.let { Widget(it) }
 		set(value) = gtk_box_set_center_widget(boxPointer, value?.widgetPointer)
 
+	companion object{
+		internal inline fun CPointer<GtkBox>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GtkBox>.wrap() =
+			Box(this)
+	}
 }

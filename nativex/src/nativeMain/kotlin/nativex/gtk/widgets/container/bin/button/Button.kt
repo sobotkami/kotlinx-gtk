@@ -7,6 +7,7 @@ import kotlinx.cinterop.toKString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gtk.IconSize
 import nativex.gtk.Signals.CLICKED
 import nativex.gtk.bool
@@ -24,10 +25,12 @@ open class Button internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val buttonPointer: CPointer<GtkButton>
 ) : Bin(buttonPointer.reinterpret()) {
+
+	constructor(widget: Widget) : this(widget.widgetPointer.reinterpret())
+
 	@ExperimentalCoroutinesApi
-	val clickedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(CLICKED)
-	}
+	val clickedSignal: Flow<Unit> by signalFlow(CLICKED)
+
 
 	var relief: ReliefStyle
 		get() = ReliefStyle.valueOf(gtk_button_get_relief(buttonPointer))!!
@@ -77,6 +80,14 @@ open class Button internal constructor(
 
 	fun clicked() {
 		gtk_button_clicked(buttonPointer)
+	}
+
+	companion object {
+		internal inline fun CPointer<GtkButton>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GtkButton>.wrap() =
+			Button(this)
 	}
 }
 

@@ -5,9 +5,8 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.Closeable
-import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
-import nativex.atk.KAtkObject
 import nativex.gdk.Event.Companion.wrap
 import nativex.gdk.Seat.Companion.wrap
 import nativex.gdk.Window.Companion.wrap
@@ -141,34 +140,22 @@ class Display internal constructor(
 
 
 	@ExperimentalCoroutinesApi
-	val closedSignal: Flow<Boolean> by lazy {
-		callbackSignalFlow(Signals.CLOSE, staticBooleanCallback)
-	}
+	val closedSignal: Flow<Boolean> by signalFlow(Signals.CLOSE, staticBooleanCallback)
 
 	@ExperimentalCoroutinesApi
-	val monitorAddedSignal: Flow<Monitor> by lazy {
-		callbackSignalFlow(Signals.MONITOR_ADDED, staticMonitorCallback)
-	}
+	val monitorAddedSignal: Flow<Monitor> by signalFlow(Signals.MONITOR_ADDED, staticMonitorCallback)
 
 	@ExperimentalCoroutinesApi
-	val monitorRemovedSignal: Flow<Monitor> by lazy {
-		callbackSignalFlow(Signals.MONITOR_REMOVED, staticMonitorCallback)
-	}
+	val monitorRemovedSignal: Flow<Monitor> by signalFlow(Signals.MONITOR_REMOVED, staticMonitorCallback)
 
 	@ExperimentalCoroutinesApi
-	val openedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.OPENED)
-	}
+	val openedSignal: Flow<Unit> by signalFlow(Signals.OPENED)
 
 	@ExperimentalCoroutinesApi
-	val seatAddedSignal: Flow<Seat> by lazy {
-		callbackSignalFlow(Signals.SEAT_ADDED, staticSeatCallback)
-	}
+	val seatAddedSignal: Flow<Seat> by signalFlow(Signals.SEAT_ADDED, staticSeatCallback)
 
 	@ExperimentalCoroutinesApi
-	val seatRemovedSignal: Flow<Seat> by lazy {
-		callbackSignalFlow(Signals.SEAT_REMOVED, staticSeatCallback)
-	}
+	val seatRemovedSignal: Flow<Seat> by signalFlow(Signals.SEAT_REMOVED, staticSeatCallback)
 
 	companion object {
 		internal val staticMonitorCallback: GCallback =

@@ -112,7 +112,7 @@ class ToolPalette internal constructor(
 			if (value == null)
 				unsetStyle()
 			else
-				gtk_tool_palette_set_style(toolPalettePointer, value!!.gtk)
+				gtk_tool_palette_set_style(toolPalettePointer, value.gtk)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html#gtk-tool-palette-get-icon-size"></a>
