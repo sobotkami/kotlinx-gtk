@@ -34,4 +34,7 @@ class RGBA internal constructor(
 		set(value) {
 			rgbaPointer.pointed.alpha = value
 		}
+
+	override fun toString(): String = "RGBA(red=${red}, green=${green}, blue=${blue}, alpha=${alpha})"
+
 }

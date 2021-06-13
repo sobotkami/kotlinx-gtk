@@ -1,4 +1,3 @@
-import gtk.gtk_app_chooser_widget_set_show_all
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -158,19 +157,18 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 								) {
 									heading = "This is an app chooser"
 								}
-								dialog.run()
+								println(dialog.run())
+								dialog.close()
 							}
 						}
 					}
 					button("Color Chooser Dialog") {
 						onClicked {
 							launchUI {
-							}
-						}
-					}
-					button("Color Selection Dialog") {
-						onClicked {
-							launchUI {
+								val dialog = colorChooserDialog("Color Chooser Dialog Test")
+								println(dialog.run())
+								dialog.close()
+								println("RGBA: ${dialog.rGBA}")
 							}
 						}
 					}
@@ -183,6 +181,7 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 					button("Font Chooser Dialog") {
 						onClicked {
 							launchUI {
+
 							}
 						}
 					}
