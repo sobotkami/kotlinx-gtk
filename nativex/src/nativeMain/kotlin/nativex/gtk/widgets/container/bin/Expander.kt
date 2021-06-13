@@ -7,6 +7,7 @@ import kotlinx.cinterop.toKString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gtk.Signals
 import nativex.gtk.bool
 import nativex.gtk.gtk
@@ -72,9 +73,8 @@ class Expander(
 
 	
 	@ExperimentalCoroutinesApi
-	val activate: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE)
-	}
+	val activate: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+
 
 
 }

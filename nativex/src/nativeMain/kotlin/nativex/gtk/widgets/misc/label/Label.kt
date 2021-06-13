@@ -5,11 +5,12 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gtk.Signals
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.bool
 import nativex.gtk.common.enums.Justification
-import nativex.gtk.common.events.MoveCursorEvent
+import nativex.gtk.common.events.ExtenedMoveCursorEvent
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.menu.Menu
@@ -30,7 +31,7 @@ open class Label internal constructor(
 		get() = gtk_label_get_text(labelPointer)!!.toKString()
 		set(value) = gtk_label_set_text(labelPointer, value)
 
-	
+
 	val mnemonicKeyval: UInt
 		get() = gtk_label_get_mnemonic_keyval(labelPointer)
 
@@ -102,7 +103,7 @@ open class Label internal constructor(
 			else null
 		}
 
-	val layoutOffsets: Pair<Int, Int>?
+	val layoutOffsets: Pair<Int, Int>
 		get() = memScoped {
 			val x = cValue<IntVar>()
 			val y = cValue<IntVar>()
@@ -138,33 +139,22 @@ open class Label internal constructor(
 		set(value) = gtk_label_set_selectable(labelPointer, value.gtk)
 
 	@ExperimentalCoroutinesApi
-	
-	val activateCurrentLinkSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE_CURRENT_LINK)
-	}
+	val activateCurrentLinkSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_CURRENT_LINK)
+
 	val activateLinkSignal: Flow<Char>
 		get() = TODO("Figure out char")
 
 	@ExperimentalCoroutinesApi
-	
-	val copyClipboardSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.COPY_CLIPBOARD)
-	}
+	val copyClipboardSignal: Flow<Unit> by signalFlow(Signals.COPY_CLIPBOARD)
 
 	@ExperimentalCoroutinesApi
-	
-	val moveCursorSignal: Flow<MoveCursorEvent> by lazy {
-		callbackSignalFlow(
-			Signals.MOVE_CURSOR,
-			MoveCursorEvent.staticMoveCursorCallback
-		)
-	}
+	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by signalFlow(
+		Signals.MOVE_CURSOR,
+		ExtenedMoveCursorEvent.staticMoveCursorCallback
+	)
 
 	@ExperimentalCoroutinesApi
-	
-	val populatePopup: Flow<Menu> by lazy {
-		callbackSignalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
-	}
+	val populatePopup: Flow<Menu> by signalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
 
 	constructor(
 		label: String?, isMnemonic: Boolean = false

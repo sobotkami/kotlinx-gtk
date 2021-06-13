@@ -6,6 +6,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gio.AppInfo
@@ -30,9 +31,7 @@ class RecentManager internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val changedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.CHANGED)
-	}
+	val changedSignal: Flow<Unit> by signalFlow(Signals.CHANGED)
 
 	constructor() : this(gtk_recent_manager_new()!!)
 

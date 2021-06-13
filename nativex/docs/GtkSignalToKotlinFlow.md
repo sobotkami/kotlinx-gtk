@@ -9,3 +9,17 @@ return.
 
 Instead, These signals have been translated as a Callback. One can add a callback, and receive a `SignalManager` in
 return. The `SignalManager` allows the developer to disconnect the signal once complete
+
+## Notes
+
+### Requirements to become a flow
+
+- Signal does not need a return
+- Signal arguments are only static data or references
+- Signal does not provide a pointer as arguments (this usually suggests changes expected to be made)
+- Signal does not have to run on the UI thread
+
+### Requirements to become a callback
+- Signal requires a return value
+- Signal requires changes to be made
+- Signal has to run on the UI thread

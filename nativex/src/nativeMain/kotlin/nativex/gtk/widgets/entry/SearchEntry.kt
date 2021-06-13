@@ -7,6 +7,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.Event
 import nativex.gtk.Signals
 
@@ -25,19 +26,16 @@ class SearchEntry internal constructor(
 
 	
 	@ExperimentalCoroutinesApi
-	val previousMatchSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.PREVIOUS_MATCH)
-	}
+	val previousMatchSignal: Flow<Unit> by signalFlow(Signals.PREVIOUS_MATCH)
+	
 
 	
 	@ExperimentalCoroutinesApi
-	val searchChangedSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.SEARCH_CHANGED)
-	}
+	val searchChangedSignal: Flow<Unit> by signalFlow(Signals.SEARCH_CHANGED)
+
 
 	
 	@ExperimentalCoroutinesApi
-	val stopSearchSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.STOP_SEARCH)
-	}
+	val stopSearchSignal: Flow<Unit> by signalFlow(Signals.STOP_SEARCH)
+
 }

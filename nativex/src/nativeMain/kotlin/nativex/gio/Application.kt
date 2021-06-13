@@ -6,6 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gio.DBusConnection.Companion.wrap
 import nativex.gio.File.Companion.toCArray
 import nativex.glib.OptionArg
@@ -64,9 +65,8 @@ open class Application(
 
 	
 	@ExperimentalCoroutinesApi
-	val activateSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.ACTIVATE)
-	}
+	val activateSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+
 	val commandLineSignal: Flow<GApplicationCommandLine>
 		get() = TODO()
 	val handleLocalOptions: Flow<GVariantDict>
@@ -74,23 +74,20 @@ open class Application(
 
 	
 	@ExperimentalCoroutinesApi
-	val nameLostSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.NAME_LOST)
-	}
+	val nameLostSignal: Flow<Unit> by signalFlow(Signals.NAME_LOST)
+
 	val openSignal: Flow<OpenEvent>
 		get() = TODO()
 
 	
 	@ExperimentalCoroutinesApi
-	val shutdownSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.SHUTDOWN)
-	}
+	val shutdownSignal: Flow<Unit> by signalFlow(Signals.SHUTDOWN)
+
 
 	
 	@ExperimentalCoroutinesApi
-	val startupSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.STARTUP)
-	}
+	val startupSignal: Flow<Unit> by signalFlow(Signals.STARTUP)
+
 	override val actionMapPointer: PointerHolder<GActionMap>
 		get() = PointerHolder(gApplicationPointer.reinterpret())
 

@@ -8,6 +8,7 @@ import nativex.gtk.asWidgetOrNull
 import nativex.gtk.bool
 import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.box.Box
 
 /**
  * kotlinx-gtk
@@ -62,6 +63,14 @@ open class HeaderBar internal constructor(
 			headerBarPointer,
 			value
 		)
+
+	companion object{
+		internal inline fun CPointer<GtkHeaderBar>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GtkHeaderBar>.wrap() =
+			HeaderBar(this)
+	}
 
 
 }

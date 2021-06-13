@@ -27,7 +27,7 @@ enum class StateFlags(val key: Int, internal val gtk: GtkStateFlags) {
 			values().find { it.key == key }
 
 		
-		internal fun valueOfGtk(gtk: GtkStateFlags) =
+		internal fun valueOf(gtk: GtkStateFlags) =
 			values().find { it.gtk == gtk }
 	}
 }

@@ -2,14 +2,15 @@ package nativex.gtk.widgets.container.bin
 
 import gtk.*
 import kotlinx.cinterop.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import nativex.async.signalFlow
 import nativex.async.staticDestroyStableRefFunction
 import nativex.gio.KObject
 import nativex.gio.ListModel
-import nativex.gtk.Adjustment
-import nativex.gtk.asKSequence
-import nativex.gtk.bool
+import nativex.gtk.*
 import nativex.gtk.common.enums.SelectionMode
-import nativex.gtk.gtk
+import nativex.gtk.common.events.MoveCursorEvent
 import nativex.gtk.widgets.Widget
 
 /**
@@ -290,7 +291,40 @@ class ListBox internal constructor(
 
 	}
 
+	@ExperimentalCoroutinesApi
+	val activateCursorRowSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_CURSOR_ROW)
+
+	@ExperimentalCoroutinesApi
+	val moveCursorSignal: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback)
+
+	@ExperimentalCoroutinesApi
+	val rowActivatedSignal: Flow<Row> by signalFlow(Signals.ROW_ACTIVATED,staticRowEventCallback)
+
+	@ExperimentalCoroutinesApi
+	val rowSelectedSignal: Flow<Row> by signalFlow(Signals.ROW_SELECTED,staticRowEventCallback)
+
+	@ExperimentalCoroutinesApi
+	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL);
+
+	@ExperimentalCoroutinesApi
+	val selectedRowsChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_ROWS_CHANGED)
+
+	@ExperimentalCoroutinesApi
+	val toggleCursorRowSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_CURSOR_ROW)
+
+	@ExperimentalCoroutinesApi
+	val unselectAllSignal: Flow<Unit> by signalFlow(Signals.UNSELECT_ALL)
+
+	@ExperimentalCoroutinesApi
+	val activateSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+
 	companion object {
+		internal val staticRowEventCallback: GCallback =
+			staticCFunction { _: CPointer<GtkListBox>, row: CPointer<GtkListBoxRow>, data: gpointer ->
+				data.asStableRef<(Row)->Unit>().get().invoke(Row(row))
+				Unit
+			}.reinterpret()
+
 		internal val staticListBoxFilterFunction: GtkListBoxFilterFunc = staticCFunction { row, data ->
 			data?.asStableRef<ListBoxFilterFunction>()?.get()?.invoke(Row(row!!))?.gtk ?: 0
 		}

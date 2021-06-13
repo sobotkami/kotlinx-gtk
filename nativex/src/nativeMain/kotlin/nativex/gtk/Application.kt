@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import nativex.ClosableSequence
 import nativex.asCloseableKSequence
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gio.Application
 import nativex.gio.Menu
 import nativex.gio.Menu.Companion.wrap
@@ -86,26 +87,23 @@ class Application internal constructor(
 	 */
 	
 	@ExperimentalCoroutinesApi
-	val queryEndSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.QUERY_END)
-	}
+	val queryEndSignal: Flow<Unit> by signalFlow(Signals.QUERY_END)
+	
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-added">window-added</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val windowAddedSignal: Flow<Window> by lazy {
-		callbackSignalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
-	}
+	val windowAddedSignal: Flow<Window> by signalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-removed">window-removed</a>
 	 */
 	
 	@ExperimentalCoroutinesApi
-	val windowRemovedSignal: Flow<Window> by lazy {
-		callbackSignalFlow(Signals.WINDOW_REMOVED, staticWindowRemovedCallback)
-	}
+	val windowRemovedSignal: Flow<Window> by signalFlow(Signals.WINDOW_REMOVED, staticWindowRemovedCallback)
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-new">gtk_application_new</a>

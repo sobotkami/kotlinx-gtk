@@ -19,8 +19,8 @@ fun Window.messageDialog(
 	messageFormat: String? = null
 ) = MessageDialog(
 	this,
-	flags = Dialog.Flags.DESTROY_WITH_PARENT,
-	messageType = MessageDialog.MessageType.INFO,
-	buttonsType = MessageDialog.ButtonsType.CLOSE,
+	flags = flags,
+	messageType = messageType,
+	buttonsType = buttonsType,
 	messageFormat = messageFormat
 )

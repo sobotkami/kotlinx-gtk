@@ -15,6 +15,7 @@ import kotlinx.cinterop.staticCFunction
 object Signals {
 
 	const val ACTIVATE_CURRENT_LINK = "activate-current-link"
+
 	const val CREATE_WINDOW = "create-window"
 	const val MOVE_FOCUS_OUT = "move-focus-out"
 	const val CHANGE_CURRENT_PAGE = "change-current-page"
@@ -117,8 +118,8 @@ object Signals {
 	const val UNSELECT_ALL = "unselect-all"
 	const val SELECTED_CHILDREN_CHANGED = "selected-children-changed"
 	const val TOGGLE_CURSOR_CHILD = "toggle-cursor-child"
-	const val CHILD_ACTIVATED: String = "child-activated"
-	const val ACTIVATE_CURSOR_CHILD: String = "activate-cursor-child"
+	const val CHILD_ACTIVATED = "child-activated"
+	const val ACTIVATE_CURSOR_CHILD = "activate-cursor-child"
 
 	// GtkNotebook
 	const val FOCUS_TAB = "focus-tab"
@@ -127,6 +128,81 @@ object Signals {
 	const val PAGE_ADDED = "page-added"
 	const val PAGE_REMOVED = "page-removed"
 	const val PAGE_REORDERED = "page-reordered"
+
+	// GtkListBox
+	const val ACTIVATE_CURSOR_ROW = "activate-cursor-row"
+	const val SELECTED_ROWS_CHANGED = "selected-rows-changed"
+	const val TOGGLE_CURSOR_ROW = "toggle-cursor-row"
+	const val ROW_ACTIVATED = "row-activated"
+	const val ROW_SELECTED = "row-selected"
+
+	// GtkWidget
+	const val REALIZE = "realize"
+	const val UNREALIZE = "unrealize"
+	const val UNMAP = "unmap"
+	const val STYLE_UPDATED = "style-updated"
+	const val GRAB_FOCUS = "grab-focus"
+	const val DESTROY = "destroy"
+	const val ACCEL_CLOSURES_CHANGED = "accel-closures-changed"
+	const val SHOW = "show"
+	const val WINDOW_STATE_EVENT = "window-state-event"
+	const val UNMAP_EVENT = "unmap-event"
+	const val TOUCH_EVENT = "touch-event"
+	const val SELECTION_REQUEST = "selection-request"
+	const val SELECTION_RECEIVED = "selection-received"
+	const val SELECTION_NOTIFY_EVENT = "selection-notify-event"
+	const val SELECTION_CLEAR_EVENT = "selection-clear-event"
+	const val SCROLL_EVENT = "scroll-event"
+	const val PROXIMITY_IN_EVENT = "proximity-in-event"
+	const val PROXIMITY_OUT_EVENT = "proximity-OUT-event"
+	const val PROPERTY_NOTIFY_EVENT = "property-notify-event"
+	const val MOTION_NOTIFY_EVENT = "motion-notify-event"
+	const val LEAVE_NOTIFY_EVENT = "leave-notify-event"
+	const val KEY_RELEASE_EVENT = "key-release-event"
+	const val KEY_PRESS_EVENT = "key-press-event"
+	const val GRAB_BROKEN_EVENT = "grab-broken-event"
+	const val FOCUS_OUT_EVENT = "focus-out-event"
+	const val FOCUS_IN_EVENT = "focus-in-event"
+	const val EVENT = "event"
+	const val ENTER_NOTIFY_EVENT = "enter-notify-event"
+	const val DESTROY_EVENT = "destroy-event"
+	const val DELETE_EVENT = "delete-event"
+	const val CONFIGURE_EVENT = "configure-event"
+	const val BUTTON_RELEASE_EVENT = "button-release-event"
+	const val BUTTON_PRESS_EVENT = "button-press-event"
+	const val DAMAGE_EVENT = "damage-event"
+	const val CAN_ACTIVATE_ACCEL = "can-activate-accel"
+	const val DIRECTION_CHANGED = "direction-changed"
+	const val DRAG_BEING_MANAGER = "drag-being-manager"
+	const val DRAG_DATA_DELETE = "drag-data-delete"
+	const val DRAG_DATA_RECEIVED = "drag-data-received"
+	const val DRAG_DROP = "drag-drop"
+	const val DRAG_END = "drag-end"
+	const val EVENT_AFTER = "event-after"
+	const val GRAB_NOTIFY = "grab-notify"
+	const val HIDE = "hide"
+	const val HIERARCHY_CHANGED = "hierarchy-changed"
+	const val MOVE_FOCUS = "move-focus"
+	const val PARENT_SET = "parent-set"
+	const val SCREEN_CHANGED = "screen-changed"
+	const val SELECTION_GET = "selection-get"
+	const val SIZE_ALLOCATE = "size-allocate"
+	const val STATE_FLAGS_CHANGED = "state-flags-changed"
+	const val DRAG_DATA_GET = "drag-data-get"
+	const val MAP_EVENT = "map-event"
+	const val DRAG_MOTION = "drag-motion"
+	const val DRAG_FAILED = "drag-failed"
+	const val DRAG_LEAVE = "drag-leave"
+	const val FOCUS = "focus"
+	const val KEYNAV_FAILED = "keynav-failed"
+	const val MAP = "map"
+	const val MNEMONIC_ACTIVATE = "mnemonic-activate"
+	const val POPUP_MENU = "popup-menu"
+	const val QUERY_TOOLTIP = "query-tooltip"
+	const val SHOW_HELP = "show-help"
+
+	// GtkAboutDialog
+	const val ACTIVATE_LINK = "activate-link"
 
 	// GtkPrinter
 	const val DETAILS_ACQUIRED = "details-acquired"
@@ -165,3 +241,5 @@ internal val staticNoArgGCallback: GCallback =
 		data?.asStableRef<() -> Unit>()?.get()?.invoke()
 		Unit
 	}.reinterpret()
+
+

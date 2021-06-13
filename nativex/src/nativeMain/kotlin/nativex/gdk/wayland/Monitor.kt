@@ -6,6 +6,7 @@ import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
+import nativex.async.signalFlow
 import nativex.gdk.Display
 import nativex.gdk.Display.Companion.wrap
 import nativex.gdk.Rectangle
@@ -57,9 +58,7 @@ class Monitor internal constructor(
 		get() = gdk_monitor_is_primary(monitorPointer).bool
 
 	@ExperimentalCoroutinesApi
-	val invalidateSignal: Flow<Unit> by lazy {
-		callbackSignalFlow(Signals.INVALIDATE)
-	}
+	val invalidateSignal: Flow<Unit> by signalFlow(Signals.INVALIDATE)
 
 	enum class SubpixelLayout(val key: Int, internal val gdk: GdkSubpixelLayout) {
 		UNKNOWN(0, GDK_SUBPIXEL_LAYOUT_UNKNOWN),
