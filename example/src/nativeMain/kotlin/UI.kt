@@ -1,3 +1,4 @@
+import gtk.gtk_app_chooser_widget_set_show_all
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -151,6 +152,13 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 					button("App Chooser Dialog") {
 						onClicked {
 							launchUI {
+								val dialog = appChooserDialog(
+									dialogFlags = Dialog.Flags.USE_HEADER_BAR,
+									contentType = "txt"
+								) {
+									heading = "This is an app chooser"
+								}
+								dialog.run()
 							}
 						}
 					}

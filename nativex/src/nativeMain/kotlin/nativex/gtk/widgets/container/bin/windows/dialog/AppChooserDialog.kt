@@ -31,15 +31,11 @@ class AppChooserDialog internal constructor(
 	)
 
 	val widget: Widget?
-		get() = gtk_app_chooser_dialog_get_widget(aboutDialogPointer)?.let {
-			Widget(
-				it
-			)
-		}
+		get() = gtk_app_chooser_dialog_get_widget(aboutDialogPointer)?.wrap()
 
 	var heading: String?
 		get() =
-			gtk_app_chooser_dialog_get_heading(aboutDialogPointer)?.pointed?.ptr?.toKString()
+			gtk_app_chooser_dialog_get_heading(aboutDialogPointer)?.toKString()
 		set(value) =
 			gtk_app_chooser_dialog_set_heading(aboutDialogPointer, value)
 
