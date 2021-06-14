@@ -1,9 +1,9 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
-import gtk.GtkRecentChooserDialog
-import gtk.gtk_recent_chooser_dialog_new
+import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.gtk.RecentManager
 import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
@@ -17,19 +17,39 @@ class RecentChooserDialog internal constructor(
 	internal val aboutDialogPointer: CPointer<GtkRecentChooserDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
-	/**
-	 * TODO vararg pass through
-	 */
 	constructor(
 		title: String? = null,
 		parent: Window? = null,
-		firstButtonText: String? = null,
-		vararg arguments: Any?
+		yesString: String,
+		noString: String
 	) : this(
 		gtk_recent_chooser_dialog_new(
 			title = title,
 			parent = parent?.windowPointer,
-			first_button_text = firstButtonText,
+			first_button_text = noString,
+			GTK_RESPONSE_CANCEL,
+			yesString,
+			GTK_RESPONSE_ACCEPT,
+			null
+		)!!.reinterpret()
+	)
+
+	constructor(
+		title: String? = null,
+		parent: Window? = null,
+		manager: RecentManager,
+		yesString: String,
+		noString: String
+	) : this(
+		gtk_recent_chooser_dialog_new_for_manager(
+			title = title,
+			parent = parent?.windowPointer,
+			manager = manager.managerPointer,
+			first_button_text = noString,
+			GTK_RESPONSE_CANCEL,
+			yesString,
+			GTK_RESPONSE_ACCEPT,
+			null
 		)!!.reinterpret()
 	)
 }

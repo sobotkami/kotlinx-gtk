@@ -11,10 +11,7 @@ import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
 import nativex.gtk.widgets.container.ButtonBox
 import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.dialog.AboutDialog
-import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
-import nativex.gtk.widgets.container.bin.windows.dialog.FileChooserDialog
-import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
+import nativex.gtk.widgets.container.bin.windows.dialog.*
 
 /**
  * kotlinx-gtk
@@ -196,13 +193,12 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 					button("Font Chooser Dialog") {
 						onClicked {
 							launchUI {
-
-							}
-						}
-					}
-					button("Font Selection Dialog") {
-						onClicked {
-							launchUI {
+								val dialog = FontChooserDialog(
+									this@mainKotlinTestBox,
+									"Font Chooser Dialog"
+								)
+								println(dialog.run())
+								dialog.destroy()
 							}
 						}
 					}
@@ -220,6 +216,7 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 							}
 						}
 					}
+					/*
 					button("Page Setup Unix Dialog") {
 						onClicked {
 							launchUI {
@@ -232,9 +229,19 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 							}
 						}
 					}
+					 */
+
 					button("Recent Chooser Dialog") {
 						onClicked {
 							launchUI {
+								val dialog = RecentChooserDialog(
+									"Recent Chooser Dialog",
+									this@mainKotlinTestBox,
+									"Select",
+									"Cancel"
+								)
+								println(dialog.run())
+								dialog.destroy()
 							}
 						}
 					}
