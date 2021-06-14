@@ -1,11 +1,11 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
-import gtk.GtkFileChooserAction
+import gtk.*
 import gtk.GtkFileChooserAction.*
-import gtk.GtkFileChooserDialog
-import gtk.gtk_file_chooser_dialog_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.PointerHolder
+import nativex.gtk.FileChooser
 import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
@@ -15,35 +15,25 @@ import nativex.gtk.widgets.container.bin.windows.Window
 class FileChooserDialog internal constructor(
 	@Suppress("MemberVisibilityCanBePrivate")
 	internal val fileChooserDialogPointer: CPointer<GtkFileChooserDialog>
-) : Dialog(fileChooserDialogPointer.reinterpret()) {
+) : Dialog(fileChooserDialogPointer.reinterpret()), FileChooser {
+	override val fileChooserPointer: PointerHolder<GtkFileChooser> by lazy { PointerHolder(fileChooserDialogPointer.reinterpret()) }
 
 	constructor(
-		action: Action,
+		action: FileChooser.Action,
 		parent: Window? = null,
 		title: String? = null,
-		firstButtonText: String? = null
+		yesString: String,
+		noString: String
 	) : this(
 		gtk_file_chooser_dialog_new(
 			title,
 			parent?.windowPointer,
 			action.gtk,
-			firstButtonText
+			yesString,
+			GTK_RESPONSE_ACCEPT,
+			noString,
+			GTK_RESPONSE_CANCEL,
+			null
 		)!!.reinterpret()
 	)
-
-
-	enum class Action(val key: Int, internal val gtk: GtkFileChooserAction) {
-		MODAL(0, GTK_FILE_CHOOSER_ACTION_OPEN),
-		ACTION_SAVE(1, GTK_FILE_CHOOSER_ACTION_SAVE),
-		SELECT_FOLDER(2, GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER),
-		CREATE_FOLDER(3, GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER);
-
-		companion object {
-			fun valueOf(key: Int) = values().find { it.key == key }
-
-			
-			internal fun valueOf(gtk: GtkFileChooserAction) =
-				values().find { it.gtk == gtk }
-		}
-	}
 }

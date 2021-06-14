@@ -5,6 +5,7 @@ import nativex.async.launchUI
 import nativex.gio.Notification
 import nativex.gio.dsl.sendNotification
 import nativex.gtk.Application
+import nativex.gtk.FileChooser
 import nativex.gtk.IconSize
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
@@ -12,6 +13,7 @@ import nativex.gtk.widgets.container.ButtonBox
 import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.gtk.widgets.container.bin.windows.dialog.AboutDialog
 import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
+import nativex.gtk.widgets.container.bin.windows.dialog.FileChooserDialog
 import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
 
 /**
@@ -172,12 +174,25 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 							}
 						}
 					}
+
 					button("File Chooser Dialog") {
 						onClicked {
 							launchUI {
+								val dialog = FileChooserDialog(
+									FileChooser.Action.ACTION_OPEN,
+									this@mainKotlinTestBox,
+									"Select",
+									"Open",
+									"Cancel"
+								)
+								println(dialog.run())
+								println(dialog.filePath)
+								dialog.destroy()
 							}
+
 						}
 					}
+
 					button("Font Chooser Dialog") {
 						onClicked {
 							launchUI {
