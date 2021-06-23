@@ -16,7 +16,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Frame               | 🟩 | 🟫 | 🟩
 | Grid                | 🟩 | 🟫 | 🟩
 | HeaderBar           | 🟩 | 🟫 | 🟩
-| Layout              | 🟩 | 🟥 | 🟥
+| Layout              | 🟩 | 🟫 | 🟩
 | ListBox             | 🟩 | 🟩 | 🟨
 | MenuBar             | 🟩 | 🟥 | 🟥
 | Notebook            | 🟩 | 🟩 | 🟩
