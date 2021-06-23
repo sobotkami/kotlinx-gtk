@@ -9,7 +9,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | AspectFrame         | 🟩 | 🟫 | 🟩
 | Box                 | 🟩 | 🟫 | 🟩    
 | ButtonBox           | 🟩 | 🟫 | 🟩
-| EventBox            | 🟩 | 🟥 | 🟥
+| EventBox            | 🟩 | 🟫 | 🟩
 | Expander            | 🟩 | 🟩 | 🟩
 | Fixed               | 🟩 | 🟫 | 🟩
 | FlowBox             | 🟩 | 🟩 | 🟩
