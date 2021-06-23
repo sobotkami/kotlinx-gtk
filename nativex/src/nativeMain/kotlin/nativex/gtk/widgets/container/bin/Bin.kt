@@ -11,7 +11,6 @@ import nativex.gtk.widgets.container.Container
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
 open class Bin internal constructor(
 	internal val binPointer: CPointer<GtkBin>
 ) : Container(binPointer.reinterpret()) {

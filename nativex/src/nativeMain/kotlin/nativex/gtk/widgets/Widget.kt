@@ -2123,7 +2123,7 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	@Deprecated("Replace with StateType")
+	//@Deprecated("Replace with StateType") i don't even know...
 	enum class StateType(val key: Int, internal val gtk: GtkStateType) {
 		NORMAL(0, GtkStateType.GTK_STATE_NORMAL),
 
