@@ -24,7 +24,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Paned               | yes       | yes       | yes
 | Popover             | yes       |
 | PopoverMenu         | yes       |
-| Revealer            | yes       |
+| Revealer            | yes       | n/a       | yes
 | ScrolledWindow      | yes       |
 | SearchBar           | no        |
 | Stack               | yes       |

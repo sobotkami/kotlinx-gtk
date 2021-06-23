@@ -26,7 +26,7 @@ class Revealer(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html#gtk-revealer-get-reveal-child">gtk_revealer_get_reveal_child</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html#gtk-revealer-set-reveal-child">gtk_revealer_set_reveal_child</a>
 	 */
-	var isRevealChild: Boolean
+	var revealChild: Boolean
 		get() = gtk_revealer_get_reveal_child(revealerPointer).bool
 		set(value) = gtk_revealer_set_reveal_child(
 			revealerPointer,
