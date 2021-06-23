@@ -13,7 +13,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Expander            | 🟩 | 🟩 | 🟩
 | Fixed               | 🟩 | 🟫 | 🟩
 | FlowBox             | 🟩 | 🟩 | 🟩
-| Frame               | 🟩 | 🟥 | 🟥
+| Frame               | 🟩 | 🟫 | 🟩
 | Grid                | 🟩 | 🟥 | 🟥
 | HeaderBar           | 🟩 | 🟥 | 🟥
 | Layout              | 🟩 | 🟥 | 🟥
