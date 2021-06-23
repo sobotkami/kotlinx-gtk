@@ -29,8 +29,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				padding = 10u
 			) {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 					button("Start") {
 						onClicked {
 							viewModel.startSharedDataTest()
@@ -51,8 +51,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				padding = 10u
 			) {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 					button("Start") {
 						onClicked {
 							viewModel.startJobTest()
@@ -68,8 +68,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 
 			frame("Notification Test") {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 
 					button("Send") {
 						onClicked {
@@ -102,8 +102,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				padding = 10u
 			) {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 					button("Increment flow value") {
 						onClicked {
 							viewModel.incrementFlow()
@@ -124,8 +124,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				padding = 10u
 			) {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 					button("About Dialog") {
 						onClicked {
 							launchUI {
@@ -255,8 +255,8 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				padding = 10u
 			) {
 				verticalButtonBox {
-					buttonBoxStyle =
-						ButtonBox.ButtonBoxStyle.CENTER
+					layout =
+						ButtonBox.Style.CENTER
 
 					scaleButton(IconSize.SMALL_TOOLBAR) {
 						onClicked {

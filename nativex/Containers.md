@@ -8,7 +8,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | ActionBar           | 🟩 | 🟫 | 🟩
 | AspectFrame         | 🟩 | 🟫 | 🟩
 | Box                 | 🟩 | 🟫 | 🟩    
-| ButtonBox           | 🟩 | 🟥 | 🟥
+| ButtonBox           | 🟩 | 🟫 | 🟩
 | EventBox            | 🟩 | 🟥 | 🟥
 | Expander            | 🟩 | 🟩 | 🟩
 | Fixed               | 🟩 | 🟫 | 🟩
