@@ -5,29 +5,29 @@ Each container will have DSL to create itself, and the rest inside itself.
 
 | Kotlin Name         | Functions | Signals   | Documented    |
 | ------------------- | --------- | --------- | ------------- |
-| ActionBar           | yes       |
-| AspectFrame         | yes       |
-| Box                 | yes       |
-| ButtonBox           | yes       |
-| EventBox            | yes       |
-| Expander            | yes       |
-| Fixed               | yes       | n/a       | yes 
-| FlowBox             | yes       | yes       | yes
-| Frame               | yes       |
-| Grid                | yes       |
-| HeaderBar           | yes       |
-| Layout              | yes       |
-| ListBox             | yes       | yes        | partial
-| MenuBar             | yes       |
-| Notebook            | yes       | yes       | yes
-| Overlay             | yes       |
-| Paned               | yes       | yes       | yes
-| Popover             | yes       |
-| PopoverMenu         | yes       |
-| Revealer            | yes       | n/a       | yes
-| ScrolledWindow      | yes       |
-| SearchBar           | no        |
-| Stack               | yes       |
-| Toolbar             | yes       |
-| ToolPalette         | partial   |
-| Viewport            | yes       |
+| ActionBar           | ✅ | ❌ |
+| AspectFrame         | ✅ | ❌ |
+| Box                 | ✅ | ❌ |      
+| ButtonBox           | ✅ | ❌ |
+| EventBox            | ✅ | ❌ |
+| Expander            | ✅ | ✅ | ✅
+| Fixed               | ✅ | ⛔ | ✅
+| FlowBox             | ✅ | ✅ | ✅
+| Frame               | ✅ | ❌ |
+| Grid                | ✅ | ❌ |
+| HeaderBar           | ✅ | ❌ |
+| Layout              | ✅ | ❌ |
+| ListBox             | ✅ | ✅ | 🟨
+| MenuBar             | ✅ | ❌ |
+| Notebook            | ✅ | ✅ | ✅
+| Overlay             | ✅ | ❌ |
+| Paned               | ✅ | ✅ | ✅
+| Popover             | ✅ | ❌ |
+| PopoverMenu         | ✅ | ❌ |
+| Revealer            | ✅ | ⛔ | ✅
+| ScrolledWindow      | ✅ | ❌ |
+| SearchBar           | 🟨 | ❌ |
+| Stack               | ✅ | ❌ |
+| Toolbar             | ✅ | ❌ |
+| ToolPalette         | 🟨 | ❌ |
+| Viewport            | ✅ | ❌ |
