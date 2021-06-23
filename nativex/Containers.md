@@ -20,7 +20,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | ListBox             | 🟩 | 🟩 | 🟨
 | MenuBar             | 🟩 | 🟫 | 🟩
 | Notebook            | 🟩 | 🟩 | 🟩
-| Overlay             | 🟩 | 🟥 | 🟥
+| Overlay             | 🟩 | 🟫 | 🟩
 | Paned               | 🟩 | 🟩 | 🟩
 | Popover             | 🟩 | 🟥 | 🟥
 | PopoverMenu         | 🟩 | 🟥 | 🟥
