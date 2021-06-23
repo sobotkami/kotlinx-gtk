@@ -14,7 +14,7 @@ import nativex.gtk.widgets.container.box.Box
  *
  * 07 / 03 / 2021
  *
- * @see <a href=""></a>
+ * @see <a href="https://developer.gnome.org/gtk3/stable/GtkButtonBox.html">GtkButtonBox</a>
  */
 open class ButtonBox internal constructor(
 	internal val buttonBoxPointer: CPointer<GtkButtonBox>

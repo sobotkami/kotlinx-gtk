@@ -2,6 +2,8 @@ package nativex.gtk.widgets.container.box
 
 import gtk.*
 import kotlinx.cinterop.*
+import nativex.PointerHolder
+import nativex.gtk.Orientable
 import nativex.gtk.bool
 import nativex.gtk.common.enums.BaselinePosition
 import nativex.gtk.common.enums.Orientation
@@ -20,7 +22,9 @@ import nativex.gtk.widgets.container.bin.button.Button
  */
 open class Box internal constructor(
 	internal val boxPointer: CPointer<GtkBox>
-) : Container(boxPointer.reinterpret()) {
+) : Container(boxPointer.reinterpret()), Orientable {
+
+	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(boxPointer.reinterpret()) }
 
 	constructor(other: Box) : this(other.boxPointer)
 
@@ -54,7 +58,6 @@ open class Box internal constructor(
 			padding
 		)
 	}
-
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-pack-end">gtk_box_pack_end</a>
@@ -102,6 +105,7 @@ open class Box internal constructor(
 	}
 
 	/**
+	 * Data returned from [queryChildPacking]
 	 */
 	data class ChildPacking  constructor(
 		val expand: Boolean,
