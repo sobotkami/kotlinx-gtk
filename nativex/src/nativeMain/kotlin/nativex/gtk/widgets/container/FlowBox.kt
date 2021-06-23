@@ -4,6 +4,7 @@ import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import nativex.PointerHolder
 import nativex.async.signalFlow
 import nativex.async.staticDestroyStableRefFunction
 import nativex.gio.KObject
@@ -22,7 +23,9 @@ import nativex.gtk.widgets.container.bin.Bin
  */
 class FlowBox internal constructor(
 	internal val flowBoxPointer: CPointer<GtkFlowBox>
-) : Bin(flowBoxPointer.reinterpret()) {
+) : Bin(flowBoxPointer.reinterpret()),Orientable {
+
+	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(flowBoxPointer.reinterpret()) }
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#gtk-flow-box-get-homogeneous">gtk_flow_box_get_homogeneous</a>
