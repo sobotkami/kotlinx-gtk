@@ -6,7 +6,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Kotlin Name         | Functions | Signals   | Documented    |
 | ------------------- | --------- | --------- | ------------- |
 | ActionBar           | 🟩 | 🟫 | 🟩
-| AspectFrame         | 🟩 | 🟥 | 🟥
+| AspectFrame         | 🟩 | 🟫 | 🟩
 | Box                 | 🟩 | 🟥 | 🟥    
 | ButtonBox           | 🟩 | 🟥 | 🟥
 | EventBox            | 🟩 | 🟥 | 🟥
