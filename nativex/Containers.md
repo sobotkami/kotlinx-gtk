@@ -11,7 +11,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | ButtonBox           | yes       |
 | EventBox            | yes       |
 | Expander            | yes       |
-| Fixed               | yes       |
+| Fixed               | yes       | n/a       | yes 
 | FlowBox             | yes       | yes       | yes
 | Frame               | yes       |
 | Grid                | yes       |
