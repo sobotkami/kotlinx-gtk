@@ -28,6 +28,6 @@ Each container will have DSL to create itself, and the rest inside itself.
 | ScrolledWindow      | 🟩 | 🟩 | 🟩
 | SearchBar           | 🟩 | 🟫 | 🟩
 | Stack               | 🟩 | 🟫 | 🟩
-| Toolbar             | 🟩 | 🟥 | 🟥
+| Toolbar             | 🟩 | 🟩 | 🟩
 | ToolPalette         | 🟨 | 🟥 | 🟥
 | Viewport            | 🟩 | 🟫 | 🟩

@@ -211,6 +211,12 @@ object Signals {
 	const val SCROLL_CHILD = "scroll-child"
 	const val EDGE_OVERSHOT = "edge-overshot"
 	const val EDGE_REACHED = "edge-reached"
+
+	// GtkToolbar
+	const val ORIENTATION_CHANGED = "orientation-changed"
+	const val STYLE_CHANGED = "style-changed"
+	const val FOCUS_HOME_OR_END = "focus-home-or-end"
+	const val POPUP_CONTEXT_MENU = "popup-context-menu"
 }
 
 /**

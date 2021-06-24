@@ -156,4 +156,11 @@ open class ToolItem(
 		gtk_tool_item_toolbar_reconfigured(toolItemPointer)
 	}
 
+	companion object{
+		internal inline fun CPointer<GtkToolItem>?.wrap() =
+			this?.wrap()
+
+		internal inline fun CPointer<GtkToolItem>.wrap() =
+			ToolItem(this)
+	}
 }
