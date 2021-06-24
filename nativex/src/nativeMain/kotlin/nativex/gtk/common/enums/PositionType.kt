@@ -1,7 +1,12 @@
 package nativex.gtk.common.enums
 
+import gtk.GCallback
 import gtk.GtkPositionType
 import gtk.GtkPositionType.*
+import gtk.gpointer
+import kotlinx.cinterop.asStableRef
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
 
 /**
  * kotlinx-gtk
@@ -19,5 +24,12 @@ enum class PositionType(val key: Int, internal val gtk: GtkPositionType) {
 
 		internal fun valueOf(gtk: GtkPositionType) =
 			values().find { it.gtk == gtk }
+
+		/** Generic callback for signals */
+		internal val staticPositionTypeCallback: GCallback =
+			staticCFunction { _: gpointer, pos: GtkPositionType, data: gpointer? ->
+				data?.asStableRef<(PositionType) -> Unit>()?.get()?.invoke(valueOf(pos)!!)
+				Unit
+			}.reinterpret()
 	}
 }

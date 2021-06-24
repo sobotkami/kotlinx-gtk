@@ -151,7 +151,7 @@ class Notebook internal constructor(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-move-focus-out">move-focus-out</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val moveFocusOutSignal: Flow<GtkDirectionType> by signalFlow(Signals.MOVE_FOCUS_OUT, staticMoveFocusOutCallback)
+	val moveFocusOutSignal: Flow<GtkDirectionType> by signalFlow(Signals.MOVE_FOCUS_OUT, DirectionType.staticDirectionTypeCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-page-added">create-window</a>
@@ -616,13 +616,6 @@ class Notebook internal constructor(
 	}
 
 	companion object {
-		internal val staticMoveFocusOutCallback: GCallback =
-			staticCFunction { _: gpointer?, arg1: GtkDirectionType, data: gpointer? ->
-				data?.asStableRef<(DirectionType) -> Unit>()
-					?.get()
-					?.invoke(DirectionType.valueOf(arg1)!!)
-				Unit
-			}.reinterpret()
 
 		internal val staticChangeCurrentPageFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->

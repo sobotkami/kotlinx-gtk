@@ -25,7 +25,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Popover             | 🟩 | 🟩 | 🟩
 | V====> Menu         | 🟩 | 🟩 | 🟩
 | Revealer            | 🟩 | 🟫 | 🟩
-| ScrolledWindow      | 🟩 | 🟥 | 🟥
+| ScrolledWindow      | 🟩 | 🟩 | 🟩
 | SearchBar           | 🟨 | 🟥 | 🟥
 | Stack               | 🟩 | 🟥 | 🟥
 | Toolbar             | 🟩 | 🟥 | 🟥

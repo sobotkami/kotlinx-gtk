@@ -205,7 +205,12 @@ object Signals {
 	const val ACTIVATE_LINK = "activate-link"
 
 	// GtkPrinter
-	const val DETAILS_ACQUIRED = "details-acquired"
+	//const val DETAILS_ACQUIRED = "details-acquired"
+
+	// GtkScrolledWindow
+	const val SCROLL_CHILD = "scroll-child"
+	const val EDGE_OVERSHOT = "edge-overshot"
+	const val EDGE_REACHED = "edge-reached"
 }
 
 /**

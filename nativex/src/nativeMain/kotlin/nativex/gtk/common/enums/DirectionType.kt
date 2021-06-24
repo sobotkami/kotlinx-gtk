@@ -1,7 +1,12 @@
 package nativex.gtk.common.enums
 
+import gtk.GCallback
 import gtk.GtkDirectionType
 import gtk.GtkDirectionType.*
+import gtk.gpointer
+import kotlinx.cinterop.asStableRef
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
 
 /**
  * kotlinx-gtk
@@ -24,5 +29,12 @@ enum class DirectionType(val key: Int, internal val gtk: GtkDirectionType) {
 
 		internal fun valueOf(gtk: GtkDirectionType) =
 			values().find { it.gtk == gtk }
+
+		/** Generic callback for signals */
+		internal val staticDirectionTypeCallback: GCallback =
+			staticCFunction { _: gpointer, direction: GtkDirectionType, data: gpointer ->
+				data.asStableRef<(DirectionType) -> Unit>().get().invoke(valueOf(direction)!!)
+				Unit
+			}.reinterpret()
 	}
 }
