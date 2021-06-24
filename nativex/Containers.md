@@ -22,7 +22,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Notebook            | 🟩 | 🟩 | 🟩
 | Overlay             | 🟩 | 🟫 | 🟩
 | Paned               | 🟩 | 🟩 | 🟩
-| Popover             | 🟩 | 🟥 | 🟥
+| Popover             | 🟩 | 🟩 | 🟩
 | PopoverMenu         | 🟩 | 🟥 | 🟥
 | Revealer            | 🟩 | 🟫 | 🟩
 | ScrolledWindow      | 🟩 | 🟥 | 🟥
