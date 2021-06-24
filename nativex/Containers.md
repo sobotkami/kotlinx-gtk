@@ -30,4 +30,4 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Stack               | 🟩 | 🟥 | 🟥
 | Toolbar             | 🟩 | 🟥 | 🟥
 | ToolPalette         | 🟨 | 🟥 | 🟥
-| Viewport            | 🟩 | 🟥 | 🟥
+| Viewport            | 🟩 | 🟫 | 🟩
