@@ -27,7 +27,7 @@ Each container will have DSL to create itself, and the rest inside itself.
 | Revealer            | 🟩 | 🟫 | 🟩
 | ScrolledWindow      | 🟩 | 🟩 | 🟩
 | SearchBar           | 🟩 | 🟫 | 🟩
-| Stack               | 🟩 | 🟥 | 🟥
+| Stack               | 🟩 | 🟫 | 🟩
 | Toolbar             | 🟩 | 🟥 | 🟥
 | ToolPalette         | 🟨 | 🟥 | 🟥
 | Viewport            | 🟩 | 🟫 | 🟩
