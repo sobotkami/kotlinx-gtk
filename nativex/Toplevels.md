@@ -1,6 +1,16 @@
 # Gtk Widgets that are classified as "Toplevels"
-| Kotlin Name         | Functions | Signals   | Documented    |
-| ------------------- | --------- | --------- | ------------- |
+
+Guide
+
+| Color | Meaning             |
+| ----- | ------------------- |
+| 🟩    | Complete            |
+| 🟨    | Partially complete  |
+| 🟥    | Incomplete          |
+| 🟫    | N/A                 |
+
+| Kotlin Name         | Functions | Signals   | Documented    | DSL |
+| ------------------- | --------- | --------- | ------------- | --- |
 | Window              |           |           |               |
 | OffscreenWindow     |           |           |               |
 | ApplicationWindow   |           |           |               |

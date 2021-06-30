@@ -1,7 +1,16 @@
 # List of GTK Widgets that fit the "Display" category
 
-| Kotlin Name   | Functions | Signals   | Documented    |
-| ------------- | --------- | --------- | ------------- |
+Guide
+
+| Color | Meaning             |
+| ----- | ------------------- |
+| 🟩    | Complete            |
+| 🟨    | Partially complete  |
+| 🟥    | Incomplete          |
+| 🟫    | N/A                 |
+
+| Kotlin Name         | Functions | Signals   | Documented    | DSL |
+| ------------------- | --------- | --------- | ------------- | --- |
 | Label         | Wrapped   |           |               |
 | AccelLabel    | Wrapped   |           |
 | Image         | Wrapped   |           |

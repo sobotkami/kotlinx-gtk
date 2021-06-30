@@ -1,9 +1,6 @@
 package nativex.gtk.dsl
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import nativex.GtkDsl
-import nativex.async.launchUnconfined
 import nativex.gtk.widgets.container.Container
 import nativex.gtk.widgets.container.Grid
 import nativex.gtk.widgets.container.bin.button.Button
@@ -28,10 +25,4 @@ inline fun Grid.button(
 
 
 @GtkDsl
-inline fun Button.onClicked(crossinline onClicked: suspend () -> Unit) {
-	launchUnconfined {
-		clickedSignal.collect {
-			onClicked()
-		}
-	}
-}
+inline fun Button.onClicked(crossinline action: () -> Unit) = addOnClickedCallback { action() }

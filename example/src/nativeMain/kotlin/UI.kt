@@ -1,6 +1,7 @@
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import nativex.async.launchIO
 import nativex.async.launchUI
 import nativex.gio.Notification
 import nativex.gio.dsl.sendNotification
@@ -111,7 +112,9 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 					}
 					button("Collect flow value") {
 						onClicked {
-							println("Value: ${viewModel.flow.first()}")
+							launchIO {
+								println("Value: ${viewModel.flow.first()}")
+							}
 						}
 					}
 				}
