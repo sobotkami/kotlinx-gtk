@@ -61,7 +61,7 @@ interface ActionMap {
 		level = DeprecationLevel.HIDDEN
 	)
 	fun addAction(action: Action) {
-		g_action_map_add_action(actionMapPointer.ptr, action.actionPointer.ptr)
+		g_action_map_add_action(actionMapPointer.ptr, action.actionPointer)
 	}
 
 	fun removeAction(actionName: String) {

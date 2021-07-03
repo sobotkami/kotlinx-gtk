@@ -120,7 +120,8 @@ fun main() {
 				applicationWindow {
 					title = "Kotlin/Native Gtk Test"
 					defaultSize = 600 x 200
-					mainKotlinTestBox(this@onCreateUI)
+					//mainKotlinTestBox(this@onCreateUI)
+					entryTestBox()
 				}.showAll()
 			}.also {
 				println("Created UI in $it ms")

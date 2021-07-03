@@ -126,7 +126,7 @@ class Menu internal constructor(
 		}
 
 		fun setIcon(icon: Icon) {
-			g_menu_item_set_icon(menuItemPointer, icon.pointer.ptr)
+			g_menu_item_set_icon(menuItemPointer, icon.pointer)
 		}
 
 		fun setActionAndTargetValue(action: String?, variant: Variant?) {

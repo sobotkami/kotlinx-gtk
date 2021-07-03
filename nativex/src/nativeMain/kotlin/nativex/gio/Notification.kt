@@ -24,7 +24,7 @@ class Notification internal constructor(
 	}
 
 	fun setIcon(icon: Icon) {
-		g_notification_set_icon(notificationPointer, icon.pointer.ptr)
+		g_notification_set_icon(notificationPointer, icon.pointer)
 	}
 
 	fun setPriority(priority: Priority) {
