@@ -827,12 +827,24 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		companion object {
 			fun valueOf(gtk: GtkInputHints) = values().find { it.gtk == gtk }
 
+			/**
+			 * @see [UInt.and]
+			 */
 			infix fun InputHints.and(hint: InputHints): @AInputHint UInt = gtk and hint.gtk
 
+			/**
+			 * @see [UInt.or]
+			 */
 			infix fun InputHints.or(hint: InputHints): @AInputHint UInt = gtk or hint.gtk
 
+			/**
+			 * @see [UInt.and]
+			 */
 			infix fun @AInputHint UInt.and(hint: InputHints): @AInputHint UInt = this and hint.gtk
 
+			/**
+			 * @see [UInt.or]
+			 */
 			infix fun @AInputHint UInt.or(hint: InputHints): @AInputHint UInt = this or hint.gtk
 
 		}
