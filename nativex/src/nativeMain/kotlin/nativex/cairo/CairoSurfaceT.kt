@@ -11,5 +11,4 @@ import kotlinx.cinterop.CPointer
  */
 class CairoSurfaceT(
 	 val cPointer: CPointer<cairo_surface_t>
-) {
-}
+)

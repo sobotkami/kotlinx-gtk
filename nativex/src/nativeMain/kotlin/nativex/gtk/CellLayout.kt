@@ -5,7 +5,6 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.staticCFunction
-import nativex.PointerHolder
 import nativex.gtk.CellArea.Companion.wrap
 import nativex.gtk.TreeModel.TreeIter
 import nativex.gtk.cellrenderer.CellRenderer
@@ -22,7 +21,7 @@ interface CellLayout {
 			                  iter: CPointer<GtkTreeIter>?,
 			                  data: gpointer? ->
 				data?.asStableRef<(CellLayout, CellRenderer, TreeModel, TreeIter) -> Unit>()?.get()?.invoke(
-					Impl(PointerHolder(cellLayout!!)),
+					Impl(cellLayout!!),
 					CellRenderer(cell!!),
 					TreeModel(treeModel!!),
 					TreeIter(iter!!)
@@ -31,9 +30,9 @@ interface CellLayout {
 			}
 	}
 
-	class Impl(override val cellLayoutHolder: PointerHolder<GtkCellLayout>) : CellLayout
+	class Impl(override val cellLayoutHolder: CPointer<GtkCellLayout>) : CellLayout
 
-	val cellLayoutHolder: PointerHolder<GtkCellLayout>
+	val cellLayoutHolder: CPointer<GtkCellLayout>
 
 
 	fun setCellDataFunc(
@@ -45,7 +44,7 @@ interface CellLayout {
 		) -> Unit
 	) {
 		gtk_cell_layout_set_cell_data_func(
-			cell_layout = cellLayoutHolder.ptr,
+			cell_layout = cellLayoutHolder,
 			cell = renderer.cellRendererPointer,
 			func = staticCellDataFunc,
 			func_data = StableRef.create { layout: CellLayout, cell: CellRenderer, treeModel: TreeModel, iter: TreeIter ->
@@ -60,35 +59,35 @@ interface CellLayout {
 	}
 
 	fun packStart(cellRenderer: CellRenderer, expand: Boolean) {
-		gtk_cell_layout_pack_start(cellLayoutHolder.ptr, cellRenderer.cellRendererPointer, expand.gtk)
+		gtk_cell_layout_pack_start(cellLayoutHolder, cellRenderer.cellRendererPointer, expand.gtk)
 	}
 
 	fun packEnd(cellRenderer: CellRenderer, expand: Boolean) {
-		gtk_cell_layout_pack_end(cellLayoutHolder.ptr, cellRenderer.cellRendererPointer, expand.gtk)
+		gtk_cell_layout_pack_end(cellLayoutHolder, cellRenderer.cellRendererPointer, expand.gtk)
 	}
 
 	val area: CellArea?
-		get() = gtk_cell_layout_get_area(cellLayoutHolder.ptr).wrap()
+		get() = gtk_cell_layout_get_area(cellLayoutHolder).wrap()
 
 	val cells: Sequence<CellRenderer>
-		get() = gtk_cell_layout_get_cells(cellLayoutHolder.ptr).asKSequence<GtkCellRenderer, CellRenderer> {
+		get() = gtk_cell_layout_get_cells(cellLayoutHolder).asKSequence<GtkCellRenderer, CellRenderer> {
 			it.wrap()
 		}
 
 	fun reorder(cell: CellRenderer, position: Int) {
-		gtk_cell_layout_reorder(cellLayoutHolder.ptr, cell.cellRendererPointer, position)
+		gtk_cell_layout_reorder(cellLayoutHolder, cell.cellRendererPointer, position)
 	}
 
 	fun clear() {
-		gtk_cell_layout_clear(cellLayoutHolder.ptr)
+		gtk_cell_layout_clear(cellLayoutHolder)
 	}
 
 	fun addAttribute(cell: CellRenderer, attribute: String, column: Int) {
-		gtk_cell_layout_add_attribute(cellLayoutHolder.ptr, cell.cellRendererPointer, attribute, column)
+		gtk_cell_layout_add_attribute(cellLayoutHolder, cell.cellRendererPointer, attribute, column)
 	}
 
 	fun clearAttributes(cellRenderer: CellRenderer) {
-		gtk_cell_layout_clear_attributes(cellLayoutHolder.ptr, cellRenderer.cellRendererPointer)
+		gtk_cell_layout_clear_attributes(cellLayoutHolder, cellRenderer.cellRendererPointer)
 	}
 
 

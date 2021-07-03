@@ -2,7 +2,6 @@ package nativex.gtk.widgets.container
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.PointerHolder
 import nativex.gdk.Window
 import nativex.gtk.Adjustment
 import nativex.gtk.Scrollable
@@ -18,8 +17,8 @@ import nativex.gtk.widgets.Widget
 class Layout(
 	 val layoutPointer: CPointer<GtkLayout>
 ) : Container(layoutPointer.reinterpret()), Scrollable {
-	override val scrollablePointer: PointerHolder<GtkScrollable>
-		get() = PointerHolder(layoutPointer.reinterpret())
+	override val scrollablePointer: CPointer<GtkScrollable>
+		get() = layoutPointer.reinterpret()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLayout.html#gtk-layout-new">gtk_layout_new</a>

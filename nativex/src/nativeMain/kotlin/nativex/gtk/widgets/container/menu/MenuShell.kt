@@ -11,6 +11,4 @@ import nativex.gtk.widgets.container.Container
  */
 open class MenuShell(
 	 val menuShellPointer: CPointer<GtkMenuShell>
-) : Container(menuShellPointer.reinterpret()) {
-
-}
+) : Container(menuShellPointer.reinterpret())

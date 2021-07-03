@@ -17,6 +17,6 @@ open class Separator(
 ) : Widget(separatorPointer.reinterpret()) {
 	constructor(orientation: Orientation) : this(gtk_separator_new(orientation.gtk)!!.reinterpret())
 
-	class HorizontalSeparator() : Separator(HORIZONTAL)
-	class VerticalSeparator() : Separator(VERTICAL)
+	class HorizontalSeparator : Separator(HORIZONTAL)
+	class VerticalSeparator : Separator(VERTICAL)
 }

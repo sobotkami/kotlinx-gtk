@@ -30,7 +30,7 @@ open class CellRenderer(
 	}
 
 
-	class Accel() : CellRenderer(gtk_cell_renderer_accel_new()!!) {
+	class Accel : CellRenderer(gtk_cell_renderer_accel_new()!!) {
 		enum class Mode(val key: Int,  val gtk: GtkCellRendererAccelMode) {
 			GTK(0, GTK_CELL_RENDERER_ACCEL_MODE_GTK),
 			OTHER(1, GTK_CELL_RENDERER_ACCEL_MODE_OTHER),
@@ -52,7 +52,7 @@ open class CellRenderer(
 			get() = TODO("accel-edited")
 	}
 
-	class Combo() : CellRenderer(gtk_cell_renderer_combo_new()!!) {
+	class Combo : CellRenderer(gtk_cell_renderer_combo_new()!!) {
 		data class ChangedData(
 			val path: String,
 			val newIter: TreeModel.TreeIter
@@ -62,13 +62,13 @@ open class CellRenderer(
 			get() = TODO("changed")
 	}
 
-	class Pixbuf() : CellRenderer(gtk_cell_renderer_pixbuf_new()!!)
+	class Pixbuf : CellRenderer(gtk_cell_renderer_pixbuf_new()!!)
 
-	class Progress() : CellRenderer(gtk_cell_renderer_progress_new()!!)
+	class Progress : CellRenderer(gtk_cell_renderer_progress_new()!!)
 
-	class Spin() : CellRenderer(gtk_cell_renderer_spin_new()!!)
+	class Spin : CellRenderer(gtk_cell_renderer_spin_new()!!)
 
-	class Text() : CellRenderer(gtk_cell_renderer_text_new()!!) {
+	class Text : CellRenderer(gtk_cell_renderer_text_new()!!) {
 		fun setFixedHeightFromFont(numberOfRows: Int) {
 			gtk_cell_renderer_text_set_fixed_height_from_font(cellRendererPointer.reinterpret(), numberOfRows)
 		}
@@ -82,7 +82,7 @@ open class CellRenderer(
 			get() = TODO("edited")
 	}
 
-	class Toggle() : CellRenderer(gtk_cell_renderer_toggle_new()!!) {
+	class Toggle : CellRenderer(gtk_cell_renderer_toggle_new()!!) {
 		 val cellRendererTogglePointer: CPointer<GtkCellRendererToggle> by lazy {
 			cellRendererPointer.reinterpret()
 		}
@@ -105,6 +105,6 @@ open class CellRenderer(
 		val toggledSignal: Flow<String> by signalFlow(Signals.TOGGLED, staticCStringCallback)
 	}
 
-	class Spinner() : CellRenderer(gtk_cell_renderer_spinner_new()!!)
+	class Spinner : CellRenderer(gtk_cell_renderer_spinner_new()!!)
 
 }

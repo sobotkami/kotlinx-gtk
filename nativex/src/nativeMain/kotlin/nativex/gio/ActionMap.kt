@@ -2,7 +2,6 @@ package nativex.gio
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.PointerHolder
 import nativex.glib.Variant
 
 /**
@@ -10,10 +9,10 @@ import nativex.glib.Variant
  * 23 / 03 / 2021
  */
 interface ActionMap {
-	val actionMapPointer: PointerHolder<GActionMap>
+	val actionMapPointer: CPointer<GActionMap>
 
 	fun lookupAction(actionName: String): Action? =
-		g_action_map_lookup_action(actionMapPointer.ptr, actionName)?.let {
+		g_action_map_lookup_action(actionMapPointer, actionName)?.let {
 			ImplAction(it)
 		}
 
@@ -26,7 +25,7 @@ interface ActionMap {
 		userData: Any? = null
 	) {
 		g_action_map_add_action_entries(
-			actionMapPointer.ptr,
+			actionMapPointer,
 			memScoped<CValuesRef<GActionEntry>?> {
 				allocArrayOf(entries.map { it.actionEntryPointer }).pointed.value
 			},
@@ -61,11 +60,11 @@ interface ActionMap {
 		level = DeprecationLevel.HIDDEN
 	)
 	fun addAction(action: Action) {
-		g_action_map_add_action(actionMapPointer.ptr, action.actionPointer)
+		g_action_map_add_action(actionMapPointer, action.actionPointer)
 	}
 
 	fun removeAction(actionName: String) {
-		g_action_map_remove_action(actionMapPointer.ptr, actionName)
+		g_action_map_remove_action(actionMapPointer, actionName)
 	}
 
 	/**

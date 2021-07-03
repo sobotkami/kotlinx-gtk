@@ -4,7 +4,6 @@ import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.PointerHolder
 import nativex.async.signalFlow
 import nativex.async.staticDestroyStableRefFunction
 import nativex.gio.KObject
@@ -25,7 +24,7 @@ class FlowBox(
 	 val flowBoxPointer: CPointer<GtkFlowBox>
 ) : Bin(flowBoxPointer.reinterpret()),Orientable {
 
-	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(flowBoxPointer.reinterpret()) }
+	override val orientablePointer: CPointer<GtkOrientable> by lazy { flowBoxPointer.reinterpret() }
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#gtk-flow-box-get-homogeneous">gtk_flow_box_get_homogeneous</a>
@@ -317,19 +316,19 @@ class FlowBox(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-move-cursor">move-cursor</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val moveCursor: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback);
+	val moveCursor: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-select-all">select-all</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL);
+	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-selected-children-changed">selected-children-changed</a>
 	 */
 	@ExperimentalCoroutinesApi
-	val selectedChildrenChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_CHILDREN_CHANGED);
+	val selectedChildrenChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_CHILDREN_CHANGED)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-toggle-cursor-child">toggle-cursor-child</a>

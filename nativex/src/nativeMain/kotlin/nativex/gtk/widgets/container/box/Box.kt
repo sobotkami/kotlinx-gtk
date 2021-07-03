@@ -2,7 +2,6 @@ package nativex.gtk.widgets.container.box
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.PointerHolder
 import nativex.gtk.Orientable
 import nativex.gtk.bool
 import nativex.gtk.common.enums.BaselinePosition
@@ -24,7 +23,7 @@ open class Box(
 	 val boxPointer: CPointer<GtkBox>
 ) : Container(boxPointer.reinterpret()), Orientable {
 
-	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(boxPointer.reinterpret()) }
+	override val orientablePointer: CPointer<GtkOrientable> by lazy { boxPointer.reinterpret() }
 
 	constructor(other: Box) : this(other.boxPointer)
 

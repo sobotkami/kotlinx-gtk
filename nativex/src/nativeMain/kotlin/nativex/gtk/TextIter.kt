@@ -9,6 +9,4 @@ import kotlinx.cinterop.CPointer
  */
 class TextIter(
 	val pointer: CPointer<GtkTextIter>
-) {
-
-}
+)

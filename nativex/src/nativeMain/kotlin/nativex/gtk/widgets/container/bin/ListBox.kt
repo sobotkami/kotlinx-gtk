@@ -304,7 +304,7 @@ class ListBox(
 	val rowSelectedSignal: Flow<Row> by signalFlow(Signals.ROW_SELECTED,staticRowEventCallback)
 
 	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL);
+	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL)
 
 	@ExperimentalCoroutinesApi
 	val selectedRowsChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_ROWS_CHANGED)

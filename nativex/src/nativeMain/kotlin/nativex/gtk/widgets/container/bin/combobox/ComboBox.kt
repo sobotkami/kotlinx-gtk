@@ -2,7 +2,6 @@ package nativex.gtk.widgets.container.bin.combobox
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.PointerHolder
 import nativex.gdk.Device
 import nativex.gtk.*
 import nativex.gtk.widgets.container.TreeView.Companion.staticTreeViewRowSeparatorFunc
@@ -17,8 +16,8 @@ import nativex.gtk.widgets.range.Range
 open class ComboBox(
 	 val comboBoxPointer: CPointer<GtkComboBox>
 ) : Bin(comboBoxPointer.reinterpret()), CellLayout {
-	override val cellLayoutHolder: PointerHolder<GtkCellLayout> by lazy {
-		PointerHolder(comboBoxPointer.reinterpret())
+	override val cellLayoutHolder: CPointer<GtkCellLayout> by lazy {
+		comboBoxPointer.reinterpret()
 	}
 
 	constructor(

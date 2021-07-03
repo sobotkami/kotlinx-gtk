@@ -12,5 +12,4 @@ import kotlinx.cinterop.CPointer
  */
 class CairoT(
 	 val pointer: CPointer<cairo_t>
-) {
-}
+)

@@ -10,6 +10,4 @@ import kotlinx.cinterop.reinterpret
  */
 open class Menu(
 	 val menuPointer: CPointer<GtkMenu>
-) : MenuShell(menuPointer.reinterpret()) {
-
-}
+) : MenuShell(menuPointer.reinterpret())

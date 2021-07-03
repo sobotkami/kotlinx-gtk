@@ -7,7 +7,6 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.PointerHolder
 import nativex.async.signalFlow
 import nativex.gdk.RGBA
 import nativex.gtk.ColorChooser
@@ -29,8 +28,8 @@ class ColorChooserDialog(
 		)!!.reinterpret()
 	)
 
-	override val colorChooserPointer: PointerHolder<GtkColorChooser> by lazy {
-		PointerHolder(aboutDialogPointer.reinterpret())
+	override val colorChooserPointer: CPointer<GtkColorChooser> by lazy {
+		aboutDialogPointer.reinterpret()
 	}
 
 	@ExperimentalCoroutinesApi

@@ -33,7 +33,7 @@ class Toolbar(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolbar.html#gtk-toolbar-insert">gtk_toolbar_insert</a>
 	 */
 	fun insert(item: ToolItem, position: Int) {
-		gtk_toolbar_insert(toolbarPointer, item.toolItemPointer, position);
+		gtk_toolbar_insert(toolbarPointer, item.toolItemPointer, position)
 	}
 
 	/**

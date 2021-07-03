@@ -2,7 +2,6 @@ package nativex.gtk.widgets.range
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.PointerHolder
 import nativex.gtk.Adjustment
 import nativex.gtk.Orientable
 import nativex.gtk.bool
@@ -18,7 +17,7 @@ class Scale(
 	 val scalePointer: CPointer<GtkScale>
 ) : Range(scalePointer.reinterpret()), Orientable {
 
-	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(scalePointer.reinterpret()) }
+	override val orientablePointer: CPointer<GtkOrientable> by lazy { scalePointer.reinterpret() }
 
 	constructor(
 		orientation: Orientation,

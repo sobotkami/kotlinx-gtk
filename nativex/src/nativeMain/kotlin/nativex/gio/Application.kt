@@ -4,7 +4,6 @@ import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gio.DBusConnection.Companion.wrap
@@ -88,8 +87,8 @@ open class Application(
 	@ExperimentalCoroutinesApi
 	val startupSignal: Flow<Unit> by signalFlow(Signals.STARTUP)
 
-	override val actionMapPointer: PointerHolder<GActionMap>
-		get() = PointerHolder(gApplicationPointer.reinterpret())
+	override val actionMapPointer: CPointer<GActionMap>
+		get() = gApplicationPointer.reinterpret()
 
 	constructor(applicationID: String?, flags: Flags) : this(
 		g_application_new(

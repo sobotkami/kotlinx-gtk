@@ -12,5 +12,4 @@ import nativex.gio.KObject
  */
 class Clipboard(
 	 val clipboardPointer: CPointer<GtkClipboard>
-) : KObject(clipboardPointer.reinterpret()) {
-}
+) : KObject(clipboardPointer.reinterpret())

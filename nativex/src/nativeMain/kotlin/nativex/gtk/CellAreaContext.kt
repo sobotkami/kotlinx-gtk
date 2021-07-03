@@ -11,7 +11,4 @@ import nativex.gio.KObject
  */
 class CellAreaContext(
 	 val cellAreaContextPointer: CPointer<GtkCellAreaContext>
-) : KObject(cellAreaContextPointer.reinterpret()) {
-
-
-}
+) : KObject(cellAreaContextPointer.reinterpret())

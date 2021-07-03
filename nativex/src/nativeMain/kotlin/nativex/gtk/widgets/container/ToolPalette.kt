@@ -3,7 +3,6 @@ package nativex.gtk.widgets.container
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.PointerHolder
 import nativex.gdk.dragndrop.DragAction
 import nativex.gtk.*
 import nativex.gtk.common.enums.ToolbarStyle
@@ -25,12 +24,12 @@ import nativex.gtk.widgets.container.bin.toolitem.ToolItem.Companion.wrap
 class ToolPalette(
 	val toolPalettePointer: CPointer<GtkToolPalette>
 ) : Container(toolPalettePointer.reinterpret()), Scrollable, Orientable {
-	override val scrollablePointer: PointerHolder<GtkScrollable> by lazy {
-		PointerHolder(toolPalettePointer.reinterpret())
+	override val scrollablePointer: CPointer<GtkScrollable> by lazy {
+		toolPalettePointer.reinterpret()
 	}
 
-	override val orientablePointer: PointerHolder<GtkOrientable> by lazy {
-		PointerHolder(toolPalettePointer.reinterpret())
+	override val orientablePointer: CPointer<GtkOrientable> by lazy {
+		toolPalettePointer.reinterpret()
 	}
 
 	/**

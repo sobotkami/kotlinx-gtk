@@ -4,20 +4,20 @@ import gtk.GtkFileChooser
 import gtk.GtkFileChooserAction
 import gtk.gtk_file_chooser_get_filename
 import gtk.gtk_file_chooser_set_filename
+import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.toKString
-import nativex.PointerHolder
 
 /**
  * kotlinx-gtk
  * 13 / 06 / 2021
  */
 interface FileChooser {
-	val fileChooserPointer: PointerHolder<GtkFileChooser>
+	val fileChooserPointer: CPointer<GtkFileChooser>
 
 	var filePath: String?
-		get() = gtk_file_chooser_get_filename(fileChooserPointer.ptr)?.toKString()
+		get() = gtk_file_chooser_get_filename(fileChooserPointer)?.toKString()
 		set(value) {
-			gtk_file_chooser_set_filename(fileChooserPointer.ptr, value)
+			gtk_file_chooser_set_filename(fileChooserPointer, value)
 		}
 
 	enum class Action(val key: Int,  val gtk: GtkFileChooserAction) {

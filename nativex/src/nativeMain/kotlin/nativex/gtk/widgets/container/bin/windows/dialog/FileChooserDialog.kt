@@ -4,7 +4,6 @@ import gtk.*
 import gtk.GtkFileChooserAction.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.PointerHolder
 import nativex.gtk.FileChooser
 import nativex.gtk.widgets.container.bin.windows.Window
 
@@ -16,7 +15,7 @@ class FileChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
 	 val fileChooserDialogPointer: CPointer<GtkFileChooserDialog>
 ) : Dialog(fileChooserDialogPointer.reinterpret()), FileChooser {
-	override val fileChooserPointer: PointerHolder<GtkFileChooser> by lazy { PointerHolder(fileChooserDialogPointer.reinterpret()) }
+	override val fileChooserPointer: CPointer<GtkFileChooser> by lazy { fileChooserDialogPointer.reinterpret() }
 
 	constructor(
 		action: FileChooser.Action,

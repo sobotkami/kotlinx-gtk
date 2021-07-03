@@ -195,7 +195,7 @@ fun List<String>.toNullTermCStringArray(): CStringList =
 	this ?: return emptySequence()
 	return object : Sequence<Int> {
 		override fun iterator(): Iterator<Int> = object : Iterator<Int> {
-			private var index = 0;
+			private var index = 0
 
 			override fun hasNext(): Boolean = index < length
 

@@ -25,7 +25,7 @@ open class KObject constructor(val pointer: CPointer<GObject>) {
 
 
 	@Target(AnnotationTarget.VALUE_PARAMETER)
-	annotation class Property()
+	annotation class Property
 
 
 	companion object {

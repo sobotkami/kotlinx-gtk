@@ -9,5 +9,4 @@ import kotlinx.cinterop.CPointer
  */
 class PixbufAnimation(
 	 val pixBufAnimationPointer: CPointer<GdkPixbufAnimation>
-) {
-}
+)

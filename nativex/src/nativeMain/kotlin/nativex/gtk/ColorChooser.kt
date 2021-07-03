@@ -12,26 +12,26 @@ import nativex.gtk.common.enums.Orientation
  * 16 / 03 / 2021
  */
 interface ColorChooser {
-	val colorChooserPointer: nativex.PointerHolder<GtkColorChooser>
+	val colorChooserPointer: CPointer<GtkColorChooser>
 
 	var rGBA: RGBA
 		get() = memScoped {
 			val v = cValue<GdkRGBA>()
-			gtk_color_chooser_get_rgba(colorChooserPointer.ptr, v)
+			gtk_color_chooser_get_rgba(colorChooserPointer, v)
 			RGBA(v.ptr)
 		}
 		set(value) {
 			gtk_color_chooser_set_rgba(
-				colorChooserPointer.ptr,
+				colorChooserPointer,
 				value.rgbaPointer
 			)
 		}
 
 	var useAlpha: Boolean
-		get() = gtk_color_chooser_get_use_alpha(colorChooserPointer.ptr)
+		get() = gtk_color_chooser_get_use_alpha(colorChooserPointer)
 			.bool
 		set(value) = gtk_color_chooser_set_use_alpha(
-			colorChooserPointer.ptr,
+			colorChooserPointer,
 			value.gtk
 		)
 
@@ -43,7 +43,7 @@ interface ColorChooser {
 		colors: RGBA
 	) {
 		gtk_color_chooser_add_palette(
-			colorChooserPointer.ptr,
+			colorChooserPointer,
 			orientation.gtk,
 			colorsPerLine,
 			totalColors,

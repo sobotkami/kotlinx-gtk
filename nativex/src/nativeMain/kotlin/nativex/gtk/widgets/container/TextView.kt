@@ -12,7 +12,6 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.PointerHolder
 import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
@@ -39,8 +38,8 @@ class TextView(
 		)!!.reinterpret()
 	)
 
-	override val scrollablePointer: PointerHolder<GtkScrollable>
-		get() = PointerHolder(textViewPointer.reinterpret())
+	override val scrollablePointer: CPointer<GtkScrollable>
+		get() = textViewPointer.reinterpret()
 
 
 	var buffer: TextBuffer?

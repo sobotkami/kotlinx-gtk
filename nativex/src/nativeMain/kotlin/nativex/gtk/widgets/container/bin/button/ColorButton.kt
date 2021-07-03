@@ -19,8 +19,8 @@ class ColorButton(
 	 val colorButtonPointer: CPointer<GtkColorButton>
 ) : Button(colorButtonPointer.reinterpret()), ColorChooser {
 
-	override val colorChooserPointer: nativex.PointerHolder<GtkColorChooser> by lazy {
-		nativex.PointerHolder(colorButtonPointer.reinterpret())
+	override val colorChooserPointer: CPointer<GtkColorChooser> by lazy {
+		colorButtonPointer.reinterpret()
 	}
 
 	@ExperimentalCoroutinesApi

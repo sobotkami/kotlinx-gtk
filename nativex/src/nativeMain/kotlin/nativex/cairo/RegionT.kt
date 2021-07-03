@@ -9,5 +9,4 @@ import kotlinx.cinterop.CPointer
  */
 class RegionT(
   val pointer: CPointer<cairo_region_t>
-) {
-}
+)
