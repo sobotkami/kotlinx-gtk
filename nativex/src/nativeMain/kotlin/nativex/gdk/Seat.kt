@@ -14,8 +14,8 @@ import nativex.gtk.asKSequence
  * @see <a href="https://developer.gnome.org/gdk3/stable/GdkSeat.html">
  *     GdkSeat</a>
  */
-class Seat internal constructor(
-	internal val seatPointer: CPointer<GdkSeat>
+class Seat(
+	 val seatPointer: CPointer<GdkSeat>
 ) {
 
 	/**
@@ -49,7 +49,7 @@ class Seat internal constructor(
 	val toolRemovedSignal:Flow<Unit> = TODO("tool-removed")
 
 
-	enum class Capabilities(val key: Int, internal val gdk: GdkSeatCapabilities) {
+	enum class Capabilities(val key: Int,  val gdk: GdkSeatCapabilities) {
 		NONE(0, GDK_SEAT_CAPABILITY_NONE),
 		POINTER(1, GDK_SEAT_CAPABILITY_POINTER),
 		TOUCH(2, GDK_SEAT_CAPABILITY_TOUCH),
@@ -60,15 +60,15 @@ class Seat internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkSeatCapabilities) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkSeatCapabilities) = values().find { it.gdk == gdk }
 		}
 	}
 
 	companion object {
-		internal inline fun CPointer<GdkSeat>?.wrap() =
+		 inline fun CPointer<GdkSeat>?.wrap() =
 			this?.let { Seat(it) }
 
-		internal inline fun CPointer<GdkSeat>.wrap() =
+		 inline fun CPointer<GdkSeat>.wrap() =
 			Seat(this)
 	}
 }

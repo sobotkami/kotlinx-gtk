@@ -23,7 +23,7 @@ import nativex.gtk.widgets.container.bin.Bin
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPopover.html">GtkPopover</a>
  */
 open class Popover(
-	internal val popoverPointer: CPointer<GtkPopover>
+	 val popoverPointer: CPointer<GtkPopover>
 ) : Bin(popoverPointer.reinterpret()) {
 
 	/**
@@ -149,8 +149,8 @@ open class Popover(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPopoverMenu.html">GtkPopoverMenu</a>
 	 */
-	class Menu internal constructor(
-		internal val popoverMenuPointer: CPointer<GtkPopoverMenu>
+	class Menu(
+		 val popoverMenuPointer: CPointer<GtkPopoverMenu>
 	) : Popover(popoverMenuPointer.reinterpret()) {
 
 		/**
@@ -174,7 +174,7 @@ open class Popover(
 	 */
 	enum class Constraint(
 		val key: Int,
-		internal val gtk: GtkPopoverConstraint
+		 val gtk: GtkPopoverConstraint
 	) {
 		/** Don't constrain the popover position beyond what is imposed by the implementation */
 		NONE(0, GTK_POPOVER_CONSTRAINT_NONE),

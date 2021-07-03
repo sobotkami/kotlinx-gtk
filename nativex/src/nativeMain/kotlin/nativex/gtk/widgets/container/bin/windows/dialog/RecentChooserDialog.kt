@@ -12,9 +12,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  *
  * TODO GtkRecentManager
  */
-class RecentChooserDialog internal constructor(
+class RecentChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkRecentChooserDialog>
+	 val aboutDialogPointer: CPointer<GtkRecentChooserDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
 	constructor(

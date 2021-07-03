@@ -14,7 +14,7 @@ import nativex.gtk.gtk
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEventBox.html">GtkEventBox</a>
  */
 class EventBox(
-	internal val eventBoxPointer: CPointer<GtkEventBox>
+	 val eventBoxPointer: CPointer<GtkEventBox>
 ) : Bin(eventBoxPointer.reinterpret()) {
 
 	/**

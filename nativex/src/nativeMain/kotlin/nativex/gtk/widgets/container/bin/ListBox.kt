@@ -18,8 +18,8 @@ import nativex.gtk.widgets.Widget
  * 13 / 03 / 2021
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html">GtkListBox</a>
  */
-class ListBox internal constructor(
-	internal val listBoxPointer: CPointer<GtkListBox>
+class ListBox(
+	 val listBoxPointer: CPointer<GtkListBox>
 ) : Bin(listBoxPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-new">gtk_list_box_new</a>
@@ -227,8 +227,8 @@ class ListBox internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-row-new">GtkListBoxRow</a>
 	 */
-	class Row internal constructor(
-		internal val rowPointer: CPointer<GtkListBoxRow>
+	class Row(
+		 val rowPointer: CPointer<GtkListBoxRow>
 	) : Bin(rowPointer.reinterpret()) {
 		/**
 		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-row-new">gtk_list_box_row_new</a>
@@ -319,32 +319,32 @@ class ListBox internal constructor(
 	val activateSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE)
 
 	companion object {
-		internal val staticRowEventCallback: GCallback =
+		 val staticRowEventCallback: GCallback =
 			staticCFunction { _: CPointer<GtkListBox>, row: CPointer<GtkListBoxRow>, data: gpointer ->
 				data.asStableRef<(Row)->Unit>().get().invoke(Row(row))
 				Unit
 			}.reinterpret()
 
-		internal val staticListBoxFilterFunction: GtkListBoxFilterFunc = staticCFunction { row, data ->
+		 val staticListBoxFilterFunction: GtkListBoxFilterFunc = staticCFunction { row, data ->
 			data?.asStableRef<ListBoxFilterFunction>()?.get()?.invoke(Row(row!!))?.gtk ?: 0
 		}
 
-		internal val staticListBoxForEachFunction: GtkListBoxForeachFunc = staticCFunction { _, row, data ->
+		 val staticListBoxForEachFunction: GtkListBoxForeachFunc = staticCFunction { _, row, data ->
 			data?.asStableRef<ListBoxForEachFunction>()?.get()?.invoke(Row(row!!))
 			Unit
 		}
 
-		internal val staticListBoxSortFunction: GtkListBoxSortFunc = staticCFunction { row1, row2, data ->
+		 val staticListBoxSortFunction: GtkListBoxSortFunc = staticCFunction { row1, row2, data ->
 			data?.asStableRef<ListBoxSortFunction>()?.get()?.invoke(Row(row1!!), Row(row2!!)) ?: 0
 		}
 
-		internal val staticListBoxUpdateHeaderFunction: GtkListBoxUpdateHeaderFunc =
+		 val staticListBoxUpdateHeaderFunction: GtkListBoxUpdateHeaderFunc =
 			staticCFunction { row, before, data ->
 				data?.asStableRef<ListBoxUpdateHeaderFunction>()?.get()?.invoke(Row(row!!), Row(before!!))
 				Unit
 			}
 
-		internal val staticListBoxCreateWidgetFunction: GtkListBoxCreateWidgetFunc = staticCFunction { item, data ->
+		 val staticListBoxCreateWidgetFunction: GtkListBoxCreateWidgetFunc = staticCFunction { item, data ->
 			data?.asStableRef<ListBoxCreateWidgetFunction>()?.get()
 				?.invoke(KObject(item!!.reinterpret()))?.widgetPointer
 		}

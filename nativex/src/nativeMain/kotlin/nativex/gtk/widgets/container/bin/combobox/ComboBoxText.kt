@@ -4,8 +4,8 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 
-class ComboBoxText internal constructor(
-	internal val comboBoxTextPointer: CPointer<GtkComboBoxText>
+class ComboBoxText(
+	 val comboBoxTextPointer: CPointer<GtkComboBoxText>
 ) :ComboBox(comboBoxTextPointer.reinterpret()){
 	constructor(withEntry: Boolean = false) : this(
 		if (withEntry) {

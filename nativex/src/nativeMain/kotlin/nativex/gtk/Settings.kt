@@ -8,8 +8,8 @@ import kotlinx.cinterop.reinterpret
 import nativex.gdk.Screen
 import nativex.gio.KObject
 
-class Settings internal constructor(
-	internal val settingsPointer: CPointer<GtkSettings>
+class Settings(
+	 val settingsPointer: CPointer<GtkSettings>
 ) : KObject(settingsPointer.reinterpret()) {
 	companion object {
 		/**
@@ -26,10 +26,10 @@ class Settings internal constructor(
 		fun getForScreen(screen: Screen): Settings =
 			gtk_settings_get_for_screen(screen.screenPointer)!!.wrap()
 
-		internal inline fun CPointer<GtkSettings>?.wrap() =
+		 inline fun CPointer<GtkSettings>?.wrap() =
 			this?.let { Settings(it) }
 
-		internal inline fun CPointer<GtkSettings>.wrap() =
+		 inline fun CPointer<GtkSettings>.wrap() =
 			Settings(this)
 	}
 }

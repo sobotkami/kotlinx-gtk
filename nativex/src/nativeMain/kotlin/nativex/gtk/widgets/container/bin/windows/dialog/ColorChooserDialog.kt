@@ -18,9 +18,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class ColorChooserDialog internal constructor(
+class ColorChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkDialog>
+	 val aboutDialogPointer: CPointer<GtkDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()), ColorChooser {
 	constructor(window: Window?, title: String?) : this(
 		gtk_color_chooser_dialog_new(

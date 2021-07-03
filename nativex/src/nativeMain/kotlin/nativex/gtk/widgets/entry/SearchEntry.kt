@@ -15,8 +15,8 @@ import nativex.gtk.Signals
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class SearchEntry internal constructor(
-	internal val searchEntryPointer: CPointer<GtkSearchEntry>
+class SearchEntry(
+	 val searchEntryPointer: CPointer<GtkSearchEntry>
 ) : Entry(searchEntryPointer.reinterpret()) {
 	constructor() : this(gtk_search_entry_new()!!.reinterpret())
 

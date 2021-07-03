@@ -25,7 +25,7 @@ import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html">GtkApplication</a>
  */
-class Application internal constructor(
+class Application(
 	val applicationPointer: CPointer<GtkApplication>
 ) : Application(applicationPointer.reinterpret()) {
 	/**
@@ -209,13 +209,13 @@ class Application internal constructor(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 			
-			internal fun valueOf(gtk: GtkApplicationInhibitFlags) =
+			 fun valueOf(gtk: GtkApplicationInhibitFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
-		internal val staticWindowAddedCallback: GCallback =
+		 val staticWindowAddedCallback: GCallback =
 			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
 				data?.asStableRef<(Window) -> Unit>()
 					?.get()
@@ -223,7 +223,7 @@ class Application internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticWindowRemovedCallback: GCallback =
+		 val staticWindowRemovedCallback: GCallback =
 			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
 				data?.asStableRef<(Window) -> Unit>()
 					?.get()

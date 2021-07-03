@@ -7,7 +7,7 @@ import gtk.GtkScrollStep.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class ScrollStep(val key: Int, internal val gtk: GtkScrollStep) {
+enum class ScrollStep(val key: Int,  val gtk: GtkScrollStep) {
 	STEPS(0, GTK_SCROLL_STEPS),
 	PAGES(1, GTK_SCROLL_PAGES),
 	ENDS(2, GTK_SCROLL_ENDS),
@@ -19,7 +19,7 @@ enum class ScrollStep(val key: Int, internal val gtk: GtkScrollStep) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkScrollStep) =
+		 fun valueOf(gtk: GtkScrollStep) =
 			values().find { it.gtk == gtk }
 	}
 }

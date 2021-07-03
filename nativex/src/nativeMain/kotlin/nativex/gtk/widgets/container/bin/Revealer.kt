@@ -14,7 +14,7 @@ import nativex.gtk.gtk
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRevealer.html">GtkRevealer</a>
  */
 class Revealer(
-	internal val revealerPointer: CPointer<GtkRevealer>
+	 val revealerPointer: CPointer<GtkRevealer>
 ) : Bin(revealerPointer.reinterpret()) {
 
 	/**
@@ -70,7 +70,7 @@ class Revealer(
 	 */
 	enum class TransitionType(
 		val key: Int,
-		internal val gtk: GtkRevealerTransitionType
+		 val gtk: GtkRevealerTransitionType
 	) {
 		NONE(0, GTK_REVEALER_TRANSITION_TYPE_NONE),
 		CROSSFADE(1, GTK_REVEALER_TRANSITION_TYPE_CROSSFADE),
@@ -84,7 +84,7 @@ class Revealer(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkRevealerTransitionType) =
+			 fun valueOf(gtk: GtkRevealerTransitionType) =
 				values().find { it.gtk == gtk }
 		}
 	}

@@ -237,7 +237,7 @@ open class Application(
 
 	enum class Flags constructor(
 		val key: Int,
-		internal val gtk: GApplicationFlags
+		 val gtk: GApplicationFlags
 	) {
 		NONE(0, G_APPLICATION_FLAGS_NONE),
 		IS_SERVICE(1, G_APPLICATION_IS_SERVICE),
@@ -254,7 +254,7 @@ open class Application(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GApplicationFlags) =
+			 fun valueOf(gtk: GApplicationFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
@@ -266,10 +266,10 @@ open class Application(
 		fun isIdValid(applicationID: String): Boolean =
 			g_application_id_is_valid(applicationID).bool
 
-		internal inline fun CPointer<GApplication>?.wrap() =
+		 inline fun CPointer<GApplication>?.wrap() =
 			this?.let { Application(it) }
 
-		internal inline fun CPointer<GApplication>.wrap() =
+		 inline fun CPointer<GApplication>.wrap() =
 			Application(this)
 
 

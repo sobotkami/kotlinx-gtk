@@ -12,7 +12,7 @@ import nativex.gtk.common.enums.Orientation.VERTICAL
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-open class Separator internal constructor(
+open class Separator(
 	separatorPointer: CPointer<GtkSeparator>
 ) : Widget(separatorPointer.reinterpret()) {
 	constructor(orientation: Orientation) : this(gtk_separator_new(orientation.gtk)!!.reinterpret())

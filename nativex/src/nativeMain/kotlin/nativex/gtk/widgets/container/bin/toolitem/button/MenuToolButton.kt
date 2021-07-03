@@ -10,9 +10,9 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-class MenuToolButton internal constructor(
+class MenuToolButton(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val menuToolButton: CPointer<GtkMenuToolButton>
+	 val menuToolButton: CPointer<GtkMenuToolButton>
 ) : ToolButton(menuToolButton.reinterpret()) {
 
 	var menu: Widget?

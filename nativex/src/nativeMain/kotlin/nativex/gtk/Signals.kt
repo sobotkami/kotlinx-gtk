@@ -235,7 +235,7 @@ object Signals {
  * @param callbackWrapper Passed as the data parameter to `g_signal_connect_data`. Invoked by [handler]
  * @param flags Flags
  */
-internal fun VoidPointer.connectSignal(
+ fun VoidPointer.connectSignal(
 	signal: String,
 	handler: GCallback = staticNoArgGCallback,
 	callbackWrapper: COpaquePointer? = null,
@@ -257,7 +257,7 @@ internal fun VoidPointer.connectSignal(
 /**
  * [GCallback] that calls a function with only no arguments
  */
-internal val staticNoArgGCallback: GCallback =
+ val staticNoArgGCallback: GCallback =
 	staticCFunction { _: gpointer?, data: gpointer? ->
 		data?.asStableRef<() -> Unit>()?.get()?.invoke()
 		Unit

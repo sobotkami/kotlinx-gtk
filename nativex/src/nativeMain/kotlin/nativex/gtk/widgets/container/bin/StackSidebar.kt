@@ -14,7 +14,7 @@ import nativex.gtk.widgets.container.Stack
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStackSidebar.html">GtkStackSiderbar</a>
  */
 class StackSidebar(
-	internal val stackSidebarPointer: CPointer<GtkStackSidebar>
+	 val stackSidebarPointer: CPointer<GtkStackSidebar>
 ) : Bin(stackSidebarPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStackSidebar.html#gtk-stack-sidebar-new">gtk_stack_sidebar_new</a>

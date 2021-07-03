@@ -24,8 +24,8 @@ import nativex.gtk.widgets.container.bin.Bin
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html">GtkScrolledWindow</a>
  */
-class ScrolledWindow internal constructor(
-	internal val scrolledWindowPointer: CPointer<GtkScrolledWindow>
+class ScrolledWindow(
+	 val scrolledWindowPointer: CPointer<GtkScrolledWindow>
 ) : Bin(scrolledWindowPointer.reinterpret()) {
 
 	/**
@@ -331,7 +331,7 @@ class ScrolledWindow internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkPolicyType) =
+			 fun valueOf(gtk: GtkPolicyType) =
 				values().find { it.gtk == gtk }
 		}
 	}
@@ -357,7 +357,7 @@ class ScrolledWindow internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkCornerType) =
+			 fun valueOf(gtk: GtkCornerType) =
 				values().find { it.gtk == gtk }
 		}
 	}

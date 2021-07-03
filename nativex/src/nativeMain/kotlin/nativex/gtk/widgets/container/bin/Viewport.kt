@@ -15,7 +15,7 @@ import nativex.gtk.common.enums.ShadowType
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkViewport.html">GtkViewport</a>
  */
 class Viewport(
-	internal val viewPortPointer: CPointer<GtkViewport>
+	 val viewPortPointer: CPointer<GtkViewport>
 ) : Bin(viewPortPointer.reinterpret()), Scrollable {
 	override val scrollablePointer: nativex.PointerHolder<GtkScrollable>
 		get() = nativex.PointerHolder(viewPortPointer.reinterpret())

@@ -13,8 +13,8 @@ import nativex.glib.KGType.Companion.toCArray
 import nativex.glib.KGValue
 import nativex.gtk.TreeModel.TreeIter
 
-class TreeStore internal constructor(
-	internal val treeStorePointer: CPointer<GtkTreeStore>
+class TreeStore(
+	 val treeStorePointer: CPointer<GtkTreeStore>
 ) : KObject(treeStorePointer.reinterpret()) {
 	constructor(vararg types: KGType) : this(
 		memScoped {

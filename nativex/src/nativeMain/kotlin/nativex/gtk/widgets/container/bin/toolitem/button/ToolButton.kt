@@ -14,9 +14,9 @@ import nativex.gtk.widgets.container.bin.toolitem.ToolItem
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-open class ToolButton internal constructor(
+open class ToolButton(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val toolButtonPointer: CPointer<GtkToolButton>
+	 val toolButtonPointer: CPointer<GtkToolButton>
 ) : ToolItem(toolButtonPointer.reinterpret()) {
 
 	var label: String?

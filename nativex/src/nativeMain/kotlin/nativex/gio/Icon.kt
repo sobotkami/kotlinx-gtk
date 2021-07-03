@@ -45,10 +45,10 @@ interface Icon {
 class ImplIcon(override val pointer: CPointer<GIcon>) : Icon {
 
 	companion object {
-		internal inline fun CPointer<GIcon>?.wrap() =
+		 inline fun CPointer<GIcon>?.wrap() =
 			this?.let { ImplIcon(it) }
 
-		internal inline fun CPointer<GIcon>.wrap() =
+		 inline fun CPointer<GIcon>.wrap() =
 			ImplIcon(this)
 	}
 }

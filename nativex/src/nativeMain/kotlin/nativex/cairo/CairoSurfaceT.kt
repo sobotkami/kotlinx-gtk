@@ -9,7 +9,7 @@ import kotlinx.cinterop.CPointer
  * TODO
  * @see <a href="https://developer.gnome.org/cairo/stable/cairo-cairo-surface-t.html">cairo_surface_t</a>
  */
-class CairoSurfaceT internal constructor(
-	internal val cPointer: CPointer<cairo_surface_t>
+class CairoSurfaceT(
+	 val cPointer: CPointer<cairo_surface_t>
 ) {
 }

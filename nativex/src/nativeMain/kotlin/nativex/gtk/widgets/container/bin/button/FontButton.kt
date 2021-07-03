@@ -11,8 +11,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class FontButton internal constructor(
-	internal val fontButtonPointer: CPointer<GtkFontButton>
+class FontButton(
+	 val fontButtonPointer: CPointer<GtkFontButton>
 ) : Button(fontButtonPointer.reinterpret()) {
 	constructor() : this(gtk_font_button_new()!!.reinterpret())
 	constructor(fontName: String) : this(gtk_font_button_new_with_font(fontName)!!.reinterpret())

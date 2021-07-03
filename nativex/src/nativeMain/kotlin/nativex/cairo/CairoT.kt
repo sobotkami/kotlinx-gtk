@@ -10,7 +10,7 @@ import kotlinx.cinterop.CPointer
  *
  * @see <a href="https://developer.gnome.org/cairo/stable/cairo-cairo-t.html">cario_t</a>
  */
-class CairoT internal constructor(
-	internal val pointer: CPointer<cairo_t>
+class CairoT(
+	 val pointer: CPointer<cairo_t>
 ) {
 }

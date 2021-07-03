@@ -8,8 +8,8 @@ import kotlinx.cinterop.pointed
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class RGBA internal constructor(
-	internal val rgbaPointer: CPointer<GdkRGBA>
+class RGBA(
+	 val rgbaPointer: CPointer<GdkRGBA>
 ) {
 	var red: Double
 		get() = rgbaPointer.pointed.red

@@ -9,8 +9,8 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 19 / 03 / 2021
  */
-class TextBuffer internal constructor(
-	internal val textBufferPointer: CPointer<GtkTextBuffer>
+class TextBuffer(
+	 val textBufferPointer: CPointer<GtkTextBuffer>
 ) {
 	constructor(textTagTable: TextTagTable) : this(
 		gtk_text_buffer_new(

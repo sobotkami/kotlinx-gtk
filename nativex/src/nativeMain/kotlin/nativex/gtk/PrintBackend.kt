@@ -11,15 +11,15 @@ import nativex.gio.KObject
  *
  * @see <a href=""></a>
  */
-class PrintBackend internal constructor(
-	internal val printBackendPointer: CPointer<GtkPrintBackend>
+class PrintBackend(
+	 val printBackendPointer: CPointer<GtkPrintBackend>
 ) : KObject(printBackendPointer.reinterpret()) {
 
 	companion object{
-		internal inline fun CPointer<GtkPrintBackend>?.wrap() =
+		 inline fun CPointer<GtkPrintBackend>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkPrintBackend>.wrap() =
+		 inline fun CPointer<GtkPrintBackend>.wrap() =
 			PrintBackend(this)
 	}
 }

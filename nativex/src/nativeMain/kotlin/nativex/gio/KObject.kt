@@ -29,10 +29,10 @@ open class KObject constructor(val pointer: CPointer<GObject>) {
 
 
 	companion object {
-		internal fun CPointer<GObject>?.wrap() =
+		 fun CPointer<GObject>?.wrap() =
 			this?.wrap()
 
-		internal fun CPointer<GObject>.wrap() =
+		 fun CPointer<GObject>.wrap() =
 			KObject(this)
 	}
 

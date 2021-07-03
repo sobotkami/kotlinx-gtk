@@ -15,8 +15,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class ToggleButton internal constructor(
-	internal val toggleButtonPointer: CPointer<GtkToggleButton>
+class ToggleButton(
+	 val toggleButtonPointer: CPointer<GtkToggleButton>
 ) : Button(toggleButtonPointer.reinterpret()) {
 	constructor() : this(
 		gtk_toggle_button_new()!!.reinterpret()

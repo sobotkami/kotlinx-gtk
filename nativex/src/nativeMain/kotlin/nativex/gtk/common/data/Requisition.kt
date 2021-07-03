@@ -14,8 +14,8 @@ import nativex.gdk.Window
  *
  * After being used, should be closed
  */
-class Requisition internal constructor(
-	internal val requisitionPointer: CPointer<GtkRequisition>
+class Requisition(
+	 val requisitionPointer: CPointer<GtkRequisition>
 ) : Closeable {
 	constructor() : this(gtk_requisition_new()!!)
 
@@ -58,10 +58,10 @@ class Requisition internal constructor(
 	}
 
 	companion object {
-		internal inline fun CPointer<GtkRequisition>?.wrap() =
+		 inline fun CPointer<GtkRequisition>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkRequisition>.wrap() =
+		 inline fun CPointer<GtkRequisition>.wrap() =
 			Requisition(this)
 
 	}

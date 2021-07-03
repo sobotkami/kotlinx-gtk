@@ -7,7 +7,7 @@ import gtk.GtkShadowType.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class ShadowType(val key: Int, internal val gtk: GtkShadowType) {
+enum class ShadowType(val key: Int,  val gtk: GtkShadowType) {
 	NONE(0, GTK_SHADOW_NONE),
 	IN(1, GTK_SHADOW_IN),
 	OUT(2, GTK_SHADOW_OUT),
@@ -18,7 +18,7 @@ enum class ShadowType(val key: Int, internal val gtk: GtkShadowType) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkShadowType) =
+		 fun valueOf(gtk: GtkShadowType) =
 			values().find { it.gtk == gtk }
 	}
 }

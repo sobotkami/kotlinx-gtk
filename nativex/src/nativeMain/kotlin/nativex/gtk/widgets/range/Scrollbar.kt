@@ -11,7 +11,7 @@ import nativex.gtk.common.enums.Orientation
  * kotlinx-gtk
  * 14 / 03 / 2021
  */
-class Scrollbar internal constructor(
+class Scrollbar(
 	scrollBar: CPointer<GtkScrollbar>
 ) : Range(scrollBar.reinterpret()) {
 

@@ -10,8 +10,8 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-class SizeGroup internal constructor(
-	internal val sizeGroupPointer: CPointer<GtkSizeGroup>
+class SizeGroup(
+	 val sizeGroupPointer: CPointer<GtkSizeGroup>
 ) {
 	constructor(mode: Mode) : this(gtk_size_group_new(mode.gtk)!!.reinterpret())
 
@@ -37,7 +37,7 @@ class SizeGroup internal constructor(
 			)
 		}
 
-	enum class Mode(val key: Int, internal val gtk: GtkSizeGroupMode) {
+	enum class Mode(val key: Int,  val gtk: GtkSizeGroupMode) {
 		NONE(0, GTK_SIZE_GROUP_NONE),
 		HORIZONTAL(1, GTK_SIZE_GROUP_HORIZONTAL),
 		VERTICAL(2, GTK_SIZE_GROUP_VERTICAL),
@@ -47,7 +47,7 @@ class SizeGroup internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkSizeGroupMode) =
+			 fun valueOf(gtk: GtkSizeGroupMode) =
 				values().find { it.gtk == gtk }
 		}
 	}

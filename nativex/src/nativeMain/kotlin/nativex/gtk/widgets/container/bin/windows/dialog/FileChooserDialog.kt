@@ -12,9 +12,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class FileChooserDialog internal constructor(
+class FileChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val fileChooserDialogPointer: CPointer<GtkFileChooserDialog>
+	 val fileChooserDialogPointer: CPointer<GtkFileChooserDialog>
 ) : Dialog(fileChooserDialogPointer.reinterpret()), FileChooser {
 	override val fileChooserPointer: PointerHolder<GtkFileChooser> by lazy { PointerHolder(fileChooserDialogPointer.reinterpret()) }
 

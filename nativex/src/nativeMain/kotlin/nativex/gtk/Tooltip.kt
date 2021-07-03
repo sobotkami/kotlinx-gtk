@@ -9,14 +9,14 @@ import nativex.gio.KObject
  * kotlinx-gtk
  * 09 / 06 / 2021
  */
-class Tooltip internal constructor(
-	internal val tooltipPointer: CPointer<GtkTooltip>
+class Tooltip(
+	 val tooltipPointer: CPointer<GtkTooltip>
 ) : KObject(tooltipPointer.reinterpret()) {
 	companion object{
-		internal inline fun CPointer<GtkTooltip>?.wrap() =
+		 inline fun CPointer<GtkTooltip>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkTooltip>.wrap() =
+		 inline fun CPointer<GtkTooltip>.wrap() =
 			Tooltip(this)
 	}
 }

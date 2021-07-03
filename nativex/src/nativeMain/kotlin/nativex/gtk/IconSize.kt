@@ -7,7 +7,7 @@ import gtk.GtkIconSize.*
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-enum class IconSize(val key: Int, internal val gtk: GtkIconSize) {
+enum class IconSize(val key: Int,  val gtk: GtkIconSize) {
 	INVALID(0, GTK_ICON_SIZE_INVALID),
 	MENU(1, GTK_ICON_SIZE_MENU),
 	SMALL_TOOLBAR(2, GTK_ICON_SIZE_SMALL_TOOLBAR),
@@ -20,7 +20,7 @@ enum class IconSize(val key: Int, internal val gtk: GtkIconSize) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkIconSize) =
+		 fun valueOf(gtk: GtkIconSize) =
 			values().find { it.gtk == gtk }
 	}
 }

@@ -10,9 +10,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class AppChooserDialog internal constructor(
+class AppChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkAppChooserDialog>
+	 val aboutDialogPointer: CPointer<GtkAppChooserDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 	constructor(window: Window, dialogFlags: Flags, file: File) : this(
 		gtk_app_chooser_dialog_new(

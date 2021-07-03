@@ -11,8 +11,8 @@ import nativex.gtk.IconSize
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class Image internal constructor(
-	internal val imagePointer: CPointer<GtkImage>
+class Image(
+	 val imagePointer: CPointer<GtkImage>
 ) : Misc(imagePointer.reinterpret()) {
 
 	//TODO GIcon for this constructor : gtk_image_new_from_gicon

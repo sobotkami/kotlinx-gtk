@@ -11,7 +11,7 @@ import gtk.gpointer
 
 @Suppress("FunctionName")
 
-internal fun g_signal_connect(
+ fun g_signal_connect(
 	instance: gpointer,
 	detailedSignal: String,
 	handler: GCallback,

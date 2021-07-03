@@ -16,22 +16,22 @@ import nativex.gtk.TreeModel
 import nativex.gtk.bool
 import nativex.gtk.gtk
 
-open class CellRenderer internal constructor(
-	internal val cellRendererPointer: CPointer<GtkCellRenderer>
+open class CellRenderer(
+	 val cellRendererPointer: CPointer<GtkCellRenderer>
 ) : KObject(cellRendererPointer.reinterpret()) {
 
 
 	companion object {
-		internal inline fun CPointer<GtkCellRenderer>?.wrap() =
+		 inline fun CPointer<GtkCellRenderer>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkCellRenderer>.wrap() =
+		 inline fun CPointer<GtkCellRenderer>.wrap() =
 			CellRenderer(this)
 	}
 
 
 	class Accel() : CellRenderer(gtk_cell_renderer_accel_new()!!) {
-		enum class Mode(val key: Int, internal val gtk: GtkCellRendererAccelMode) {
+		enum class Mode(val key: Int,  val gtk: GtkCellRendererAccelMode) {
 			GTK(0, GTK_CELL_RENDERER_ACCEL_MODE_GTK),
 			OTHER(1, GTK_CELL_RENDERER_ACCEL_MODE_OTHER),
 			MODIFIER_TAP(2, GTK_CELL_RENDERER_ACCEL_MODE_MODIFIER_TAP);
@@ -83,7 +83,7 @@ open class CellRenderer internal constructor(
 	}
 
 	class Toggle() : CellRenderer(gtk_cell_renderer_toggle_new()!!) {
-		internal val cellRendererTogglePointer: CPointer<GtkCellRendererToggle> by lazy {
+		 val cellRendererTogglePointer: CPointer<GtkCellRendererToggle> by lazy {
 			cellRendererPointer.reinterpret()
 		}
 

@@ -19,8 +19,8 @@ import nativex.gtk.widgets.Widget
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html">GtkNotebook</a>
  */
-class Notebook internal constructor(
-	internal val noteBookPointer: CPointer<GtkNotebook>
+class Notebook(
+	 val noteBookPointer: CPointer<GtkNotebook>
 ) : Container(noteBookPointer.reinterpret()) {
 
 	/**
@@ -512,7 +512,7 @@ class Notebook internal constructor(
 	) {
 		companion object {
 
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageAddedEvent) -> Unit>()
 						?.get()
@@ -538,7 +538,7 @@ class Notebook internal constructor(
 	) {
 		companion object {
 
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, widget: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageRemovedEvent) -> Unit>()
 						?.get()
@@ -564,7 +564,7 @@ class Notebook internal constructor(
 	) {
 		companion object {
 
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageReorderedEvent) -> Unit>()
 						?.get()
@@ -590,7 +590,7 @@ class Notebook internal constructor(
 	) {
 		companion object {
 
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, page: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(SwitchPageEvent) -> Unit>()
 						?.get()
@@ -605,26 +605,26 @@ class Notebook internal constructor(
 		}
 	}
 
-	enum class Tab(val key: Int, internal val gtk: GtkNotebookTab) {
+	enum class Tab(val key: Int,  val gtk: GtkNotebookTab) {
 		FIRST(0, GtkNotebookTab.GTK_NOTEBOOK_TAB_FIRST),
 		LAST(1, GtkNotebookTab.GTK_NOTEBOOK_TAB_LAST);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gtk: GtkNotebookTab) = values().find { it.gtk == gtk }
+			 fun valueOf(gtk: GtkNotebookTab) = values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
 
-		internal val staticChangeCurrentPageFunction: GCallback =
+		 val staticChangeCurrentPageFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 				data?.asStableRef<ChangeCurrentPageFunction>()
 					?.get()
 					?.invoke(arg1).gtk
 			}.reinterpret()
 
-		internal val staticCreateWindowFunction: GCallback =
+		 val staticCreateWindowFunction: GCallback =
 			staticCFunction { _: gpointer,
 			                  page: CPointer<GtkWidget>,
 			                  x: Int,
@@ -634,21 +634,21 @@ class Notebook internal constructor(
 					?.invoke(Widget(page), x, y)?.widgetPointer
 			}.reinterpret()
 
-		internal val staticFocusTabFunction: GCallback =
+		 val staticFocusTabFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: GtkNotebookTab, data: gpointer? ->
 				data?.asStableRef<FocusTabFunction>()
 					?.get()
 					?.invoke(Tab.valueOf(arg1)!!).gtk
 			}.reinterpret()
 
-		internal val staticReorderTabFunction: GCallback =
+		 val staticReorderTabFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: GtkDirectionType, arg2: gboolean, data: gpointer? ->
 				data?.asStableRef<ReorderTabFunction>()
 					?.get()
 					?.invoke(DirectionType.valueOf(arg1)!!, arg2.bool).gtk
 			}.reinterpret()
 
-		internal val staticSelectPageFunction: GCallback =
+		 val staticSelectPageFunction: GCallback =
 			staticCFunction { _: gpointer?, arg2: gboolean, data: gpointer? ->
 				data?.asStableRef<SelectPageFunction>()
 					?.get()

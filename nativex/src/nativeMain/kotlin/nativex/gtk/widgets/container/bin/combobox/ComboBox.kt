@@ -15,7 +15,7 @@ import nativex.gtk.widgets.range.Range
  * 13 / 03 / 2021
  */
 open class ComboBox(
-	internal val comboBoxPointer: CPointer<GtkComboBox>
+	 val comboBoxPointer: CPointer<GtkComboBox>
 ) : Bin(comboBoxPointer.reinterpret()), CellLayout {
 	override val cellLayoutHolder: PointerHolder<GtkCellLayout> by lazy {
 		PointerHolder(comboBoxPointer.reinterpret())

@@ -16,12 +16,12 @@ import nativex.gio.KObject
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class Window internal constructor(
-	internal val windowPointer: CPointer<GdkWindow>
+class Window(
+	 val windowPointer: CPointer<GdkWindow>
 ) : KObject(windowPointer.reinterpret()) {
 
 
-	enum class Type(val key: Int, internal val gdk: GdkWindowType) {
+	enum class Type(val key: Int,  val gdk: GdkWindowType) {
 		ROOT(0, GDK_WINDOW_ROOT),
 		TOPLEVEL(1, GDK_WINDOW_TOPLEVEL),
 		CHILD(2, GDK_WINDOW_CHILD),
@@ -32,21 +32,21 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowType) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowType) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class WindowClass(val key: Int, internal val gdk: GdkWindowWindowClass) {
+	enum class WindowClass(val key: Int,  val gdk: GdkWindowWindowClass) {
 		OUTPUT(0, GDK_INPUT_OUTPUT),
 		ONLY(1, GDK_INPUT_ONLY);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowWindowClass) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowWindowClass) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class Hints(val key: Int, internal val gdk: GdkWindowHints) {
+	enum class Hints(val key: Int,  val gdk: GdkWindowHints) {
 		POS(0, GDK_HINT_POS),
 		MIN_SIZE(1, GDK_HINT_MIN_SIZE),
 		MAX_SIZE(2, GDK_HINT_MAX_SIZE),
@@ -59,11 +59,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowHints) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowHints) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class Gravity(val key: Int, internal val gdk: GdkGravity) {
+	enum class Gravity(val key: Int,  val gdk: GdkGravity) {
 		NORTH_WEST(0, GDK_GRAVITY_NORTH_WEST),
 		NORTH(1, GDK_GRAVITY_NORTH),
 		NORTH_EAST(2, GDK_GRAVITY_NORTH_EAST),
@@ -77,11 +77,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkGravity) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkGravity) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class AnchorHints(val key: Int, internal val gdk: GdkAnchorHints) {
+	enum class AnchorHints(val key: Int,  val gdk: GdkAnchorHints) {
 		FLIP_X(0, GDK_ANCHOR_FLIP_X),
 		FLIP_Y(1, GDK_ANCHOR_FLIP_Y),
 		SLIDE_X(2, GDK_ANCHOR_SLIDE_X),
@@ -94,11 +94,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkAnchorHints) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkAnchorHints) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class Edge(val key: Int, internal val gdk: GdkWindowEdge) {
+	enum class Edge(val key: Int,  val gdk: GdkWindowEdge) {
 		NORTH_WEST(0, GDK_WINDOW_EDGE_NORTH_WEST),
 		NORTH(1, GDK_WINDOW_EDGE_NORTH),
 		NORTH_EAST(2, GDK_WINDOW_EDGE_NORTH_EAST),
@@ -110,11 +110,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowEdge) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowEdge) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class TypeHint(val key: Int, internal val gdk: GdkWindowTypeHint) {
+	enum class TypeHint(val key: Int,  val gdk: GdkWindowTypeHint) {
 		NORMAL(0, GDK_WINDOW_TYPE_HINT_NORMAL),
 		DIALOG(1, GDK_WINDOW_TYPE_HINT_DIALOG),
 		MENU(2, GDK_WINDOW_TYPE_HINT_MENU),
@@ -132,11 +132,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowTypeHint) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowTypeHint) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class AttributesType(val key: Int, internal val gdk: GdkWindowAttributesType) {
+	enum class AttributesType(val key: Int,  val gdk: GdkWindowAttributesType) {
 		TITLE(0, GDK_WA_TITLE),
 		X(1, GDK_WA_X),
 		Y(2, GDK_WA_Y),
@@ -148,32 +148,32 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWindowAttributesType) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWindowAttributesType) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class FullscreenMode(val key: Int, internal val gdk: GdkFullscreenMode) {
+	enum class FullscreenMode(val key: Int,  val gdk: GdkFullscreenMode) {
 		ON_CURRENT_MONITOR(0, GDK_FULLSCREEN_ON_CURRENT_MONITOR),
 		ON_ALL_MONITORS(1, GDK_FULLSCREEN_ON_ALL_MONITORS);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkFullscreenMode) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkFullscreenMode) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class FilterReturn(val key: Int, internal val gdk: GdkFilterReturn) {
+	enum class FilterReturn(val key: Int,  val gdk: GdkFilterReturn) {
 		CONTINUE(0, GDK_FILTER_CONTINUE),
 		TRANSLATE(1, GDK_FILTER_TRANSLATE),
 		REMOVE(2, GDK_FILTER_REMOVE);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkFilterReturn) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkFilterReturn) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class ModifierType(val key: Int, internal val gdk: GdkModifierType) {
+	enum class ModifierType(val key: Int,  val gdk: GdkModifierType) {
 		SHIFT_MASK(0, GDK_SHIFT_MASK),
 		LOCK_MASK(1, GDK_LOCK_MASK),
 		CONTROL_MASK(2, GDK_CONTROL_MASK),
@@ -211,11 +211,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkModifierType) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkModifierType) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class ModifierIntent(val key: Int, internal val gdk: GdkModifierIntent) {
+	enum class ModifierIntent(val key: Int,  val gdk: GdkModifierIntent) {
 		PRIMARY_ACCELERATOR(0, GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR),
 		CONTEXT_MENU(1, GDK_MODIFIER_INTENT_CONTEXT_MENU),
 		EXTEND_SELECTION(2, GDK_MODIFIER_INTENT_EXTEND_SELECTION),
@@ -226,11 +226,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkModifierIntent) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkModifierIntent) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class WMDecoration(val key: Int, internal val gdk: GdkWMDecoration) {
+	enum class WMDecoration(val key: Int,  val gdk: GdkWMDecoration) {
 		ALL(0, GDK_DECOR_ALL),
 		BORDER(1, GDK_DECOR_BORDER),
 		RESIZEH(2, GDK_DECOR_RESIZEH),
@@ -241,11 +241,11 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWMDecoration) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWMDecoration) = values().find { it.gdk == gdk }
 		}
 	}
 
-	enum class WMFunction(val key: Int, internal val gdk: GdkWMFunction) {
+	enum class WMFunction(val key: Int,  val gdk: GdkWMFunction) {
 		ALL(0, GDK_FUNC_ALL),
 		RESIZE(1, GDK_FUNC_RESIZE),
 		MOVE(2, GDK_FUNC_MOVE),
@@ -255,16 +255,16 @@ class Window internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gdk: GdkWMFunction) = values().find { it.gdk == gdk }
+			 fun valueOf(gdk: GdkWMFunction) = values().find { it.gdk == gdk }
 		}
 	}
 
 
 	companion object {
-		internal inline fun CPointer<GdkWindow>?.wrap() =
+		 inline fun CPointer<GdkWindow>?.wrap() =
 			this?.let { Window(it) }
 
-		internal inline fun CPointer<GdkWindow>.wrap() =
+		 inline fun CPointer<GdkWindow>.wrap() =
 			Window(this)
 	}
 }

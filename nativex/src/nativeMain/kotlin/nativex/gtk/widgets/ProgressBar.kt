@@ -14,8 +14,8 @@ import nativex.pango.EllipsizeMode
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkProgressBar.html">
  *     GtkProgressBar</a>
  */
-class ProgressBar internal constructor(
-	internal val progressBarPointer: CPointer<GtkProgressBar>
+class ProgressBar(
+	 val progressBarPointer: CPointer<GtkProgressBar>
 ) : Widget(progressBarPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkProgressBar.html#gtk-progress-bar-get-fraction">

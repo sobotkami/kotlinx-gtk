@@ -15,8 +15,8 @@ import nativex.reinterpretOrNull
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-open class TreeModel internal constructor(
-	internal val treeModelPointer: CPointer<GtkTreeModel>
+open class TreeModel(
+	 val treeModelPointer: CPointer<GtkTreeModel>
 ) {
 	fun getPath(iter: TreeIter): TreePath =
 		TreePath(gtk_tree_model_get_path(treeModelPointer, iter.treeIterPointer)!!)
@@ -75,7 +75,7 @@ open class TreeModel internal constructor(
 		val iter: TreeIter,
 	) {
 		companion object {
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowChanged) -> Unit>()?.get()
 						?.invoke(
@@ -93,7 +93,7 @@ open class TreeModel internal constructor(
 		val path: TreePath
 	) {
 		companion object {
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, data: gpointer? ->
 					data?.asStableRef<(RowDeleted) -> Unit>()?.get()
 						?.invoke(
@@ -110,7 +110,7 @@ open class TreeModel internal constructor(
 		val iter: TreeIter
 	) {
 		companion object {
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowHasChildToggled) -> Unit>()
 						?.get()
@@ -130,7 +130,7 @@ open class TreeModel internal constructor(
 		val iter: TreeIter
 	) {
 		companion object {
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowInserted) -> Unit>()?.get()
 						?.invoke(
@@ -150,7 +150,7 @@ open class TreeModel internal constructor(
 		val newOrder: Sequence<Pair<Int, Int>>
 	) {
 		companion object {
-			internal val staticCallback: GCallback =
+			 val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, newOrder: gpointer, data: gpointer? ->
 					data?.asStableRef<(RowsReordered) -> Unit>()
 						?.get()
@@ -171,7 +171,7 @@ open class TreeModel internal constructor(
 		}
 	}
 
-	enum class Flags(val key: Int, internal val gtk: GtkTreeModelFlags) {
+	enum class Flags(val key: Int,  val gtk: GtkTreeModelFlags) {
 		ITERS_PERSIST(0, GTK_TREE_MODEL_ITERS_PERSIST),
 		LIST_ONLY(1, GTK_TREE_MODEL_LIST_ONLY);
 
@@ -180,13 +180,13 @@ open class TreeModel internal constructor(
 				values().find { it.key == key }
 
 
-			internal fun valueOf(gtk: GtkTreeModelFlags) =
+			 fun valueOf(gtk: GtkTreeModelFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
-	data class TreeIter internal constructor(
-		internal val treeIterPointer: CPointer<GtkTreeIter>
+	data class TreeIter(
+		 val treeIterPointer: CPointer<GtkTreeIter>
 	) {
 		constructor() : this(memScoped { alloc<GtkTreeIter>().ptr })
 
@@ -198,8 +198,8 @@ open class TreeModel internal constructor(
 		var userData3: Any? = null
 	}
 
-	class TreePath internal constructor(
-		internal val treePathPointer: CPointer<GtkTreePath>
+	class TreePath(
+		 val treePathPointer: CPointer<GtkTreePath>
 	) : Closeable {
 		private var isClosed = false
 		private inline fun getCloseException() =

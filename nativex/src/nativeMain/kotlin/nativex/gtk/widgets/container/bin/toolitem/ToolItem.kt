@@ -19,7 +19,7 @@ import nativex.pango.EllipsizeMode
  */
 open class ToolItem(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val toolItemPointer: CPointer<GtkToolItem>
+	 val toolItemPointer: CPointer<GtkToolItem>
 ) : Bin(toolItemPointer.reinterpret()) {
 
 	var homogeneous: Boolean
@@ -157,10 +157,10 @@ open class ToolItem(
 	}
 
 	companion object{
-		internal inline fun CPointer<GtkToolItem>?.wrap() =
+		 inline fun CPointer<GtkToolItem>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkToolItem>.wrap() =
+		 inline fun CPointer<GtkToolItem>.wrap() =
 			ToolItem(this)
 	}
 }

@@ -11,8 +11,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-class ApplicationWindow internal constructor(
-	internal val appWindowPointer: CPointer<GtkApplicationWindow>
+class ApplicationWindow(
+	 val appWindowPointer: CPointer<GtkApplicationWindow>
 ) : Window(
 	appWindowPointer.reinterpret()
 ) {

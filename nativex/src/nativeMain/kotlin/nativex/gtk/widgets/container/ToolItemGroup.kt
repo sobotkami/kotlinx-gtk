@@ -11,14 +11,14 @@ import nativex.gtk.selections.TargetEntry
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolItemGroup.html">GtkToolItemGroup</a>
  */
-class ToolItemGroup internal constructor(
+class ToolItemGroup(
 	val toolItemGroupPointer: CPointer<GtkToolItemGroup>
 ) : Container(toolItemGroupPointer.reinterpret()) {
 	companion object {
-		internal inline fun CPointer<GtkToolItemGroup>?.wrap() =
+		 inline fun CPointer<GtkToolItemGroup>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkToolItemGroup>.wrap() =
+		 inline fun CPointer<GtkToolItemGroup>.wrap() =
 			ToolItemGroup(this)
 	}
 }

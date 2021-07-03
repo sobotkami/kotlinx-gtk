@@ -12,8 +12,8 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-open class Container internal constructor(
-	internal val containerPointer: CPointer<GtkContainer>
+open class Container(
+	 val containerPointer: CPointer<GtkContainer>
 ) : Widget(containerPointer.reinterpret()) {
 
 
@@ -159,7 +159,7 @@ open class Container internal constructor(
 		gtk_container_unset_focus_chain(containerPointer)
 	}
 
-	enum class ResizeMode(val key: Int, internal val gtk: GtkResizeMode) {
+	enum class ResizeMode(val key: Int,  val gtk: GtkResizeMode) {
 		PARENT(0, GtkResizeMode.GTK_RESIZE_PARENT),
 		QUEUE(1, GtkResizeMode.GTK_RESIZE_QUEUE),
 		IMMEDIATE(2, GtkResizeMode.GTK_RESIZE_IMMEDIATE);
@@ -168,7 +168,7 @@ open class Container internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkResizeMode) =
+			 fun valueOf(gtk: GtkResizeMode) =
 				values().find { it.gtk == gtk }
 		}
 	}

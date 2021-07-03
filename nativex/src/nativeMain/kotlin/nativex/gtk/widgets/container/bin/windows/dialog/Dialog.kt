@@ -23,9 +23,9 @@ import nativex.gtk.widgets.container.box.Box.Companion.wrap
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-open class Dialog internal constructor(
+open class Dialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val dialogPointer: CPointer<GtkDialog>
+	 val dialogPointer: CPointer<GtkDialog>
 ) : Window(dialogPointer.reinterpret()) {
 	constructor() : this(gtk_dialog_new()!!.reinterpret())
 
@@ -66,7 +66,7 @@ open class Dialog internal constructor(
 	@ExperimentalCoroutinesApi
 	val responseSignal: Flow<ResponseType> by signalFlow(Signals.RESPONSE, staticResponseCallback)
 
-	enum class Flags(val key: Int, internal val gtk: GtkDialogFlags) {
+	enum class Flags(val key: Int,  val gtk: GtkDialogFlags) {
 		MODAL(0, GTK_DIALOG_MODAL),
 		DESTROY_WITH_PARENT(1, GTK_DIALOG_DESTROY_WITH_PARENT),
 		USE_HEADER_BAR(2, GTK_DIALOG_USE_HEADER_BAR);
@@ -75,19 +75,19 @@ open class Dialog internal constructor(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 
-			internal fun valueOf(gtk: GtkDialogFlags) =
+			 fun valueOf(gtk: GtkDialogFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
-		internal val staticResponseCallback: GCallback =
+		 val staticResponseCallback: GCallback =
 			staticCFunction { _: CPointer<GtkDialog>, id: Int, data: gpointer ->
 				data.asStableRef<(ResponseType) -> Unit>().get().invoke(ResponseType.valueOfGtk(id)!!)
 			}.reinterpret()
 	}
 
-	enum class ResponseType(val key: Int, internal val gtk: GtkResponseType) {
+	enum class ResponseType(val key: Int,  val gtk: GtkResponseType) {
 		NONE(0, GTK_RESPONSE_NONE),
 
 		REJECT(1, GTK_RESPONSE_REJECT),
@@ -113,7 +113,7 @@ open class Dialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			internal fun valueOfGtk(gtk: GtkResponseType) =
+			 fun valueOfGtk(gtk: GtkResponseType) =
 				values().find { it.gtk == gtk }
 		}
 	}

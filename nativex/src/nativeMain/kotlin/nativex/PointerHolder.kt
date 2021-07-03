@@ -10,4 +10,4 @@ import kotlinx.cinterop.CPointer
 @Deprecated("externalize pointer", ReplaceWith("CPointer<T>","kotlinx.cinterop.CPointer"))
 class PointerHolder<T : CPointed>
 @Deprecated("externalize pointer", ReplaceWith("ptr"))
-constructor(internal val ptr: CPointer<T>)
+constructor( val ptr: CPointer<T>)

@@ -9,15 +9,15 @@ import kotlinx.cinterop.CPointer
  *
  * TODO GAppInfo
  */
-class AppInfo internal constructor(
-	internal val pointer: CPointer<GAppInfo>
+class AppInfo(
+	 val pointer: CPointer<GAppInfo>
 ) {
 
 	companion object {
-		internal inline fun CPointer<GAppInfo>?.wrap() =
+		 inline fun CPointer<GAppInfo>?.wrap() =
 			this?.let { AppInfo(it) }
 
-		internal inline fun CPointer<GAppInfo>.wrap() =
+		 inline fun CPointer<GAppInfo>.wrap() =
 			AppInfo(this)
 	}
 }

@@ -7,7 +7,7 @@ import kotlinx.cinterop.CPointer
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class PixbufAnimation internal constructor(
-	internal val pixBufAnimationPointer: CPointer<GdkPixbufAnimation>
+class PixbufAnimation(
+	 val pixBufAnimationPointer: CPointer<GdkPixbufAnimation>
 ) {
 }

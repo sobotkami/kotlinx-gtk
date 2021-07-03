@@ -9,8 +9,8 @@ import kotlinx.cinterop.CPointer
  * 15 / 04 / 2021
  * TODO
  */
-class OptionGroup internal constructor(
-	internal val optionPointer: CPointer<GOptionGroup>
+class OptionGroup(
+	 val optionPointer: CPointer<GOptionGroup>
 ) {
 	constructor(
 		name: String,

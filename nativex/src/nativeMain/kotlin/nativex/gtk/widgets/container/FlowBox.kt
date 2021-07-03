@@ -21,8 +21,8 @@ import nativex.gtk.widgets.container.bin.Bin
  * 13 / 03 / 2021
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html">GtkFlowBox</a>
  */
-class FlowBox internal constructor(
-	internal val flowBoxPointer: CPointer<GtkFlowBox>
+class FlowBox(
+	 val flowBoxPointer: CPointer<GtkFlowBox>
 ) : Bin(flowBoxPointer.reinterpret()),Orientable {
 
 	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(flowBoxPointer.reinterpret()) }
@@ -255,7 +255,7 @@ class FlowBox internal constructor(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBoxChild-struct">GtkFlowBoxChild</a>
 	 */
 	class Child(
-		internal val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
+		 val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
 	) : Bin(flowBoxChildPointer.reinterpret()) {
 
 		/**
@@ -286,10 +286,10 @@ class FlowBox internal constructor(
 
 		companion object {
 
-			internal inline fun CPointer<GtkFlowBoxChild>?.wrap() =
+			 inline fun CPointer<GtkFlowBoxChild>?.wrap() =
 				this?.wrap()
 
-			internal inline fun CPointer<GtkFlowBoxChild>.wrap() =
+			 inline fun CPointer<GtkFlowBoxChild>.wrap() =
 				Child(this)
 		}
 
@@ -344,36 +344,36 @@ class FlowBox internal constructor(
 	val unselectAllSignal: Flow<Unit> by signalFlow(Signals.UNSELECT_ALL)
 
 	companion object {
-		internal val staticChildActivatedCallback: GCallback =
+		 val staticChildActivatedCallback: GCallback =
 			staticCFunction { _: CPointer<GtkFlowBox>, child: CPointer<GtkFlowBoxChild>, data: gpointer? ->
 				data?.asStableRef<(Child) -> Unit>()?.get()?.invoke(child.wrap())
 				Unit
 			}.reinterpret()
 
 
-		internal val staticFlowBoxForeachFunction: GtkFlowBoxForeachFunc = staticCFunction { _, child, data ->
+		 val staticFlowBoxForeachFunction: GtkFlowBoxForeachFunc = staticCFunction { _, child, data ->
 			data?.asStableRef<FlowBoxForEachFunction>()?.get()?.invoke(child!!.wrap())
 			Unit
 		}
 
-		internal val staticFlowBoxFilterFunction: GtkFlowBoxFilterFunc = staticCFunction { child, data ->
+		 val staticFlowBoxFilterFunction: GtkFlowBoxFilterFunc = staticCFunction { child, data ->
 			data?.asStableRef<FlowBoxFilterFunction>()?.get()?.invoke(child!!.wrap())?.gtk ?: 0
 		}
 
-		internal val staticFlowBoxSortFunction: GtkFlowBoxSortFunc = staticCFunction { child1, child2, data ->
+		 val staticFlowBoxSortFunction: GtkFlowBoxSortFunc = staticCFunction { child1, child2, data ->
 			data?.asStableRef<FlowBoxSortFunction>()?.get()?.invoke(child1!!.wrap(), child2!!.wrap())!!
 		}
 
-		internal val staticFlowBoxCreateWidgetFunction: GtkFlowBoxCreateWidgetFunc = staticCFunction { item, data ->
+		 val staticFlowBoxCreateWidgetFunction: GtkFlowBoxCreateWidgetFunc = staticCFunction { item, data ->
 			data?.asStableRef<FlowBoxCreateWidgetFunction>()?.get()
 				?.invoke(KObject(item!!.reinterpret()))?.widgetPointer
 		}
 
 
-		internal inline fun CPointer<GtkFlowBox>?.wrap() =
+		 inline fun CPointer<GtkFlowBox>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkFlowBox>.wrap() =
+		 inline fun CPointer<GtkFlowBox>.wrap() =
 			FlowBox(this)
 	}
 }

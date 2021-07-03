@@ -6,7 +6,7 @@ import gtk.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class StateFlags(val key: Int, internal val gtk: GtkStateFlags) {
+enum class StateFlags(val key: Int,  val gtk: GtkStateFlags) {
 	NORMAL(0, GTK_STATE_FLAG_NORMAL),
 	ACTIVE(1, GTK_STATE_FLAG_ACTIVE),
 	PRELIGHT(2, GTK_STATE_FLAG_PRELIGHT),
@@ -27,7 +27,7 @@ enum class StateFlags(val key: Int, internal val gtk: GtkStateFlags) {
 			values().find { it.key == key }
 
 		
-		internal fun valueOf(gtk: GtkStateFlags) =
+		 fun valueOf(gtk: GtkStateFlags) =
 			values().find { it.gtk == gtk }
 	}
 }

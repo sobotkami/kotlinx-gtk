@@ -13,8 +13,8 @@ import nativex.gtk.widgets.container.bin.Bin
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-class MenuItem internal constructor(
-	internal val menuItemPointer: CPointer<GtkMenuItem>
+class MenuItem(
+	 val menuItemPointer: CPointer<GtkMenuItem>
 ) : Bin(menuItemPointer.reinterpret()) {
 
 	constructor() : this(gtk_menu_item_new()!!.reinterpret())

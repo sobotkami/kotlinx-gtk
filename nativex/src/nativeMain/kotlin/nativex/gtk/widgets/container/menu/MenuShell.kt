@@ -9,8 +9,8 @@ import nativex.gtk.widgets.container.Container
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-open class MenuShell internal constructor(
-	internal val menuShellPointer: CPointer<GtkMenuShell>
+open class MenuShell(
+	 val menuShellPointer: CPointer<GtkMenuShell>
 ) : Container(menuShellPointer.reinterpret()) {
 
 }

@@ -10,8 +10,8 @@ import nativex.glib.Variant
  * kotlinx-gtk
  * 14 / 04 / 2021
  */
-class Notification internal constructor(
-	internal val notificationPointer: CPointer<GNotification>
+class Notification(
+	 val notificationPointer: CPointer<GNotification>
 ) : KObject(notificationPointer.reinterpret()) {
 	constructor(title: String) : this(g_notification_new(title)!!.reinterpret())
 
@@ -61,7 +61,7 @@ class Notification internal constructor(
 	}
 
 
-	enum class Priority(val key: Int, internal val gio: GNotificationPriority) {
+	enum class Priority(val key: Int,  val gio: GNotificationPriority) {
 		NORMAL(0, G_NOTIFICATION_PRIORITY_NORMAL),
 		LOW(1, G_NOTIFICATION_PRIORITY_LOW),
 		HIGH(2, G_NOTIFICATION_PRIORITY_HIGH),
@@ -69,7 +69,7 @@ class Notification internal constructor(
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }!!
-			internal fun valueOf(gio: GNotificationPriority) =
+			 fun valueOf(gio: GNotificationPriority) =
 				values().find { it.gio == gio }
 		}
 	}

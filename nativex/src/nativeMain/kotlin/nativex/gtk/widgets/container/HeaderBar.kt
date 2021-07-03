@@ -17,8 +17,8 @@ import nativex.gtk.widgets.container.box.Box
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html">GtkHeaderBar</a>
  */
-open class HeaderBar internal constructor(
-	internal val headerBarPointer: CPointer<GtkHeaderBar>
+open class HeaderBar(
+	 val headerBarPointer: CPointer<GtkHeaderBar>
 ) : Container(headerBarPointer.reinterpret()) {
 
 	/**
@@ -117,10 +117,10 @@ open class HeaderBar internal constructor(
 		)
 
 	companion object{
-		internal inline fun CPointer<GtkHeaderBar>?.wrap() =
+		 inline fun CPointer<GtkHeaderBar>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkHeaderBar>.wrap() =
+		 inline fun CPointer<GtkHeaderBar>.wrap() =
 			HeaderBar(this)
 	}
 

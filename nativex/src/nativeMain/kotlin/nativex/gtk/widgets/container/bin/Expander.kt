@@ -19,7 +19,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html">GtkExpander</a>
  */
 class Expander(
-	internal val expanderPointer: CPointer<GtkExpander>
+	 val expanderPointer: CPointer<GtkExpander>
 ) : Bin(expanderPointer.reinterpret()) {
 
 	/**

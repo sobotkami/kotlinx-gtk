@@ -7,7 +7,7 @@ import gtk.GtkJustification.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class Justification(val key: Int, internal val gtk: GtkJustification) {
+enum class Justification(val key: Int,  val gtk: GtkJustification) {
 	LEFT(0, GTK_JUSTIFY_LEFT),
 	RIGHT(1, GTK_JUSTIFY_RIGHT),
 	CENTER(2, GTK_JUSTIFY_CENTER),
@@ -17,7 +17,7 @@ enum class Justification(val key: Int, internal val gtk: GtkJustification) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkJustification) =
+		 fun valueOf(gtk: GtkJustification) =
 			values().find { it.gtk == gtk }
 	}
 }

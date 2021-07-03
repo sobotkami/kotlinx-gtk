@@ -11,13 +11,13 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class ModelButton internal constructor(
+class ModelButton(
 	toggleButtonPointer: CPointer<GtkModelButton>
 ) : Button(toggleButtonPointer.reinterpret()) {
 
 	constructor() : this(gtk_model_button_new()!!.reinterpret())
 
-	enum class ButtonRole(val key: Int, internal val gtk: GtkButtonRole) {
+	enum class ButtonRole(val key: Int,  val gtk: GtkButtonRole) {
 		NORMAL(0, GtkButtonRole.GTK_BUTTON_ROLE_NORMAL),
 		CHECK(1, GtkButtonRole.GTK_BUTTON_ROLE_CHECK),
 		RADIO(2, GtkButtonRole.GTK_BUTTON_ROLE_RADIO);
@@ -25,7 +25,7 @@ class ModelButton internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkButtonRole) =
+			 fun valueOf(gtk: GtkButtonRole) =
 				values().find { it.gtk == gtk }
 		}
 	}

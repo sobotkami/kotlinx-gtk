@@ -7,7 +7,7 @@ import gtk.GOptionArg.*
  * kotlinx-gtk
  * 23 / 03 / 2021
  */
-enum class OptionArg(val key: Int, internal val gtk: GOptionArg) {
+enum class OptionArg(val key: Int,  val gtk: GOptionArg) {
 	NONE(0, G_OPTION_ARG_NONE),
 	STRING(1, G_OPTION_ARG_STRING),
 	INT(2, G_OPTION_ARG_INT),

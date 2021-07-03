@@ -7,7 +7,7 @@ import gtk.GtkScrollType.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class ScrollType(val key: Int, internal val gtk: GtkScrollType) {
+enum class ScrollType(val key: Int,  val gtk: GtkScrollType) {
 	NONE(0, GTK_SCROLL_NONE),
 	JUMP(1, GTK_SCROLL_JUMP),
 	STEP_BACKWARD(2, GTK_SCROLL_STEP_BACKWARD),
@@ -29,7 +29,7 @@ enum class ScrollType(val key: Int, internal val gtk: GtkScrollType) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkScrollType) =
+		 fun valueOf(gtk: GtkScrollType) =
 			values().find { it.gtk == gtk }
 	}
 }

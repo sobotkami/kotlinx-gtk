@@ -6,23 +6,23 @@ import nativex.gtk.widgets.Widget
 
 typealias WidgetPointer = CPointer<GtkWidget>
 
-internal typealias VoidPointer = COpaquePointer
+ typealias VoidPointer = COpaquePointer
 
-internal inline val Boolean?.gtk: gboolean
+ inline val Boolean?.gtk: gboolean
 	get() = this?.gtk ?: 0
 
-internal inline val Boolean.gtk: gboolean
+ inline val Boolean.gtk: gboolean
 	get() = if (this) 1 else 0
 
-internal inline val gboolean.bool
+ inline val gboolean.bool
 	get() = this == 1
 
 
 /**Shorthand for C's representation of a string.*/
-internal typealias CString = CPointer<ByteVar>
+ typealias CString = CPointer<ByteVar>
 
 /**Shorthand for C's representation of a list of strings (a pointer to a list of char pointers).*/
-internal typealias CStringList = CPointer<CPointerVar<ByteVar>>
+ typealias CStringList = CPointer<CPointerVar<ByteVar>>
 
 
 fun Array<Int>.toCArray(scope: MemScope): CPointer<CPointerVar<IntVar>> =
@@ -53,7 +53,7 @@ fun List<String>.toNullTermCStringArray(): CStringList =
 /**
  * For null terminated C arrays
  */
-internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable(): Iterator<CPointer<T>> =
+ inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable(): Iterator<CPointer<T>> =
 	object : Iterator<CPointer<T>> {
 		var index = 0
 
@@ -67,7 +67,7 @@ internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>.asIterable()
  * For null terminated C arrays
  * @see asIterable
  */
-internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
+ inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(): Sequence<CPointer<T>> {
 	this ?: return emptySequence()
 	return object : Sequence<CPointer<T>> {
 		override fun iterator(): Iterator<CPointer<T>> =
@@ -78,7 +78,7 @@ internal inline fun <reified T : CPointed> CPointer<CPointerVar<T>>?.asSequence(
 /**
  * Null termination accepting sequence
  */
-internal inline fun CStringList?.asKSequence(): Sequence<String> {
+ inline fun CStringList?.asKSequence(): Sequence<String> {
 	this ?: return emptySequence()
 
 	return object : Sequence<String> {
@@ -94,7 +94,7 @@ internal inline fun CStringList?.asKSequence(): Sequence<String> {
 }
 
 @Deprecated("Replace with sequences")
-internal fun CStringList?.toStringList(length: Int): List<String?> {
+ fun CStringList?.toStringList(length: Int): List<String?> {
 	this ?: return emptyList()
 	return List(length) { index ->
 		get(index)?.toKString()
@@ -105,7 +105,7 @@ internal fun CStringList?.toStringList(length: Int): List<String?> {
  * Will throw an exception on a nullable
  */
 @Deprecated("Replace with sequences")
-internal fun CStringList?.toStringListNoNulls(length: Int): List<String> {
+ fun CStringList?.toStringListNoNulls(length: Int): List<String> {
 	this ?: return emptyList()
 	return List(length) { index ->
 		get(index)!!.toKString()
@@ -116,7 +116,7 @@ internal fun CStringList?.toStringListNoNulls(length: Int): List<String> {
  * Will simply replace null with ["null"]
  */
 @Deprecated("Replace with sequences")
-internal fun CStringList?.toStringListFillNulls(length: Int): List<String> {
+ fun CStringList?.toStringListFillNulls(length: Int): List<String> {
 	this ?: return emptyList()
 	return List(length) { index ->
 		get(index)?.toKString() ?: "null"
@@ -126,22 +126,22 @@ internal fun CStringList?.toStringListFillNulls(length: Int): List<String> {
 /**
  * Will filter out nulls
  */
-internal fun CStringList?.toStringListFilterNulls(length: Int): List<String> {
+ fun CStringList?.toStringListFilterNulls(length: Int): List<String> {
 	this ?: return emptyList()
 	return List(length) { index ->
 		get(index)?.toKString()
 	}.filterNotNull()
 }
 
-internal fun CPointer<GList>?.free() {
+ fun CPointer<GList>?.free() {
 	g_list_free(this)
 }
 
-internal fun CPointer<GSList>?.free() {
+ fun CPointer<GSList>?.free() {
 	g_slist_free(this)
 }
 
-internal inline fun <I : CPointed, O> CPointer<GSList>?.asKSequence(
+ inline fun <I : CPointed, O> CPointer<GSList>?.asKSequence(
 	crossinline wrap: (CPointer<I>) -> O
 ): Sequence<O> =
 	object : Sequence<O> {
@@ -166,7 +166,7 @@ internal inline fun <I : CPointed, O> CPointer<GSList>?.asKSequence(
 			iterator
 	}
 
-internal inline fun <I : CPointed, O> CPointer<GList>?.asKSequence(
+ inline fun <I : CPointed, O> CPointer<GList>?.asKSequence(
 	crossinline wrap: (CPointer<I>) -> O
 ): Sequence<O> =
 	object : Sequence<O> {
@@ -191,7 +191,7 @@ internal inline fun <I : CPointed, O> CPointer<GList>?.asKSequence(
 			iterator
 	}
 
-internal fun CPointer<gintVar>?.asSequence(length: Int): Sequence<Int> {
+ fun CPointer<gintVar>?.asSequence(length: Int): Sequence<Int> {
 	this ?: return emptySequence()
 	return object : Sequence<Int> {
 		override fun iterator(): Iterator<Int> = object : Iterator<Int> {
@@ -204,7 +204,7 @@ internal fun CPointer<gintVar>?.asSequence(length: Int): Sequence<Int> {
 	}
 }
 
-internal fun <T : CPointed> CPointer<GSList>?.asSequence(): Sequence<CPointer<T>> {
+ fun <T : CPointed> CPointer<GSList>?.asSequence(): Sequence<CPointer<T>> {
 	val length = g_slist_length(this).toInt()
 	return sequence {
 		repeat(length) { index ->
@@ -215,7 +215,7 @@ internal fun <T : CPointed> CPointer<GSList>?.asSequence(): Sequence<CPointer<T>
 	}
 }
 
-internal fun <T : CPointed> CPointer<GList>?.asSequence(): Sequence<CPointer<T>> {
+ fun <T : CPointed> CPointer<GList>?.asSequence(): Sequence<CPointer<T>> {
 	val length = g_list_length(this).toInt()
 	return sequence {
 		repeat(length) { index ->
@@ -225,8 +225,8 @@ internal fun <T : CPointed> CPointer<GList>?.asSequence(): Sequence<CPointer<T>>
 	}
 }
 
-internal inline fun WidgetPointer?.asWidgetOrNull() = this?.let { Widget(it) }
+ inline fun WidgetPointer?.asWidgetOrNull() = this?.let { Widget(it) }
 
-internal inline fun WidgetPointer?.asWidget() = Widget(this!!)
+ inline fun WidgetPointer?.asWidget() = Widget(this!!)
 
 

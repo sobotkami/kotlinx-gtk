@@ -10,9 +10,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class FontChooserDialog internal constructor(
+class FontChooserDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkFontChooserDialog>
+	 val aboutDialogPointer: CPointer<GtkFontChooserDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
 	constructor(

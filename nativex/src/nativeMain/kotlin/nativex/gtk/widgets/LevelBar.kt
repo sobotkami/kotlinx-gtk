@@ -12,8 +12,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 25 / 03 / 2021
  */
-class LevelBar internal constructor(
-	internal val levelBarPointer: CPointer<GtkLevelBar>
+class LevelBar(
+	 val levelBarPointer: CPointer<GtkLevelBar>
 ) : Widget(levelBarPointer.reinterpret()) {
 	constructor() : this(gtk_level_bar_new()!!.reinterpret())
 	constructor(
@@ -75,13 +75,13 @@ class LevelBar internal constructor(
 	}
 
 
-	enum class Mode(val key: Int, internal val gtk: GtkLevelBarMode) {
+	enum class Mode(val key: Int,  val gtk: GtkLevelBarMode) {
 		CONTINUOUS(0, GTK_LEVEL_BAR_MODE_CONTINUOUS),
 		DISCRETE(1, GTK_LEVEL_BAR_MODE_DISCRETE);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gtk: GtkLevelBarMode) =
+			 fun valueOf(gtk: GtkLevelBarMode) =
 				values().find { it.gtk == gtk }
 		}
 	}

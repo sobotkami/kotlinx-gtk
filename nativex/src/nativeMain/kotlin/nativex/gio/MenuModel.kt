@@ -17,8 +17,8 @@ import nativex.gtk.Signals
  * kotlinx-gtk
  * 08 / 02 / 2021
  */
-abstract class MenuModel internal constructor(
-	internal val menuModelPointer: CPointer<GMenuModel>
+abstract class MenuModel(
+	 val menuModelPointer: CPointer<GMenuModel>
 ) : KObject(menuModelPointer.reinterpret()) {
 
 
@@ -36,19 +36,19 @@ abstract class MenuModel internal constructor(
 	/**
 	 * Impl classes are used to purely wrap pointers returned for [MenuModel]
 	 */
-	internal class Impl(menuModelPointer: CPointer<GMenuModel>) :
+	 class Impl(menuModelPointer: CPointer<GMenuModel>) :
 		MenuModel(menuModelPointer) {
 		companion object {
-			internal inline fun CPointer<GMenuModel>?.wrap() =
+			 inline fun CPointer<GMenuModel>?.wrap() =
 				this?.let { Impl(it) }
 
-			internal inline fun CPointer<GMenuModel>.wrap() =
+			 inline fun CPointer<GMenuModel>.wrap() =
 				Impl(this)
 		}
 	}
 
 	companion object {
-		internal val staticItemsChangedSignal: GCallback =
+		 val staticItemsChangedSignal: GCallback =
 			staticCFunction { _: gpointer?, position: Int, removed: Int, added: Int, data: gpointer? ->
 				data?.asStableRef<(ItemsChangedEvent) -> Unit>()?.get()
 					?.invoke(ItemsChangedEvent(position, removed, added))

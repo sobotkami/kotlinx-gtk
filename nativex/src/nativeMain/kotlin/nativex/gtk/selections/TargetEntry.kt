@@ -44,10 +44,10 @@ class TargetEntry(val struct: CPointer<GtkTargetEntry>) {
 		}
 
 	companion object {
-		internal inline fun CPointer<GtkTargetEntry>?.wrap() =
+		 inline fun CPointer<GtkTargetEntry>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkTargetEntry>.wrap() =
+		 inline fun CPointer<GtkTargetEntry>.wrap() =
 			TargetEntry(this)
 	}
 }

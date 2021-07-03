@@ -14,9 +14,9 @@ import nativex.gtk.widgets.container.bin.toolitem.button.ToolButton
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-open class ToggleToolButton internal constructor(
+open class ToggleToolButton(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val toggleToolButton: CPointer<GtkToggleToolButton>
+	 val toggleToolButton: CPointer<GtkToggleToolButton>
 ) : ToolButton(toggleToolButton.reinterpret()) {
 	constructor() : this(gtk_toggle_tool_button_new()!!.reinterpret())
 

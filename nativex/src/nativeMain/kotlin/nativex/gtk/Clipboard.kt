@@ -10,7 +10,7 @@ import nativex.gio.KObject
  * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-Clipboards.html#GtkClipboard">
  *     GtkClipboard</a>
  */
-class Clipboard internal constructor(
-	internal val clipboardPointer: CPointer<GtkClipboard>
+class Clipboard(
+	 val clipboardPointer: CPointer<GtkClipboard>
 ) : KObject(clipboardPointer.reinterpret()) {
 }

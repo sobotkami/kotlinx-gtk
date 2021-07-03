@@ -7,7 +7,7 @@ import gtk.GtkDeleteType.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class DeleteType(val key: Int, internal val gtk: GtkDeleteType) {
+enum class DeleteType(val key: Int,  val gtk: GtkDeleteType) {
 	CHARS(0, GTK_DELETE_CHARS),
 	ENDS(1, GTK_DELETE_WORD_ENDS),
 	WORDS(2, GTK_DELETE_WORDS),
@@ -21,7 +21,7 @@ enum class DeleteType(val key: Int, internal val gtk: GtkDeleteType) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkDeleteType) =
+		 fun valueOf(gtk: GtkDeleteType) =
 			values().find { it.gtk == gtk }
 	}
 }

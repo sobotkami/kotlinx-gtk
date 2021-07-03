@@ -15,8 +15,8 @@ import nativex.gtk.Signals
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class ColorButton internal constructor(
-	internal val colorButtonPointer: CPointer<GtkColorButton>
+class ColorButton(
+	 val colorButtonPointer: CPointer<GtkColorButton>
 ) : Button(colorButtonPointer.reinterpret()), ColorChooser {
 
 	override val colorChooserPointer: nativex.PointerHolder<GtkColorChooser> by lazy {

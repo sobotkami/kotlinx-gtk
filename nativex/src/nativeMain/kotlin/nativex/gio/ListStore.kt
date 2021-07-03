@@ -12,8 +12,8 @@ import nativex.gtk.bool
  *
  * @see <a href="https://developer.gnome.org/gio/stable/GListStore.html">GListStore</a>
  */
-class ListStore internal constructor(
-	internal val listStorePointer: CPointer<GListStore>
+class ListStore(
+	 val listStorePointer: CPointer<GListStore>
 ) : ListModel(listStorePointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListStore.html#g-list-store-new">g_list_store_new</a>
@@ -109,7 +109,7 @@ class ListStore internal constructor(
 	}
 
 	companion object {
-		internal val staticGValueCompareFunction: GCompareDataFunc =
+		 val staticGValueCompareFunction: GCompareDataFunc =
 			staticCFunction { a: CPointer<GValue>, b: CPointer<GValue>, c: gpointer? ->
 				c?.asStableRef<CompareKGValueFunction>()?.get()?.invoke(KGValue(a), KGValue(b)) ?: 0
 			}.reinterpret()

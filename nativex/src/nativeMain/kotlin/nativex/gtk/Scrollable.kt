@@ -50,7 +50,7 @@ interface Scrollable {
 		}
 
 
-	enum class Policy(val key: Int, internal val gtk: GtkScrollablePolicy) {
+	enum class Policy(val key: Int,  val gtk: GtkScrollablePolicy) {
 		MINIMUM(0, GTK_SCROLL_MINIMUM),
 		NATURAL(1, GTK_SCROLL_NATURAL);
 
@@ -58,7 +58,7 @@ interface Scrollable {
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkScrollablePolicy) =
+			 fun valueOf(gtk: GtkScrollablePolicy) =
 				values().find { it.gtk == gtk }
 		}
 

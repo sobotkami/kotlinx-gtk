@@ -10,9 +10,9 @@ import nativex.gtk.bool
  * 23 / 03 / 2021
  */
 sealed class VariantType(
-	internal val variantTypePointer: CPointer<GVariantType>
+	 val variantTypePointer: CPointer<GVariantType>
 ) {
-	class OpenVariant internal constructor(variantTypePointer: CPointer<GVariantType>) :
+	class OpenVariant(variantTypePointer: CPointer<GVariantType>) :
 		VariantType(variantTypePointer) {
 		constructor(type: String) : this(g_variant_type_new(type)!!)
 
@@ -112,10 +112,10 @@ sealed class VariantType(
 		fun scanString(string: String, limit: String? = null): Boolean =
 			g_variant_type_string_scan(string, limit, null).bool
 
-		internal inline fun CPointer<GVariantType>?.wrap(): VariantType? =
+		 inline fun CPointer<GVariantType>?.wrap(): VariantType? =
 			this?.let { OpenVariant(it) }
 
-		internal inline fun CPointer<GVariantType>.wrap(): VariantType =
+		 inline fun CPointer<GVariantType>.wrap(): VariantType =
 			OpenVariant(this)
 	}
 

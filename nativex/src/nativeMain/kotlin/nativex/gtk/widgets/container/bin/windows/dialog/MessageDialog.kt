@@ -12,9 +12,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class MessageDialog internal constructor(
+class MessageDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val messageDialogPointer: CPointer<GtkMessageDialog>
+	 val messageDialogPointer: CPointer<GtkMessageDialog>
 ) : Dialog(messageDialogPointer.reinterpret()) {
 
 	/**
@@ -97,7 +97,7 @@ class MessageDialog internal constructor(
 			)
 		}
 
-	enum class MessageType(val key: Int, internal val gtk: GtkMessageType) {
+	enum class MessageType(val key: Int,  val gtk: GtkMessageType) {
 		INFO(0, GTK_MESSAGE_INFO),
 		WARNING(1, GTK_MESSAGE_WARNING),
 		QUESTION(2, GTK_MESSAGE_QUESTION),
@@ -108,12 +108,12 @@ class MessageDialog internal constructor(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 			
-			internal fun valueOf(gtk: GtkMessageType) =
+			 fun valueOf(gtk: GtkMessageType) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
-	enum class ButtonsType(val key: Int, internal val gtk: GtkButtonsType) {
+	enum class ButtonsType(val key: Int,  val gtk: GtkButtonsType) {
 		NONE(0, GTK_BUTTONS_NONE),
 		OK(1, GTK_BUTTONS_OK),
 		CLOSE(2, GTK_BUTTONS_CLOSE),
@@ -125,7 +125,7 @@ class MessageDialog internal constructor(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 			
-			internal fun valueOf(gtk: GtkButtonsType) =
+			 fun valueOf(gtk: GtkButtonsType) =
 				values().find { it.gtk == gtk }
 		}
 	}

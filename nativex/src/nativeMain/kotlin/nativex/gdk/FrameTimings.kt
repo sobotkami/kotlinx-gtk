@@ -10,8 +10,8 @@ import nativex.gtk.bool
  *
  * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-GdkFrameTimings.html">GdkFrameTimings</a>
  */
-class FrameTimings internal constructor(
-	internal val pointer: CPointer<GdkFrameTimings>
+class FrameTimings(
+	 val pointer: CPointer<GdkFrameTimings>
 ) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-GdkFrameTimings.html#gdk-frame-timings-ref">gdk_frame_timings_ref</a>
@@ -65,10 +65,10 @@ class FrameTimings internal constructor(
 
 
 	companion object {
-		internal inline fun CPointer<GdkFrameTimings>?.wrap() =
+		 inline fun CPointer<GdkFrameTimings>?.wrap() =
 			this?.let { FrameTimings(it) }
 
-		internal inline fun CPointer<GdkFrameTimings>.wrap() =
+		 inline fun CPointer<GdkFrameTimings>.wrap() =
 			FrameTimings(this)
 	}
 }

@@ -10,11 +10,11 @@ import kotlinx.cinterop.reinterpret
  *
  * TODO gtkunixprint.h
  */
-class PrintUnixDialog internal constructor(
-	internal val aboutDialogPointer: CPointer<GtkPrintUnixDialog>
+class PrintUnixDialog(
+	 val aboutDialogPointer: CPointer<GtkPrintUnixDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
-	enum class PrintCapabilities(val key: Int, internal val gtk: GtkPrintCapabilities) {
+	enum class PrintCapabilities(val key: Int,  val gtk: GtkPrintCapabilities) {
 		PAGE_SET(0, GTK_PRINT_CAPABILITY_PAGE_SET),
 
 		COPIES(1, GTK_PRINT_CAPABILITY_COPIES),
@@ -39,7 +39,7 @@ class PrintUnixDialog internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkPrintCapabilities) =
+			 fun valueOf(gtk: GtkPrintCapabilities) =
 				values().find { it.gtk == gtk }
 
 		}

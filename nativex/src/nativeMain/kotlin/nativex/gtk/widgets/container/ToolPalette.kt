@@ -22,7 +22,7 @@ import nativex.gtk.widgets.container.bin.toolitem.ToolItem.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolPalette.html">GtkToolPalette</a>
  */
-class ToolPalette internal constructor(
+class ToolPalette(
 	val toolPalettePointer: CPointer<GtkToolPalette>
 ) : Container(toolPalettePointer.reinterpret()), Scrollable, Orientable {
 	override val scrollablePointer: PointerHolder<GtkScrollable> by lazy {

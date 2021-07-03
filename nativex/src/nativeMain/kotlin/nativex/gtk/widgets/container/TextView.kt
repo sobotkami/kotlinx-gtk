@@ -26,8 +26,8 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class TextView internal constructor(
-	internal val textViewPointer: CPointer<GtkTextView>
+class TextView(
+	 val textViewPointer: CPointer<GtkTextView>
 ) : Container(
 	textViewPointer.reinterpret()
 ), Scrollable {
@@ -149,7 +149,7 @@ class TextView internal constructor(
 
 	enum class Layer(
 		val key: Int,
-		internal val gtk: GtkTextViewLayer
+		 val gtk: GtkTextViewLayer
 	) {
 		BELOW(0, GTK_TEXT_VIEW_LAYER_BELOW),
 		ABOVE(1, GTK_TEXT_VIEW_LAYER_ABOVE),
@@ -160,14 +160,14 @@ class TextView internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkTextViewLayer) =
+			 fun valueOf(gtk: GtkTextViewLayer) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	enum class TextWindowType(
 		val key: Int,
-		internal val gtk: GtkTextWindowType
+		 val gtk: GtkTextWindowType
 	) {
 		PRIVATE(0, GTK_TEXT_WINDOW_PRIVATE),
 		WIDGET(1, GTK_TEXT_WINDOW_WIDGET),
@@ -182,7 +182,7 @@ class TextView internal constructor(
 				values()
 					.find { it.key == key }
 
-			internal fun valueOf(gtk: GtkTextWindowType) =
+			 fun valueOf(gtk: GtkTextWindowType) =
 				values()
 					.find { it.gtk == gtk }
 		}
@@ -190,7 +190,7 @@ class TextView internal constructor(
 
 	enum class TextExtendSelection(
 		val key: Int,
-		internal val gtk: GtkTextExtendSelection
+		 val gtk: GtkTextExtendSelection
 	) {
 		PRIVATE(0, GTK_TEXT_EXTEND_SELECTION_WORD),
 		BOTTOM(1, GTK_TEXT_EXTEND_SELECTION_LINE);
@@ -200,7 +200,7 @@ class TextView internal constructor(
 				values()
 					.find { it.key == key }
 
-			internal fun valueOf(gtk: GtkTextExtendSelection) =
+			 fun valueOf(gtk: GtkTextExtendSelection) =
 				values()
 					.find { it.gtk == gtk }
 		}
@@ -208,7 +208,7 @@ class TextView internal constructor(
 
 	enum class WrapMode(
 		val key: Int,
-		internal val gtk: GtkWrapMode
+		 val gtk: GtkWrapMode
 	) {
 		PRIVATE(0, GTK_WRAP_NONE),
 		WIDGET(1, GTK_WRAP_CHAR),
@@ -220,14 +220,14 @@ class TextView internal constructor(
 				values()
 					.find { it.key == key }
 
-			internal fun valueOf(gtk: GtkWrapMode) =
+			 fun valueOf(gtk: GtkWrapMode) =
 				values()
 					.find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
-		internal val staticDeleteFromCursorCallback: GCallback =
+		 val staticDeleteFromCursorCallback: GCallback =
 			staticCFunction { _: gpointer?, type: GtkDeleteType, count: Int, data: gpointer? ->
 				data?.asStableRef<(DeleteFromCursorEvent) -> Unit>()?.get()
 					?.invoke(
@@ -239,7 +239,7 @@ class TextView internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticExtendSelectionCallback: GCallback =
+		 val staticExtendSelectionCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  granularity: GtkTextExtendSelection,
 			                  location: CPointer<GtkTextIter>,
@@ -260,7 +260,7 @@ class TextView internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticInsertAtCursorCallback: GCallback
+		 val staticInsertAtCursorCallback: GCallback
 			get() {
 				/*
 					staticCFunction { _: gpointer?,
@@ -273,7 +273,7 @@ class TextView internal constructor(
 				TODO("Figure out char")
 			}
 /*
-		internal val staticSelectAllCallback: GCallback =
+		 val staticSelectAllCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  select: gboolean,
 			                  data: gpointer? ->
@@ -282,7 +282,7 @@ class TextView internal constructor(
 				Unit
 			}.reinterpret()
 */
-		internal val staticPreeditChangedCallback: GCallback
+		 val staticPreeditChangedCallback: GCallback
 			get() {
 				/*staticCFunction { _: gpointer?,
 								  preedit: CPointer<ByteVar>,
@@ -294,7 +294,7 @@ class TextView internal constructor(
 				TODO("Figure out char")
 			}
 
-		internal val staticPopulatePopupCallback: GCallback =
+		 val staticPopulatePopupCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  popup: CPointer<GtkWidget>,
 			                  data: gpointer? ->
@@ -304,7 +304,7 @@ class TextView internal constructor(
 			}.reinterpret()
 
 
-		internal val staticMoveViewportCallback: GCallback =
+		 val staticMoveViewportCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  step: GtkScrollStep,
 			                  count: Int,

@@ -13,11 +13,11 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 14 / 03 / 2021
  */
-class TreeView internal constructor(
-	internal val treeViewPointer: CPointer<GtkTreeView>
+class TreeView(
+	 val treeViewPointer: CPointer<GtkTreeView>
 ) : Container(treeViewPointer.reinterpret()) {
 	companion object {
-		internal val staticTreeViewRowSeparatorFunc: GtkTreeViewRowSeparatorFunc =
+		 val staticTreeViewRowSeparatorFunc: GtkTreeViewRowSeparatorFunc =
 			staticCFunction { model: CPointer<GtkTreeModel>?,
 			                  iter: CPointer<GtkTreeIter>?,
 			                  data: gpointer? ->

@@ -8,7 +8,7 @@ import kotlinx.cinterop.CPointer
  * 15 / 04 / 2021
  * TODO
  */
-class OptionEntry internal constructor(
+class OptionEntry(
 	val struct: CPointer<GOptionEntry>
 ) {
 	var arg: OptionArg

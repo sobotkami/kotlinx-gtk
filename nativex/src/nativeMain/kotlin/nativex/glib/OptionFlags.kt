@@ -6,7 +6,7 @@ import gtk.*
  * kotlinx-gtk
  * 23 / 03 / 2021
  */
-enum class OptionFlags(val key: Int, internal val gtk: GOptionFlags) {
+enum class OptionFlags(val key: Int,  val gtk: GOptionFlags) {
 	NONE(0, G_OPTION_FLAG_NONE),
 	HIDDEN(1, G_OPTION_FLAG_HIDDEN),
 	IN_MAIN(2, G_OPTION_FLAG_IN_MAIN),

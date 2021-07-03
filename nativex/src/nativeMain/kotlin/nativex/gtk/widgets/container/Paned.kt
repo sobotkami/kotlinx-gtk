@@ -14,8 +14,8 @@ import nativex.gtk.widgets.Widget
  * 24 / 03 / 2021
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html">GtkPaned</a>
  */
-open class Paned internal constructor(
-	internal val panedPointer: CPointer<GtkPaned>
+open class Paned(
+	 val panedPointer: CPointer<GtkPaned>
 ) : Container(panedPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-new"></a>

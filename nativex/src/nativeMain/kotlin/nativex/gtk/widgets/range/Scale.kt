@@ -14,8 +14,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 14 / 03 / 2021
  */
-class Scale internal constructor(
-	internal val scalePointer: CPointer<GtkScale>
+class Scale(
+	 val scalePointer: CPointer<GtkScale>
 ) : Range(scalePointer.reinterpret()), Orientable {
 
 	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(scalePointer.reinterpret()) }

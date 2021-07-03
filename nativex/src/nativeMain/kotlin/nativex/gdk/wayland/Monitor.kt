@@ -17,8 +17,8 @@ import nativex.gtk.bool
 /**
  * Question why such details are needed by a program, ever?
  */
-class Monitor internal constructor(
-	internal val monitorPointer: CPointer<GdkMonitor>
+class Monitor(
+	 val monitorPointer: CPointer<GdkMonitor>
 ) : KObject(monitorPointer.reinterpret()) {
 	val display: Display
 		get() = gdk_monitor_get_display(monitorPointer)!!.wrap()
@@ -60,7 +60,7 @@ class Monitor internal constructor(
 	@ExperimentalCoroutinesApi
 	val invalidateSignal: Flow<Unit> by signalFlow(Signals.INVALIDATE)
 
-	enum class SubpixelLayout(val key: Int, internal val gdk: GdkSubpixelLayout) {
+	enum class SubpixelLayout(val key: Int,  val gdk: GdkSubpixelLayout) {
 		UNKNOWN(0, GDK_SUBPIXEL_LAYOUT_UNKNOWN),
 		NONE(1, GDK_SUBPIXEL_LAYOUT_NONE),
 		HORIZONTAL_RGB(2, GDK_SUBPIXEL_LAYOUT_HORIZONTAL_RGB),
@@ -76,10 +76,10 @@ class Monitor internal constructor(
 
 	companion object{
 
-		internal inline fun CPointer<GdkMonitor>?.wrap() =
+		 inline fun CPointer<GdkMonitor>?.wrap() =
 			this?.let { Monitor(it) }
 
-		internal inline fun CPointer<GdkMonitor>.wrap() =
+		 inline fun CPointer<GdkMonitor>.wrap() =
 			Monitor(this)
 	}
 

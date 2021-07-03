@@ -7,7 +7,7 @@ import gtk.PangoEllipsizeMode.*
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-enum class EllipsizeMode(val key: Int, internal val pango: PangoEllipsizeMode) {
+enum class EllipsizeMode(val key: Int,  val pango: PangoEllipsizeMode) {
 	NONE(0, PANGO_ELLIPSIZE_NONE),
 	START(1, PANGO_ELLIPSIZE_START),
 	MIDDLE(2, PANGO_ELLIPSIZE_MIDDLE),

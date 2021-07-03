@@ -15,7 +15,7 @@ import nativex.gtk.cellrenderer.CellRenderer.Companion.wrap
 interface CellLayout {
 	companion object {
 
-		internal val staticCellDataFunc =
+		 val staticCellDataFunc =
 			staticCFunction { cellLayout: CPointer<GtkCellLayout>?,
 			                  cell: CPointer<GtkCellRenderer>?,
 			                  treeModel: CPointer<GtkTreeModel>?,

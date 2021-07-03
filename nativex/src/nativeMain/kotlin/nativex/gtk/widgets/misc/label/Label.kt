@@ -24,8 +24,8 @@ import nativex.pango.WrapMode
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-open class Label internal constructor(
-	internal val labelPointer: CPointer<GtkLabel>
+open class Label(
+	 val labelPointer: CPointer<GtkLabel>
 ) : Misc(labelPointer.reinterpret()) {
 	var text: String
 		get() = gtk_label_get_text(labelPointer)!!.toKString()
@@ -183,7 +183,7 @@ open class Label internal constructor(
 	}
 
 	companion object {
-		internal val staticPopulatePopupCallback: GCallback =
+		 val staticPopulatePopupCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  popup: CPointer<GtkMenu>,
 			                  data: gpointer? ->

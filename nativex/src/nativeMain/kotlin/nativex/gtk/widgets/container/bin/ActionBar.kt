@@ -13,7 +13,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkActionBar.html">GtkActionBar</a>
  */
 open class ActionBar(
-	internal val actionBarPointer: CPointer<GtkActionBar>
+	 val actionBarPointer: CPointer<GtkActionBar>
 ) : Bin(actionBarPointer.reinterpret()) {
 
 	/**

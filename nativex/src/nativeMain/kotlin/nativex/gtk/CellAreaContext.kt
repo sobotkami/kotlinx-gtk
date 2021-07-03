@@ -9,8 +9,8 @@ import nativex.gio.KObject
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class CellAreaContext internal constructor(
-	internal val cellAreaContextPointer: CPointer<GtkCellAreaContext>
+class CellAreaContext(
+	 val cellAreaContextPointer: CPointer<GtkCellAreaContext>
 ) : KObject(cellAreaContextPointer.reinterpret()) {
 
 

@@ -9,7 +9,7 @@ import nativex.glib.KGValue
 import nativex.gtk.TreeModel.TreeIter
 
 class ListStore constructor(
-	internal val listStorePointer: CPointer<GtkListStore>
+	 val listStorePointer: CPointer<GtkListStore>
 ) : KObject(listStorePointer.reinterpret()) {
 	constructor(vararg types: KGType) : this(
 		memScoped {

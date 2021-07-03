@@ -9,7 +9,7 @@ import gtk.GtkDragResult.*
  */
 enum class DragResult(
 	val key: Int,
-	internal val gtk: GtkDragResult
+	 val gtk: GtkDragResult
 ) {
 	SUCCESS(0, GTK_DRAG_RESULT_SUCCESS),
 	NO_TARGET(2, GTK_DRAG_RESULT_NO_TARGET),
@@ -23,7 +23,7 @@ enum class DragResult(
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkDragResult) =
+		 fun valueOf(gtk: GtkDragResult) =
 			values().find { it.gtk == gtk }
 	}
 }

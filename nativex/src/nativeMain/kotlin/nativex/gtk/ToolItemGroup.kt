@@ -8,8 +8,8 @@ import nativex.gtk.widgets.Widget.Companion.wrap
 import nativex.gtk.widgets.container.bin.toolitem.ToolItem
 import nativex.pango.EllipsizeMode
 
-class ToolItemGroup internal constructor(
-	internal val toolItemGroupPointer: CPointer<GtkToolItemGroup>
+class ToolItemGroup(
+	 val toolItemGroupPointer: CPointer<GtkToolItemGroup>
 ) {
 
 	val collapsed: Boolean

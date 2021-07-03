@@ -4,7 +4,7 @@ import gtk.*
 import kotlinx.cinterop.*
 
 enum class KGType constructor(
-	internal val glib: GType
+	 val glib: GType
 ) {
 	INVALID(G_TYPE_INVALID),
 	INT(G_TYPE_INT),
@@ -22,6 +22,6 @@ enum class KGType constructor(
 				}
 			}
 
-		internal fun valueOf(glib: GType) = values().find { it.glib == glib } ?: INVALID
+		 fun valueOf(glib: GType) = values().find { it.glib == glib } ?: INVALID
 	}
 }

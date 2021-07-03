@@ -11,8 +11,8 @@ import nativex.reinterpretOrNull
  * kotlinx-gtk
  * 28 / 03 / 2021
  */
-class Menu internal constructor(
-	internal val menuPointer: CPointer<GMenu>
+class Menu(
+	 val menuPointer: CPointer<GMenu>
 ) : MenuModel(menuPointer.reinterpret()) {
 	constructor() : this(g_menu_new()!!.reinterpret())
 
@@ -107,8 +107,8 @@ class Menu internal constructor(
 	}
 
 
-	open class Item internal constructor(
-		internal val menuItemPointer: CPointer<GMenuItem>
+	open class Item(
+		 val menuItemPointer: CPointer<GMenuItem>
 	) : KObject(menuItemPointer.reinterpret()) {
 		constructor(label: String? = null, detailedAction: String? = null) : this(
 			g_menu_item_new(label, detailedAction)!!.reinterpret()
@@ -180,7 +180,7 @@ class Menu internal constructor(
 			)
 		}
 
-		class Section internal constructor(p: CPointer<GMenuItem>) : Item(p) {
+		class Section(p: CPointer<GMenuItem>) : Item(p) {
 			constructor(label: String?, section: MenuModel) : this(
 				g_menu_item_new_section(
 					label,
@@ -189,7 +189,7 @@ class Menu internal constructor(
 			)
 		}
 
-		class Submenu internal constructor(p: CPointer<GMenuItem>) : Item(p) {
+		class Submenu(p: CPointer<GMenuItem>) : Item(p) {
 			constructor(label: String?, section: MenuModel) : this(
 				g_menu_item_new_submenu(
 					label,
@@ -207,10 +207,10 @@ class Menu internal constructor(
 		fun MenuModel.asMenu(): Menu? =
 			from(this)
 
-		internal inline fun CPointer<GMenu>?.wrap() =
+		 inline fun CPointer<GMenu>?.wrap() =
 			this?.let { Menu(it) }
 
-		internal inline fun CPointer<GMenu>.wrap() =
+		 inline fun CPointer<GMenu>.wrap() =
 			Menu(this)
 	}
 }

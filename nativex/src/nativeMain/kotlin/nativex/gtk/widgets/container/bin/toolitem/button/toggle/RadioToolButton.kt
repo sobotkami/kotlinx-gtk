@@ -12,8 +12,8 @@ import kotlinx.cinterop.reinterpret
  *
  * TODO Figure out GSList group
  */
-class RadioToolButton internal constructor(
-	internal val radioToolButtonPointer: CPointer<GtkRadioToolButton>
+class RadioToolButton(
+	 val radioToolButtonPointer: CPointer<GtkRadioToolButton>
 ) : ToggleToolButton(radioToolButtonPointer.reinterpret()) {
 	/**
 	 * TODO Figure out GSList group parameter

@@ -14,8 +14,8 @@ import nativex.gtk.gtk
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkAspectFrame.html">GtkAspectFrame</a>
  */
-class AspectFrame internal constructor(
-	internal val aspectFramePointer: CPointer<GtkAspectFrame>
+class AspectFrame(
+	 val aspectFramePointer: CPointer<GtkAspectFrame>
 ) : Frame(aspectFramePointer.reinterpret()) {
 
 	/**

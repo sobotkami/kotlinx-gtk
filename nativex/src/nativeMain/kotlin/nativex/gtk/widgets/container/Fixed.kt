@@ -14,8 +14,8 @@ import nativex.gtk.widgets.Widget
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFixed.html">GtkFixed</a>
  */
-class Fixed internal constructor(
-	internal val fixedPointer: CPointer<GtkFixed>
+class Fixed(
+	 val fixedPointer: CPointer<GtkFixed>
 ) : Container(
 	fixedPointer.reinterpret()
 ) {

@@ -13,8 +13,8 @@ import nativex.gtk.gtk
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRecentChooserMenu.html">
  *     GtkRecentChooserMenu</a>
  */
-class RecentChooserMenu internal constructor(
-	internal val recentChooserMenuPointer: CPointer<GtkRecentChooserMenu>
+class RecentChooserMenu(
+	 val recentChooserMenuPointer: CPointer<GtkRecentChooserMenu>
 ) : Menu(recentChooserMenuPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkRecentChooserMenu.html#gtk-recent-chooser-menu-new">

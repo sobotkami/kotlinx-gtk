@@ -21,8 +21,8 @@ import nativex.gtk.widgets.container.bin.Bin
  * kotlinx-gtk
  * 08 / 02 / 2021
  */
-open class Window internal constructor(
-	internal val windowPointer: CPointer<GtkWindow>
+open class Window(
+	 val windowPointer: CPointer<GtkWindow>
 ) : Bin(windowPointer.reinterpret()) {
 
 	constructor(type: Type) : this(gtk_window_new(type.gtk)!!.reinterpret())
@@ -239,14 +239,14 @@ open class Window internal constructor(
 
 
 	companion object {
-		internal val staticEnableDebuggingCallback: GCallback =
+		 val staticEnableDebuggingCallback: GCallback =
 			staticCFunction { _: gpointer?, toggle: gboolean, data: gpointer? ->
 				data?.asStableRef<(Boolean) -> Unit>()?.get()
 					?.invoke(toggle.bool)
 				Unit
 			}.reinterpret()
 
-		internal val staticSetFocusCallback: GCallback =
+		 val staticSetFocusCallback: GCallback =
 			staticCFunction { _: gpointer?, widget: CPointer<GtkWidget>?, data: gpointer? ->
 				data?.asStableRef<(Widget?) -> Unit>()?.get()
 					?.invoke(widget?.let { Widget(it) })
@@ -254,14 +254,14 @@ open class Window internal constructor(
 			}.reinterpret()
 
 
-		internal inline fun CPointer<GtkWindow>?.wrap() =
+		 inline fun CPointer<GtkWindow>?.wrap() =
 			this?.let { Window(it) }
 
-		internal inline fun CPointer<GtkWindow>.wrap() =
+		 inline fun CPointer<GtkWindow>.wrap() =
 			Window(this)
 	}
 
-	enum class Type(val key: Int, internal val gtk: GtkWindowType) {
+	enum class Type(val key: Int,  val gtk: GtkWindowType) {
 		TOP_LEVEL(0, GTK_WINDOW_TOPLEVEL),
 		POPUP(1, GTK_WINDOW_POPUP);
 
@@ -271,7 +271,7 @@ open class Window internal constructor(
 		}
 	}
 
-	enum class Position(val key: Int, internal val gtk: GtkWindowPosition) {
+	enum class Position(val key: Int,  val gtk: GtkWindowPosition) {
 		NONE(0, GTK_WIN_POS_NONE),
 		CENTER(1, GTK_WIN_POS_CENTER),
 		MOUSE(2, GTK_WIN_POS_MOUSE),

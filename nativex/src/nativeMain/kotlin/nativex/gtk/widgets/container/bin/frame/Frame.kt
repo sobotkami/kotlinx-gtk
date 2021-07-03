@@ -14,7 +14,7 @@ import nativex.gtk.widgets.container.bin.Bin
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html">GtkFrame</a>
  */
 open class Frame(
-	internal val framePointer: CPointer<GtkFrame>
+	 val framePointer: CPointer<GtkFrame>
 ) : Bin(framePointer.reinterpret()) {
 
 	/**

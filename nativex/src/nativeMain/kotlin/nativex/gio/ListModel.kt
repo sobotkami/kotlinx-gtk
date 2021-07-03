@@ -14,8 +14,8 @@ import nativex.glib.KGType
  *
  * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html">GListModel</a>
  */
-open class ListModel internal constructor(
-	internal val listModelPointer: CPointer<GListModel>
+open class ListModel(
+	 val listModelPointer: CPointer<GListModel>
 ) {
 
 	/**
@@ -57,7 +57,7 @@ open class ListModel internal constructor(
 	)
 
 	companion object {
-		internal val staticItemsChangedCallback =
+		 val staticItemsChangedCallback =
 			staticCFunction { _: GListModel?, position: UInt, removed: UInt, added: UInt, data: gpointer? ->
 				data?.asStableRef<(ItemsChanged) -> Unit>()?.get()?.invoke(ItemsChanged(position, removed, added))
 				Unit

@@ -10,7 +10,7 @@ import gtk.GtkBaselinePosition.GTK_BASELINE_POSITION_TOP
  */
 enum class BaselinePosition(
 	val key: Int,
-	internal val gtk: GtkBaselinePosition
+	 val gtk: GtkBaselinePosition
 ) {
 	TOP(0, GTK_BASELINE_POSITION_TOP),
 	CENTER(1, GTK_BASELINE_POSITION_CENTER),
@@ -20,7 +20,7 @@ enum class BaselinePosition(
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkBaselinePosition) =
+		 fun valueOf(gtk: GtkBaselinePosition) =
 			values().find { it.gtk == gtk }
 	}
 }

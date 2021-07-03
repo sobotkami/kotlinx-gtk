@@ -20,8 +20,8 @@ import nativex.gtk.widgets.container.bin.windows.dialog.PrintUnixDialog
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPrinter.html">GtkPrinter</a>
  */
-class Printer internal constructor(
-	internal val printerPointer: CPointer<GtkPrinter>
+class Printer(
+	 val printerPointer: CPointer<GtkPrinter>
 ) : Comparable<Printer>, KObject(printerPointer.reinterpret()) {
 
 	/**
@@ -198,20 +198,20 @@ class Printer internal constructor(
 	val detailsAcquiredSignal: Flow<Boolean> by signalFlow(Signals.DETAILS_ACQUIRED, staticDetailsAcquiredCallback)
 
 	companion object {
-		internal val staticPrinterFunction: GtkPrinterFunc = staticCFunction { p, d ->
+		 val staticPrinterFunction: GtkPrinterFunc = staticCFunction { p, d ->
 			d?.asStableRef<PrinterFunction>()?.get()?.invoke(p!!.wrap()).gtk
 		}
 
-		internal val staticDetailsAcquiredCallback: GCallback =
+		 val staticDetailsAcquiredCallback: GCallback =
 			staticCFunction { _: gpointer, success: gboolean, data: gpointer? ->
 				data?.asStableRef<(Boolean) -> Unit>()?.get()?.invoke(success.bool)
 				Unit
 			}.reinterpret()
 
-		internal inline fun CPointer<GtkPrinter>?.wrap() =
+		 inline fun CPointer<GtkPrinter>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkPrinter>.wrap() =
+		 inline fun CPointer<GtkPrinter>.wrap() =
 			Printer(this)
 	}
 }

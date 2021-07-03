@@ -12,7 +12,7 @@ import nativex.glib.KGError
  * kotlinx-gtk
  * 08 / 04 / 2021
  */
-internal fun CPointer<CPointerVar<GError>>.unwrap(throwException: Boolean = true): Exception? {
+ fun CPointer<CPointerVar<GError>>.unwrap(throwException: Boolean = true): Exception? {
 	val err = pointed.pointed ?: return null
 	val exception = when (err.domain) {
 		GDK_PIXBUF_ERROR -> {

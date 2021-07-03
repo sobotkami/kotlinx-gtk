@@ -9,8 +9,8 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class GlArea internal constructor(
-	internal val glAreaPointer: CPointer<GtkGLArea>
+class GlArea(
+	 val glAreaPointer: CPointer<GtkGLArea>
 ) : Widget(glAreaPointer.reinterpret()) {
 	constructor() : this(gtk_gl_area_new()!!.reinterpret())
 }

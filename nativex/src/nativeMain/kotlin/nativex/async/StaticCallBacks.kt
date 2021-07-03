@@ -12,7 +12,7 @@ import nativex.gtk.widgets.container.FlowBox
 
 // This file contains generic static callbacks that are frequently used in the program
 
-internal val staticIntCallback: GCallback =
+ val staticIntCallback: GCallback =
 	staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 		data?.asStableRef<(Int) -> Unit>()
 			?.get()
@@ -20,7 +20,7 @@ internal val staticIntCallback: GCallback =
 		Unit
 	}.reinterpret()
 
-internal val staticBooleanCallback: GCallback =
+ val staticBooleanCallback: GCallback =
 	staticCFunction { _: gpointer?,
 	                  arg1: gboolean,
 	                  data: gpointer? ->
@@ -29,7 +29,7 @@ internal val staticBooleanCallback: GCallback =
 		Unit
 	}.reinterpret()
 
-internal val staticCStringCallback: GCallback =
+ val staticCStringCallback: GCallback =
 	staticCFunction { _: gpointer?,
 	                  arg1: CString,
 	                  data: gpointer? ->
@@ -41,7 +41,7 @@ internal val staticCStringCallback: GCallback =
 /**
  * Most of the library uses a stable reference as the user data. This is just a generic destroy for it
  */
-internal val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer ->
+ val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer ->
 	pointer?.asStableRef<Any>()?.dispose()
 }
 

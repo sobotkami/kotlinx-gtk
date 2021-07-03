@@ -17,8 +17,8 @@ import nativex.gtk.widgets.Widget
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html">GtkStack</a>
  */
-class Stack internal constructor(
-	internal val stackPointer: CPointer<GtkStack>
+class Stack(
+	 val stackPointer: CPointer<GtkStack>
 ) : Container(stackPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-new">gtk_stack_new</a>
@@ -141,7 +141,7 @@ class Stack internal constructor(
 	 */
 	enum class TransitionType(
 		val key: Int,
-		internal val gtk: GtkStackTransitionType
+		 val gtk: GtkStackTransitionType
 	) {
 		/** No transition */
 		NONE(0, GTK_STACK_TRANSITION_TYPE_NONE),

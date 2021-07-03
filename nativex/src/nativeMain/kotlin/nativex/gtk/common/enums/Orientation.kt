@@ -6,7 +6,7 @@ import gtk.GtkOrientation
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class Orientation(val key: Int, internal val gtk: GtkOrientation) {
+enum class Orientation(val key: Int,  val gtk: GtkOrientation) {
 	HORIZONTAL(0, GtkOrientation.GTK_ORIENTATION_HORIZONTAL),
 	VERTICAL(1, GtkOrientation.GTK_ORIENTATION_VERTICAL);
 
@@ -14,7 +14,7 @@ enum class Orientation(val key: Int, internal val gtk: GtkOrientation) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkOrientation) =
+		 fun valueOf(gtk: GtkOrientation) =
 			values().find { it.gtk == gtk }
 	}
 }

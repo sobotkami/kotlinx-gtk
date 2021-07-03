@@ -7,14 +7,14 @@ import kotlinx.cinterop.CPointer
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-class CellArea internal constructor(
-	internal val pointer: CPointer<GtkCellArea>
+class CellArea(
+	 val pointer: CPointer<GtkCellArea>
 ) {
 	companion object{
-		internal inline fun CPointer<GtkCellArea>?.wrap() =
+		 inline fun CPointer<GtkCellArea>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkCellArea>.wrap() =
+		 inline fun CPointer<GtkCellArea>.wrap() =
 			CellArea(this)
 	}
 

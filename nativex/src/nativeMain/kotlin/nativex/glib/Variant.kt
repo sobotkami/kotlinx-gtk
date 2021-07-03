@@ -11,8 +11,8 @@ import platform.posix.va_list
  * kotlinx-gtk
  * 23 / 03 / 2021
  */
-open class Variant internal constructor(
-	internal val variantPointer: CPointer<GVariant>
+open class Variant(
+	 val variantPointer: CPointer<GVariant>
 ) : Comparable<Variant> {
 
 	val type: VariantType
@@ -140,10 +140,10 @@ open class Variant internal constructor(
 		val String.isSignature: Boolean
 			get() = isSignature(this)
 
-		internal inline fun CPointer<GVariant>?.wrap() =
+		 inline fun CPointer<GVariant>?.wrap() =
 			this?.let { Variant(it) }
 
-		internal inline fun CPointer<GVariant>.wrap() =
+		 inline fun CPointer<GVariant>.wrap() =
 			Variant(this)
 	}
 

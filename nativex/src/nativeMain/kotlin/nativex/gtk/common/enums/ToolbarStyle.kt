@@ -7,7 +7,7 @@ import gtk.GtkToolbarStyle.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class ToolbarStyle(val key: Int, internal val gtk: GtkToolbarStyle) {
+enum class ToolbarStyle(val key: Int,  val gtk: GtkToolbarStyle) {
 	ICONS(0, GTK_TOOLBAR_ICONS),
 	TEXT(1, GTK_TOOLBAR_TEXT),
 	BOTH(2, GTK_TOOLBAR_BOTH),
@@ -17,7 +17,7 @@ enum class ToolbarStyle(val key: Int, internal val gtk: GtkToolbarStyle) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkToolbarStyle) =
+		 fun valueOf(gtk: GtkToolbarStyle) =
 			values().find { it.gtk == gtk }
 	}
 }

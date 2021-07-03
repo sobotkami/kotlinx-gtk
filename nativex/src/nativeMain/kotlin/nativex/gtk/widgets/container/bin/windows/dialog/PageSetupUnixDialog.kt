@@ -10,9 +10,9 @@ import kotlinx.cinterop.reinterpret
  *
  * TODO gtkunixprint.h
  */
-class PageSetupUnixDialog internal constructor(
+class PageSetupUnixDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkDialog>
+	 val aboutDialogPointer: CPointer<GtkDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
 	/*

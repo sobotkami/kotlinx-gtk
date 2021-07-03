@@ -13,8 +13,8 @@ import nativex.gtk.bool
  *
  * TODO Complete
  */
-class KCancellable internal constructor(
-	internal val cancellablePointer: CPointer<GCancellable>
+class KCancellable(
+	 val cancellablePointer: CPointer<GCancellable>
 ) : KObject(cancellablePointer.reinterpret()) {
 	constructor() : this(g_cancellable_new()!!.reinterpret())
 

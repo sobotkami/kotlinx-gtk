@@ -9,7 +9,7 @@ import kotlinx.cinterop.reinterpret
  * 08 / 03 / 2021
  * TODO gtkx
  */
-class Plug internal constructor(
+class Plug(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val plugPointer: CPointer<GtkDialog>
+	 val plugPointer: CPointer<GtkDialog>
 ) : Window(plugPointer.reinterpret())

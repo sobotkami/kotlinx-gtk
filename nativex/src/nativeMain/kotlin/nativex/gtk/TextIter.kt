@@ -7,7 +7,7 @@ import kotlinx.cinterop.CPointer
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-class TextIter internal constructor(
+class TextIter(
 	val pointer: CPointer<GtkTextIter>
 ) {
 

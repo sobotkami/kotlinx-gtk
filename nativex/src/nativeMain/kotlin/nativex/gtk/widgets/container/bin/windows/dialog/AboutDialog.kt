@@ -13,9 +13,9 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-class AboutDialog internal constructor(
+class AboutDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val aboutDialogPointer: CPointer<GtkAboutDialog>
+	 val aboutDialogPointer: CPointer<GtkAboutDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
 	var programName: String?
@@ -141,7 +141,7 @@ class AboutDialog internal constructor(
 		)
 	}
 
-	enum class License(val key: Int, internal val gtk: GtkLicense) {
+	enum class License(val key: Int,  val gtk: GtkLicense) {
 		UNKNOWN(0, GTK_LICENSE_UNKNOWN),
 
 		CUSTOM(1, GTK_LICENSE_CUSTOM),
@@ -181,7 +181,7 @@ class AboutDialog internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkLicense) =
+			 fun valueOf(gtk: GtkLicense) =
 				values().find { it.gtk == gtk }
 		}
 
@@ -194,7 +194,7 @@ class AboutDialog internal constructor(
 	}
 }
 
-internal val staticActivateLinkCallback: GCallback =
+ val staticActivateLinkCallback: GCallback =
 	staticCFunction { _: CPointer<GtkAboutDialog>, char: CString, data: gpointer ->
 		data.asStableRef<ActivateLinkFunction>().get().invoke(char.toKString()).gtk
 	}.reinterpret()

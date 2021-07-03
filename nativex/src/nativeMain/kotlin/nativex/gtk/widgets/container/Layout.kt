@@ -15,8 +15,8 @@ import nativex.gtk.widgets.Widget
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLayout.html">GtkLayout</a>
  */
-class Layout internal constructor(
-	internal val layoutPointer: CPointer<GtkLayout>
+class Layout(
+	 val layoutPointer: CPointer<GtkLayout>
 ) : Container(layoutPointer.reinterpret()), Scrollable {
 	override val scrollablePointer: PointerHolder<GtkScrollable>
 		get() = PointerHolder(layoutPointer.reinterpret())

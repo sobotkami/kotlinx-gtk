@@ -14,10 +14,10 @@ import nativex.gtk.asIterable
  */
 interface ClosableSequence<T> : Sequence<T>, Closeable
 
-internal inline fun CStringList.asCloseableKSequence(): ClosableSequence<String> =
+ inline fun CStringList.asCloseableKSequence(): ClosableSequence<String> =
 	asCloseableSequence().asKSequence()
 
-internal inline fun ClosableSequence<CString>.asKSequence(): ClosableSequence<String> =
+ inline fun ClosableSequence<CString>.asKSequence(): ClosableSequence<String> =
 	object : Sequence<String>, ClosableSequence<String> {
 
 		override fun iterator(): Iterator<String> = object : Iterator<String> {
@@ -31,7 +31,7 @@ internal inline fun ClosableSequence<CString>.asKSequence(): ClosableSequence<St
 		}
 	}
 
-internal inline fun CStringList.asCloseableSequence() =
+ inline fun CStringList.asCloseableSequence() =
 	object : ClosableSequence<CString> {
 		var isClosed = false
 

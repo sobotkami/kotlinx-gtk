@@ -11,8 +11,8 @@ import nativex.gtk.widgets.container.Container
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-open class Bin internal constructor(
-	internal val binPointer: CPointer<GtkBin>
+open class Bin(
+	 val binPointer: CPointer<GtkBin>
 ) : Container(binPointer.reinterpret()) {
 
 	val child: Widget?

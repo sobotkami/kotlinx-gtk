@@ -11,8 +11,8 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class Spinner internal constructor(
-	internal val spinnerPointer: CPointer<GtkSpinner>
+class Spinner(
+	 val spinnerPointer: CPointer<GtkSpinner>
 ) : Widget(spinnerPointer.reinterpret()) {
 	constructor() : this(gtk_spinner_new()!!.reinterpret())
 

@@ -8,7 +8,7 @@ import kotlinx.cinterop.reinterpret
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-class ShortcutsWindow internal constructor(
+class ShortcutsWindow(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val shortCutsWindowPointer: CPointer<GtkShortcutsWindow>
+	 val shortCutsWindowPointer: CPointer<GtkShortcutsWindow>
 ) : Window(shortCutsWindowPointer.reinterpret())

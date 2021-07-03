@@ -17,8 +17,8 @@ import nativex.gtk.Signals
 import nativex.gtk.asKSequence
 import nativex.gtk.bool
 
-class Display internal constructor(
-	internal val displayPointer: CPointer<GdkDisplay>
+class Display(
+	 val displayPointer: CPointer<GdkDisplay>
 ) : KObject(displayPointer.reinterpret()), Closeable {
 
 	/**
@@ -158,7 +158,7 @@ class Display internal constructor(
 	val seatRemovedSignal: Flow<Seat> by signalFlow(Signals.SEAT_REMOVED, staticSeatCallback)
 
 	companion object {
-		internal val staticMonitorCallback: GCallback =
+		 val staticMonitorCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: CPointer<GdkMonitor>, data: gpointer? ->
 				data?.asStableRef<(Monitor) -> Unit>()
 					?.get()
@@ -166,7 +166,7 @@ class Display internal constructor(
 				Unit
 			}.reinterpret()
 
-		internal val staticSeatCallback: GCallback =
+		 val staticSeatCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: CPointer<GdkSeat>, data: gpointer? ->
 				data?.asStableRef<(Seat) -> Unit>()
 					?.get()
@@ -183,10 +183,10 @@ class Display internal constructor(
 			get() = gdk_display_get_default().wrap()
 
 
-		internal inline fun CPointer<GdkDisplay>?.wrap() =
+		 inline fun CPointer<GdkDisplay>?.wrap() =
 			this?.let { Display(it) }
 
-		internal inline fun CPointer<GdkDisplay>.wrap() =
+		 inline fun CPointer<GdkDisplay>.wrap() =
 			Display(this)
 	}
 

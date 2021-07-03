@@ -16,7 +16,7 @@ import nativex.gtk.widgets.entry.Entry
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html">GtkSearchBar</a>
  */
 class SearchBar(
-	internal val searchBarPointer: CPointer<GtkSearchBar>
+	 val searchBarPointer: CPointer<GtkSearchBar>
 ) : Bin(searchBarPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html#gtk-search-bar-new">gtk_search_bar_new</a>

@@ -20,8 +20,8 @@ import nativex.gtk.widgets.container.bin.toolitem.ToolItem.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToolbar.html">GtkToolbar</a>
  */
-class Toolbar internal constructor(
-	internal val toolbarPointer: CPointer<GtkToolbar>
+class Toolbar(
+	 val toolbarPointer: CPointer<GtkToolbar>
 ) : Container(toolbarPointer.reinterpret()) {
 
 	/**
@@ -163,24 +163,24 @@ class Toolbar internal constructor(
 		)
 
 	companion object {
-		internal val staticOrientationChangedCallback: GCallback =
+		 val staticOrientationChangedCallback: GCallback =
 			staticCFunction { _: gpointer, orientation: GtkOrientation, data: gpointer? ->
 				data?.asStableRef<(Orientation) -> Unit>()?.get()?.invoke(Orientation.valueOf(orientation)!!)
 				Unit
 			}.reinterpret()
 
-		internal val staticStyleChangedCallback: GCallback =
+		 val staticStyleChangedCallback: GCallback =
 			staticCFunction { _: gpointer, orientation: GtkToolbarStyle, data: gpointer? ->
 				data?.asStableRef<(ToolbarStyle) -> Unit>()?.get()?.invoke(ToolbarStyle.valueOf(orientation)!!)
 				Unit
 			}.reinterpret()
 
-		internal val staticFocusHomeOrEndFunction: GCallback =
+		 val staticFocusHomeOrEndFunction: GCallback =
 			staticCFunction { _: gpointer, focusHome: gboolean, data: gpointer? ->
 				data?.asStableRef<FocusHomeOrEndFunction>()?.get()?.invoke(focusHome.bool).gtk
 			}.reinterpret()
 
-		internal val staticPopupContextMenuFunction: GCallback =
+		 val staticPopupContextMenuFunction: GCallback =
 			staticCFunction { _: gpointer, x: Int, y: Int, button: Int, data: gpointer? ->
 				data?.asStableRef<PopupContextMenuFunction>()?.get()?.invoke(x, y, button).gtk
 			}.reinterpret()

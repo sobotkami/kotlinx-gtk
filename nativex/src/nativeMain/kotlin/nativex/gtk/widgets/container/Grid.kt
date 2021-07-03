@@ -17,8 +17,8 @@ import nativex.gtk.widgets.Widget
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkGrid.html">GtkGrid</a>
  */
-class Grid internal constructor(
-	internal val gridPointer: CPointer<GtkGrid>
+class Grid(
+	 val gridPointer: CPointer<GtkGrid>
 ) : Container(gridPointer.reinterpret()) {
 
 	/**

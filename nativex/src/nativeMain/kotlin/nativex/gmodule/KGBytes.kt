@@ -7,8 +7,8 @@ import nativex.gtk.bool
 /**
  * @see <a href="https://developer.gnome.org/glib/stable/glib-Byte-Arrays.html#GBytes">GBytes</a>
  */
-class KGBytes internal constructor(
-	internal val pointer: CPointer<GBytes>
+class KGBytes(
+	 val pointer: CPointer<GBytes>
 ):Comparable<KGBytes> {
 
 	/**

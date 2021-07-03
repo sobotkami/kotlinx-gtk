@@ -15,7 +15,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkOverlay.html"></a>
  */
 class Overlay(
-	internal val overlayPointer: CPointer<GtkOverlay>
+	 val overlayPointer: CPointer<GtkOverlay>
 ) : Bin(overlayPointer.reinterpret()) {
 
 	/**

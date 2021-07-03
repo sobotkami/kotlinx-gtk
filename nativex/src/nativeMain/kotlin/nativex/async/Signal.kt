@@ -15,7 +15,7 @@ import nativex.gtk.connectSignal
 
 
 @ExperimentalCoroutinesApi
-internal inline fun KObject.signalFlow(signal: String): Lazy<Flow<Unit>> = lazy(LazyThreadSafetyMode.NONE) {
+ inline fun KObject.signalFlow(signal: String): Lazy<Flow<Unit>> = lazy(LazyThreadSafetyMode.NONE) {
 	callbackFlow {
 		val id = pointer.connectSignal(
 			signal = signal,
@@ -35,7 +35,7 @@ internal inline fun KObject.signalFlow(signal: String): Lazy<Flow<Unit>> = lazy(
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
 @ExperimentalCoroutinesApi
-internal inline fun <T> KObject.signalFlow(
+ inline fun <T> KObject.signalFlow(
 	signal: String,
 	handler: GCallback,
 ): Lazy<Flow<T>> = lazy(LazyThreadSafetyMode.NONE) {
@@ -45,7 +45,7 @@ internal inline fun <T> KObject.signalFlow(
 
 @Deprecated("simplify codebase with lazy inlined", ReplaceWith("signalFlow(signal)", "nativex.async.signalFlow"))
 @ExperimentalCoroutinesApi
-internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
+ inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	callbackFlow {
 		val id = pointer.connectSignal(
 			signal = signal,
@@ -68,7 +68,7 @@ internal inline fun KObject.callbackSignalFlow(signal: String): Flow<Unit> =
 	ReplaceWith("signalFlow(signal,handler)", "nativex.async.signalFlow")
 )
 @ExperimentalCoroutinesApi
-internal inline fun <T> KObject.callbackSignalFlow(
+ inline fun <T> KObject.callbackSignalFlow(
 	signal: String,
 	handler: GCallback,
 ): Flow<T> = pointer.callbackSignalFlow(signal, handler)
@@ -78,7 +78,7 @@ internal inline fun <T> KObject.callbackSignalFlow(
  * @param handler Static C Function that will take event directly from the GTK library, should invoke [connectSignal.callbackWrapper]
  */
 @ExperimentalCoroutinesApi
-internal inline fun <T> CPointer<GObject>.callbackSignalFlow(
+ inline fun <T> CPointer<GObject>.callbackSignalFlow(
 	signal: String,
 	handler: GCallback
 ): Flow<T> = callbackFlow {
@@ -103,7 +103,7 @@ internal inline fun <T> CPointer<GObject>.callbackSignalFlow(
  * @param T type of function this manager is responsible
  * @param signalId id of the signal
  */
-class SignalManager internal constructor(internal val pointer: VoidPointer, internal val signalId: ULong) {
+class SignalManager( val pointer: VoidPointer,  val signalId: ULong) {
 	fun disconnect() {
 		g_signal_handler_disconnect(pointer, signalId)
 	}

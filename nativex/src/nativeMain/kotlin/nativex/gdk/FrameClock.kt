@@ -16,7 +16,7 @@ import nativex.gtk.Signals
  *
  * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html">GdkFrameClock</a>
  */
-class FrameClock internal constructor(
+class FrameClock(
 	val frameClockPointer: CPointer<GdkFrameClock>
 ) : KObject(frameClockPointer.reinterpret()) {
 	/**
@@ -156,16 +156,16 @@ class FrameClock internal constructor(
 
 		companion object {
 
-			internal fun valueOf(gdk: GdkFrameClockPhase) =
+			 fun valueOf(gdk: GdkFrameClockPhase) =
 				values().find { it.gdk == gdk }!!
 		}
 	}
 
 	companion object{
-		internal inline fun CPointer<GdkFrameClock>?.wrap() =
+		 inline fun CPointer<GdkFrameClock>?.wrap() =
 			this?.let { FrameClock(it) }
 
-		internal inline fun CPointer<GdkFrameClock>.wrap() =
+		 inline fun CPointer<GdkFrameClock>.wrap() =
 			FrameClock(this)
 	}
 }

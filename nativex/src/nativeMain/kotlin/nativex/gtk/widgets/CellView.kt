@@ -11,8 +11,8 @@ import nativex.gtk.*
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class CellView internal constructor(
-	internal val cellViewPointer: CPointer<GtkCellView>
+class CellView(
+	 val cellViewPointer: CPointer<GtkCellView>
 ) : Widget(cellViewPointer.reinterpret()) {
 	constructor() : this(gtk_cell_view_new()!!.reinterpret())
 	constructor(cellView: CellArea, cellAreaContext: CellAreaContext) : this(

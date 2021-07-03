@@ -13,7 +13,7 @@ data class MoveCursorEvent(
 	val count: Int
 ) {
 	companion object {
-		internal val staticCallback: GCallback =
+		 val staticCallback: GCallback =
 			staticCFunction { _: gpointer, step: GtkMovementStep, count: Int, data: gpointer? ->
 				data?.asStableRef<(MoveCursorEvent) -> Unit>()?.get()?.invoke(
 					MoveCursorEvent(

@@ -12,8 +12,8 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class ScaleButton internal constructor(
-	internal val scaleButtonPointer: CPointer<GtkScaleButton>
+class ScaleButton(
+	 val scaleButtonPointer: CPointer<GtkScaleButton>
 ) : Button(scaleButtonPointer.reinterpret()) {
 
 	constructor(

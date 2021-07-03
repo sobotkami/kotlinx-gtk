@@ -74,8 +74,8 @@ interface ActionMap {
 	 * Instead of actually wrapping the C function,
 	 * the C function calls the K function
 	 */
-	class Entry internal constructor(
-		internal val actionEntryPointer: CPointer<GActionEntry>
+	class Entry(
+		 val actionEntryPointer: CPointer<GActionEntry>
 	) {
 		var name: String
 			get() = actionEntryPointer.pointed.name!!.toKString()
@@ -123,7 +123,7 @@ interface ActionMap {
 		}
 
 		companion object {
-			internal val activateCallback =
+			 val activateCallback =
 				staticCFunction { action: CPointer<GSimpleAction>?, variant: CPointer<GVariant>?, userData: gpointer? ->
 					userData?.asStableRef<NativeActionMapEntryFunction>()
 						?.get()
@@ -132,7 +132,7 @@ interface ActionMap {
 				}
 
 
-			internal val changeStateCallback =
+			 val changeStateCallback =
 				staticCFunction { action: CPointer<GSimpleAction>?, variant: CPointer<GVariant>?, userData: gpointer? ->
 					userData?.asStableRef<NativeActionMapEntryFunction>()
 						?.get()
@@ -144,7 +144,7 @@ interface ActionMap {
 	}
 }
 
-internal typealias NativeActionMapEntryFunction = (
+ typealias NativeActionMapEntryFunction = (
 	@ParameterName("actionPointer") CPointer<GSimpleAction>?,
 	@ParameterName("parameterPointer") CPointer<GVariant>?,
 	/**

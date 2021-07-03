@@ -28,7 +28,7 @@ open class Event(val eventPointer: CPointer<GdkEvent>) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Events.html#GdkEventMask">GdkEventMask</a>
 	 */
-	enum class Mask(val key: Int, internal val gdk: GdkEventMask) {
+	enum class Mask(val key: Int,  val gdk: GdkEventMask) {
 		EXPOSURE_MASK(0, GDK_EXPOSURE_MASK),
 		POINTER_MOTION_MASK(1, GDK_POINTER_MOTION_MASK),
 		POINTER_MOTION_HINT_MASK(2, GDK_POINTER_MOTION_HINT_MASK),
@@ -57,7 +57,7 @@ open class Event(val eventPointer: CPointer<GdkEvent>) {
 		ALL_EVENTS_MASK(25, GDK_ALL_EVENTS_MASK);
 
 		companion object {
-			internal fun valueOf(gdk: GdkEventMask) =
+			 fun valueOf(gdk: GdkEventMask) =
 				values().find { it.gdk == gdk }
 		}
 

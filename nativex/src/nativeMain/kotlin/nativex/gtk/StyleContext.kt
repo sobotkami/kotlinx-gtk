@@ -10,20 +10,20 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class StyleContext internal constructor(
-	internal val styleContextPointer: CPointer<GtkStyleContext>
+class StyleContext(
+	 val styleContextPointer: CPointer<GtkStyleContext>
 ) {
 	companion object{
-		internal inline fun CPointer<GtkStyleContext>?.wrap() =
+		 inline fun CPointer<GtkStyleContext>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkStyleContext>.wrap() =
+		 inline fun CPointer<GtkStyleContext>.wrap() =
 			StyleContext(this)
 
 	}
 
-	class Border internal constructor(
-		internal val borderPointer: CPointer<GtkBorder>?
+	class Border(
+		 val borderPointer: CPointer<GtkBorder>?
 	) {
 		val left: Short?
 			get() = borderPointer?.pointed?.left

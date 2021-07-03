@@ -10,8 +10,8 @@ import kotlinx.cinterop.toKString
  * kotlinx-gtk
  * 13 / 04 / 2021
  */
-class KGError internal constructor(
-	internal val pointer: CPointer<CPointerVar<GError>>
+class KGError(
+	 val pointer: CPointer<CPointerVar<GError>>
 ) : Exception(
 	pointer.pointed.pointed?.message?.toKString()
 ) {

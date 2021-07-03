@@ -11,8 +11,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class LinkButton internal constructor(
-	internal val linkButtonPointer: CPointer<GtkLinkButton>
+class LinkButton(
+	 val linkButtonPointer: CPointer<GtkLinkButton>
 ) : Button(linkButtonPointer.reinterpret()) {
 
 	constructor(uri: String) : this(gtk_link_button_new(uri)!!.reinterpret())

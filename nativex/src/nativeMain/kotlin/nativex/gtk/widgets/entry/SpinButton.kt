@@ -13,8 +13,8 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class SpinButton internal constructor(
-	internal val spinButtonPointer: CPointer<GtkSpinButton>
+class SpinButton(
+	 val spinButtonPointer: CPointer<GtkSpinButton>
 ) : Entry(spinButtonPointer.reinterpret()) {
 	
 	fun configure(
@@ -149,7 +149,7 @@ class SpinButton internal constructor(
 
 	enum class UpdatePolicy(
 		val key: Int,
-		internal val gtk: GtkSpinButtonUpdatePolicy
+		 val gtk: GtkSpinButtonUpdatePolicy
 	) {
 		ALWAYS(0, GTK_UPDATE_ALWAYS),
 		IF_VALID(1, GTK_UPDATE_IF_VALID);
@@ -165,7 +165,7 @@ class SpinButton internal constructor(
 
 	enum class SpinType(
 		val key: Int,
-		internal val gtk: GtkSpinType
+		 val gtk: GtkSpinType
 	) {
 		STEP_FORWARD(0, GTK_SPIN_STEP_FORWARD),
 		STEP_BACKWARD(0, GTK_SPIN_STEP_BACKWARD),

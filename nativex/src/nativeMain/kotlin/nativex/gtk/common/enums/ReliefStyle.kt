@@ -8,7 +8,7 @@ import gtk.GtkReliefStyle.GTK_RELIEF_NORMAL
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class ReliefStyle(val key: Int, internal val gtk: GtkReliefStyle) {
+enum class ReliefStyle(val key: Int,  val gtk: GtkReliefStyle) {
 	NORMAL(0, GTK_RELIEF_NORMAL),
 	NON(1, GTK_RELIEF_NONE);
 
@@ -16,7 +16,7 @@ enum class ReliefStyle(val key: Int, internal val gtk: GtkReliefStyle) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkReliefStyle) =
+		 fun valueOf(gtk: GtkReliefStyle) =
 			values().find { it.gtk == gtk }
 	}
 }

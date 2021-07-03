@@ -16,8 +16,8 @@ import nativex.gtk.widgets.container.box.Box
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkButtonBox.html">GtkButtonBox</a>
  */
-open class ButtonBox internal constructor(
-	internal val buttonBoxPointer: CPointer<GtkButtonBox>
+open class ButtonBox(
+	 val buttonBoxPointer: CPointer<GtkButtonBox>
 ) : Box(
 	buttonBoxPointer.reinterpret()
 ) {
@@ -92,7 +92,7 @@ open class ButtonBox internal constructor(
 	 */
 	enum class Style(
 		val key: Int,
-		internal val gtk: GtkButtonBoxStyle
+		 val gtk: GtkButtonBoxStyle
 	) {
 		/**
 		 * Buttons are evenly spread across the box.
@@ -136,7 +136,7 @@ open class ButtonBox internal constructor(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkButtonBoxStyle) =
+			 fun valueOf(gtk: GtkButtonBoxStyle) =
 				values().find { it.gtk == gtk }
 		}
 	}

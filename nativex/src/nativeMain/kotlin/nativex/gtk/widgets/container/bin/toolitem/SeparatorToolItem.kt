@@ -13,9 +13,9 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 20 / 03 / 2021
  */
-class SeparatorToolItem internal constructor(
+class SeparatorToolItem(
 	@Suppress("MemberVisibilityCanBePrivate")
-	internal val separatorToolItem: CPointer<GtkSeparatorToolItem>
+	 val separatorToolItem: CPointer<GtkSeparatorToolItem>
 ) : ToolItem(separatorToolItem.reinterpret()) {
 	constructor() : this(gtk_separator_tool_item_new()!!.reinterpret())
 

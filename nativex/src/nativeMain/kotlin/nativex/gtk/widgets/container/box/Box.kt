@@ -20,8 +20,8 @@ import nativex.gtk.widgets.container.bin.button.Button
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html">GtkBox</a>
  */
-open class Box internal constructor(
-	internal val boxPointer: CPointer<GtkBox>
+open class Box(
+	 val boxPointer: CPointer<GtkBox>
 ) : Container(boxPointer.reinterpret()), Orientable {
 
 	override val orientablePointer: PointerHolder<GtkOrientable> by lazy { PointerHolder(boxPointer.reinterpret()) }
@@ -183,10 +183,10 @@ open class Box internal constructor(
 		set(value) = gtk_box_set_center_widget(boxPointer, value?.widgetPointer)
 
 	companion object{
-		internal inline fun CPointer<GtkBox>?.wrap() =
+		 inline fun CPointer<GtkBox>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GtkBox>.wrap() =
+		 inline fun CPointer<GtkBox>.wrap() =
 			Box(this)
 	}
 }

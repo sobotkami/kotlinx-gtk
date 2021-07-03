@@ -12,8 +12,8 @@ import nativex.gio.Permission
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
-class LockButton internal constructor(
-	internal val lockButtonPointer: CPointer<GtkLockButton>
+class LockButton(
+	 val lockButtonPointer: CPointer<GtkLockButton>
 ) : Button(lockButtonPointer.reinterpret()) {
 
 	constructor(permission: Permission) : this(gtk_lock_button_new(permission.permissionPointer)!!.reinterpret())

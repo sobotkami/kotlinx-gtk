@@ -13,8 +13,8 @@ import nativex.gio.MenuModel
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkMenuBar.html">GtkMenuBar</a>
  */
-class MenuBar internal constructor(
-	internal val menuBarPointer: CPointer<GtkMenuBar>
+class MenuBar(
+	 val menuBarPointer: CPointer<GtkMenuBar>
 ) : MenuShell(menuBarPointer.reinterpret()) {
 
 	/**
@@ -65,7 +65,7 @@ class MenuBar internal constructor(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkMenuBar.html#GtkPackDirection">GtkPackDirection</a>
 	 */
-	enum class PackDirection(val key: Int, internal val gtk: GtkPackDirection) {
+	enum class PackDirection(val key: Int,  val gtk: GtkPackDirection) {
 		/** Widgets are packed left-to-right */
 		LTR(0, GTK_PACK_DIRECTION_LTR),
 
@@ -82,7 +82,7 @@ class MenuBar internal constructor(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			internal fun valueOf(gtk: GtkPackDirection) =
+			 fun valueOf(gtk: GtkPackDirection) =
 				values().find { it.gtk == gtk }
 		}
 

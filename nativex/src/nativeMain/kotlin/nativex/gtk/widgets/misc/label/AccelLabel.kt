@@ -9,8 +9,8 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class AccelLabel internal constructor(
-	internal val accelLabelPointer: CPointer<GtkAccelLabel>
+class AccelLabel(
+	 val accelLabelPointer: CPointer<GtkAccelLabel>
 ) : Label(accelLabelPointer.reinterpret()) {
 
 	constructor(label: String) : this(gtk_accel_label_new(label)!!.reinterpret())

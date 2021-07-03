@@ -21,8 +21,8 @@ import nativex.gtk.common.ext.unwrap
  * kotlinx-gtk
  * 27 / 03 / 2021
  */
-class RecentManager internal constructor(
-	internal val managerPointer: CPointer<GtkRecentManager>
+class RecentManager(
+	 val managerPointer: CPointer<GtkRecentManager>
 ) : KObject(managerPointer.reinterpret()) {
 
 	val items: Sequence<RecentInfo>
@@ -73,8 +73,8 @@ class RecentManager internal constructor(
 		}
 	}
 
-	class RecentInfo internal constructor(
-		internal val struct: CPointer<GtkRecentInfo>
+	class RecentInfo(
+		 val struct: CPointer<GtkRecentInfo>
 	) {
 
 
@@ -188,16 +188,16 @@ class RecentManager internal constructor(
 		)
 
 		companion object {
-			internal inline fun CPointer<GtkRecentInfo>?.wrap() =
+			 inline fun CPointer<GtkRecentInfo>?.wrap() =
 				this?.let { RecentInfo(this) }
 
-			internal inline fun CPointer<GtkRecentInfo>.wrap() =
+			 inline fun CPointer<GtkRecentInfo>.wrap() =
 				RecentInfo(this)
 		}
 	}
 
-	class RecentData internal constructor(
-		internal val struct: CPointer<GtkRecentData>
+	class RecentData(
+		 val struct: CPointer<GtkRecentData>
 	) {
 
 		var displayName: String?
@@ -236,7 +236,7 @@ class RecentManager internal constructor(
 		constructor () : this(memScoped { cValue<GtkRecentData>().ptr })
 	}
 
-	enum class Error(val key: Int, internal val gtk: GtkRecentManagerError) {
+	enum class Error(val key: Int,  val gtk: GtkRecentManagerError) {
 		NOT_FOUND(0, GTK_RECENT_MANAGER_ERROR_NOT_FOUND),
 		INVALID_URI(1, GTK_RECENT_MANAGER_ERROR_INVALID_URI),
 		INVALID_ENCODING(2, GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING),
@@ -246,7 +246,7 @@ class RecentManager internal constructor(
 		ERROR_UNKNOWN(6, GTK_RECENT_MANAGER_ERROR_UNKNOWN);
 
 		companion object {
-			internal fun valueOf(gtk: GtkRecentManagerError) =
+			 fun valueOf(gtk: GtkRecentManagerError) =
 				values().find { it.gtk == gtk }!!
 		}
 	}

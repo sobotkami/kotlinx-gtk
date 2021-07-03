@@ -7,7 +7,7 @@ import gtk.GtkMovementStep.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class MovementStep(val key: Int, internal val gtk: GtkMovementStep) {
+enum class MovementStep(val key: Int,  val gtk: GtkMovementStep) {
 	LOGICAL_POSITIONS(0, GTK_MOVEMENT_LOGICAL_POSITIONS),
 	VISUAL_POSITIONS(1, GTK_MOVEMENT_VISUAL_POSITIONS),
 	WORDS(2, GTK_MOVEMENT_WORDS),
@@ -23,7 +23,7 @@ enum class MovementStep(val key: Int, internal val gtk: GtkMovementStep) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkMovementStep) =
+		 fun valueOf(gtk: GtkMovementStep) =
 			values().find { it.gtk == gtk }
 	}
 }

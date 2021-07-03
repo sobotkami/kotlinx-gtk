@@ -9,8 +9,8 @@ import nativex.gdk.Screen
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-class Invisible internal constructor(
-	internal val invisiblePointer: CPointer<GtkInvisible>
+class Invisible(
+	 val invisiblePointer: CPointer<GtkInvisible>
 ) : Widget(invisiblePointer.reinterpret()) {
 	constructor() : this(gtk_invisible_new()!!.reinterpret())
 	constructor(screen: Screen) : this(gtk_invisible_new_for_screen(screen.screenPointer)!!.reinterpret())

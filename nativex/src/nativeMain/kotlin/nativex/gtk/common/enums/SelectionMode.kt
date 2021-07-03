@@ -7,7 +7,7 @@ import gtk.GtkSelectionMode.*
  * kotlinx-gtk
  * 06 / 03 / 2021
  */
-enum class SelectionMode(val key: Int, internal val gtk: GtkSelectionMode) {
+enum class SelectionMode(val key: Int,  val gtk: GtkSelectionMode) {
 	NONE(0, GTK_SELECTION_NONE),
 	SINGLE(1, GTK_SELECTION_SINGLE),
 	BROWSE(2, GTK_SELECTION_BROWSE),
@@ -17,7 +17,7 @@ enum class SelectionMode(val key: Int, internal val gtk: GtkSelectionMode) {
 		fun valueOf(key: Int) =
 			values().find { it.key == key }
 
-		internal fun valueOf(gtk: GtkSelectionMode) =
+		 fun valueOf(gtk: GtkSelectionMode) =
 			values().find { it.gtk == gtk }
 	}
 }

@@ -54,7 +54,7 @@ interface ColorChooser {
 	val colorActivated: Flow<RGBA>
 
 	companion object {
-		internal val staticColorActivatedCallback: GCallback =
+		 val staticColorActivatedCallback: GCallback =
 			staticCFunction { _: gpointer?, rgba: CPointer<GdkRGBA>, data: gpointer? ->
 				data?.asStableRef<(RGBA) -> Unit>()?.get()?.invoke(RGBA(rgba))
 				Unit

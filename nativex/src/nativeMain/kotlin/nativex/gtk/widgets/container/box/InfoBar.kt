@@ -25,8 +25,8 @@ import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
  * gtk_info_bar_new_with_buttons & gtk_info_bar_add_buttons
  * due to vararg. Thus they have not been encapsulated properly
  */
-class InfoBar internal constructor(
-	internal val infoBarPointer: CPointer<GtkInfoBar>
+class InfoBar(
+	 val infoBarPointer: CPointer<GtkInfoBar>
 ) : Box(infoBarPointer.reinterpret()) {
 	constructor() : this(gtk_info_bar_new()!!.reinterpret())
 	// TODO Vararg : gtk_info_bar_new_with_buttons
@@ -146,7 +146,7 @@ class InfoBar internal constructor(
 
 	/*
 	companion object {
-		internal val staticCallback: GCallback =
+		 val staticCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 				data?.asStableRef<(Int) -> Unit>()
 					?.get()

@@ -876,7 +876,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 
 typealias PopulatePopupFunction = (Widget) -> Unit
 
-internal val staticPopulatePopupFunction: GCallback =
+ val staticPopulatePopupFunction: GCallback =
 	staticCFunction { _: WidgetPointer, previous: WidgetPointer, data: gpointer ->
 		data.asStableRef<(Widget) -> Unit>().get().invoke(previous.wrap())
 		Unit

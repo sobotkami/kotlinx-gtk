@@ -9,6 +9,6 @@ import nativex.gtk.widgets.Widget
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
-open class Misc internal constructor(
-	internal val miscPointer: CPointer<GtkMisc>
+open class Misc(
+	 val miscPointer: CPointer<GtkMisc>
 ) : Widget(miscPointer.reinterpret())
