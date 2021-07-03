@@ -8,15 +8,13 @@ import kotlinx.coroutines.flow.Flow
 import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gio.KObject
+import nativex.pango.TabArray
 
 /**
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-class Adjustment internal constructor(
-	@Suppress("MemberVisibilityCanBePrivate")
-	internal val adjustmentPointer: CPointer<GtkAdjustment>
-) : KObject(adjustmentPointer.reinterpret()) {
+class Adjustment(val adjustmentPointer: CPointer<GtkAdjustment>) : KObject(adjustmentPointer.reinterpret()) {
 	var value: Double
 		get() = gtk_adjustment_get_value(adjustmentPointer)
 		set(value) = gtk_adjustment_set_value(adjustmentPointer, value)
@@ -68,4 +66,12 @@ class Adjustment internal constructor(
 			pageSize
 		)!!
 	)
+
+	companion object {
+		inline fun CPointer<GtkAdjustment>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkAdjustment>.wrap() =
+			Adjustment(this)
+	}
 }

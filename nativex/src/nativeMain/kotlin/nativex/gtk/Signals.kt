@@ -16,6 +16,16 @@ object Signals {
 
 	const val ACTIVATE_CURRENT_LINK = "activate-current-link"
 
+	// Common
+	const val BACKSPACE = "backspace"
+	const val COPY_CLIPBOARD = "copy-clipboard"
+	const val CUT_CLIPBOARD = "cut-clipboard"
+	const val INSERT_EMOJI = "insert-emoji"
+	const val PASTE_CLIPBOARD = "paste-clipboard"
+	const val POPULATE_POPUP = "populate-popup"
+	const val TOGGLE_OVERWRITE = "toggle-overwrite"
+	const val DELETE_FROM_CURSOR = "delete-from-cursor"
+
 	const val CREATE_WINDOW = "create-window"
 	const val MOVE_FOCUS_OUT = "move-focus-out"
 	const val CHANGE_CURRENT_PAGE = "change-current-page"
@@ -40,22 +50,14 @@ object Signals {
 	const val STOP_SEARCH = "stop-search"
 
 	// GtkTextView
-	const val BACKSPACE = "backspace"
-	const val COPY_CLIPBOARD = "copy-clipboard"
-	const val CUT_CLIPBOARD = "cut-clipboard"
-	const val DELETE_FROM_CURSOR = "delete-from-cursor"
 	const val EXTEND_SELECTION = "extend-selection"
 	const val INSERT_AT_CURSOR = "insert-at-cursor"
-	const val INSERT_EMOJI = "insert-emoji"
 	const val MOVE_CURSOR = "move-cursor"
 	const val MOVE_VIEWPORT = "move-viewport"
-	const val PASTE_CLIPBOARD = "paste-clipboard"
-	const val POPULATE_POPUP = "populate-popup"
 	const val PREEDIT_CHANGED = "preedit-changed"
 	const val SELECT_ALL = "select-all"
 	const val SET_ANCHOR = "set-anchor"
 	const val TOGGLE_CURSOR_VISIBLE = "toggle-cursor-visible"
-	const val TOGGLE_OVERWRITE = "toggle-overwrite"
 
 	// GtkTreeModel
 	const val ROW_CHANGED = "row-changed"
@@ -217,6 +219,14 @@ object Signals {
 	const val STYLE_CHANGED = "style-changed"
 	const val FOCUS_HOME_OR_END = "focus-home-or-end"
 	const val POPUP_CONTEXT_MENU = "popup-context-menu"
+
+	// GtkEntryBuffer
+	const val DELETED_TEXT = "deleted-text"
+	const val INSERTED_TEXT = "inserted-text"
+
+	// GtkEntry
+	const val ICON_PRESS = "icon-press"
+	const val ICON_RELEASE = "icon-release"
 }
 
 /**

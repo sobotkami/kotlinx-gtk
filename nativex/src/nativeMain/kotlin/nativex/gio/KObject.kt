@@ -14,9 +14,7 @@ import nativex.reinterpretOrNull
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
-open class KObject internal constructor(
-	internal val pointer: CPointer<GObject>
-) {
+open class KObject constructor(val pointer: CPointer<GObject>) {
 	fun set(@Property propertyName: String, boolean: Boolean) {
 		g_object_set_property(pointer, propertyName, KGValue(boolean).pointer)
 	}

@@ -85,19 +85,18 @@ class Image internal constructor(
 		gtk_image_clear(imagePointer)
 	}
 
-	enum class Type(val key: Int, internal val gtk: GtkImageType) {
-		EMPTY(0, GTK_IMAGE_EMPTY),
-		PIXBUF(1, GTK_IMAGE_PIXBUF),
-		STOCK(2, GTK_IMAGE_STOCK),
-		ICON_SET(3, GTK_IMAGE_ICON_SET),
-		ANIMATION(4, GTK_IMAGE_ANIMATION),
-		ICON_NAME(5, GTK_IMAGE_ICON_NAME),
-		GICON(6, GTK_IMAGE_GICON),
-		SURFACE(7, GTK_IMAGE_SURFACE);
+	enum class Type(val gtk: GtkImageType) {
+		EMPTY(GTK_IMAGE_EMPTY),
+		PIXBUF(GTK_IMAGE_PIXBUF),
+		STOCK(GTK_IMAGE_STOCK),
+		ICON_SET(GTK_IMAGE_ICON_SET),
+		ANIMATION(GTK_IMAGE_ANIMATION),
+		ICON_NAME(GTK_IMAGE_ICON_NAME),
+		GICON(GTK_IMAGE_GICON),
+		SURFACE(GTK_IMAGE_SURFACE);
 
 		companion object {
-			fun valueOf(key: Int) = values().find { it.key == key }
-			internal fun valueOf(gtk: GtkImageType) =
+			fun valueOf(gtk: GtkImageType) =
 				values().find { it.gtk == gtk }
 		}
 	}

@@ -5,7 +5,6 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.interpretCPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.flow.Flow
-import nativex.PointerHolder
 import nativex.glib.Variant
 import nativex.glib.VariantType
 import nativex.gtk.gtk
@@ -14,16 +13,14 @@ import nativex.gtk.gtk
  * kotlinx-gtk
  * 23 / 03 / 2021
  */
-class SimpleAction internal constructor(
-	@Suppress("MemberVisibilityCanBePrivate")
-	internal val simpleActionPointer: CPointer<GSimpleAction>
-) : KObject(simpleActionPointer.reinterpret()), Action {
+class SimpleAction(val simpleActionPointer: CPointer<GSimpleAction>) : KObject(simpleActionPointer.reinterpret()),
+	Action {
 	companion object {
 		/**
 		 * Convert an [Action] safely as an
 		 */
 		fun Action.safeCast(): SimpleAction? =
-			interpretCPointer<GSimpleAction>(actionPointer.ptr.rawValue)?.let {
+			interpretCPointer<GSimpleAction>(actionPointer.rawValue)?.let {
 				SimpleAction(
 					it
 				)
@@ -67,6 +64,6 @@ class SimpleAction internal constructor(
 		)
 	}
 
-	override val actionPointer: PointerHolder<GAction>
-		get() = PointerHolder(simpleActionPointer.reinterpret())
+	override val actionPointer: CPointer<GAction>
+		get() = simpleActionPointer.reinterpret()
 }

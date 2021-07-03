@@ -12,7 +12,7 @@ Guide
 | Kotlin Name         | Functions | Signals   | Documented    | DSL |
 | ------------------- | --------- | --------- | ------------- | --- |
 | Button              | 🟩 | 🟩 | 🟩 |
-| Entry               |
+| Entry               | 🟩 | 🟩 | 🟩 |
 | SearchEntry         |
 | SpinButton          |
 | ToggleButton        |

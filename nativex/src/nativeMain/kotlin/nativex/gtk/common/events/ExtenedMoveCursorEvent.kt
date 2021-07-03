@@ -16,7 +16,7 @@ data class ExtenedMoveCursorEvent(
 	val extendSelection: Boolean
 ) {
 	companion object {
-		internal val staticMoveCursorCallback: GCallback =
+		val staticMoveCursorCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  step: GtkMovementStep,
 			                  count: Int,
@@ -34,3 +34,24 @@ data class ExtenedMoveCursorEvent(
 			}.reinterpret()
 	}
 }
+
+typealias ExtendedMoveCursorFunction = (
+	MovementStep,
+	@ParameterName("count") Int,
+	@ParameterName("extendSelection") Boolean
+) -> Unit
+
+val staticExtendedMoveCursorFunction: GCallback =
+	staticCFunction { _: gpointer?,
+	                  step: GtkMovementStep,
+	                  count: Int,
+	                  extendSelection: gboolean,
+	                  data: gpointer? ->
+		data?.asStableRef<ExtendedMoveCursorFunction>()?.get()
+			?.invoke(
+				MovementStep.valueOf(step)!!,
+				count,
+				extendSelection.bool
+			)
+		Unit
+	}.reinterpret()

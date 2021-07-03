@@ -2,6 +2,7 @@ package nativex.gdk
 
 import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
 
 /**
  * kotlinx-gtk
@@ -9,17 +10,20 @@ import kotlinx.cinterop.CPointer
  * TODO
  * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEvent">GdkEvent union</a>
  */
-class Event internal constructor(
-	internal val eventPointer: CPointer<GdkEvent>
-) {
+open class Event(val eventPointer: CPointer<GdkEvent>) {
 	companion object {
 
-		internal inline fun CPointer<GdkEvent>?.wrap() =
+		inline fun CPointer<GdkEvent>?.wrap() =
 			this?.let { Event(it) }
 
-		internal inline fun CPointer<GdkEvent>.wrap() =
+		inline fun CPointer<GdkEvent>.wrap() =
 			Event(this)
 	}
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html#GdkEventKey">GdkEventKey</a>
+	 */
+	class Key(val eventKeyPointer: CPointer<GdkEventKey>) : Event(eventKeyPointer.reinterpret())
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Events.html#GdkEventMask">GdkEventMask</a>

@@ -9,7 +9,7 @@ import gtk.*
  *
  * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Drag-and-Drop.html#GdkDragAction">GdkDragAction</a>
  */
-enum class DragAction(internal val gdk: GdkDragAction) {
+enum class DragAction(val gdk: GdkDragAction) {
 	DEFAULT(GDK_ACTION_DEFAULT),
 	COPY(GDK_ACTION_COPY),
 	MOVE(GDK_ACTION_MOVE),

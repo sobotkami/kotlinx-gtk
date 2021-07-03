@@ -9,9 +9,7 @@ import nativex.gtk.Tooltip
  * kotlinx-gtk
  * 15 / 03 / 2021
  */
-class Rectangle internal constructor(
-	internal val rectanglePointer: CPointer<GdkRectangle>
-) {
+class Rectangle(val rectanglePointer: CPointer<GdkRectangle>) {
 
 	var x: Int
 		get() = rectanglePointer.pointed.x
@@ -38,10 +36,10 @@ class Rectangle internal constructor(
 		}
 
 	companion object{
-		internal inline fun CPointer<GdkRectangle>?.wrap() =
+		inline fun CPointer<GdkRectangle>?.wrap() =
 			this?.wrap()
 
-		internal inline fun CPointer<GdkRectangle>.wrap() =
+		inline fun CPointer<GdkRectangle>.wrap() =
 			Rectangle(this)
 	}
 }
