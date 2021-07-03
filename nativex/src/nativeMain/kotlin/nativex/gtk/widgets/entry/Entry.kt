@@ -24,6 +24,7 @@ import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.events.ExtendedMoveCursorFunction
 import nativex.gtk.common.events.staticExtendedMoveCursorFunction
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.Widget.Companion.wrap
 import nativex.gtk.widgets.misc.Image
 import nativex.pango.AttrList
 import nativex.pango.AttrList.Companion.wrap
@@ -651,11 +652,12 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#GtkEntry-populate-popup">populate-popup</a>
 	 */
-	fun addOnPopulatePopupCallback(action: () -> Unit): SignalManager =
+	fun addOnPopulatePopupCallback(action: PopulatePopupFunction): SignalManager =
 		SignalManager(
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.POPULATE_POPUP,
+				staticPopulatePopupFunction,
 				callbackWrapper = StableRef.create(action).asCPointer()
 			)
 		)
@@ -712,42 +714,52 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		 * Allow any character
 		 */
 		FREE_FORM(GTK_INPUT_PURPOSE_FREE_FORM),
+
 		/**
 		 * Allow only alphabetic characters
 		 */
 		ALPHA(GTK_INPUT_PURPOSE_ALPHA),
+
 		/**
 		 * Allow only digits
 		 */
 		DIGITS(GTK_INPUT_PURPOSE_DIGITS),
+
 		/**
 		 * Edited field expects numbers
 		 */
 		NUMBER(GTK_INPUT_PURPOSE_NUMBER),
+
 		/**
 		 * Edited field expects phone number
 		 */
 		PHONE(GTK_INPUT_PURPOSE_PHONE),
+
 		/**
 		 * Edited field expects URL
 		 */
 		URL(GTK_INPUT_PURPOSE_URL),
+
 		/**
 		 * Edited field expects email address
 		 */
 		EMAIL(GTK_INPUT_PURPOSE_EMAIL),
+
 		/**
 		 * Edited field expects the name of a person
 		 */
 		NAME(GTK_INPUT_PURPOSE_NAME),
+
 		/**
 		 * Like [FREE_FORM], but characters are hidden
 		 */
 		PASSWORD(GTK_INPUT_PURPOSE_PASSWORD),
+
 		/**
 		 * Like [DIGITS], but characters are hidden
 		 */
 		PIN(GTK_INPUT_PURPOSE_PIN),
+
 		/**
 		 * Allow any character, in addition to control codes
 		 */
@@ -766,50 +778,61 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		 * No special behaviour suggested
 		 */
 		NONE(GTK_INPUT_HINT_NONE),
+
 		/**
 		 * Suggest checking for typos
 		 */
 		SPELLCHECK(GTK_INPUT_HINT_SPELLCHECK),
+
 		/**
 		 * Suggest not checking for typos
 		 */
 		NO_SPELLCHECK(GTK_INPUT_HINT_NO_SPELLCHECK),
+
 		/**
 		 * Suggest word completion
 		 */
 		WORD_COMPLETION(GTK_INPUT_HINT_WORD_COMPLETION),
+
 		/**
 		 * Suggest to convert all text to lowercase
 		 */
 		LOWERCASE(GTK_INPUT_HINT_LOWERCASE),
+
 		/**
 		 * Suggest to capitalize all text
 		 */
 		UPPERCASE_CHARS(GTK_INPUT_HINT_UPPERCASE_CHARS),
+
 		/**
 		 * Suggest to capitalize the first character of each word
 		 */
 		UPPERCASE_WORDS(GTK_INPUT_HINT_UPPERCASE_WORDS),
+
 		/**
 		 * Suggest to capitalize the first word of each sentence
 		 */
 		UPPERCASE_SENTENCES(GTK_INPUT_HINT_UPPERCASE_SENTENCES),
+
 		/**
 		 * Suggest to not show an onscreen keyboard (e.g for a calculator that already has all the keys).
 		 */
 		INHIBIT_OSK(GTK_INPUT_HINT_INHIBIT_OSK),
+
 		/**
 		 * The text is vertical.
 		 *
 		 * @since 3.18
 		 */
 		VERTICAL_WRITING(GTK_INPUT_HINT_VERTICAL_WRITING),
+
 		/**
 		 * Suggest offering Emoji support.
 		 *
 		 * @since 3.22.20
 		 */
 		EMOJI(GTK_INPUT_HINT_EMOJI),
+
 		/**
 		 * Suggest not offering Emoji support.
 		 *
@@ -850,6 +873,14 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		}
 	}
 }
+
+typealias PopulatePopupFunction = (Widget) -> Unit
+
+internal val staticPopulatePopupFunction: GCallback =
+	staticCFunction { _: WidgetPointer, previous: WidgetPointer, data: gpointer ->
+		data.asStableRef<(Widget) -> Unit>().get().invoke(previous.wrap())
+		Unit
+	}.reinterpret()
 
 /**
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#GtkEntry-delete-from-cursor">delete-from-cursor</a>
