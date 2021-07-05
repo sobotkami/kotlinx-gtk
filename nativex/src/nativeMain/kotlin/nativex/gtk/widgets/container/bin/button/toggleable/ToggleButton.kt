@@ -18,7 +18,7 @@ import nativex.gtk.widgets.container.bin.button.Button
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html">GtkToggleButton</a>
  */
-class ToggleButton(
+open class ToggleButton(
 	val toggleButtonPointer: CPointer<GtkToggleButton>
 ) : Button(toggleButtonPointer.reinterpret()) {
 
@@ -67,9 +67,7 @@ class ToggleButton(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-new">gtk_toggle_button_new</a>
 	 */
-	constructor() : this(
-		gtk_toggle_button_new()!!.reinterpret()
-	)
+	constructor() : this(gtk_toggle_button_new()!!.reinterpret())
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-new-with-label">
