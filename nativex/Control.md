@@ -13,7 +13,7 @@ Guide
 | ------------------- | --------- | --------- | ------------- | --- |
 | Button              | 🟩 | 🟩 | 🟩 |
 | Entry               | 🟩 | 🟩 | 🟩 |
-| SearchEntry         |
+| SearchEntry         | 🟩 | 🟩 | 🟩 |
 | SpinButton          |
 | ToggleButton        |
 | CheckButton         |

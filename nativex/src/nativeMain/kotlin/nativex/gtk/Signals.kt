@@ -45,6 +45,8 @@ object Signals {
 	const val VALUE_CHANGED = "value-changed"
 	const val TOGGLED = "toggled"
 
+	// GtkSearchEntry
+	const val NEXT_MATCH = "next-match"
 	const val PREVIOUS_MATCH = "previous-match"
 	const val SEARCH_CHANGED = "search-changed"
 	const val STOP_SEARCH = "stop-search"
