@@ -1,4 +1,4 @@
-package nativex.gtk.widgets.container.bin.button
+package nativex.gtk.widgets.container.bin.button.toggleable
 
 import gtk.*
 import kotlinx.cinterop.CPointer
@@ -9,6 +9,7 @@ import nativex.gtk.Signals
 import nativex.gtk.bool
 import nativex.gtk.connectSignal
 import nativex.gtk.gtk
+import nativex.gtk.widgets.container.bin.button.Button
 
 /**
  * kotlinx-gtk
