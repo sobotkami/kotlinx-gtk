@@ -14,7 +14,7 @@ Guide
 | Button              | 🟩 | 🟩 | 🟩 |
 | Entry               | 🟩 | 🟩 | 🟩 |
 | SearchEntry         | 🟩 | 🟩 | 🟩 |
-| SpinButton          |
+| SpinButton          | 🟩 | 🟩 | 🟩 |
 | ToggleButton        |
 | CheckButton         |
 | RadioButton         |

@@ -25,6 +25,10 @@ object Signals {
 	const val POPULATE_POPUP = "populate-popup"
 	const val TOGGLE_OVERWRITE = "toggle-overwrite"
 	const val DELETE_FROM_CURSOR = "delete-from-cursor"
+	const val VALUE_CHANGED = "value-changed"
+	const val CHANGED = "changed"
+	const val TOGGLED = "toggled"
+
 
 	const val CREATE_WINDOW = "create-window"
 	const val MOVE_FOCUS_OUT = "move-focus-out"
@@ -41,9 +45,6 @@ object Signals {
 	const val HANDLE_LOCAL_OPTIONS = "handle-location-options"
 	const val COMMAND_LINE = "command-line"
 
-	const val CHANGED = "changed"
-	const val VALUE_CHANGED = "value-changed"
-	const val TOGGLED = "toggled"
 
 	// GtkSearchEntry
 	const val NEXT_MATCH = "next-match"
@@ -229,6 +230,12 @@ object Signals {
 	// GtkEntry
 	const val ICON_PRESS = "icon-press"
 	const val ICON_RELEASE = "icon-release"
+
+	// GtkSpinButton
+	const val OUTPUT = "output"
+	const val WRAPPED = "wrapped"
+	const val CHANGE_VALUE = "change-value"
+	const val INPUT = "input"
 }
 
 /**
@@ -237,7 +244,7 @@ object Signals {
  * @param callbackWrapper Passed as the data parameter to `g_signal_connect_data`. Invoked by [handler]
  * @param flags Flags
  */
- fun VoidPointer.connectSignal(
+fun VoidPointer.connectSignal(
 	signal: String,
 	handler: GCallback = staticNoArgGCallback,
 	callbackWrapper: COpaquePointer? = null,
@@ -259,7 +266,7 @@ object Signals {
 /**
  * [GCallback] that calls a function with only no arguments
  */
- val staticNoArgGCallback: GCallback =
+val staticNoArgGCallback: GCallback =
 	staticCFunction { _: gpointer?, data: gpointer? ->
 		data?.asStableRef<() -> Unit>()?.get()?.invoke()
 		Unit
