@@ -1,11 +1,9 @@
 package nativex.gtk.dsl
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
-import nativex.async.launchUnconfined
 import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.button.ToggleButton
+import nativex.gtk.widgets.container.bin.button.toggleable.ToggleButton
 
 /**
  * kotlinx-gtk
@@ -22,12 +20,7 @@ fun Container.toggleButton(
 		.also { add(it) }
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun ToggleButton.onToggle(crossinline onToggle: suspend () -> Unit) {
-	launchUnconfined {
-		toggledSignal.collectLatest {
-			onToggle()
-		}
-	}
+inline fun ToggleButton.onToggle(noinline onToggle: () -> Unit) {
+	addOnToggledCallback(onToggle)
 }
