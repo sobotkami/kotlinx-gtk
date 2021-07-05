@@ -15,7 +15,7 @@ Guide
 | Entry               | 🟩 | 🟩 | 🟩 |
 | SearchEntry         | 🟩 | 🟩 | 🟩 |
 | SpinButton          | 🟩 | 🟩 | 🟩 |
-| ToggleButton        |
+| ToggleButton        | 🟩 | 🟩 | 🟩 |
 | CheckButton         |
 | RadioButton         |
 | MenuButton          |
