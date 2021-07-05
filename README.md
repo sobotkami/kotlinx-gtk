@@ -9,6 +9,9 @@ Version: `0.1.0-alpha`
 See `example/src/nativeMain/kotlin/Main.kt` for a simple example on
 how to create an application using this library
 
+## Progress
+
+Check out the [status](nativex/README.md#Progress) of the wrapping
 
 ## Installation
 
