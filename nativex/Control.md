@@ -16,9 +16,9 @@ Guide
 | SearchEntry         | 🟩 | 🟩 | 🟩 |
 | SpinButton          | 🟩 | 🟩 | 🟩 |
 | ToggleButton        | 🟩 | 🟩 | 🟩 |
-| CheckButton         |
-| RadioButton         |
-| MenuButton          |
+| CheckButton         | 🟩 | 🟫 | 🟩 |
+| RadioButton         | 🟨 | 🟩 | 🟨 |
+| MenuButton          | 🟩 | 🟩 | 🟩 |
 | LockButton          |
 | Switch              |
 | ModelButton         |

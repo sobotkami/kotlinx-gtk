@@ -14,6 +14,7 @@ import nativex.gtk.*
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
+import nativex.gtk.widgets.container.menu.Menu
 
 /**
  * kotlinx-gtk
@@ -197,4 +198,12 @@ open class Popover(
 	 */
 	@ExperimentalCoroutinesApi
 	val closed: Flow<Unit> by signalFlow(Signals.CLOSED)
+
+	companion object {
+		inline fun CPointer<GtkPopover>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkPopover>.wrap() =
+			Popover(this)
+	}
 }
