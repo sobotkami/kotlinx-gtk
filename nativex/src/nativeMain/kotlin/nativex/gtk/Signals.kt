@@ -236,6 +236,9 @@ object Signals {
 	const val WRAPPED = "wrapped"
 	const val CHANGE_VALUE = "change-value"
 	const val INPUT = "input"
+
+	// GtkRadioButton
+	const val GROUP_CHANGED = "group-changed"
 }
 
 /**
