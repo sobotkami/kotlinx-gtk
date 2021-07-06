@@ -129,7 +129,7 @@ class KCancellable(
 		val current: KCancellable?
 			get() = g_cancellable_get_current().wrap()
 
-		fun CPointer<GCancellable>?.wrap() =
+		inline fun CPointer<GCancellable>?.wrap() =
 			this?.wrap()
 
 		inline fun CPointer<GCancellable>.wrap() =
