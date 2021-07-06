@@ -19,7 +19,7 @@ Guide
 | CheckButton         | 🟩 | 🟫 | 🟩 |
 | RadioButton         | 🟨 | 🟩 | 🟨 |
 | MenuButton          | 🟩 | 🟩 | 🟩 |
-| LockButton          |
+| LockButton          | 🟩 | 🟫 | 🟩
 | Switch              |
 | ModelButton         |
 | StackSwitcher       |
