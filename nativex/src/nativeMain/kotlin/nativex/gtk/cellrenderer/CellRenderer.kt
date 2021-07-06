@@ -1,6 +1,8 @@
 package nativex.gtk.cellrenderer
+
 import gtk.*
-import gtk.GtkCellRendererAccelMode.*
+import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_GTK
+import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_OTHER
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -8,31 +10,34 @@ import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.async.staticCStringCallback
 import nativex.gdk.Window
-import nativex.gobject.KObject
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.KObject
 import nativex.gobject.Signals
 import nativex.gtk.TreeModel
 
 open class CellRenderer(
-	 val cellRendererPointer: CPointer<GtkCellRenderer>
+	val cellRendererPointer: CPointer<GtkCellRenderer>
 ) : KObject(cellRendererPointer.reinterpret()) {
 
 
 	companion object {
-		 inline fun CPointer<GtkCellRenderer>?.wrap() =
+		inline fun CPointer<GtkCellRenderer>?.wrap() =
 			this?.wrap()
 
-		 inline fun CPointer<GtkCellRenderer>.wrap() =
+		inline fun CPointer<GtkCellRenderer>.wrap() =
 			CellRenderer(this)
 	}
 
 
 	class Accel : CellRenderer(gtk_cell_renderer_accel_new()!!) {
-		enum class Mode(val key: Int,  val gtk: GtkCellRendererAccelMode) {
-			GTK(0, GTK_CELL_RENDERER_ACCEL_MODE_GTK),
-			OTHER(1, GTK_CELL_RENDERER_ACCEL_MODE_OTHER),
-			MODIFIER_TAP(2, GTK_CELL_RENDERER_ACCEL_MODE_MODIFIER_TAP);
+		enum class Mode(val gtk: GtkCellRendererAccelMode) {
+			GTK(GTK_CELL_RENDERER_ACCEL_MODE_GTK),
+			OTHER(GTK_CELL_RENDERER_ACCEL_MODE_OTHER);
+
+			companion object {
+				fun valueOf(gtk: GtkCellRendererAccelMode) = values().find { it.gtk == gtk }
+			}
 		}
 
 		val accelClearedSignal: Flow<String>
@@ -81,7 +86,7 @@ open class CellRenderer(
 	}
 
 	class Toggle : CellRenderer(gtk_cell_renderer_toggle_new()!!) {
-		 val cellRendererTogglePointer: CPointer<GtkCellRendererToggle> by lazy {
+		val cellRendererTogglePointer: CPointer<GtkCellRendererToggle> by lazy {
 			cellRendererPointer.reinterpret()
 		}
 
