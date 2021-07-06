@@ -25,7 +25,7 @@ Guide
 | StackSwitcher       | 🟩 | 🟫 | 🟩
 | StackSidebar        | 🟩 | 🟫 | 🟩
 | ComboBox            | 🟩 | 🟫 | 🟩
-| ComboBoxText        |
+| ComboBoxText        | 🟩 | 🟫 | 🟩
 | FileChooserButton   |
 | ColorButton         |
 | FontButton          |
