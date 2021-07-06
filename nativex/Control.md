@@ -23,7 +23,7 @@ Guide
 | Switch              | 🟩 | 🟩 | 🟩
 | ModelButton         | 🟩 | 🟫 | 🟩
 | StackSwitcher       | 🟩 | 🟫 | 🟩
-| StackSidebar        |
+| StackSidebar        | 🟩 | 🟫 | 🟩
 | ComboBox            |
 | ComboBoxText        |
 | FileChooserButton   |
