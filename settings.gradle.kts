@@ -1,5 +1,10 @@
 rootProject.name = "kotlinx-gtk"
 include("nativex")
+include("nativex:gio")
+include("nativex:glib-object")
+include("nativex:glib")
+include("nativex:cairo")
+include("nativex:pango")
 include("dsl")
 include("example")
 include("demos:widget-factory")

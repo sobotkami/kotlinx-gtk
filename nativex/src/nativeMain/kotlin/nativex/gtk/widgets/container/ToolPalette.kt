@@ -1,10 +1,14 @@
 package nativex.gtk.widgets.container
-
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gdk.dragndrop.DragAction
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gtk.IconSize
+import nativex.gtk.Orientable
+import nativex.gtk.Scrollable
+import nativex.gtk.SelectionData
 import nativex.gtk.common.enums.ToolbarStyle
 import nativex.gtk.dragndrop.DestDefaults
 import nativex.gtk.selections.TargetEntry

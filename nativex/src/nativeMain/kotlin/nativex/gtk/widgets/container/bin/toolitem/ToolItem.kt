@@ -3,12 +3,12 @@ package nativex.gtk.widgets.container.bin.toolitem
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.IconSize
 import nativex.gtk.SizeGroup
-import nativex.gtk.bool
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.ToolbarStyle
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
 import nativex.pango.EllipsizeMode

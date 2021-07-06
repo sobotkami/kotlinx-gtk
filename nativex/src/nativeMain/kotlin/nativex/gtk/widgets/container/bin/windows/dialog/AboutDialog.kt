@@ -1,12 +1,16 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkLicense.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
-import nativex.gtk.*
+import nativex.glib.*
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
 import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
@@ -15,7 +19,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
  */
 class AboutDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	 val aboutDialogPointer: CPointer<GtkAboutDialog>
+	val aboutDialogPointer: CPointer<GtkAboutDialog>
 ) : Dialog(aboutDialogPointer.reinterpret()) {
 
 	var programName: String?
@@ -141,7 +145,7 @@ class AboutDialog(
 		)
 	}
 
-	enum class License(val key: Int,  val gtk: GtkLicense) {
+	enum class License(val key: Int, val gtk: GtkLicense) {
 		UNKNOWN(0, GTK_LICENSE_UNKNOWN),
 
 		CUSTOM(1, GTK_LICENSE_CUSTOM),
@@ -181,7 +185,7 @@ class AboutDialog(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			 fun valueOf(gtk: GtkLicense) =
+			fun valueOf(gtk: GtkLicense) =
 				values().find { it.gtk == gtk }
 		}
 
@@ -194,9 +198,10 @@ class AboutDialog(
 	}
 }
 
- val staticActivateLinkCallback: GCallback =
+val staticActivateLinkCallback: GCallback by lazy {
 	staticCFunction { _: CPointer<GtkAboutDialog>, char: CString, data: gpointer ->
 		data.asStableRef<ActivateLinkFunction>().get().invoke(char.toKString()).gtk
 	}.reinterpret()
+}
 
 typealias ActivateLinkFunction = (@ParameterName("uri") String) -> Boolean

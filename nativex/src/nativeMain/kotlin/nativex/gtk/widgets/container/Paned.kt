@@ -1,10 +1,16 @@
 package nativex.gtk.widgets.container
-
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
 import nativex.gdk.Window
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.ScrollType
 import nativex.gtk.widgets.Widget

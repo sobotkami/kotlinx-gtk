@@ -4,8 +4,8 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 
 /**
  * kotlinx-gtk

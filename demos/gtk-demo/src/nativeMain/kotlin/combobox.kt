@@ -18,7 +18,6 @@ import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.gtk.widgets.container.box.Box
 import nativex.gtk.widgets.entry.Entry
 import nativex.use
-import kotlin.test.assertNotNull
 
 const val ICON_NAME_COL = 0
 const val TEXT_COL = 1

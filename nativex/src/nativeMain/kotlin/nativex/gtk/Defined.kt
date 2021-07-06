@@ -1,8 +1,8 @@
 package nativex.gtk
 
-import gtk.GCallback
-import gtk.g_signal_connect_data
-import gtk.gpointer
+import glib.gpointer
+import gobject.GCallback
+import gobject.g_signal_connect_data
 
 /**
  * kotlinx-gtk
@@ -11,7 +11,7 @@ import gtk.gpointer
 
 @Suppress("FunctionName")
 
- fun g_signal_connect(
+fun g_signal_connect(
 	instance: gpointer,
 	detailedSignal: String,
 	handler: GCallback,

@@ -1,14 +1,20 @@
 package nativex.gtk.widgets.container
-
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
-import nativex.async.staticDestroyStableRefFunction
-import nativex.gio.KObject
+import nativex.gobject.KObject
 import nativex.gio.ListModel
-import nativex.gtk.*
+import nativex.glib.asKSequence
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gobject.staticDestroyStableRefFunction
+import nativex.gtk.Adjustment
+import nativex.gtk.Orientable
 import nativex.gtk.common.enums.SelectionMode
 import nativex.gtk.common.events.MoveCursorEvent
 import nativex.gtk.widgets.Widget
@@ -166,11 +172,7 @@ class FlowBox(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#gtk-flow-box-get-selected-children">gtk_flow_box_get_selected_children</a>
 	 */
 	fun getSelectedChildren(): Sequence<Widget> =
-		gtk_flow_box_get_selected_children(flowBoxPointer).asKSequence<GtkWidget, Widget> {
-			Widget(
-				it
-			)
-		}
+		gtk_flow_box_get_selected_children(flowBoxPointer).asKSequence<GtkWidget, Widget> { Widget(it) }
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#gtk-flow-box-select-child">gtk_flow_box_select_child</a>

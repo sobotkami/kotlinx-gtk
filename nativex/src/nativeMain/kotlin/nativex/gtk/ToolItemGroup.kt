@@ -3,6 +3,7 @@ package nativex.gtk
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.toKString
+import nativex.glib.bool
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.Widget.Companion.wrap
 import nativex.gtk.widgets.container.bin.toolitem.ToolItem

@@ -1,13 +1,19 @@
 package nativex.gtk.widgets.entry
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkSpinButtonUpdatePolicy.GTK_UPDATE_ALWAYS
 import gtk.GtkSpinButtonUpdatePolicy.GTK_UPDATE_IF_VALID
 import gtk.GtkSpinType.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gtk.Adjustment
 import nativex.gtk.common.enums.ScrollType
+import nativex.gobject.connectSignal
+import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk

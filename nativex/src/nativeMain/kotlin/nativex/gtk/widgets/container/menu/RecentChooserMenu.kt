@@ -3,9 +3,9 @@ package nativex.gtk.widgets.container.menu
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.RecentManager
-import nativex.gtk.bool
-import nativex.gtk.gtk
 
 /**
  * kotlinx-gtk

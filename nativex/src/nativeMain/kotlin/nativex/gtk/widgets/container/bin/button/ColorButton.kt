@@ -8,8 +8,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.gdk.RGBA
+import nativex.gobject.Signals
 import nativex.gtk.ColorChooser
-import nativex.gtk.Signals
 
 /**
  * kotlinx-gtk

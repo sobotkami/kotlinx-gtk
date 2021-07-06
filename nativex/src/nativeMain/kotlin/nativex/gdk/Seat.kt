@@ -5,7 +5,7 @@ import kotlinx.cinterop.CPointer
 import kotlinx.coroutines.flow.Flow
 import nativex.gdk.Device.Companion.wrap
 import nativex.gdk.Display.Companion.wrap
-import nativex.gtk.asKSequence
+import nativex.glib.asKSequence
 
 /**
  * @see <a href=""></a>

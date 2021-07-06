@@ -2,7 +2,7 @@ package nativex.gdk
 
 import gtk.*
 import kotlinx.cinterop.CPointer
-import nativex.gtk.bool
+import nativex.glib.bool
 
 /**
  * kotlinx-gtk

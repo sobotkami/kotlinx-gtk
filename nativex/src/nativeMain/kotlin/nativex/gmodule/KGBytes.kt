@@ -1,8 +1,7 @@
 package nativex.gmodule
-
-import gtk.*
+import glib.*
 import kotlinx.cinterop.CPointer
-import nativex.gtk.bool
+import nativex.glib.bool
 
 /**
  * @see <a href="https://developer.gnome.org/glib/stable/glib-Byte-Arrays.html#GBytes">GBytes</a>

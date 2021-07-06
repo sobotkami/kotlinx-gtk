@@ -1,15 +1,14 @@
 package nativex.gtk.widgets.container.bin.button.toggleable
-
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
-import nativex.async.SignalManager
-import nativex.gtk.Signals
-import nativex.gtk.bool
-import nativex.gtk.connectSignal
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.widgets.container.bin.button.Button
+import nativex.gobject.connectSignal
+import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk

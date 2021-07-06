@@ -6,8 +6,8 @@ import gtk.gtk_separator_tool_item_new
 import gtk.gtk_separator_tool_item_set_draw
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 
 /**
  * kotlinx-gtk

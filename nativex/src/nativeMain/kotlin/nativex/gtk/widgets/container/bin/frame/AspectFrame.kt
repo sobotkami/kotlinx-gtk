@@ -1,11 +1,10 @@
 package nativex.gtk.widgets.container.bin.frame
-
 import gtk.GtkAspectFrame
 import gtk.gtk_aspect_frame_new
 import gtk.gtk_aspect_frame_set
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.gtk
+import nativex.glib.gtk
 
 /**
  * kotlinx-gtk

@@ -3,8 +3,7 @@ package nativex.gtk
 import gtk.GtkClipboard
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gdk.Display
-import nativex.gio.KObject
+import nativex.gobject.KObject
 
 /**
  * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-Clipboards.html#GtkClipboard">

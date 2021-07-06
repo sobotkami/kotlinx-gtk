@@ -5,14 +5,13 @@ import gtk.GdkSubpixelLayout.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gdk.Display
 import nativex.gdk.Display.Companion.wrap
 import nativex.gdk.Rectangle
-import nativex.gio.KObject
-import nativex.gtk.Signals
-import nativex.gtk.bool
+import nativex.gobject.KObject
+import nativex.glib.bool
+import nativex.gobject.Signals
 
 /**
  * Question why such details are needed by a program, ever?

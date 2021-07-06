@@ -1,10 +1,7 @@
 package nativex.gtk.dsl
 
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
-import nativex.async.launchUnconfined
-import nativex.gio.Application.*
+import nativex.gio.Application.Flags
 import nativex.gtk.Application
 import nativex.gtk.widgets.container.bin.windows.Window
 
@@ -23,38 +20,14 @@ inline fun application(
 		builder()
 	}.run()
 
-
-
-
-
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onQueryEnd(crossinline onQueryEnd: suspend () -> Unit) {
-	launchUnconfined {
-		queryEndSignal.collectLatest {
-			onQueryEnd()
-		}
-	}
-}
+inline fun Application.onQueryEnd(noinline onQueryEnd: () -> Unit) =
+	addOnQueryEndCallback(onQueryEnd)
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onWindowAdded(crossinline onWindowAdded: suspend (Window) -> Unit) {
-	launchUnconfined {
-		windowAddedSignal.collectLatest {
-			onWindowAdded(it)
-		}
-	}
-}
+inline fun Application.onWindowAdded(noinline onWindowAdded: (Window) -> Unit) =
+	addOnWindowAddedCallback(onWindowAdded)
 
-
-
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onWindowRemoved(crossinline onWindowRemoved: suspend (Window) -> Unit) {
-	launchUnconfined {
-		windowRemovedSignal.collectLatest {
-			onWindowRemoved(it)
-		}
-	}
-}
+inline fun Application.onWindowRemoved(noinline onWindowRemoved: (Window) -> Unit) =
+	addOnWindowRemovedCallback(onWindowRemoved)

@@ -1,14 +1,15 @@
 package nativex.gtk.widgets
 
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkTextDirection.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.SignalManager
 import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
-import nativex.async.staticDestroyStableRefFunction
 import nativex.atk.KAtkObject
 import nativex.atk.KAtkObject.Companion.wrap
 import nativex.cairo.CairoT
@@ -24,9 +25,12 @@ import nativex.gdk.Rectangle.Companion.wrap
 import nativex.gdk.Screen.Companion.wrap
 import nativex.gdk.Visual.Companion.wrap
 import nativex.gdk.Window.Companion.wrap
-import nativex.gio.KObject
-import nativex.glib.KGValue
+import nativex.gobject.KObject
+import nativex.glib.asKSequence
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gmodule.KGBytes
+import nativex.gobject.*
 import nativex.gtk.*
 import nativex.gtk.SelectionData.Companion.wrap
 import nativex.gtk.Settings.Companion.wrap
@@ -56,7 +60,7 @@ import nativex.pango.Layout
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html">GtkWidget</a>
  */
 open class Widget(
-	 open val widgetPointer: WidgetPointer
+	open val widgetPointer: WidgetPointer
 ) : KObject(
 	widgetPointer.reinterpret()
 ) {
@@ -2062,7 +2066,7 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	enum class HelpType(val key: Int,  val gtk: GtkWidgetHelpType) {
+	enum class HelpType(val key: Int, val gtk: GtkWidgetHelpType) {
 		TOOLTIP(0, GtkWidgetHelpType.GTK_WIDGET_HELP_TOOLTIP),
 		WHATIS_THIS(4, GtkWidgetHelpType.GTK_WIDGET_HELP_WHATS_THIS);
 
@@ -2077,13 +2081,13 @@ open class Widget(
 	 * @see <a href="">GtkWidgetPath</a>
 	 */
 	class Path(
-		 val pointer: CPointer<GtkWidgetPath>
+		val pointer: CPointer<GtkWidgetPath>
 	) {
 		companion object {
-			 inline fun CPointer<GtkWidgetPath>?.wrap() =
+			inline fun CPointer<GtkWidgetPath>?.wrap() =
 				this?.wrap()
 
-			 inline fun CPointer<GtkWidgetPath>.wrap() =
+			inline fun CPointer<GtkWidgetPath>.wrap() =
 				Path(this)
 		}
 	}
@@ -2091,7 +2095,7 @@ open class Widget(
 	/**
 	 * @see <a href=""></a>
 	 */
-	enum class Align(val key: Int,  val gtk: GtkAlign) {
+	enum class Align(val key: Int, val gtk: GtkAlign) {
 		FILL(0, GtkAlign.GTK_ALIGN_FILL),
 		START(1, GtkAlign.GTK_ALIGN_START),
 		END(2, GtkAlign.GTK_ALIGN_END),
@@ -2108,14 +2112,14 @@ open class Widget(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkTextDirection">GtkTextDirection</a>
 	 */
-	enum class TextDirection(val key: Int,  val gtk: GtkTextDirection) {
+	enum class TextDirection(val key: Int, val gtk: GtkTextDirection) {
 		NONE(0, GTK_TEXT_DIR_NONE),
 		LTR(1, GTK_TEXT_DIR_LTR),
 		RTL(2, GTK_TEXT_DIR_RTL);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			 fun valueOf(gtk: GtkTextDirection) =
+			fun valueOf(gtk: GtkTextDirection) =
 				values().find { it.gtk == gtk }
 		}
 	}
@@ -2124,7 +2128,7 @@ open class Widget(
 	 * @see <a href=""></a>
 	 */
 	//@Deprecated("Replace with StateType") i don't even know...
-	enum class StateType(val key: Int,  val gtk: GtkStateType) {
+	enum class StateType(val key: Int, val gtk: GtkStateType) {
 		NORMAL(0, GtkStateType.GTK_STATE_NORMAL),
 
 		ACTIVE(1, GtkStateType.GTK_STATE_ACTIVE),
@@ -2147,7 +2151,7 @@ open class Widget(
 	}
 
 	class Class(
-		 val classPointer: CPointer<GtkWidgetClass>
+		val classPointer: CPointer<GtkWidgetClass>
 	) {
 		fun setTemplate(templateBytes: KGBytes) {
 			gtk_widget_class_set_template(classPointer, templateBytes.pointer)
@@ -2173,23 +2177,23 @@ open class Widget(
 		 */
 		fun cairoTransformToWindow(): Unit = TODO("gtk_cairo_transform_to_window")
 
-		 val staticTickCallback: GtkTickCallback =
+		val staticTickCallback: GtkTickCallback =
 			staticCFunction { _: gpointer?, frameClock: CPointer<GdkFrameClock>, data: gpointer ->
 				data.asStableRef<(FrameClock) -> Boolean>().get()
 					.invoke(FrameClock(frameClock)).gtk
 			}.reinterpret()
 
-		 inline fun CPointer<GtkWidget>?.wrap() =
-			this?.let { Widget(it) }
+		inline fun CPointer<GtkWidget>?.wrap() =
+			this?.wrap()
 
-		 inline fun CPointer<GtkWidget>.wrap() =
+		inline fun CPointer<GtkWidget>.wrap() =
 			Widget(this)
 	}
 }
 
 typealias EventForBooleanFunction = (Event) -> Boolean
 
- val staticEventForBooleanFunction: GCallback =
+val staticEventForBooleanFunction: GCallback =
 	staticCFunction { _: CPointer<GtkWidget>, event: CPointer<GdkEvent>, data: gpointer? ->
 		data?.asStableRef<EventForBooleanFunction>()?.get()?.invoke(event.wrap()).gtk
 	}.reinterpret()
@@ -2198,11 +2202,11 @@ typealias EventForBooleanFunction = (Event) -> Boolean
  */
 typealias CanActivateAccelFunction = (@ParameterName("signalId") UInt) -> Boolean
 
- val staticCanActivateAccelFunction: GCallback = staticCFunction { _: WidgetPointer, id: UInt, data: gpointer ->
+val staticCanActivateAccelFunction: GCallback = staticCFunction { _: WidgetPointer, id: UInt, data: gpointer ->
 	data.asStableRef<CanActivateAccelFunction>().get().invoke(id).gtk
 }.reinterpret()
 
- val staticDirectionChangedCallback: GCallback =
+val staticDirectionChangedCallback: GCallback =
 	staticCFunction { _: WidgetPointer, previous: GtkTextDirection, data: gpointer ->
 		data.asStableRef<(Widget.TextDirection) -> Unit>().get().invoke(Widget.TextDirection.valueOf(previous)!!)
 		Unit
@@ -2210,7 +2214,7 @@ typealias CanActivateAccelFunction = (@ParameterName("signalId") UInt) -> Boolea
 
 typealias DragContextForUnitFunction = (DragContext) -> Unit
 
- val staticDragContextForUnitFunction: GCallback =
+val staticDragContextForUnitFunction: GCallback =
 	staticCFunction { _: WidgetPointer, context: CPointer<GdkDragContext>, data: gpointer ->
 		data.asStableRef<DragContextForUnitFunction>().get().invoke(context.wrap())
 		Unit
@@ -2220,7 +2224,7 @@ typealias DragContextForUnitFunction = (DragContext) -> Unit
  */
 typealias DragDataGetFunction = (DragContext, SelectionData, @ParameterName("info") UInt, @ParameterName("time") UInt) -> Unit
 
- val staticDragDataGetFunction: GCallback =
+val staticDragDataGetFunction: GCallback =
 	staticCFunction { _: WidgetPointer,
 	                  context: CPointer<GdkDragContext>,
 	                  sel: CPointer<GtkSelectionData>,
@@ -2242,7 +2246,7 @@ typealias DragDataReceivedFunction = (
 	@ParameterName("time") UInt
 ) -> Unit
 
- val staticDragDataReceivedFunction: GCallback =
+val staticDragDataReceivedFunction: GCallback =
 	staticCFunction { _: WidgetPointer,
 	                  context: CPointer<GdkDragContext>,
 	                  x: Int,
@@ -2265,7 +2269,7 @@ typealias DragDropFunction = (
 	@ParameterName("time") UInt
 ) -> Unit
 
- val staticDragDropFunction: GCallback =
+val staticDragDropFunction: GCallback =
 	staticCFunction { _: WidgetPointer,
 	                  context: CPointer<GdkDragContext>,
 	                  x: Int,
@@ -2277,39 +2281,39 @@ typealias DragDropFunction = (
 	}.reinterpret()
 
 
- val staticWidgetForUnitFunction: GCallback =
+val staticWidgetForUnitFunction: GCallback =
 	staticCFunction { _: WidgetPointer, previous: WidgetPointer?, data: gpointer ->
 		data.asStableRef<(Widget?) -> Unit>().get().invoke(previous.wrap())
 		Unit
 	}.reinterpret()
 
- val staticScreenChangedFunction: GCallback =
+val staticScreenChangedFunction: GCallback =
 	staticCFunction { _: WidgetPointer, previous: CPointer<GdkScreen>?, data: gpointer ->
 		data.asStableRef<(Screen?) -> Unit>().get().invoke(previous.wrap())
 		Unit
 	}.reinterpret()
 
 
- val staticSelectionGetFunction: GCallback =
+val staticSelectionGetFunction: GCallback =
 	staticCFunction { _: WidgetPointer, sel: CPointer<GtkSelectionData>, info: UInt, time: UInt, data: gpointer ->
 		data.asStableRef<(SelectionGetData) -> Unit>().get().invoke(SelectionGetData(sel.wrap(), info, time))
 		Unit
 	}.reinterpret()
 
- val staticSizeAllocateCallback: GCallback =
+val staticSizeAllocateCallback: GCallback =
 	staticCFunction { _: WidgetPointer, rect: CPointer<GdkRectangle>, data: gpointer ->
 		data.asStableRef<(Rectangle) -> Unit>().get().invoke(rect.wrap())
 		Unit
 	}.reinterpret()
 
- val staticStateFlagsChangedCallback: GCallback =
+val staticStateFlagsChangedCallback: GCallback =
 	staticCFunction { _: WidgetPointer, flags: GtkStateFlags, data: gpointer ->
 		data.asStableRef<(StateFlags) -> Unit>().get().invoke(StateFlags.valueOf(flags)!!)
 		Unit
 	}.reinterpret()
 
 
- val staticEventCallback: GCallback =
+val staticEventCallback: GCallback =
 	staticCFunction { _: CPointer<GtkWidget>, event: CPointer<GdkEvent>, data: gpointer? ->
 		data?.asStableRef<(Event) -> Unit>()?.get()?.invoke(event.wrap())
 		Unit
@@ -2319,9 +2323,9 @@ typealias DragDropFunction = (
  */
 typealias ShowHelpFunction = (HelpType) -> Boolean
 
- val staticShowHelpFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                   type: GtkWidgetHelpType,
-                                                                   data: gpointer ->
+val staticShowHelpFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                          type: GtkWidgetHelpType,
+                                                          data: gpointer ->
 	data.asStableRef<ShowHelpFunction>().get().invoke(HelpType.valueOf(type)!!).gtk
 }.reinterpret()
 /**
@@ -2329,12 +2333,12 @@ typealias ShowHelpFunction = (HelpType) -> Boolean
  */
 typealias QueryTooltipFunction = (@ParameterName("x") Int, @ParameterName("y") Int, Boolean, Tooltip) -> Boolean
 
- val staticQueryTooltipFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                       x: Int,
-                                                                       y: Int,
-                                                                       key: gboolean,
-                                                                       tooltip: CPointer<GtkTooltip>,
-                                                                       data: gpointer ->
+val staticQueryTooltipFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                              x: Int,
+                                                              y: Int,
+                                                              key: gboolean,
+                                                              tooltip: CPointer<GtkTooltip>,
+                                                              data: gpointer ->
 	data.asStableRef<QueryTooltipFunction>().get().invoke(x, y, key.bool, tooltip.wrap()).gtk
 }.reinterpret()
 
@@ -2343,7 +2347,7 @@ typealias QueryTooltipFunction = (@ParameterName("x") Int, @ParameterName("y") I
  */
 typealias PopupMenuFunction = () -> Boolean
 
- val staticPopupMenuFunction: GCallback = staticCFunction { _: WidgetPointer, data: gpointer ->
+val staticPopupMenuFunction: GCallback = staticCFunction { _: WidgetPointer, data: gpointer ->
 	data.asStableRef<PopupMenuFunction>().get().invoke().gtk
 }.reinterpret()
 /**
@@ -2351,7 +2355,7 @@ typealias PopupMenuFunction = () -> Boolean
  */
 typealias MnemonicActivateFunction = (@ParameterName("groupCycling") Boolean) -> Boolean
 
- val staticMnemonicActivateFunction: GCallback =
+val staticMnemonicActivateFunction: GCallback =
 	staticCFunction { _: WidgetPointer, groupCycling: gboolean, data: gpointer ->
 		data.asStableRef<MnemonicActivateFunction>().get().invoke(groupCycling.bool).gtk
 	}.reinterpret()
@@ -2360,9 +2364,9 @@ typealias MnemonicActivateFunction = (@ParameterName("groupCycling") Boolean) ->
  */
 typealias KeynavFailedFunction = (DirectionType) -> Boolean
 
- val staticKeynavFailedFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                       direction: GtkDirectionType,
-                                                                       data: gpointer ->
+val staticKeynavFailedFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                              direction: GtkDirectionType,
+                                                              data: gpointer ->
 	data.asStableRef<KeynavFailedFunction>().get().invoke(DirectionType.valueOf(direction)!!).gtk
 }.reinterpret()
 
@@ -2371,15 +2375,15 @@ typealias KeynavFailedFunction = (DirectionType) -> Boolean
  */
 typealias FocusFunction = (DirectionType) -> Boolean
 
- val staticFocusFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                direction: GtkDirectionType,
-                                                                data: gpointer ->
+val staticFocusFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                       direction: GtkDirectionType,
+                                                       data: gpointer ->
 	data.asStableRef<FocusFunction>().get().invoke(DirectionType.valueOf(direction)!!).gtk
 }.reinterpret()
 
- val staticMoveFocusFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                    direction: GtkDirectionType,
-                                                                    data: gpointer ->
+val staticMoveFocusFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                           direction: GtkDirectionType,
+                                                           data: gpointer ->
 	data.asStableRef<(DirectionType) -> Unit>().get().invoke(DirectionType.valueOf(direction)!!)
 	Unit
 }.reinterpret()
@@ -2389,7 +2393,7 @@ typealias FocusFunction = (DirectionType) -> Boolean
  */
 typealias MapFunction = () -> Unit
 
- val staticMapFunction: GCallback = staticCFunction { _: WidgetPointer, data: gpointer ->
+val staticMapFunction: GCallback = staticCFunction { _: WidgetPointer, data: gpointer ->
 	data.asStableRef<MapFunction>().get().invoke()
 	Unit
 }.reinterpret()
@@ -2404,12 +2408,12 @@ typealias DragMotionFunction = (
 	@ParameterName("time") UInt
 ) -> Boolean
 
- val staticDragMotionFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                     context: CPointer<GdkDragContext>,
-                                                                     x: Int,
-                                                                     y: Int,
-                                                                     time: UInt,
-                                                                     data: gpointer ->
+val staticDragMotionFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                            context: CPointer<GdkDragContext>,
+                                                            x: Int,
+                                                            y: Int,
+                                                            time: UInt,
+                                                            data: gpointer ->
 	data.asStableRef<DragMotionFunction>().get().invoke(context.wrap(), x, y, time).gtk
 }.reinterpret()
 
@@ -2418,10 +2422,10 @@ typealias DragMotionFunction = (
  */
 typealias DragFailedFunction = (DragContext, DragResult) -> Boolean
 
- val staticDragFailedFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                     context: CPointer<GdkDragContext>,
-                                                                     result: GtkDragResult,
-                                                                     data: gpointer ->
+val staticDragFailedFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                            context: CPointer<GdkDragContext>,
+                                                            result: GtkDragResult,
+                                                            data: gpointer ->
 	data.asStableRef<DragFailedFunction>().get().invoke(context.wrap(), DragResult.valueOf(result)!!).gtk
 }.reinterpret()
 
@@ -2430,18 +2434,18 @@ typealias DragFailedFunction = (DragContext, DragResult) -> Boolean
  */
 typealias DragLeaveFunction = (DragContext, @ParameterName("time") UInt) -> Unit
 
- val staticDragLeaveFunction: GCallback = staticCFunction { _: WidgetPointer,
-                                                                    context: CPointer<GdkDragContext>,
-                                                                    time: UInt,
-                                                                    data: gpointer ->
+val staticDragLeaveFunction: GCallback = staticCFunction { _: WidgetPointer,
+                                                           context: CPointer<GdkDragContext>,
+                                                           time: UInt,
+                                                           data: gpointer ->
 	data.asStableRef<DragLeaveFunction>().get().invoke(context.wrap(), time)
 	Unit
 }.reinterpret()
 
- val staticSelectionReceivedCallback: GCallback = staticCFunction { _: WidgetPointer,
-                                                                            sel: CPointer<GtkSelectionData>,
-                                                                            time: UInt,
-                                                                            data: gpointer ->
+val staticSelectionReceivedCallback: GCallback = staticCFunction { _: WidgetPointer,
+                                                                   sel: CPointer<GtkSelectionData>,
+                                                                   time: UInt,
+                                                                   data: gpointer ->
 	data.asStableRef<(Widget.SelectionReceivedData) -> Unit>().get()
 		.invoke(Widget.SelectionReceivedData(sel.wrap(), time))
 	Unit

@@ -1,8 +1,8 @@
 package nativex.gtk.common.events
 
-import gtk.GCallback
+import glib.gpointer
+import gobject.GCallback
 import gtk.GtkMovementStep
-import gtk.gpointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
@@ -13,7 +13,7 @@ data class MoveCursorEvent(
 	val count: Int
 ) {
 	companion object {
-		 val staticCallback: GCallback =
+		val staticCallback: GCallback =
 			staticCFunction { _: gpointer, step: GtkMovementStep, count: Int, data: gpointer? ->
 				data?.asStableRef<(MoveCursorEvent) -> Unit>()?.get()?.invoke(
 					MoveCursorEvent(
@@ -21,6 +21,7 @@ data class MoveCursorEvent(
 						count
 					)
 				)
+				Unit
 			}.reinterpret()
 	}
 }

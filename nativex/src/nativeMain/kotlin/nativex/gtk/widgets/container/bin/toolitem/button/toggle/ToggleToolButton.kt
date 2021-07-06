@@ -6,8 +6,8 @@ import gtk.gtk_toggle_tool_button_new
 import gtk.gtk_toggle_tool_button_set_active
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.widgets.container.bin.toolitem.button.ToolButton
 
 /**

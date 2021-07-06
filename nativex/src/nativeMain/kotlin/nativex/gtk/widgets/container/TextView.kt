@@ -1,5 +1,6 @@
 package nativex.gtk.widgets.container
-
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_LINE
 import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_WORD
@@ -12,10 +13,12 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
-import nativex.gtk.*
+import nativex.gobject.Signals
+import nativex.gtk.Scrollable
+import nativex.gtk.TextBuffer
+import nativex.gtk.TextIter
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.enums.ScrollStep
 import nativex.gtk.common.events.ExtenedMoveCursorEvent

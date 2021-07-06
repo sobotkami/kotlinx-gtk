@@ -4,6 +4,7 @@ import gtk.*
 import gtk.GtkSizeGroupMode.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.asKSequence
 import nativex.gtk.widgets.Widget
 
 /**

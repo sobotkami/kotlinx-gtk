@@ -5,8 +5,12 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
-import nativex.async.SignalManager
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gtk.IconSize
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.common.enums.ReliefStyle
 import nativex.gtk.widgets.Widget

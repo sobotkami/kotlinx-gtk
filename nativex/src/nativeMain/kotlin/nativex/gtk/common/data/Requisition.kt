@@ -1,10 +1,13 @@
 package nativex.gtk.common.data
 
-import gtk.*
-import kotlinx.cinterop.*
+import gtk.GtkRequisition
+import gtk.gtk_requisition_copy
+import gtk.gtk_requisition_free
+import gtk.gtk_requisition_new
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.pointed
 import nativex.Closeable
 import nativex.ClosedException
-import nativex.gdk.Window
 
 /**
  * kotlinx-gtk

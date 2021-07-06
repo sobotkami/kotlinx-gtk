@@ -1,7 +1,9 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
 import gtk.*
-import kotlinx.cinterop.*
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.toKString
 import nativex.gio.File
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.windows.Window

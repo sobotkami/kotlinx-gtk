@@ -2,12 +2,12 @@ package nativex.gtk.widgets.range
 
 import gtk.*
 import kotlinx.cinterop.*
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.Adjustment
 import nativex.gtk.Orientable
-import nativex.gtk.bool
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PositionType
-import nativex.gtk.gtk
 
 /**
  * kotlinx-gtk

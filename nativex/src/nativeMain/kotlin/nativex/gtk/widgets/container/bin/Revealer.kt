@@ -4,8 +4,8 @@ import gtk.*
 import gtk.GtkRevealerTransitionType.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 
 /**
  * kotlinx-gtk

@@ -5,7 +5,11 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gdk.Pixbuf
 import nativex.gdk.RGBA
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gtk.CellArea
+import nativex.gtk.CellAreaContext
+import nativex.gtk.TreeModel
 
 /**
  * kotlinx-gtk

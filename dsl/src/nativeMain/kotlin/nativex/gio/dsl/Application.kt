@@ -1,44 +1,27 @@
 package nativex.gio.dsl
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
-import nativex.async.launchUnconfined
 import nativex.gio.Application
 import nativex.gio.Icon
 import nativex.gio.Notification
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onStartup(crossinline onStartup: suspend () -> Unit) {
-	launchUnconfined {
-		startupSignal.collectLatest {
-			onStartup()
-		}
-	}
+inline fun Application.onStartup(noinline onStartup: () -> Unit) {
+	addOnStartupCallback(onStartup)
 }
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onShutdown(crossinline onShutdown: suspend () -> Unit) {
-	launchUnconfined {
-		shutdownSignal.collectLatest {
-			onShutdown()
-		}
-	}
+inline fun Application.onShutdown(noinline onShutdown: () -> Unit) {
+	addOnShutdownCallback(onShutdown)
 }
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun Application.onNameLost(crossinline onNameLost: suspend () -> Unit) {
-	launchUnconfined {
-		nameLostSignal.collectLatest {
-			onNameLost()
-		}
-	}
+inline fun Application.onNameLost(noinline onNameLost: () -> Unit) {
+	addOnNameLostCallback(onNameLost)
 }
 
 

@@ -1,5 +1,8 @@
 package nativex.gtk.widgets.container.bin.windows
 
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkWindowPosition.*
 import gtk.GtkWindowType.GTK_WINDOW_POPUP
@@ -7,12 +10,13 @@ import gtk.GtkWindowType.GTK_WINDOW_TOPLEVEL
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gdk.Screen
 import nativex.gdk.Screen.Companion.wrap
-import nativex.glib.Variant
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gtk.Application
 import nativex.gtk.GtkWindowGroup
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
@@ -163,7 +167,7 @@ open class Window(
 	}
 
 	fun close() {
-		TODO("")
+		gtk_window_close(windowPointer)
 	}
 
 	fun maximize() {

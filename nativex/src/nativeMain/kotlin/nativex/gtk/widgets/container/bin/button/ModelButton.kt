@@ -4,7 +4,6 @@ import gtk.GtkButtonRole
 import gtk.GtkModelButton
 import gtk.gtk_model_button_new
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.pointed
 import kotlinx.cinterop.reinterpret
 
 /**

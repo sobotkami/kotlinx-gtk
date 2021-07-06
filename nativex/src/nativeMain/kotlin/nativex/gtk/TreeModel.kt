@@ -1,5 +1,7 @@
 package nativex.gtk
-
+import glib.gpointer
+import gobject.GCallback
+import gobject.GObject
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -7,9 +9,12 @@ import kotlinx.coroutines.flow.Flow
 import nativex.Closeable
 import nativex.ClosedException
 import nativex.async.callbackSignalFlow
-import nativex.gio.KObject
-import nativex.gio.KObject.Companion.wrap
-import nativex.reinterpretOrNull
+import nativex.gobject.KObject
+import nativex.gobject.KObject.Companion.wrap
+import nativex.glib.asSequence
+import nativex.glib.bool
+import nativex.glib.reinterpretOrNull
+import nativex.gobject.Signals
 
 /**
  * kotlinx-gtk

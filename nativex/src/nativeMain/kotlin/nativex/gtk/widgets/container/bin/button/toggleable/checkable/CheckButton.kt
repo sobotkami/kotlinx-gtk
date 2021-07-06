@@ -1,6 +1,9 @@
 package nativex.gtk.widgets.container.bin.button.toggleable.checkable
 
-import gtk.*
+import gtk.GtkCheckButton
+import gtk.gtk_check_button_new
+import gtk.gtk_check_button_new_with_label
+import gtk.gtk_check_button_new_with_mnemonic
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gtk.widgets.container.bin.button.toggleable.ToggleButton

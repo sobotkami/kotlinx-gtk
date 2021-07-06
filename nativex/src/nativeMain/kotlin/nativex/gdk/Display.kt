@@ -1,5 +1,7 @@
 package nativex.gdk
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -12,13 +14,13 @@ import nativex.gdk.Seat.Companion.wrap
 import nativex.gdk.Window.Companion.wrap
 import nativex.gdk.wayland.Monitor
 import nativex.gdk.wayland.Monitor.Companion.wrap
-import nativex.gio.KObject
-import nativex.gtk.Signals
-import nativex.gtk.asKSequence
-import nativex.gtk.bool
+import nativex.gobject.KObject
+import nativex.glib.asKSequence
+import nativex.glib.bool
+import nativex.gobject.Signals
 
 class Display(
-	 val displayPointer: CPointer<GdkDisplay>
+	val displayPointer: CPointer<GdkDisplay>
 ) : KObject(displayPointer.reinterpret()), Closeable {
 
 	/**
@@ -158,7 +160,7 @@ class Display(
 	val seatRemovedSignal: Flow<Seat> by signalFlow(Signals.SEAT_REMOVED, staticSeatCallback)
 
 	companion object {
-		 val staticMonitorCallback: GCallback =
+		val staticMonitorCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: CPointer<GdkMonitor>, data: gpointer? ->
 				data?.asStableRef<(Monitor) -> Unit>()
 					?.get()
@@ -166,7 +168,7 @@ class Display(
 				Unit
 			}.reinterpret()
 
-		 val staticSeatCallback: GCallback =
+		val staticSeatCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: CPointer<GdkSeat>, data: gpointer? ->
 				data?.asStableRef<(Seat) -> Unit>()
 					?.get()
@@ -183,10 +185,10 @@ class Display(
 			get() = gdk_display_get_default().wrap()
 
 
-		 inline fun CPointer<GdkDisplay>?.wrap() =
+		inline fun CPointer<GdkDisplay>?.wrap() =
 			this?.let { Display(it) }
 
-		 inline fun CPointer<GdkDisplay>.wrap() =
+		inline fun CPointer<GdkDisplay>.wrap() =
 			Display(this)
 	}
 

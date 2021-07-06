@@ -1,16 +1,16 @@
 package nativex.gtk.widgets.container.box
 
+import glib.gbooleanVar
 import gtk.*
 import kotlinx.cinterop.*
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.Orientable
-import nativex.gtk.bool
 import nativex.gtk.common.enums.BaselinePosition
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PackType
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.button.Button
 
 /**
  * kotlinx-gtk

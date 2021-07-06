@@ -1,11 +1,10 @@
 package nativex.gtk.widgets.container
-
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.bool
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.common.enums.Orientation
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.box.Box
 

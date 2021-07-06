@@ -1,9 +1,13 @@
 package nativex.gtk.widgets.container.bin.combobox
-
+import glib.gpointer
 import gtk.*
 import kotlinx.cinterop.*
 import nativex.gdk.Device
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gtk.CellArea
+import nativex.gtk.CellLayout
+import nativex.gtk.TreeModel
 import nativex.gtk.widgets.container.TreeView.Companion.staticTreeViewRowSeparatorFunc
 import nativex.gtk.widgets.container.TreeViewRowSeparatorFunc
 import nativex.gtk.widgets.container.bin.Bin

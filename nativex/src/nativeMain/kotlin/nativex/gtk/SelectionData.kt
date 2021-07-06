@@ -2,7 +2,6 @@ package nativex.gtk
 
 import gtk.GtkSelectionData
 import kotlinx.cinterop.CPointer
-import nativex.gdk.DragContext
 
 /**
  * kotlinx-gtk

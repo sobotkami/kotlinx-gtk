@@ -1,5 +1,7 @@
 package nativex.gtk.widgets.container.bin.scrolledwindow
-
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import gtk.GtkCornerType.*
 import gtk.GtkPolicyType.*
@@ -7,9 +9,13 @@ import gtk.GtkPolicyType.Var
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.SignalManager
 import nativex.async.signalFlow
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gtk.Adjustment
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.common.enums.ScrollType

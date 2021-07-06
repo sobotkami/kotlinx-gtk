@@ -3,7 +3,6 @@ package nativex.gdk
 import gtk.GdkRectangle
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
-import nativex.gtk.Tooltip
 
 /**
  * kotlinx-gtk

@@ -1,14 +1,20 @@
 package nativex.gtk.widgets.container.bin
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
-import nativex.async.staticDestroyStableRefFunction
-import nativex.gio.KObject
+import nativex.gobject.KObject
 import nativex.gio.ListModel
-import nativex.gtk.*
+import nativex.glib.asKSequence
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gobject.staticDestroyStableRefFunction
+import nativex.gtk.Adjustment
 import nativex.gtk.common.enums.SelectionMode
 import nativex.gtk.common.events.MoveCursorEvent
 import nativex.gtk.widgets.Widget

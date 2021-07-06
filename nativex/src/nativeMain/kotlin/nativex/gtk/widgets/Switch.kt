@@ -1,12 +1,14 @@
 package nativex.gtk.widgets
-
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
-import nativex.gtk.Signals
-import nativex.gtk.bool
-import nativex.gtk.connectSignal
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
 
 /**
  * kotlinx-gtk

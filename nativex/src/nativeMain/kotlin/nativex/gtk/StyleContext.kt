@@ -4,7 +4,6 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.pointed
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk

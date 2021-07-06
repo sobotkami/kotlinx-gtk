@@ -1,0 +1,9 @@
+headers = glib-object.h
+package = gobject
+headerFilter = gobject/* glib-object.h
+
+# pkg-config --cflags gobject-2.0
+compilerOpts.linux = -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
+
+# pkg-config --libs gobject-2.0
+linkerOpts.linux = -lgobject-2.0 -lglib-2.0

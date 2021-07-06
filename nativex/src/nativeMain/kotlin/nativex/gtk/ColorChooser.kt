@@ -1,10 +1,12 @@
 package nativex.gtk
-
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.gdk.RGBA
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.common.enums.Orientation
 
 /**

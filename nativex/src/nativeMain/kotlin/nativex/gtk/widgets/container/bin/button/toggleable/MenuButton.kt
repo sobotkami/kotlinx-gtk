@@ -1,13 +1,12 @@
 package nativex.gtk.widgets.container.bin.button.toggleable
-
 import gtk.*
 import gtk.GtkArrowType.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gio.MenuModel
 import nativex.gio.MenuModel.Impl.Companion.wrap
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.popover.Popover
 import nativex.gtk.widgets.container.bin.popover.Popover.Companion.wrap

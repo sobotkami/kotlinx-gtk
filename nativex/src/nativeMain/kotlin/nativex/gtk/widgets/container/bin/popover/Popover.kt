@@ -10,11 +10,14 @@ import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.gdk.Rectangle
 import nativex.gio.MenuModel
-import nativex.gtk.*
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gtk.asWidget
+import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
-import nativex.gtk.widgets.container.menu.Menu
 
 /**
  * kotlinx-gtk

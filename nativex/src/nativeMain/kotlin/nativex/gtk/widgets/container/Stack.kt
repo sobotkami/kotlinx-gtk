@@ -1,13 +1,12 @@
 package nativex.gtk.widgets.container
-
 import gtk.*
 import gtk.GtkStackTransitionType.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.asWidgetOrNull
-import nativex.gtk.bool
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**

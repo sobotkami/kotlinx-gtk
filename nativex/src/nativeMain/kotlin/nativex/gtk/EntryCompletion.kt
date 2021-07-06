@@ -2,7 +2,6 @@ package nativex.gtk
 
 import gtk.GtkEntryCompletion
 import kotlinx.cinterop.CPointer
-import nativex.pango.Layout
 
 /**
  * kotlinx-gtk

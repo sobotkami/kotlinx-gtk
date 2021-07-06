@@ -1,12 +1,11 @@
 package nativex.gtk.widgets
-
 import gtk.*
 import gtk.GtkLevelBarMode.GTK_LEVEL_BAR_MODE_CONTINUOUS
 import gtk.GtkLevelBarMode.GTK_LEVEL_BAR_MODE_DISCRETE
 import kotlinx.cinterop.*
 import kotlinx.coroutines.flow.Flow
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 
 /**
  * kotlinx-gtk

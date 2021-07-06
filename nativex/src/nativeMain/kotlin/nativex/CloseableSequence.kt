@@ -1,10 +1,10 @@
 package nativex
 
-import gtk.g_strfreev
+import glib.g_strfreev
 import kotlinx.cinterop.toKString
-import nativex.gtk.CString
-import nativex.gtk.CStringList
-import nativex.gtk.asIterable
+import nativex.glib.CString
+import nativex.glib.CStringList
+import nativex.glib.asIterable
 
 /**
  * kotlinx-gtk

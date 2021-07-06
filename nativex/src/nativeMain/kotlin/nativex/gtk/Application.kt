@@ -1,21 +1,22 @@
 package nativex.gtk
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.asStableRef
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.staticCFunction
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
+import kotlinx.cinterop.*
 import nativex.ClosableSequence
 import nativex.asCloseableKSequence
-import nativex.async.callbackSignalFlow
-import nativex.async.signalFlow
 import nativex.gio.Application
 import nativex.gio.Menu
 import nativex.gio.Menu.Companion.wrap
 import nativex.gio.MenuModel
 import nativex.gio.MenuModel.Impl.Companion.wrap
+import nativex.glib.asKSequence
+import nativex.glib.bool
+import nativex.glib.toNullTermCStringArray
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
 import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
 
@@ -85,25 +86,41 @@ class Application(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-query-end">query-end</a>
 	 */
-	
-	@ExperimentalCoroutinesApi
-	val queryEndSignal: Flow<Unit> by signalFlow(Signals.QUERY_END)
-	
+	fun addOnQueryEndCallback(action: () -> Unit): SignalManager =
+		SignalManager(
+			applicationPointer,
+			applicationPointer.connectSignal(
+				Signals.QUERY_END,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-added">window-added</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val windowAddedSignal: Flow<Window> by signalFlow(Signals.WINDOW_ADDED, staticWindowAddedCallback)
+	fun addOnWindowAddedCallback(action: (Window) -> Unit): SignalManager =
+		SignalManager(
+			applicationPointer,
+			applicationPointer.connectSignal(
+				Signals.WINDOW_ADDED,
+				staticWindowAddedCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
 
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-removed">window-removed</a>
 	 */
-	
-	@ExperimentalCoroutinesApi
-	val windowRemovedSignal: Flow<Window> by signalFlow(Signals.WINDOW_REMOVED, staticWindowRemovedCallback)
-
+	fun addOnWindowRemovedCallback(action: (Window) -> Unit): SignalManager =
+		SignalManager(
+			applicationPointer,
+			applicationPointer.connectSignal(
+				Signals.WINDOW_REMOVED,
+				staticWindowRemovedCallback,
+				callbackWrapper = StableRef.create(action).asCPointer()
+			)
+		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-new">gtk_application_new</a>
@@ -121,14 +138,14 @@ class Application(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-window-by-id">gtk_application_get_window_by_id</a>
 	 */
-	
+
 	fun getWindowById(id: UInt): Window? =
 		gtk_application_get_window_by_id(applicationPointer, id).wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-inhibit">gtk_application_inhibit</a>
 	 */
-	
+
 	fun inhibit(window: Window, flags: InhibitFlags, reason: String): UInt =
 		gtk_application_inhibit(
 			applicationPointer,
@@ -146,7 +163,7 @@ class Application(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-uninhibit">gtk_application_uninhibit</a>
 	 */
-	
+
 	fun unInhibit(cookie: UInt) =
 		gtk_application_uninhibit(applicationPointer, cookie)
 
@@ -208,14 +225,14 @@ class Application(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			
-			 fun valueOf(gtk: GtkApplicationInhibitFlags) =
+
+			fun valueOf(gtk: GtkApplicationInhibitFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
-		 val staticWindowAddedCallback: GCallback =
+		private val staticWindowAddedCallback: GCallback =
 			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
 				data?.asStableRef<(Window) -> Unit>()
 					?.get()
@@ -223,7 +240,7 @@ class Application(
 				Unit
 			}.reinterpret()
 
-		 val staticWindowRemovedCallback: GCallback =
+		private val staticWindowRemovedCallback: GCallback =
 			staticCFunction { _: gpointer?, window: CPointer<GtkWindow>, data: gpointer? ->
 				data?.asStableRef<(Window) -> Unit>()
 					?.get()

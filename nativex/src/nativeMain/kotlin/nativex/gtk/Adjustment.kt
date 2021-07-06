@@ -5,10 +5,9 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
-import nativex.gio.KObject
-import nativex.pango.TabArray
+import nativex.gobject.KObject
+import nativex.gobject.Signals
 
 /**
  * kotlinx-gtk

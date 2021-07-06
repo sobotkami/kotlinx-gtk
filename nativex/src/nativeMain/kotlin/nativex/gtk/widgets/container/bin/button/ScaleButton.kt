@@ -3,9 +3,9 @@ package nativex.gtk.widgets.container.bin.button
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.toNullTermCStringArray
 import nativex.gtk.Adjustment
 import nativex.gtk.IconSize
-import nativex.gtk.toNullTermCStringArray
 import nativex.gtk.widgets.Widget
 
 /**

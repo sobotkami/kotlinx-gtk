@@ -2,14 +2,16 @@ package nativex.gtk
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.gio.KObject
-import nativex.glib.KGType
-import nativex.glib.KGType.Companion.toCArray
-import nativex.glib.KGValue
+import nativex.gobject.KObject
+import nativex.glib.bool
+import nativex.glib.toCArray
+import nativex.gobject.KGType
+import nativex.gobject.KGType.Companion.toCArray
+import nativex.gobject.KGValue
 import nativex.gtk.TreeModel.TreeIter
 
 class ListStore constructor(
-	 val listStorePointer: CPointer<GtkListStore>
+	val listStorePointer: CPointer<GtkListStore>
 ) : KObject(listStorePointer.reinterpret()) {
 	constructor(vararg types: KGType) : this(
 		memScoped {

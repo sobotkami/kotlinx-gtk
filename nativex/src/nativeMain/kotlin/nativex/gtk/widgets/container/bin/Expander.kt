@@ -6,11 +6,10 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
-import nativex.gtk.Signals
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.widgets.Widget
 
 /**

@@ -1,13 +1,17 @@
 package nativex.gtk.widgets.container
 
-import gtk.*
+import glib.gpointer
+import gtk.GtkTreeIter
+import gtk.GtkTreeModel
+import gtk.GtkTreeView
+import gtk.GtkTreeViewRowSeparatorFunc
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
+import nativex.glib.gtk
 import nativex.gtk.TreeModel
 import nativex.gtk.TreeModel.TreeIter
-import nativex.gtk.gtk
 
 /**
  * kotlinx-gtk

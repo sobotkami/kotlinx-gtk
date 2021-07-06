@@ -2,18 +2,15 @@ package nativex.gtk.widgets.container.box
 
 import gtk.*
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.async.staticIntCallback
-import nativex.gtk.Signals
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.asWidget
-import nativex.gtk.bool
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
 

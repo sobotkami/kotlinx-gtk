@@ -1,11 +1,10 @@
 package nativex.gtk.widgets.container
-
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.gtk
 import nativex.gtk.Adjustment
 import nativex.gtk.Properties
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**

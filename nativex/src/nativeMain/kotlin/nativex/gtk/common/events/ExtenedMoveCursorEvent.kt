@@ -1,13 +1,12 @@
 package nativex.gtk.common.events
-
-import gtk.GCallback
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.GtkMovementStep
-import gtk.gboolean
-import gtk.gpointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
-import nativex.gtk.bool
+import nativex.glib.bool
 import nativex.gtk.common.enums.MovementStep
 
 data class ExtenedMoveCursorEvent(

@@ -1,8 +1,8 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.glib.KGType
-import nativex.glib.KGValue
+import nativex.gobject.KGType
+import nativex.gobject.KGValue
 import nativex.gtk.ListStore
 import nativex.gtk.TreeModel.TreeIter
 

@@ -2,7 +2,6 @@ package nativex.gtk.selections
 
 import gtk.GtkTargetEntry
 import kotlinx.cinterop.*
-import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk

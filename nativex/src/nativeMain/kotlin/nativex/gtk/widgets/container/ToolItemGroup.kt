@@ -3,7 +3,6 @@ package nativex.gtk.widgets.container
 import gtk.GtkToolItemGroup
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gtk.selections.TargetEntry
 
 /**
  * kotlinx-gtk

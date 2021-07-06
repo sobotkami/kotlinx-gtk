@@ -6,7 +6,7 @@ import gtk.gtk_settings_get_for_screen
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gdk.Screen
-import nativex.gio.KObject
+import nativex.gobject.KObject
 
 class Settings(
 	 val settingsPointer: CPointer<GtkSettings>

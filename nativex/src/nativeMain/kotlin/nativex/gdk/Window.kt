@@ -2,15 +2,17 @@ package nativex.gdk
 
 import gtk.*
 import gtk.GdkFilterReturn.*
-import gtk.GdkFullscreenMode.*
+import gtk.GdkFullscreenMode.GDK_FULLSCREEN_ON_ALL_MONITORS
+import gtk.GdkFullscreenMode.GDK_FULLSCREEN_ON_CURRENT_MONITOR
 import gtk.GdkModifierIntent.*
 import gtk.GdkWindowEdge.*
 import gtk.GdkWindowType.*
 import gtk.GdkWindowTypeHint.*
-import gtk.GdkWindowWindowClass.*
+import gtk.GdkWindowWindowClass.GDK_INPUT_ONLY
+import gtk.GdkWindowWindowClass.GDK_INPUT_OUTPUT
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.KObject
+import nativex.gobject.KObject
 
 /**
  * kotlinx-gtk

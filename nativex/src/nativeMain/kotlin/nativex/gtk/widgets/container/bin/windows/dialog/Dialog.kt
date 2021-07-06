@@ -1,5 +1,7 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.asStableRef
@@ -8,8 +10,8 @@ import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
-import nativex.gtk.Signals
-import nativex.gtk.gtk
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.HeaderBar
 import nativex.gtk.widgets.container.HeaderBar.Companion.wrap

@@ -2,7 +2,6 @@ package nativex.gdk
 
 import gtk.GdkDragContext
 import kotlinx.cinterop.CPointer
-import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk

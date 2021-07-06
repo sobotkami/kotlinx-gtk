@@ -1,9 +1,13 @@
 package nativex.gtk
-
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
-import nativex.gio.KObject
+import nativex.gobject.KObject
+import nativex.glib.CString
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
 
 /**
  * kotlinx-gtk
@@ -124,11 +128,12 @@ class EntryBuffer(val entryBufferPointer: CPointer<GtkEntryBuffer>) : KObject(en
 		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntryBuffer.html#GtkEntryBuffer-inserted-text">
 		 *     inserted-text</a>
 		 */
-		val staticInsertedTextFunction: GCallback =
+		val staticInsertedTextFunction: GCallback by lazy {
 			staticCFunction { _: gpointer, position: UInt, chars: CString, nChars: UInt, data: gpointer? ->
 				data?.asStableRef<InsertedTextFunction>()?.get()?.invoke(position, chars.toKString(), nChars)
 				Unit
 			}.reinterpret()
+		}
 
 		fun CPointer<GtkEntryBuffer>?.wrap() =
 			this?.wrap()

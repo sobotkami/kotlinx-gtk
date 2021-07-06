@@ -1,18 +1,18 @@
 package nativex.async
 
-import gtk.*
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import kotlinx.cinterop.toKString
-import nativex.gtk.CString
-import nativex.gtk.bool
-import nativex.gtk.common.enums.MovementStep
-import nativex.gtk.widgets.container.FlowBox
+import nativex.glib.CString
+import nativex.glib.bool
 
 // This file contains generic static callbacks that are frequently used in the program
 
- val staticIntCallback: GCallback =
+val staticIntCallback: GCallback =
 	staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 		data?.asStableRef<(Int) -> Unit>()
 			?.get()
@@ -20,7 +20,7 @@ import nativex.gtk.widgets.container.FlowBox
 		Unit
 	}.reinterpret()
 
- val staticBooleanCallback: GCallback =
+val staticBooleanCallback: GCallback =
 	staticCFunction { _: gpointer?,
 	                  arg1: gboolean,
 	                  data: gpointer? ->
@@ -29,7 +29,7 @@ import nativex.gtk.widgets.container.FlowBox
 		Unit
 	}.reinterpret()
 
- val staticCStringCallback: GCallback =
+val staticCStringCallback: GCallback =
 	staticCFunction { _: gpointer?,
 	                  arg1: CString,
 	                  data: gpointer? ->
@@ -38,12 +38,6 @@ import nativex.gtk.widgets.container.FlowBox
 		Unit
 	}.reinterpret()
 
-/**
- * Most of the library uses a stable reference as the user data. This is just a generic destroy for it
- */
- val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer ->
-	pointer?.asStableRef<Any>()?.dispose()
-}
 
 
 

@@ -1,7 +1,6 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
 import gtk.*
-import gtk.GtkFileChooserAction.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gtk.FileChooser

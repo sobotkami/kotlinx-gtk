@@ -1,15 +1,16 @@
 package nativex.gtk
-
+import glib.gpointer
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.staticCFunction
+import nativex.glib.asKSequence
+import nativex.glib.gtk
 import nativex.gtk.CellArea.Companion.wrap
 import nativex.gtk.TreeModel.TreeIter
 import nativex.gtk.cellrenderer.CellRenderer
 import nativex.gtk.cellrenderer.CellRenderer.Companion.wrap
-
 
 interface CellLayout {
 	companion object {

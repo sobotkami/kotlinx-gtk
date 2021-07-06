@@ -1,13 +1,20 @@
 package nativex.gtk.widgets.container
-
+import glib.gboolean
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.SignalManager
 import nativex.async.signalFlow
-import nativex.gtk.*
-import nativex.gtk.Signals.PAGE_REORDERED
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.Signals.PAGE_REORDERED
+import nativex.gobject.connectSignal
+import nativex.gtk.WidgetPointer
+import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.PackType
 import nativex.gtk.common.enums.PositionType

@@ -1,20 +1,18 @@
 package nativex.gtk.cellrenderer
-
 import gtk.*
 import gtk.GtkCellRendererAccelMode.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.async.staticCStringCallback
 import nativex.gdk.Window
-import nativex.gio.KObject
-import nativex.gtk.Signals
+import nativex.gobject.KObject
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.TreeModel
-import nativex.gtk.bool
-import nativex.gtk.gtk
 
 open class CellRenderer(
 	 val cellRendererPointer: CPointer<GtkCellRenderer>

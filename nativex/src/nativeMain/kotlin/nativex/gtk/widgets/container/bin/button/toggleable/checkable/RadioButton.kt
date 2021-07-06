@@ -4,9 +4,9 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
-import nativex.async.SignalManager
-import nativex.gtk.Signals
-import nativex.gtk.connectSignal
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk

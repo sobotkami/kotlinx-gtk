@@ -3,7 +3,7 @@ package nativex.gtk
 import gtk.GtkPrintBackend
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gio.KObject
+import nativex.gobject.KObject
 
 /**
  * kotlinx-gtk

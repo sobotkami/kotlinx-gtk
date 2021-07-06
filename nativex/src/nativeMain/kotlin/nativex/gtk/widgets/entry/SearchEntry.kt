@@ -6,11 +6,11 @@ import gtk.gtk_search_entry_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
-import nativex.async.SignalManager
 import nativex.gdk.Event
-import nativex.gtk.Signals
-import nativex.gtk.bool
-import nativex.gtk.connectSignal
+import nativex.glib.bool
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk

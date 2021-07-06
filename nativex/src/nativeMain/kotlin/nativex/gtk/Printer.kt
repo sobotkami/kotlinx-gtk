@@ -7,7 +7,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.async.staticDestroyStableRefFunction
-import nativex.gio.KObject
+import nativex.gobject.KObject
 import nativex.gtk.PageSetup.Companion.wrap
 import nativex.gtk.PrintBackend.Companion.wrap
 import nativex.gtk.widgets.container.bin.windows.dialog.PrintUnixDialog

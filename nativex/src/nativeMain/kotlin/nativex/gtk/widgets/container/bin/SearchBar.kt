@@ -4,8 +4,8 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gdk.Event
-import nativex.gtk.bool
-import nativex.gtk.gtk
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.widgets.entry.Entry
 
 /**

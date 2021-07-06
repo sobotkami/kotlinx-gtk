@@ -1,6 +1,6 @@
 headers = gtk/gtk.h
 package = gtk
-headerFilter = gtk/* gobject/* gio/* gdk/* glib/* gdk-pixbuf/* atk/* cairo/*
+headerFilter = gtk/* gdk/* gdk-pixbuf/* atk/*
 
 # pkg-config --cflags gtk+-3.0
 compilerOpts.linux = \

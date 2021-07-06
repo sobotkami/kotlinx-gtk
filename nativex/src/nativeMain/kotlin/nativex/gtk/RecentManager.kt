@@ -1,11 +1,10 @@
 package nativex.gtk
-
+import glib.GError
 import gtk.*
 import gtk.GtkRecentManagerError.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
@@ -13,9 +12,10 @@ import nativex.gio.AppInfo
 import nativex.gio.AppInfo.Companion.wrap
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
-import nativex.gio.KObject
+import nativex.gobject.KObject
+import nativex.glib.*
+import nativex.gobject.Signals
 import nativex.gtk.RecentManager.RecentInfo.Companion.wrap
-import nativex.gtk.common.ext.unwrap
 
 /**
  * kotlinx-gtk

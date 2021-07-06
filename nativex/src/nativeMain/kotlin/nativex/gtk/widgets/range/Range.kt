@@ -4,9 +4,9 @@ import gtk.*
 import gtk.GtkSensitivityType.*
 import kotlinx.cinterop.*
 import nativex.gdk.Rectangle
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.Adjustment
-import nativex.gtk.bool
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**
@@ -14,7 +14,7 @@ import nativex.gtk.widgets.Widget
  * 14 / 03 / 2021
  */
 open class Range(
-	 val rangePointer: CPointer<GtkRange>
+	val rangePointer: CPointer<GtkRange>
 ) : Widget(rangePointer.reinterpret()) {
 	var fillLevel: Double
 		get() = gtk_range_get_fill_level(rangePointer)
@@ -113,7 +113,7 @@ open class Range(
 
 	enum class SensitivityType(
 		val key: Int,
-		 val gtk: GtkSensitivityType
+		val gtk: GtkSensitivityType
 	) {
 		AUTO(0, GTK_SENSITIVITY_AUTO),
 		ON(1, GTK_SENSITIVITY_ON),
@@ -123,7 +123,7 @@ open class Range(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			 fun valueOf(gtk: GtkSensitivityType) =
+			fun valueOf(gtk: GtkSensitivityType) =
 				values().find { it.gtk == gtk }
 		}
 	}

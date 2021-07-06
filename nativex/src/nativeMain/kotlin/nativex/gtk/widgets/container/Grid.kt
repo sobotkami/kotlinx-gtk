@@ -1,13 +1,12 @@
 package nativex.gtk.widgets.container
-
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.glib.bool
+import nativex.glib.gtk
 import nativex.gtk.asWidgetOrNull
-import nativex.gtk.bool
 import nativex.gtk.common.enums.BaselinePosition
 import nativex.gtk.common.enums.PositionType
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 
 /**

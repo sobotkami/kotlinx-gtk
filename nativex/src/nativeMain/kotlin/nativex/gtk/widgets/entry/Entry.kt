@@ -1,11 +1,16 @@
 package nativex.gtk.widgets.entry
 
+import nativex.gobject.connectSignal
+import nativex.gobject.SignalManager
+
+import gio.*
+import glib.*
+import gobject.GCallback
 import gtk.*
 import gtk.GtkEntryIconPosition.GTK_ENTRY_ICON_PRIMARY
 import gtk.GtkEntryIconPosition.GTK_ENTRY_ICON_SECONDARY
 import gtk.GtkInputPurpose.*
 import kotlinx.cinterop.*
-import nativex.async.SignalManager
 import nativex.async.staticCStringCallback
 import nativex.gdk.Event
 import nativex.gdk.Event.Companion.wrap
@@ -16,6 +21,9 @@ import nativex.gdk.Rectangle.Companion.wrap
 import nativex.gdk.dragndrop.DragAction
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.*
 import nativex.gtk.Adjustment.Companion.wrap
 import nativex.gtk.EntryBuffer.Companion.wrap

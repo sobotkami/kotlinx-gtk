@@ -1,17 +1,18 @@
 package nativex.gtk.widgets.misc.label
 
+import glib.gpointer
+import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
-import nativex.gtk.Signals
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
 import nativex.gtk.asWidgetOrNull
-import nativex.gtk.bool
 import nativex.gtk.common.enums.Justification
 import nativex.gtk.common.events.ExtenedMoveCursorEvent
-import nativex.gtk.gtk
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.menu.Menu
 import nativex.gtk.widgets.misc.Misc
@@ -19,13 +20,14 @@ import nativex.pango.AttrList
 import nativex.pango.EllipsizeMode
 import nativex.pango.Layout
 import nativex.pango.WrapMode
+import pango.PangoEllipsizeMode
 
 /**
  * kotlinx-gtk
  * 26 / 03 / 2021
  */
 open class Label(
-	 val labelPointer: CPointer<GtkLabel>
+	val labelPointer: CPointer<GtkLabel>
 ) : Misc(labelPointer.reinterpret()) {
 	var text: String
 		get() = gtk_label_get_text(labelPointer)!!.toKString()
@@ -183,7 +185,7 @@ open class Label(
 	}
 
 	companion object {
-		 val staticPopulatePopupCallback: GCallback =
+		val staticPopulatePopupCallback: GCallback =
 			staticCFunction { _: gpointer?,
 			                  popup: CPointer<GtkMenu>,
 			                  data: gpointer? ->

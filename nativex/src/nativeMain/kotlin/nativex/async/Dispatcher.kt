@@ -1,7 +1,7 @@
 package nativex.async
 
-import gtk.g_idle_add
-import gtk.gpointer
+import glib.g_idle_add
+import glib.gpointer
 import kotlinx.cinterop.staticCFunction
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext

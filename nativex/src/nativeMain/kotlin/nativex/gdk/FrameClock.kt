@@ -4,11 +4,10 @@ import gtk.*
 import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.callbackSignalFlow
 import nativex.async.signalFlow
 import nativex.gdk.FrameTimings.Companion.wrap
-import nativex.gio.KObject
-import nativex.gtk.Signals
+import nativex.gobject.KObject
+import nativex.gobject.Signals
 
 /**
  * kotlinx-gtk

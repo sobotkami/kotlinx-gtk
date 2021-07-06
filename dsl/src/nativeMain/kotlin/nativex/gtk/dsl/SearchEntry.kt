@@ -17,34 +17,19 @@ inline fun Container.searchEntry(
 ) = add(SearchEntry().apply(searchEntryBuilder))
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun SearchEntry.onPreviousMatch(crossinline onPreviousMatch: suspend () -> Unit) {
-	launchUnconfined {
-		previousMatchSignal.collectLatest {
-			onPreviousMatch()
-		}
-	}
+inline fun SearchEntry.onPreviousMatch(noinline onPreviousMatch:  () -> Unit) {
+	addOnPreviousMatchCallback(onPreviousMatch)
 }
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun SearchEntry.onSearchChanged(crossinline onSearchChanged: suspend () -> Unit) {
-	launchUnconfined {
-		searchChangedSignal.collectLatest {
-			onSearchChanged()
-		}
-	}
+inline fun SearchEntry.onSearchChanged(noinline onSearchChanged: () -> Unit) {
+	addOnSearchChangedCallback(onSearchChanged)
 }
 
 
-@ExperimentalCoroutinesApi
 @GtkDsl
-inline fun SearchEntry.onStopSearch(crossinline onStopSearch: suspend () -> Unit) {
-	launchUnconfined {
-		stopSearchSignal.collectLatest {
-			onStopSearch()
-		}
-	}
+inline fun SearchEntry.onStopSearch(noinline onStopSearch:  () -> Unit) {
+	addOnStopSearchCallback(onStopSearch)
 }

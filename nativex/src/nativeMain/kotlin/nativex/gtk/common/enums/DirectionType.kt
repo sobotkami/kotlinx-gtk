@@ -1,9 +1,8 @@
 package nativex.gtk.common.enums
-
-import gtk.GCallback
+import glib.gpointer
+import gobject.GCallback
 import gtk.GtkDirectionType
 import gtk.GtkDirectionType.*
-import gtk.gpointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
