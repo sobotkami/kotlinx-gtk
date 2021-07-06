@@ -20,7 +20,7 @@ Guide
 | RadioButton         | 🟨 | 🟩 | 🟨 |
 | MenuButton          | 🟩 | 🟩 | 🟩 |
 | LockButton          | 🟩 | 🟫 | 🟩
-| Switch              |
+| Switch              | 🟩 | 🟩 | 🟩
 | ModelButton         |
 | StackSwitcher       |
 | StackSidebar        |
