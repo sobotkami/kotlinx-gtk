@@ -21,7 +21,7 @@ Guide
 | MenuButton          | 🟩 | 🟩 | 🟩 |
 | LockButton          | 🟩 | 🟫 | 🟩
 | Switch              | 🟩 | 🟩 | 🟩
-| ModelButton         |
+| ModelButton         | 🟩 | 🟫 | 🟩
 | StackSwitcher       |
 | StackSidebar        |
 | ComboBox            |
