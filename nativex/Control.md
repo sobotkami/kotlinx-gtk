@@ -22,7 +22,7 @@ Guide
 | LockButton          | 🟩 | 🟫 | 🟩
 | Switch              | 🟩 | 🟩 | 🟩
 | ModelButton         | 🟩 | 🟫 | 🟩
-| StackSwitcher       |
+| StackSwitcher       | 🟩 | 🟫 | 🟩
 | StackSidebar        |
 | ComboBox            |
 | ComboBoxText        |

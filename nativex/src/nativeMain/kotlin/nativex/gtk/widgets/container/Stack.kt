@@ -1,4 +1,5 @@
 package nativex.gtk.widgets.container
+
 import gtk.*
 import gtk.GtkStackTransitionType.*
 import kotlinx.cinterop.CPointer
@@ -17,7 +18,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html">GtkStack</a>
  */
 class Stack(
-	 val stackPointer: CPointer<GtkStack>
+	val stackPointer: CPointer<GtkStack>
 ) : Container(stackPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-new">gtk_stack_new</a>
@@ -140,22 +141,29 @@ class Stack(
 	 */
 	enum class TransitionType(
 		val key: Int,
-		 val gtk: GtkStackTransitionType
+		val gtk: GtkStackTransitionType
 	) {
 		/** No transition */
 		NONE(0, GTK_STACK_TRANSITION_TYPE_NONE),
+
 		/** A cross-fade */
 		CROSSFADE(1, GTK_STACK_TRANSITION_TYPE_CROSSFADE),
+
 		/** Slide from left to right */
 		SLIDE_RIGHT(2, GTK_STACK_TRANSITION_TYPE_SLIDE_RIGHT),
+
 		/** Slide from right to left */
 		SLIDE_LEFT(3, GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT),
+
 		/** Slide from bottom up */
 		SLIDE_UP(4, GTK_STACK_TRANSITION_TYPE_SLIDE_UP),
+
 		/** Slide from top down */
 		SLIDE_DOWN(5, GTK_STACK_TRANSITION_TYPE_SLIDE_DOWN),
+
 		/** Slide from left or right according to the children order */
 		LEFT_RIGHT(6, GTK_STACK_TRANSITION_TYPE_SLIDE_LEFT_RIGHT),
+
 		/** Slide from top down or bottom up according to the order */
 		SLIDE_UP_DOWN(7, GTK_STACK_TRANSITION_TYPE_SLIDE_UP_DOWN),
 
@@ -238,5 +246,13 @@ class Stack(
 			fun valueOf(gtk: GtkStackTransitionType) =
 				values().find { it.gtk == gtk }
 		}
+	}
+
+	companion object {
+		inline fun CPointer<GtkStack>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkStack>.wrap() =
+			Stack(this)
 	}
 }
