@@ -287,6 +287,9 @@ object Signals {
 	const val POPUP = "popup"
 	const val MOVE_ACTIVE = "move-active"
 	const val FORMAT_ENTRY_TEXT = "format-entry-text"
+
+	// GtkFileChooserButton
+	const val FILE_SET = "file-set"
 }
 
 
