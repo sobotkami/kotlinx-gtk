@@ -24,7 +24,7 @@ Guide
 | ModelButton         | 🟩 | 🟫 | 🟩
 | StackSwitcher       | 🟩 | 🟫 | 🟩
 | StackSidebar        | 🟩 | 🟫 | 🟩
-| ComboBox            |
+| ComboBox            | 🟩 | 🟫 | 🟩
 | ComboBoxText        |
 | FileChooserButton   |
 | ColorButton         |

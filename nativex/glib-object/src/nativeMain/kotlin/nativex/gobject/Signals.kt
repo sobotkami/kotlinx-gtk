@@ -46,6 +46,7 @@ val staticNoArgGCallback: GCallback =
  */
 val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer ->
 	pointer?.asStableRef<Any>()?.dispose()
+	Unit
 }
 
 
@@ -280,6 +281,12 @@ object Signals {
 
 	// GtkRadioButton
 	const val GROUP_CHANGED = "group-changed"
+
+	// GtkComboBox
+	const val POPDOWN = "popdown"
+	const val POPUP = "popup"
+	const val MOVE_ACTIVE = "move-active"
+	const val FORMAT_ENTRY_TEXT = "format-entry-text"
 }
 
 
