@@ -11,7 +11,7 @@
 | IconView      | 🟥 | 🟥 |
 | ProgressBar   | 🟩 | 🟫 | 🟨 
 | LevelBar      | 🟩 | 🟥 |
-| Spinner       | 🟩 | 🟥 |
+| Spinner       | 🟩 | 🟫 | 🟩
 | Menu          | 🟩 | 🟥 |
 | Calendar      | 🟥 | 🟥 |
 | Separator     | 🟩 | 🟫 | 🟩
