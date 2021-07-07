@@ -23,7 +23,7 @@ import nativex.gtk.widgets.container.bin.button.Button
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScaleButton.html">GtkScaleButton</a>
  */
-class ScaleButton(
+open class ScaleButton(
 	val scaleButtonPointer: CPointer<GtkScaleButton>
 ) : Button(scaleButtonPointer.reinterpret()) {
 
