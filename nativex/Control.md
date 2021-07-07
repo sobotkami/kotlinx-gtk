@@ -32,6 +32,6 @@ Guide
 | LinkButton          | 🟩 | 🟫 | 🟩
 | ScaleButton         | 🟩 | 🟩 | 🟩
 | VolumeButton        | 🟩 | 🟫 | 🟩
-| AppChooserButton    |
+| AppChooserButton    | 🟩 | 🟩 | 🟩
 | Scale               |
 | Scrollbar           |

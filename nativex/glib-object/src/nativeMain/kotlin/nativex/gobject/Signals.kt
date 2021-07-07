@@ -324,6 +324,9 @@ object Signals {
 
 	// GtkFontButton
 	const val FONT_SET = "font-set"
+
+	// GtkAppChooserButton
+	const val CUSTOM_ITEM_ACTIVATED = "custom-item-activated"
 }
 
 
