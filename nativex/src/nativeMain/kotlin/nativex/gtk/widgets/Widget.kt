@@ -727,7 +727,7 @@ open class Widget(
 	 */
 	var fontMap: FontMap?
 		get() = gtk_widget_get_font_map(widgetPointer).wrap()
-		set(value) = gtk_widget_set_font_map(widgetPointer, value?.pointer)
+		set(value) = gtk_widget_set_font_map(widgetPointer, value?.fontMapPointer)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-widget-create-pango-layout">gtk_widget_create_pango_layout</a>

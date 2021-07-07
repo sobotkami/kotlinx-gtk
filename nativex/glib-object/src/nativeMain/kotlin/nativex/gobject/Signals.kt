@@ -320,6 +320,9 @@ object Signals {
 
 	// GtkFileChooserButton
 	const val FILE_SET = "file-set"
+
+	// GtkFontButton
+	const val FONT_SET = "font-set"
 }
 
 
