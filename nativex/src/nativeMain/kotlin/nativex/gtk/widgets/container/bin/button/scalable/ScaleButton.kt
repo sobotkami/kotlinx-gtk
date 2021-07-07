@@ -1,4 +1,4 @@
-package nativex.gtk.widgets.container.bin.button
+package nativex.gtk.widgets.container.bin.button.scalable
 
 import gtk.*
 import kotlinx.cinterop.CPointer
@@ -14,6 +14,7 @@ import nativex.gobject.signalManager
 import nativex.gtk.Adjustment
 import nativex.gtk.IconSize
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.bin.button.Button
 
 /**
  * kotlinx-gtk
