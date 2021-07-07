@@ -80,6 +80,7 @@ val staticDestroyStableRefFunction: GDestroyNotify = staticCFunction { pointer -
 }
 
 
+
 /**
  * kotlinx-gtk
  * 08 / 02 / 2021

@@ -30,7 +30,7 @@ Guide
 | ColorButton         | 🟩 | 🟫 | 🟩
 | FontButton          | 🟩 | 🟩 | 🟩
 | LinkButton          | 🟩 | 🟫 | 🟩
-| ScaleButton         |
+| ScaleButton         | 🟩 | 🟩 | 🟩
 | VolumeButton        |
 | AppChooserButton    |
 | Scale               |

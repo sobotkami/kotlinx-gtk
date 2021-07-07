@@ -8,6 +8,7 @@ import nativex.glib.CString
 import nativex.glib.VoidPointer
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.signalManager
 import nativex.gtk.WidgetPointer
@@ -19,6 +20,14 @@ import nativex.gtk.widgets.Widget.Companion.wrap
 val staticIntCallback: GCallback =
 	staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 		data?.asStableRef<(Int) -> Unit>()
+			?.get()
+			?.invoke(arg1)
+		Unit
+	}.reinterpret()
+
+val staticDoubleCallback: GCallback =
+	staticCFunction { _: gpointer?, arg1: Double, data: gpointer? ->
+		data?.asStableRef<(Double) -> Unit>()
 			?.get()
 			?.invoke(arg1)
 		Unit
@@ -80,3 +89,12 @@ internal inline fun populatePopupSignalManager(pointer: VoidPointer, noinline ac
 		StableRef.create(action).asCPointer(),
 		staticPopulatePopupFunction
 	)
+
+
+inline fun popdownSignalManager(pointer: VoidPointer, noinline action: () -> Unit): SignalManager =
+	signalManager(pointer, Signals.POPDOWN, StableRef.create(action).asCPointer())
+
+
+inline fun popupSignalManager(pointer: VoidPointer, noinline action: () -> Unit): SignalManager =
+	signalManager(pointer, Signals.POPUP, StableRef.create(action).asCPointer())
+

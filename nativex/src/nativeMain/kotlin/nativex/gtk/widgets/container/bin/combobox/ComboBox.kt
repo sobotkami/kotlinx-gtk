@@ -10,10 +10,7 @@ import nativex.gdk.Device
 import nativex.glib.CString
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.SignalManager
-import nativex.gobject.Signals
-import nativex.gobject.connectSignal
-import nativex.gobject.staticDestroyStableRefFunction
+import nativex.gobject.*
 import nativex.gtk.CellArea
 import nativex.gtk.CellLayout
 import nativex.gtk.TreeModel
@@ -302,26 +299,13 @@ open class ComboBox(
 	 *     popdown</a>
 	 */
 	fun addOnPopdownCallback(action: () -> Unit): SignalManager =
-		SignalManager(
-			comboBoxPointer,
-			comboBoxPointer.connectSignal(
-				Signals.POPDOWN,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
-		)
-
+		popdownSignalManager(comboBoxPointer,action)
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#GtkComboBox-popup">
 	 *     popup</a>
 	 */
 	fun addOnPopupCallback(action: () -> Unit): SignalManager =
-		SignalManager(
-			comboBoxPointer,
-			comboBoxPointer.connectSignal(
-				Signals.POPUP,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
-		)
+		popupSignalManager(comboBoxPointer,action)
 
 	companion object {
 		private val staticFormatEntryFunction: GCallback =
