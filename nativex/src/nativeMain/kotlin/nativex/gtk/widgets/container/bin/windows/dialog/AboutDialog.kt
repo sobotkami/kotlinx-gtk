@@ -1,16 +1,19 @@
 package nativex.gtk.widgets.container.bin.windows.dialog
 
-import glib.gpointer
-import gobject.GCallback
 import gtk.*
 import gtk.GtkLicense.*
-import kotlinx.cinterop.*
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.toKString
+import nativex.async.ActivateLinkFunction
+import nativex.async.activateLinkSignalManager
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
-import nativex.glib.*
+import nativex.glib.asSequence
+import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.glib.toNullTermCStringArray
 import nativex.gobject.SignalManager
-import nativex.gobject.Signals
-import nativex.gobject.connectSignal
 import nativex.gtk.widgets.container.bin.windows.Window
 
 /**
@@ -131,19 +134,9 @@ class AboutDialog(
 		)
 	}
 
-	private var activateLinkManager: SignalManager? = null
+	fun addOnActivateLinkCallback(action: ActivateLinkFunction): SignalManager =
+		activateLinkSignalManager(aboutDialogPointer, action)
 
-	fun setActivateLinkCallback(action: ActivateLinkFunction) {
-		activateLinkManager?.disconnect()
-		activateLinkManager = SignalManager(
-			aboutDialogPointer,
-			aboutDialogPointer.connectSignal(
-				Signals.ACTIVATE_LINK,
-				handler = staticActivateLinkCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
-		)
-	}
 
 	enum class License(val key: Int, val gtk: GtkLicense) {
 		UNKNOWN(0, GTK_LICENSE_UNKNOWN),
@@ -198,10 +191,3 @@ class AboutDialog(
 	}
 }
 
-val staticActivateLinkCallback: GCallback by lazy {
-	staticCFunction { _: CPointer<GtkAboutDialog>, char: CString, data: gpointer ->
-		data.asStableRef<ActivateLinkFunction>().get().invoke(char.toKString()).gtk
-	}.reinterpret()
-}
-
-typealias ActivateLinkFunction = (@ParameterName("uri") String) -> Boolean

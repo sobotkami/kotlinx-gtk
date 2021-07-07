@@ -4,15 +4,19 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
+import nativex.async.ActivateLinkFunction
+import nativex.async.PopulatePopupFunction
+import nativex.async.activateLinkSignalManager
+import nativex.async.populatePopupSignalManager
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.signalManager
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.Justification
-import nativex.gtk.common.events.ExtenedMoveCursorEvent
+import nativex.gtk.common.events.ExtendedMoveCursorFunction
+import nativex.gtk.common.events.staticExtendedMoveCursorFunction
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.menu.Menu
 import nativex.gtk.widgets.misc.Misc
@@ -20,7 +24,6 @@ import nativex.pango.AttrList
 import nativex.pango.EllipsizeMode
 import nativex.pango.Layout
 import nativex.pango.WrapMode
-import pango.PangoEllipsizeMode
 
 /**
  * kotlinx-gtk
@@ -140,23 +143,20 @@ open class Label(
 		get() = gtk_label_get_selectable(labelPointer).bool
 		set(value) = gtk_label_set_selectable(labelPointer, value.gtk)
 
-	@ExperimentalCoroutinesApi
-	val activateCurrentLinkSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_CURRENT_LINK)
+	fun addOnActivateCurrentLinkCallback(action: () -> Unit): SignalManager =
+		signalManager(labelPointer, Signals.ACTIVATE_CURRENT_LINK, StableRef.create(action).asCPointer())
 
-	val activateLinkSignal: Flow<Char>
-		get() = TODO("Figure out char")
+	fun addOnActivateLinkCallback(action: ActivateLinkFunction): SignalManager =
+		activateLinkSignalManager(labelPointer, action)
 
-	@ExperimentalCoroutinesApi
-	val copyClipboardSignal: Flow<Unit> by signalFlow(Signals.COPY_CLIPBOARD)
+	fun addOnCopyClipboardCallback(action: () -> Unit): SignalManager =
+		signalManager(labelPointer, Signals.COPY_CLIPBOARD, StableRef.create(action).asCPointer())
 
-	@ExperimentalCoroutinesApi
-	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by signalFlow(
-		Signals.MOVE_CURSOR,
-		ExtenedMoveCursorEvent.staticMoveCursorCallback
-	)
+	fun addOnMoveCursorCallback(action: ExtendedMoveCursorFunction): SignalManager =
+		signalManager(labelPointer, Signals.MOVE_CURSOR, staticExtendedMoveCursorFunction)
 
-	@ExperimentalCoroutinesApi
-	val populatePopup: Flow<Menu> by signalFlow(Signals.POPULATE_POPUP, staticPopulatePopupCallback)
+	fun addOnPopulatePopupCallback(action: PopulatePopupFunction): SignalManager =
+		populatePopupSignalManager(labelPointer, action)
 
 	constructor(
 		label: String?, isMnemonic: Boolean = false

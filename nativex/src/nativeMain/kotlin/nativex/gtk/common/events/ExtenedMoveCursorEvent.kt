@@ -40,7 +40,7 @@ typealias ExtendedMoveCursorFunction = (
 	@ParameterName("extendSelection") Boolean
 ) -> Unit
 
-val staticExtendedMoveCursorFunction: GCallback =
+internal val staticExtendedMoveCursorFunction: GCallback =
 	staticCFunction { _: gpointer?,
 	                  step: GtkMovementStep,
 	                  count: Int,

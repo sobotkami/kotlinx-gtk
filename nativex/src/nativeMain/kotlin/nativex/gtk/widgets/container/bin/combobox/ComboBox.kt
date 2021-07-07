@@ -278,8 +278,8 @@ open class ComboBox(
 			comboBoxPointer,
 			comboBoxPointer.connectSignal(
 				Signals.FORMAT_ENTRY_TEXT,
-				staticFormatEntryFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				staticFormatEntryFunction
 			)
 		)
 
@@ -292,8 +292,8 @@ open class ComboBox(
 			comboBoxPointer,
 			comboBoxPointer.connectSignal(
 				Signals.MOVE_ACTIVE,
-				staticMoveActiveFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				staticMoveActiveFunction
 			)
 		)
 

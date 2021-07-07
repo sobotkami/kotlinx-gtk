@@ -153,8 +153,8 @@ class Toolbar(
 			toolbarPointer,
 			toolbarPointer.connectSignal(
 				Signals.FOCUS_HOME_OR_END,
-				handler = staticFocusHomeOrEndFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticFocusHomeOrEndFunction
 			)
 		)
 
@@ -163,8 +163,8 @@ class Toolbar(
 			toolbarPointer,
 			toolbarPointer.connectSignal(
 				Signals.POPUP_CONTEXT_MENU,
-				handler = staticPopupContextMenuFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticPopupContextMenuFunction
 			)
 		)
 

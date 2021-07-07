@@ -94,8 +94,8 @@ class EntryBuffer(val entryBufferPointer: CPointer<GtkEntryBuffer>) : KObject(en
 			entryBufferPointer,
 			entryBufferPointer.connectSignal(
 				Signals.DELETED_TEXT,
-				staticDeletedTextFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticDeletedTextFunction
 			)
 		)
 
@@ -108,8 +108,8 @@ class EntryBuffer(val entryBufferPointer: CPointer<GtkEntryBuffer>) : KObject(en
 			entryBufferPointer,
 			entryBufferPointer.connectSignal(
 				Signals.INSERTED_TEXT,
-				staticInsertedTextFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticInsertedTextFunction
 			)
 		)
 

@@ -103,8 +103,8 @@ class Application(
 			applicationPointer,
 			applicationPointer.connectSignal(
 				Signals.WINDOW_ADDED,
-				staticWindowAddedCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				staticWindowAddedCallback
 			)
 		)
 
@@ -117,8 +117,8 @@ class Application(
 			applicationPointer,
 			applicationPointer.connectSignal(
 				Signals.WINDOW_REMOVED,
-				staticWindowRemovedCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				staticWindowRemovedCallback
 			)
 		)
 

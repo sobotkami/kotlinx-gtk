@@ -1193,8 +1193,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.BUTTON_PRESS_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1210,8 +1210,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.BUTTON_RELEASE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1227,8 +1227,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.CAN_ACTIVATE_ACCEL,
-				handler = staticCanActivateAccelFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticCanActivateAccelFunction
 			)
 		)
 	}
@@ -1246,8 +1246,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.CONFIGURE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1263,8 +1263,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DAMAGE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1280,8 +1280,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DELETE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1303,8 +1303,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DESTROY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1330,8 +1330,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_BEING_MANAGER,
-				handler = staticDragContextForUnitFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragContextForUnitFunction
 			)
 		)
 	}
@@ -1348,8 +1348,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_DATA_DELETE,
-				handler = staticDragContextForUnitFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragContextForUnitFunction
 			)
 		)
 	}
@@ -1366,8 +1366,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_DATA_GET,
-				handler = staticDragDataGetFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragDataGetFunction
 			)
 		)
 	}
@@ -1383,8 +1383,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_DATA_RECEIVED,
-				handler = staticDragDataReceivedFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragDataReceivedFunction
 			)
 		)
 	}
@@ -1400,8 +1400,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_DROP,
-				handler = staticDragDropFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragDropFunction
 			)
 		)
 	}
@@ -1418,8 +1418,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_END,
-				handler = staticDragContextForUnitFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragContextForUnitFunction
 			)
 		)
 	}
@@ -1435,8 +1435,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_FAILED,
-				handler = staticDragFailedFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragFailedFunction
 			)
 		)
 	}
@@ -1453,8 +1453,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_LEAVE,
-				handler = staticDragLeaveFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragLeaveFunction
 			)
 		)
 	}
@@ -1470,8 +1470,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.DRAG_MOTION,
-				handler = staticDragMotionFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticDragMotionFunction
 			)
 		)
 	}
@@ -1494,8 +1494,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.ENTER_NOTIFY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1511,8 +1511,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1533,8 +1533,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.FOCUS,
-				handler = staticFocusFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticFocusFunction
 			)
 		)
 	}
@@ -1551,8 +1551,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.FOCUS_IN_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1568,8 +1568,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.FOCUS_OUT_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1585,8 +1585,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.GRAB_BROKEN_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1623,8 +1623,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.KEY_PRESS_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1640,8 +1640,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.KEY_RELEASE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1657,8 +1657,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.KEYNAV_FAILED,
-				handler = staticKeynavFailedFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticKeynavFailedFunction
 			)
 		)
 	}
@@ -1675,8 +1675,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.LEAVE_NOTIFY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1692,8 +1692,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.MAP,
-				handler = staticMapFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticMapFunction
 			)
 		)
 	}
@@ -1710,8 +1710,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.MAP_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1727,8 +1727,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.MNEMONIC_ACTIVATE,
-				handler = staticMnemonicActivateFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticMnemonicActivateFunction
 			)
 		)
 	}
@@ -1745,8 +1745,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.MOTION_NOTIFY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1774,8 +1774,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.POPUP_MENU,
-				handler = staticPopupMenuFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticPopupMenuFunction
 			)
 		)
 	}
@@ -1792,8 +1792,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.PROPERTY_NOTIFY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1809,8 +1809,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.PROXIMITY_IN_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1826,8 +1826,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.PROXIMITY_OUT_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1844,8 +1844,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.QUERY_TOOLTIP,
-				handler = staticQueryTooltipFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticQueryTooltipFunction
 			)
 		)
 	}
@@ -1873,8 +1873,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.SCROLL_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1890,8 +1890,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.SELECTION_CLEAR_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1919,8 +1919,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.SELECTION_NOTIFY_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1950,8 +1950,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.SELECTION_REQUEST,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -1973,8 +1973,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.SHOW_HELP,
-				handler = staticShowHelpFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticShowHelpFunction
 			)
 		)
 	}
@@ -2011,8 +2011,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.TOUCH_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -2034,8 +2034,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.UNMAP_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}
@@ -2057,8 +2057,8 @@ open class Widget(
 			widgetPointer,
 			widgetPointer.connectSignal(
 				Signals.WINDOW_STATE_EVENT,
-				handler = staticEventForBooleanFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticEventForBooleanFunction
 			)
 		)
 	}

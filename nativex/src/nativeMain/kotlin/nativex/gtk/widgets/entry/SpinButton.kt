@@ -213,8 +213,8 @@ class SpinButton(
 			spinButtonPointer,
 			spinButtonPointer.connectSignal(
 				Signals.CHANGE_VALUE,
-				handler = staticChangeValueFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticChangeValueFunction
 			)
 		)
 
@@ -226,8 +226,8 @@ class SpinButton(
 			spinButtonPointer,
 			spinButtonPointer.connectSignal(
 				Signals.INPUT,
-				handler = staticInputFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticInputFunction
 			)
 		)
 
@@ -239,8 +239,8 @@ class SpinButton(
 			spinButtonPointer,
 			spinButtonPointer.connectSignal(
 				Signals.OUTPUT,
-				staticOutputFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticOutputFunction
 			)
 		)
 

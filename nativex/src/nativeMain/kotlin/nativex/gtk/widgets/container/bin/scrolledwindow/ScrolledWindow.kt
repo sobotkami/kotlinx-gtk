@@ -407,8 +407,8 @@ class ScrolledWindow(
 			scrolledWindowPointer,
 			scrolledWindowPointer.connectSignal(
 				Signals.SCROLL_CHILD,
-				handler = staticScrollChildFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticScrollChildFunction
 			)
 		)
 	}

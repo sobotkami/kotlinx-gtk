@@ -16,8 +16,8 @@ import nativex.glib.VoidPointer
  */
 fun VoidPointer.connectSignal(
 	signal: String,
-	handler: GCallback = staticNoArgGCallback,
 	callbackWrapper: COpaquePointer? = null,
+	handler: GCallback = staticNoArgGCallback,
 	flags: UInt = 0u
 ): ULong =
 	g_signal_connect_data(
@@ -31,6 +31,36 @@ fun VoidPointer.connectSignal(
 		},
 		connect_flags = flags
 	)
+
+/**
+ * Convenience function merging [connectSignal] with [SignalManager]
+ */
+inline fun <T : CPointed> signalManager(
+	pointer: CPointer<T>,
+	signal: String,
+	callbackWrapper: COpaquePointer? = null,
+	handler: GCallback = staticNoArgGCallback,
+	flags: UInt = 0u
+): SignalManager =
+	SignalManager(
+		pointer,
+		pointer.connectSignal(signal, callbackWrapper, handler, flags)
+	)
+
+
+/**
+ * Manages a signal connection
+ *
+ * @param pointer pointer the signal is attached to
+ * @param T type of function this manager is responsible
+ * @param signalId id of the signal
+ */
+class SignalManager(val pointer: VoidPointer, val signalId: ULong) {
+	fun disconnect() {
+		g_signal_handler_disconnect(pointer, signalId)
+	}
+}
+
 
 /**
  * [GCallback] that calls a function with only no arguments
@@ -293,15 +323,4 @@ object Signals {
 }
 
 
-/**
- * Manages a signal connection
- *
- * @param pointer pointer the signal is attached to
- * @param T type of function this manager is responsible
- * @param signalId id of the signal
- */
-class SignalManager(val pointer: VoidPointer, val signalId: ULong) {
-	fun disconnect() {
-		g_signal_handler_disconnect(pointer, signalId)
-	}
-}
+

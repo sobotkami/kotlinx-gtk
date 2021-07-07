@@ -108,8 +108,8 @@ class Notebook(
 			noteBookPointer,
 			noteBookPointer.connectSignal(
 				Signals.CHANGE_CURRENT_PAGE,
-				handler = staticChangeCurrentPageFunction,
-				callbackWrapper = StableRef.create(createWindow).asCPointer()
+				callbackWrapper = StableRef.create(createWindow).asCPointer(),
+				handler = staticChangeCurrentPageFunction
 			)
 		)
 	}
@@ -128,8 +128,8 @@ class Notebook(
 			noteBookPointer,
 			noteBookPointer.connectSignal(
 				Signals.CREATE_WINDOW,
-				handler = staticCreateWindowFunction,
-				callbackWrapper = StableRef.create(createWindow).asCPointer()
+				callbackWrapper = StableRef.create(createWindow).asCPointer(),
+				handler = staticCreateWindowFunction
 			)
 		)
 	}
@@ -148,8 +148,8 @@ class Notebook(
 			noteBookPointer,
 			noteBookPointer.connectSignal(
 				signal = Signals.FOCUS_TAB,
-				handler = staticFocusTabFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticFocusTabFunction
 			)
 		)
 	}

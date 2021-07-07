@@ -1,16 +1,14 @@
 package nativex.gtk.widgets.entry
 
-import nativex.gobject.connectSignal
-import nativex.gobject.SignalManager
-
-import gio.*
-import glib.*
+import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import gtk.GtkEntryIconPosition.GTK_ENTRY_ICON_PRIMARY
 import gtk.GtkEntryIconPosition.GTK_ENTRY_ICON_SECONDARY
 import gtk.GtkInputPurpose.*
 import kotlinx.cinterop.*
+import nativex.async.PopulatePopupFunction
+import nativex.async.populatePopupSignalManager
 import nativex.async.staticCStringCallback
 import nativex.gdk.Event
 import nativex.gdk.Event.Companion.wrap
@@ -23,16 +21,20 @@ import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.SignalManager
 import nativex.gobject.Signals
-import nativex.gtk.*
+import nativex.gobject.connectSignal
+import nativex.gtk.Adjustment
 import nativex.gtk.Adjustment.Companion.wrap
+import nativex.gtk.EntryBuffer
 import nativex.gtk.EntryBuffer.Companion.wrap
+import nativex.gtk.EntryCompletion
 import nativex.gtk.EntryCompletion.Companion.wrap
+import nativex.gtk.TargetList
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.events.ExtendedMoveCursorFunction
 import nativex.gtk.common.events.staticExtendedMoveCursorFunction
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.Widget.Companion.wrap
 import nativex.gtk.widgets.misc.Image
 import nativex.pango.AttrList
 import nativex.pango.AttrList.Companion.wrap
@@ -574,8 +576,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.DELETE_FROM_CURSOR,
-				staticDeleteFromCursorFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticDeleteFromCursorFunction
 			)
 		)
 
@@ -587,8 +589,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.ICON_PRESS,
-				staticIconInteractionEventFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticIconInteractionEventFunction
 			)
 		)
 
@@ -600,8 +602,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.ICON_RELEASE,
-				staticIconInteractionEventFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticIconInteractionEventFunction
 			)
 		)
 
@@ -614,8 +616,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.PREEDIT_CHANGED,
-				staticCStringCallback,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticCStringCallback
 			)
 		)
 
@@ -639,8 +641,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.MOVE_CURSOR,
-				staticExtendedMoveCursorFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				staticExtendedMoveCursorFunction
 			)
 		)
 
@@ -661,14 +663,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#GtkEntry-populate-popup">populate-popup</a>
 	 */
 	fun addOnPopulatePopupCallback(action: PopulatePopupFunction): SignalManager =
-		SignalManager(
-			entryPointer,
-			entryPointer.connectSignal(
-				Signals.POPULATE_POPUP,
-				staticPopulatePopupFunction,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
-		)
+		populatePopupSignalManager(entryPointer, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#GtkEntry-preedit-changed">preedit-changed</a>
@@ -678,8 +673,8 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 			entryPointer,
 			entryPointer.connectSignal(
 				Signals.PREEDIT_CHANGED,
-				staticCStringCallback,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticCStringCallback
 			)
 		)
 
@@ -882,13 +877,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	}
 }
 
-typealias PopulatePopupFunction = (Widget) -> Unit
 
- val staticPopulatePopupFunction: GCallback =
-	staticCFunction { _: WidgetPointer, previous: WidgetPointer, data: gpointer ->
-		data.asStableRef<(Widget) -> Unit>().get().invoke(previous.wrap())
-		Unit
-	}.reinterpret()
 
 /**
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#GtkEntry-delete-from-cursor">delete-from-cursor</a>

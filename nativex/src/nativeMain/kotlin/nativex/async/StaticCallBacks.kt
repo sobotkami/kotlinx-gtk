@@ -3,12 +3,16 @@ package nativex.async
 import glib.gboolean
 import glib.gpointer
 import gobject.GCallback
-import kotlinx.cinterop.asStableRef
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.staticCFunction
-import kotlinx.cinterop.toKString
+import kotlinx.cinterop.*
 import nativex.glib.CString
+import nativex.glib.VoidPointer
 import nativex.glib.bool
+import nativex.glib.gtk
+import nativex.gobject.Signals
+import nativex.gobject.signalManager
+import nativex.gtk.WidgetPointer
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.Widget.Companion.wrap
 
 // This file contains generic static callbacks that are frequently used in the program
 
@@ -39,5 +43,40 @@ val staticCStringCallback: GCallback =
 	}.reinterpret()
 
 
+/**
+ * Used for [nativex.gobject.Signals.ACTIVATE_LINK]
+ */
+internal val staticActivateLinkFunction: GCallback by lazy {
+	staticCFunction { _: gpointer?, char: CString, data: gpointer? ->
+		data?.asStableRef<ActivateLinkFunction>()?.get()?.invoke(char.toKString()).gtk
+	}.reinterpret()
+}
 
+typealias ActivateLinkFunction = (@ParameterName("uri") String) -> Boolean
 
+internal inline fun activateLinkSignalManager(pointer: VoidPointer, noinline action: ActivateLinkFunction) =
+	signalManager(
+		pointer,
+		Signals.ACTIVATE_LINK,
+		StableRef.create(action).asCPointer(),
+		staticActivateLinkFunction
+	)
+
+/**
+ * Used for [nativex.gobject.Signals.POPULATE_POPUP]
+ */
+internal val staticPopulatePopupFunction: GCallback =
+	staticCFunction { _: gpointer?, previous: WidgetPointer, data: gpointer? ->
+		data?.asStableRef<PopulatePopupFunction>()?.get()?.invoke(previous.wrap())
+		Unit
+	}.reinterpret()
+
+typealias PopulatePopupFunction = (Widget) -> Unit
+
+internal inline fun populatePopupSignalManager(pointer: VoidPointer, noinline action: PopulatePopupFunction) =
+	signalManager(
+		pointer,
+		Signals.POPULATE_POPUP,
+		StableRef.create(action).asCPointer(),
+		staticPopulatePopupFunction
+	)

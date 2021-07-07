@@ -74,8 +74,8 @@ open class Application(
 			gApplicationPointer,
 			gApplicationPointer.connectSignal(
 				Signals.COMMAND_LINE,
-				staticCommandLineFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticCommandLineFunction
 			)
 		)
 
@@ -85,8 +85,8 @@ open class Application(
 			gApplicationPointer,
 			gApplicationPointer.connectSignal(
 				Signals.HANDLE_LOCAL_OPTIONS,
-				staticHandleLocalOptionsFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticHandleLocalOptionsFunction
 			)
 		)
 

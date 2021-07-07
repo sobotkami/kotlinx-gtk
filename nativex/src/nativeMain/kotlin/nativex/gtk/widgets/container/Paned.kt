@@ -112,8 +112,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.CANCEL_POSITION,
-				handler = staticNoArgBooleanCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticNoArgBooleanCallback
 			)
 		)
 	}
@@ -129,8 +129,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.CANCEL_POSITION,
-				handler = staticNoArgBooleanCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticNoArgBooleanCallback
 			)
 		)
 	}
@@ -146,8 +146,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.CYCLE_CHILD_FOCUS,
-				handler = staticCycleCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticCycleCallback
 			)
 		)
 	}
@@ -163,8 +163,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.CYCLE_HANDLE_FOCUS,
-				handler = staticCycleCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticCycleCallback
 			)
 		)
 	}
@@ -180,8 +180,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.MOVE_HANDLE,
-				handler = staticMoveHandleCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticMoveHandleCallback
 			)
 		)
 	}
@@ -197,8 +197,8 @@ open class Paned(
 			panedPointer,
 			panedPointer.connectSignal(
 				Signals.TOGGLE_HANDLE_FOCUS,
-				handler = staticNoArgBooleanCallback,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				handler = staticNoArgBooleanCallback
 			)
 		)
 	}

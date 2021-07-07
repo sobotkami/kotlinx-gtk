@@ -28,8 +28,8 @@ abstract class MenuModel(
 			menuModelPointer,
 			menuModelPointer.connectSignal(
 				Signals.ITEMS_CHANGED,
-				staticItemsChangedFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticItemsChangedFunction
 			)
 		)
 

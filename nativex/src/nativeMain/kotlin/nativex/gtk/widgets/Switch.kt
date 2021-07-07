@@ -65,8 +65,8 @@ class Switch(val switchPointer: CPointer<GtkSwitch>) : Widget(switchPointer.rein
 			switchPointer,
 			switchPointer.connectSignal(
 				Signals.ACTIVATE,
-				staticStateSetFunction,
-				StableRef.create(action).asCPointer()
+				StableRef.create(action).asCPointer(),
+				staticStateSetFunction
 			)
 		)
 
