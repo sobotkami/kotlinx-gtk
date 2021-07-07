@@ -4,13 +4,18 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
+import nativex.async.popdownSignalManager
+import nativex.async.popupSignalManager
 import nativex.atk.KAtkObject
 import nativex.atk.KAtkObject.Companion.wrap
 import nativex.gdk.Device
 import nativex.glib.CString
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.*
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.connectSignal
+import nativex.gobject.staticDestroyStableRefFunction
 import nativex.gtk.CellArea
 import nativex.gtk.CellLayout
 import nativex.gtk.TreeModel
@@ -299,13 +304,14 @@ open class ComboBox(
 	 *     popdown</a>
 	 */
 	fun addOnPopdownCallback(action: () -> Unit): SignalManager =
-		popdownSignalManager(comboBoxPointer,action)
+		popdownSignalManager(comboBoxPointer, action)
+
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#GtkComboBox-popup">
 	 *     popup</a>
 	 */
 	fun addOnPopupCallback(action: () -> Unit): SignalManager =
-		popupSignalManager(comboBoxPointer,action)
+		popupSignalManager(comboBoxPointer, action)
 
 	companion object {
 		private val staticFormatEntryFunction: GCallback =
