@@ -3,21 +3,21 @@
 ## Progress
 | Kotlin Name         | Functions | Signals   | Documented    | DSL |
 | ------------------- | --------- | --------- | ------------- | --- |
-| Label         | 🟩 | 🟥 |
-| AccelLabel    | 🟩 | 🟥 |
-| Image         | 🟩 | 🟥 |
-| TextView      | 🟩 | 🟥 |
+| Label         | 🟨 | 🟥 |
+| AccelLabel    | 🟨 | 🟥 |
+| Image         | 🟨 | 🟥 |
+| TextView      | 🟨 | 🟥 |
 | TreeView      | 🟥 | 🟥 |
 | IconView      | 🟥 | 🟥 |
 | ProgressBar   | 🟩 | 🟫 | 🟨 
-| LevelBar      | 🟩 | 🟥 |
+| LevelBar      | 🟨 | 🟥 |
 | Spinner       | 🟩 | 🟫 | 🟩
-| Menu          | 🟩 | 🟥 |
+| Menu          | 🟨 | 🟥 |
 | Calendar      | 🟥 | 🟥 |
 | Separator     | 🟩 | 🟫 | 🟩
-| DrawingArea   | 🟩 | 🟫 |
+| DrawingArea   | 🟨 | 🟫 |
 | GLArea        | 🟥 | 🟥 |
-| InfoBar       | 🟨 | 🟩 |
+| InfoBar       | 🟨 | 🟨 |
 
 ## Legend
 | Color | Meaning             |
