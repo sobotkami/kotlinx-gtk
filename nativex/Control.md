@@ -33,5 +33,5 @@ Guide
 | ScaleButton         | 🟩 | 🟩 | 🟩
 | VolumeButton        | 🟩 | 🟫 | 🟩
 | AppChooserButton    | 🟩 | 🟩 | 🟩
-| Scale               | 🟩 | 🟫 | 🟩
-| Scrollbar           |
+| Scale               | 🟩 | 🟩 | 🟩
+| Scrollbar           | 🟩 | 🟫 | 🟩

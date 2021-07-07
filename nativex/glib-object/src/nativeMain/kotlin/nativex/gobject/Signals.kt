@@ -327,6 +327,9 @@ object Signals {
 
 	// GtkAppChooserButton
 	const val CUSTOM_ITEM_ACTIVATED = "custom-item-activated"
+
+	// GtkScale
+	const val FORMAT_VALUE = "format-value"
 }
 
 
