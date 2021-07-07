@@ -29,7 +29,7 @@ Guide
 | FileChooserButton   | 🟩 | 🟩 | 🟩
 | ColorButton         | 🟩 | 🟫 | 🟩
 | FontButton          | 🟩 | 🟩 | 🟩
-| LinkButton          |
+| LinkButton          | 🟩 | 🟫 | 🟩
 | ScaleButton         |
 | VolumeButton        |
 | AppChooserButton    |
