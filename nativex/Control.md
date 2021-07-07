@@ -27,7 +27,7 @@ Guide
 | ComboBox            | 🟩 | 🟫 | 🟩
 | ComboBoxText        | 🟩 | 🟫 | 🟩
 | FileChooserButton   | 🟩 | 🟩 | 🟩
-| ColorButton         |
+| ColorButton         | 🟩 | 🟫 | 🟩
 | FontButton          |
 | LinkButton          |
 | ScaleButton         |

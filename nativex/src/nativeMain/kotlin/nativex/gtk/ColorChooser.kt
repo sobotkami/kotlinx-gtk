@@ -1,4 +1,5 @@
 package nativex.gtk
+
 import glib.gpointer
 import gobject.GCallback
 import gtk.*
@@ -7,6 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import nativex.gdk.RGBA
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.signalManager
 import nativex.gtk.common.enums.Orientation
 
 /**
@@ -53,10 +57,16 @@ interface ColorChooser {
 		)
 	}
 
-	val colorActivated: Flow<RGBA>
+	fun addOnColorActivatedCallback(action: (RGBA) -> Unit): SignalManager =
+		signalManager(
+			colorChooserPointer,
+			Signals.COLOR_ACTIVATED,
+			StableRef.create(action).asCPointer(),
+			staticColorActivatedFunction
+		)
 
 	companion object {
-		 val staticColorActivatedCallback: GCallback =
+		private val staticColorActivatedFunction: GCallback =
 			staticCFunction { _: gpointer?, rgba: CPointer<GdkRGBA>, data: gpointer? ->
 				data?.asStableRef<(RGBA) -> Unit>()?.get()?.invoke(RGBA(rgba))
 				Unit

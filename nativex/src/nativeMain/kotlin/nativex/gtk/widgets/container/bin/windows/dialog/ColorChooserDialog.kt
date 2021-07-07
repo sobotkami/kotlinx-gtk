@@ -31,10 +31,4 @@ class ColorChooserDialog(
 	override val colorChooserPointer: CPointer<GtkColorChooser> by lazy {
 		aboutDialogPointer.reinterpret()
 	}
-
-	@ExperimentalCoroutinesApi
-	override val colorActivated: Flow<RGBA> by signalFlow(
-		Signals.COLOR_ACTIVATED,
-		ColorChooser.staticColorActivatedCallback
-	)
 }
