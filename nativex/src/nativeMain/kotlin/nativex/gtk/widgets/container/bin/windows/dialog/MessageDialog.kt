@@ -4,6 +4,7 @@ import gtk.*
 import gtk.GtkButtonsType.*
 import gtk.GtkMessageType.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.cstr
 import kotlinx.cinterop.reinterpret
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.windows.Window
@@ -14,7 +15,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
  */
 class MessageDialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	 val messageDialogPointer: CPointer<GtkMessageDialog>
+	val messageDialogPointer: CPointer<GtkMessageDialog>
 ) : Dialog(messageDialogPointer.reinterpret()) {
 
 	/**
@@ -25,9 +26,8 @@ class MessageDialog(
 		flags: Flags,
 		messageType: MessageType,
 		buttonsType: ButtonsType,
-		messageFormat: String? = null,
 		withMarkup: Boolean = false,
-		vararg arguments: Any
+		message: String
 	) : this(
 		if (!withMarkup)
 			gtk_message_dialog_new(
@@ -35,7 +35,8 @@ class MessageDialog(
 				flags.gtk,
 				messageType.gtk,
 				buttonsType.gtk,
-				messageFormat
+				"%s",
+				message.cstr
 			)!!.reinterpret()
 		else
 			gtk_message_dialog_new_with_markup(
@@ -43,7 +44,8 @@ class MessageDialog(
 				flags.gtk,
 				messageType.gtk,
 				buttonsType.gtk,
-				messageFormat
+				"%s",
+				message.cstr
 			)!!.reinterpret()
 	)
 
@@ -97,7 +99,7 @@ class MessageDialog(
 			)
 		}
 
-	enum class MessageType(val key: Int,  val gtk: GtkMessageType) {
+	enum class MessageType(val key: Int, val gtk: GtkMessageType) {
 		INFO(0, GTK_MESSAGE_INFO),
 		WARNING(1, GTK_MESSAGE_WARNING),
 		QUESTION(2, GTK_MESSAGE_QUESTION),
@@ -107,13 +109,13 @@ class MessageDialog(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			
-			 fun valueOf(gtk: GtkMessageType) =
+
+			fun valueOf(gtk: GtkMessageType) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
-	enum class ButtonsType(val key: Int,  val gtk: GtkButtonsType) {
+	enum class ButtonsType(val key: Int, val gtk: GtkButtonsType) {
 		NONE(0, GTK_BUTTONS_NONE),
 		OK(1, GTK_BUTTONS_OK),
 		CLOSE(2, GTK_BUTTONS_CLOSE),
@@ -124,8 +126,8 @@ class MessageDialog(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			
-			 fun valueOf(gtk: GtkButtonsType) =
+
+			fun valueOf(gtk: GtkButtonsType) =
 				values().find { it.gtk == gtk }
 		}
 	}

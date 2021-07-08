@@ -1,6 +1,6 @@
-import nativex.glib.KGBinding
-import nativex.glib.KGType
-import nativex.glib.KGValue
+import nativex.gobject.KGBinding
+import nativex.gobject.KGType
+import nativex.gobject.KGValue
 import nativex.gtk.CellLayout
 import nativex.gtk.ListStore
 import nativex.gtk.TreeModel
@@ -167,11 +167,11 @@ fun fillComboEntry(combo: ComboBoxText) {
 	combo.appendText("Three")
 }
 
-private var window :Window? = null
+private var window: Window? = null
 
 fun doCombobox(doWidget: Widget): Widget {
 
-	if (window==null){
+	if (window == null) {
 		window = Window(Window.Type.TOP_LEVEL)
 
 		window?.windowScreen = doWidget.screen
@@ -271,7 +271,7 @@ fun doCombobox(doWidget: Widget): Widget {
 		}
 
 		val entry = Entry()
-		entry.asKGBinding()?.bind("active-id", entry, "text", KGBinding.Flags.BIDIRECTIONAL)
+		entry.asKGBinding()?.bind("active-id", entry.pointer, "text", KGBinding.Flags.BIDIRECTIONAL)
 		box.add(entry)
 	}
 

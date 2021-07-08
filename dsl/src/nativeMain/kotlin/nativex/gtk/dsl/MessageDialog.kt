@@ -16,11 +16,12 @@ fun Window.messageDialog(
 	flags: Dialog.Flags,
 	messageType: MessageDialog.MessageType,
 	buttonsType: MessageDialog.ButtonsType,
-	messageFormat: String? = null
+	messageFormat: String
 ) = MessageDialog(
 	this,
-	flags = flags,
-	messageType = messageType,
-	buttonsType = buttonsType,
-	messageFormat = messageFormat
+	flags,
+	messageType,
+	buttonsType,
+	false,
+	messageFormat
 )

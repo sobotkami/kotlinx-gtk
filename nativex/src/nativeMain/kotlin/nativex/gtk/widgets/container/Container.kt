@@ -136,8 +136,6 @@ open class Container(
 		TODO("gtk_container_forall")
 	}
 
-	@Deprecated("Removed in GTK4", level = DeprecationLevel.WARNING)
-	
 	var borderWidth: UInt
 		get() = gtk_container_get_border_width(containerPointer)
 		set(value) = gtk_container_set_border_width(containerPointer, value)

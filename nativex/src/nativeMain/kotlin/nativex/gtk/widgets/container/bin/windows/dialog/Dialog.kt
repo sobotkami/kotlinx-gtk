@@ -3,15 +3,14 @@ package nativex.gtk.widgets.container.bin.windows.dialog
 import glib.gpointer
 import gobject.GCallback
 import gtk.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.asStableRef
-import kotlinx.cinterop.reinterpret
-import kotlinx.cinterop.staticCFunction
+import kotlinx.cinterop.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.glib.gtk
+import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.signalManager
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.HeaderBar
 import nativex.gtk.widgets.container.HeaderBar.Companion.wrap
@@ -27,7 +26,7 @@ import nativex.gtk.widgets.container.box.Box.Companion.wrap
  */
 open class Dialog(
 	@Suppress("MemberVisibilityCanBePrivate")
-	 val dialogPointer: CPointer<GtkDialog>
+	val dialogPointer: CPointer<GtkDialog>
 ) : Window(dialogPointer.reinterpret()) {
 	constructor() : this(gtk_dialog_new()!!.reinterpret())
 
@@ -65,10 +64,13 @@ open class Dialog(
 	val headerBar: HeaderBar
 		get() = gtk_dialog_get_header_bar(dialogPointer)!!.reinterpret<GtkHeaderBar>().wrap()
 
-	@ExperimentalCoroutinesApi
-	val responseSignal: Flow<ResponseType> by signalFlow(Signals.RESPONSE, staticResponseCallback)
+	fun addOnCloseCallback(action: () -> Unit): SignalManager =
+		signalManager(dialogPointer, Signals.CLOSE, StableRef.create(action).asCPointer())
 
-	enum class Flags(val key: Int,  val gtk: GtkDialogFlags) {
+	fun addOnResponseCallback(action: (ResponseType) -> Unit): SignalManager =
+		signalManager(dialogPointer, Signals.RESPONSE, StableRef.create(action).asCPointer(), staticResponseCallback)
+
+	enum class Flags(val key: Int, val gtk: GtkDialogFlags) {
 		MODAL(0, GTK_DIALOG_MODAL),
 		DESTROY_WITH_PARENT(1, GTK_DIALOG_DESTROY_WITH_PARENT),
 		USE_HEADER_BAR(2, GTK_DIALOG_USE_HEADER_BAR);
@@ -77,19 +79,19 @@ open class Dialog(
 			fun valueOf(key: Int) = values().find { it.key == key }
 
 
-			 fun valueOf(gtk: GtkDialogFlags) =
+			fun valueOf(gtk: GtkDialogFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
-		 val staticResponseCallback: GCallback =
+		val staticResponseCallback: GCallback =
 			staticCFunction { _: CPointer<GtkDialog>, id: Int, data: gpointer ->
 				data.asStableRef<(ResponseType) -> Unit>().get().invoke(ResponseType.valueOfGtk(id)!!)
 			}.reinterpret()
 	}
 
-	enum class ResponseType(val key: Int,  val gtk: GtkResponseType) {
+	enum class ResponseType(val key: Int, val gtk: GtkResponseType) {
 		NONE(0, GTK_RESPONSE_NONE),
 
 		REJECT(1, GTK_RESPONSE_REJECT),
@@ -115,7 +117,7 @@ open class Dialog(
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
 
-			 fun valueOfGtk(gtk: GtkResponseType) =
+			fun valueOfGtk(gtk: GtkResponseType) =
 				values().find { it.gtk == gtk }
 		}
 	}
