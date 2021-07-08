@@ -35,6 +35,18 @@ open class Variant(
 	fun classify(): UInt =
 		g_variant_classify(variantPointer)
 
+	val string: String
+		get() = memScoped {
+			val cLength = cValue<ULongVar>()
+			val cString: CString = g_variant_get_string(variantPointer, cLength)!!
+			val length = cLength.ptr.pointed.value.toInt()
+			val stringBuilder = StringBuilder()
+			for (index in 0 until length) {
+				stringBuilder.append(cString[index])
+			}
+			stringBuilder.toString()
+		}
+
 	/**
 	 * @see <a href="https://developer.gnome.org/glib/stable/glib-GVariant.html#g-variant-get-va">
 	 *     g_variant_get_va</a>
