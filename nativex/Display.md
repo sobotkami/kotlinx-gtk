@@ -9,7 +9,7 @@
 | TextView      | 🟨 | 🟥 |
 | TreeView      | 🟥 | 🟥 |
 | IconView      | 🟥 | 🟥 |
-| ProgressBar   | 🟩 | 🟫 | 🟨 
+| ProgressBar   | 🟩 | 🟫 | 🟩 
 | LevelBar      | 🟩 | 🟩 | 🟩
 | Spinner       | 🟩 | 🟫 | 🟩
 | Menu          | 🟨 | 🟥 |
