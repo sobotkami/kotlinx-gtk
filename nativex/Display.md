@@ -10,7 +10,7 @@
 | TreeView      | 🟥 | 🟥 |
 | IconView      | 🟥 | 🟥 |
 | ProgressBar   | 🟩 | 🟫 | 🟨 
-| LevelBar      | 🟨 | 🟥 |
+| LevelBar      | 🟩 | 🟩 | 🟩
 | Spinner       | 🟩 | 🟫 | 🟩
 | Menu          | 🟨 | 🟥 |
 | Calendar      | 🟥 | 🟥 |
