@@ -155,7 +155,9 @@ class Scale(
 	companion object {
 		private val staticFormatValueCallback: GCallback =
 			staticCFunction { _: gpointer, value: Double, data: gpointer ->
-				data.asStableRef<ScaleFormatValueFunction>().get().invoke(value).cstr
+				memScoped {
+					data.asStableRef<ScaleFormatValueFunction>().get().invoke(value).cstr.ptr
+				}
 			}.reinterpret()
 	}
 }

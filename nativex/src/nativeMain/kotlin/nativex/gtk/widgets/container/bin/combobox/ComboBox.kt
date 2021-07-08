@@ -316,7 +316,9 @@ open class ComboBox(
 	companion object {
 		private val staticFormatEntryFunction: GCallback =
 			staticCFunction { _: gpointer, path: CString, data: gpointer ->
-				data.asStableRef<ComboBoxFormatEntryTextFunction>().get().invoke(path.toKString()).cstr
+				memScoped {
+					data.asStableRef<ComboBoxFormatEntryTextFunction>().get().invoke(path.toKString()).cstr.ptr
+				}
 			}.reinterpret()
 
 		private val staticMoveActiveFunction: GCallback =
