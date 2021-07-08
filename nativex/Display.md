@@ -3,7 +3,7 @@
 ## Progress
 | Kotlin Name         | Functions | Signals   | Documented    | DSL |
 | ------------------- | --------- | --------- | ------------- | --- |
-| Label         | 🟨 | 🟥 |
+| Label         | 🟩 | 🟩 | 🟩
 | AccelLabel    | 🟨 | 🟥 |
 | Image         | 🟨 | 🟥 |
 | TextView      | 🟨 | 🟥 |
