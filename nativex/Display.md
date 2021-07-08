@@ -4,7 +4,7 @@
 | Kotlin Name         | Functions | Signals   | Documented    | DSL |
 | ------------------- | --------- | --------- | ------------- | --- |
 | Label         | 🟩 | 🟩 | 🟩
-| AccelLabel    | 🟨 | 🟥 |
+| AccelLabel    | 🟩 | 🟫 | 🟩
 | Image         | 🟨 | 🟥 |
 | TextView      | 🟨 | 🟥 |
 | TreeView      | 🟥 | 🟥 |
