@@ -1,12 +1,22 @@
+import kotlinx.cinterop.reinterpret
 import nativex.gio.Application
+import nativex.gio.MenuModel
 import nativex.gio.SimpleAction
 import nativex.gio.dsl.onCreateUI
+import nativex.glib.Variant
+import nativex.gtk.FileChooserNative
+import nativex.gtk.NativeDialog
+import nativex.gtk.TextBuffer
 import nativex.gtk.dsl.application
 import nativex.gtk.dsl.applicationWindow
 import nativex.gtk.dsl.button
 import nativex.gtk.dsl.onClicked
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.container.bin.windows.ApplicationWindow
 import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
 import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
+import nativex.gtk.widgets.container.box.InfoBar
+import nativex.gtk.widgets.misc.label.Label
 
 /*
  * kotlinx-gtk
@@ -15,8 +25,8 @@ import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
  *
  * @see <a href="https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/demos/gtk-demo/application.c">application.c</a>
  */
-fun createWindow(app: Application, contents: String) {
-
+fun createWindow(app: Application, contents: String?) {
+	TODO("Finish")
 }
 
 fun showActionDialog(action: SimpleAction) {
@@ -33,6 +43,44 @@ fun showActionDialog(action: SimpleAction) {
 		dialog.destroy()
 	}
 	dialog.show()
+}
+
+class DemoApplicationWindow(
+	val parentInstance: ApplicationWindow,
+	val message: Label,
+	val infoBar: InfoBar,
+	val status: Widget,
+	val menutool: Widget,
+	val toolmenu: MenuModel,
+	val buffer: TextBuffer,
+	val width: InfoBar,
+	val height: InfoBar,
+	val maximized: Boolean,
+	val fullscreen: Boolean
+)
+
+fun showActionInfoBar(window: DemoApplicationWindow, action: SimpleAction, paramater: Variant) {
+	val name = action.simpleActionPointer
+	val value = paramater.string
+	window.message.text = "You activated radio action: \"%${name}\".\nCurrentValue: %${value}"
+	window.infoBar.show()
+}
+
+fun activateAction(action: SimpleAction) {
+	showActionDialog(action)
+}
+
+fun activateNew(application: Application) {
+	createWindow(application, null)
+}
+
+fun openResponse(dialog: NativeDialog, responseId: Int, fileChooser: FileChooserNative) {
+	val app = Application(fileChooser.getData("app")!!.reinterpret())
+
+	if (Dialog.ResponseType.ACCEPT.isId(responseId)) {
+		val file = fileChooser.file
+
+	}
 }
 
 

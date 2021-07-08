@@ -4,9 +4,6 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
@@ -91,32 +88,33 @@ open class Dialog(
 			}.reinterpret()
 	}
 
-	enum class ResponseType(val key: Int, val gtk: GtkResponseType) {
-		NONE(0, GTK_RESPONSE_NONE),
+	enum class ResponseType(val gtk: GtkResponseType) {
+		NONE(GTK_RESPONSE_NONE),
 
-		REJECT(1, GTK_RESPONSE_REJECT),
+		REJECT(GTK_RESPONSE_REJECT),
 
-		ACCEPT(2, GTK_RESPONSE_ACCEPT),
+		ACCEPT(GTK_RESPONSE_ACCEPT),
 
-		DELETE_EVENT(3, GTK_RESPONSE_DELETE_EVENT),
+		DELETE_EVENT(GTK_RESPONSE_DELETE_EVENT),
 
-		OK(4, GTK_RESPONSE_OK),
+		OK(GTK_RESPONSE_OK),
 
-		CANCEL(5, GTK_RESPONSE_CANCEL),
+		CANCEL(GTK_RESPONSE_CANCEL),
 
-		CLOSE(6, GTK_RESPONSE_CLOSE),
+		CLOSE(GTK_RESPONSE_CLOSE),
 
-		YES(7, GTK_RESPONSE_YES),
+		YES(GTK_RESPONSE_YES),
 
-		NO(8, GTK_RESPONSE_NO),
+		NO(GTK_RESPONSE_NO),
 
-		APPLY(9, GTK_RESPONSE_APPLY),
+		APPLY(GTK_RESPONSE_APPLY),
 
-		HELP(10, GTK_RESPONSE_HELP);
+		HELP(GTK_RESPONSE_HELP);
+
+		fun isId(id: Int): Boolean =
+			gtk == id
 
 		companion object {
-			fun valueOf(key: Int) = values().find { it.key == key }
-
 			fun valueOfGtk(gtk: GtkResponseType) =
 				values().find { it.gtk == gtk }
 		}
