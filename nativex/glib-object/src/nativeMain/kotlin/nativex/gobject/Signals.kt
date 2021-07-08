@@ -330,6 +330,9 @@ object Signals {
 
 	// GtkScale
 	const val FORMAT_VALUE = "format-value"
+
+	// GtkLevelBar
+	const val OFFSET_CHANGED = "offset-changed"
 }
 
 
