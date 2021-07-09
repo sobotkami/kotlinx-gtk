@@ -15,7 +15,7 @@ Guide
 | OffscreenWindow     |           |           |               |
 | ApplicationWindow   |           |           |               |
 | Dialog              | 🟩 | 🟩 | 🟩 |
-| AboutDialog         |           |           |               |
+| AboutDialog         | 🟩 | 🟩 | 🟩 |
 | FileChooserDialog   |           |           |               |
 | ColorChooserDialog  |           |           |               |
 | FontChooserDialog   |           |           |               |
