@@ -26,9 +26,7 @@ import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html">GtkApplication</a>
  */
-class Application(
-	val applicationPointer: CPointer<GtkApplication>
-) : Application(applicationPointer.reinterpret()) {
+class Application(val applicationPointer: CPointer<GtkApplication>) : Application(applicationPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-windows">gtk_application_get_windows</a>
 	 */
@@ -247,5 +245,11 @@ class Application(
 					?.invoke(Window(window))
 				Unit
 			}.reinterpret()
+
+		inline fun CPointer<GtkApplication>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkApplication>.wrap() =
+			Application(this)
 	}
 }
