@@ -1,27 +1,29 @@
 package nativex.glib
 
 import glib.GError
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.CPointerVar
-import kotlinx.cinterop.pointed
-import kotlinx.cinterop.toKString
+import glib.g_error_free
+import kotlinx.cinterop.*
 
 /**
  * kotlinx-gtk
  * 13 / 04 / 2021
  */
 class KGError(
-	 val pointer: CPointer<CPointerVar<GError>>
+	val pointer: CPointer<GError>
 ) : Exception(
-	pointer.pointed.pointed?.message?.toKString()
+	pointer.pointed.message?.toKString()
 ) {
 	val code: Int by lazy {
-		pointer.pointed.pointed?.code ?: Int.MIN_VALUE
+		pointer.pointed.code
 	}
 
-	
+
 	val domain: UInt by lazy {
-		pointer.pointed.pointed?.domain ?: UInt.MIN_VALUE
+		pointer.pointed.domain
+	}
+
+	fun free() {
+		g_error_free(pointer)
 	}
 }
 
@@ -32,7 +34,7 @@ class KGError(
 fun CPointer<CPointerVar<GError>>.unwrap(throwException: Boolean = true): Exception? {
 	val err = pointed.pointed ?: return null
 	val exception = when (err.domain) {
-		else -> KGError(this)
+		else -> KGError(err.ptr)
 	}
 
 	if (throwException)

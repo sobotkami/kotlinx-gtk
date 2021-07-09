@@ -2,9 +2,11 @@ package nativex.gtk
 
 import gtk.*
 import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.KObject
 import nativex.gtk.widgets.container.bin.windows.Window
 import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
 
@@ -16,7 +18,7 @@ import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
  * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkNativeDialog.html#gtk-native-dialog-run">
  *     GtkNativeDialog</a>
  */
-class NativeDialog(val nativeDialogPointer: CPointer<GtkNativeDialog>) {
+class NativeDialog(val nativeDialogPointer: CPointer<GtkNativeDialog>) : KObject(nativeDialogPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkNativeDialog.html#gtk-native-dialog-show">

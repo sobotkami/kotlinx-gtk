@@ -1,9 +1,15 @@
+import gobject.g_object_get_data
+import gobject.g_object_ref
+import gobject.g_object_set_data_full
 import kotlinx.cinterop.reinterpret
 import nativex.gio.Application
 import nativex.gio.MenuModel
 import nativex.gio.SimpleAction
 import nativex.gio.dsl.onCreateUI
+import nativex.glib.KGError
 import nativex.glib.Variant
+import nativex.gobject.KObject.Companion.staticUnrefFunction
+import nativex.gtk.FileChooser
 import nativex.gtk.FileChooserNative
 import nativex.gtk.NativeDialog
 import nativex.gtk.TextBuffer
@@ -36,8 +42,8 @@ fun showActionDialog(action: SimpleAction) {
 		flags = Dialog.Flags.DESTROY_WITH_PARENT,
 		messageType = MessageDialog.MessageType.INFO,
 		buttonsType = MessageDialog.ButtonsType.CLOSE,
-		withMarkup = false,
-		"You activated action: \"${name}\""
+		"You activated action: \"${name}\"",
+		withMarkup = false
 	)
 	dialog.addOnResponseCallback {
 		dialog.destroy()
@@ -75,12 +81,50 @@ fun activateNew(application: Application) {
 }
 
 fun openResponse(dialog: NativeDialog, responseId: Int, fileChooser: FileChooserNative) {
-	val app = Application(fileChooser.getData("app")!!.reinterpret())
+
+	val app = Application(g_object_get_data(fileChooser.pointer, "app")!!.reinterpret())
+
+	var error: KGError? = null
 
 	if (Dialog.ResponseType.ACCEPT.isId(responseId)) {
 		val file = fileChooser.file
-
+		val contents =
+			try {
+				file.loadContents()
+			} catch (e: KGError) {
+				error = e
+				null
+			}
+		if (contents != null) {
+			createWindow(app, contents)
+		} else {
+			val messageDialog = MessageDialog(
+				null,
+				Dialog.Flags.DESTROY_WITH_PARENT,
+				MessageDialog.MessageType.ERROR,
+				MessageDialog.ButtonsType.CLOSE,
+				"Error loading file: \"$error"
+			)
+			messageDialog.addOnResponseCallback { messageDialog.destroy() }
+			messageDialog.show()
+			error?.free()
+		}
 	}
+	dialog.destroy()
+	dialog.unref()
+}
+
+fun activateOpen(app: Application) {
+	val native = FileChooserNative(
+		"Open File",
+		null,
+		FileChooser.Action.ACTION_OPEN,
+		"_Open",
+		"_Cancel"
+	)
+	g_object_set_data_full(native.pointer, "app", g_object_ref(app.pointer), staticUnrefFunction)
+
+	// TODO Continue from here
 }
 
 

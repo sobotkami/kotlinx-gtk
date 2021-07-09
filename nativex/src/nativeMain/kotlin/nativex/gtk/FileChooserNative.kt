@@ -23,9 +23,9 @@ class FileChooserNative(val fileChooserNativePointer: CPointer<GtkFileChooserNat
 	 *     gtk_file_chooser_native_new</a>
 	 */
 	constructor(
-		action: FileChooser.Action,
 		title: String? = null,
 		parent: Window? = null,
+		action: FileChooser.Action,
 		acceptLabel: String? = null,
 		cancelLabel: String? = null
 	) : this(gtk_file_chooser_native_new(title, parent?.windowPointer, action.gtk, acceptLabel, cancelLabel)!!)

@@ -1,9 +1,13 @@
 package nativex.gobject
 
-import gobject.*
+import glib.GDestroyNotify
+import gobject.GBinding
+import gobject.GObject
+import gobject.g_object_set_property
+import gobject.g_object_unref
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.glib.VoidPointer
+import kotlinx.cinterop.staticCFunction
 import nativex.glib.reinterpretOrNull
 import nativex.gobject.KGBinding.Companion.wrap
 
@@ -16,9 +20,6 @@ open class KObject constructor(val pointer: CPointer<GObject>) {
 		g_object_set_property(pointer, propertyName, KGValue(boolean).pointer.reinterpret())
 	}
 
-	fun getData(key: String): VoidPointer? =
-		g_object_get_data(pointer, key)
-
 	fun unref() {
 		g_object_unref(pointer)
 	}
@@ -29,6 +30,11 @@ open class KObject constructor(val pointer: CPointer<GObject>) {
 
 
 	companion object {
+		val staticUnrefFunction: GDestroyNotify = staticCFunction { data ->
+			g_object_unref(data)
+			Unit
+		}
+
 		fun CPointer<GObject>?.wrap() =
 			this?.wrap()
 

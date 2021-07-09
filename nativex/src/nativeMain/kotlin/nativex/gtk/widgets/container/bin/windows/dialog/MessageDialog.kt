@@ -26,8 +26,8 @@ class MessageDialog(
 		flags: Flags,
 		messageType: MessageType,
 		buttonsType: ButtonsType,
+		message: String,
 		withMarkup: Boolean = false,
-		message: String
 	) : this(
 		if (!withMarkup)
 			gtk_message_dialog_new(

@@ -22,6 +22,6 @@ fun Window.messageDialog(
 	flags,
 	messageType,
 	buttonsType,
-	false,
-	messageFormat
+	messageFormat,
+	false
 )
