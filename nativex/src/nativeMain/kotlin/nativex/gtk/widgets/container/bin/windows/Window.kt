@@ -17,17 +17,19 @@ import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gdk.Screen
 import nativex.gdk.Screen.Companion.wrap
-import nativex.gdk.Window.Edge
-import nativex.gdk.Window.TypeHint
+import nativex.gdk.Window.*
 import nativex.glib.KGError
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.glib.unwrap
+import nativex.gmodule.KGList
+import nativex.gmodule.KGList.Companion.wrapNotNull
 import nativex.gobject.Signals
 import nativex.gtk.AccelGroup
 import nativex.gtk.Application
 import nativex.gtk.Application.Companion.wrap
-import nativex.gtk.GtkWindowGroup
+import nativex.gtk.WindowGroup
+import nativex.gtk.WindowGroup.Companion.wrap
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.container.bin.Bin
 
@@ -38,9 +40,7 @@ import nativex.gtk.widgets.container.bin.Bin
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html"></a>
  */
-open class Window(
-	val windowPointer: CPointer<GtkWindow>
-) : Bin(windowPointer.reinterpret()) {
+open class Window(val windowPointer: CPointer<GtkWindow>) : Bin(windowPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-new"></a>
@@ -208,8 +208,6 @@ open class Window(
 			windowPointer,
 			value.gtk
 		)
-
-
 
 
 	/**
@@ -550,21 +548,14 @@ open class Window(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-move">gtk_window_move</a>
 	 */
-	fun move(x:Int,y:Int){
-		gtk_window_move(windowPointer,x,y)
+	fun move(x: Int, y: Int) {
+		gtk_window_move(windowPointer, x, y)
 	}
 
 	/**
 	 * @see <a href=""></a>
 	 */
 	fun getModal(): Boolean {
-		TODO("")
-	}
-
-	/**
-	 * @see <a href=""></a>
-	 */
-	fun getGroup(): GtkWindowGroup {
 		TODO("")
 	}
 
@@ -602,6 +593,20 @@ open class Window(
 		r.bool
 	}
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-get-window-type">
+	 *     gtk_window_get_window_type</a>
+	 */
+	val type: Type
+		get() = Type.valueOf(gtk_window_get_window_type(windowPointer))!!
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-get-mnemonic-modifier"></a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-set-mnemonic-modifier"></a>
+	 */
+	var mnemonicModifier: ModifierType
+		get() = ModifierType.valueOf(gtk_window_get_mnemonic_modifier(windowPointer))!!
+		set(modifierType) = gtk_window_set_mnemonic_modifier(windowPointer, modifierType.gdk)
 
 	/**
 	 * @see <a href=""></a>
@@ -645,6 +650,11 @@ open class Window(
 		staticSetFocusCallback
 	)
 
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-get-icon-list"></a>
+	 */
+	val iconList: KGList<Pixbuf>
+		get() = gtk_window_get_icon_list(windowPointer).wrapNotNull()
 
 	companion object {
 		val staticEnableDebuggingCallback: GCallback =
@@ -660,6 +670,12 @@ open class Window(
 					?.invoke(widget?.let { Widget(it) })
 				Unit
 			}.reinterpret()
+
+		/**
+		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-get-default-icon-list"></a>
+		 */
+		val defaultIconList: KGList<Pixbuf>
+			get() = gtk_window_get_default_icon_list().wrapNotNull()
 
 		/**
 		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-set-auto-startup-notification"></a>
@@ -682,6 +698,13 @@ open class Window(
 		var defaultIconName: String
 			get() = gtk_window_get_default_icon_name()!!.toKString()
 			set(value) = gtk_window_set_default_icon_name(value)
+
+		/**
+		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-get-group"></a>
+		 */
+		val Window?.group: WindowGroup
+			get() = gtk_window_get_group(this?.windowPointer)!!.wrap()
+
 
 		inline fun CPointer<GtkWindow>?.wrap() =
 			this?.wrap()
