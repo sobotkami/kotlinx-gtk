@@ -10,5 +10,10 @@ import kotlinx.cinterop.CPointer
  * @see <a href="https://developer.gnome.org/cairo/stable/cairo-cairo-surface-t.html">cairo_surface_t</a>
  */
 class CairoSurfaceT(
-	 val cPointer: CPointer<cairo_surface_t>
-)
+	val cPointer: CPointer<cairo_surface_t>
+) {
+	companion object {
+		inline fun CPointer<cairo_surface_t>.wrap() = CairoSurfaceT(this)
+		inline fun CPointer<cairo_surface_t>?.wrap() = this?.wrap()
+	}
+}

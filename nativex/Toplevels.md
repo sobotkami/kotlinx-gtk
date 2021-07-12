@@ -12,7 +12,7 @@ Guide
 | Kotlin Name         | Functions | Signals   | Documented    | DSL |
 | ------------------- | --------- | --------- | ------------- | --- |
 | Window              | 🟩 | 🟩 | 🟩 |
-| OffscreenWindow     |           |           |               |
+| OffscreenWindow     | 🟩 | 🟫 | 🟩 |
 | ApplicationWindow   |           |           |               |
 | Dialog              | 🟩 | 🟩 | 🟩 |
 | AboutDialog         | 🟩 | 🟩 | 🟩 |
