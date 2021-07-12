@@ -4,12 +4,13 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.gdk.Device
-import nativex.gmodule.KGList
-import nativex.gmodule.KGList.Companion.wrapNotNull
+import nativex.gmodule.WrappedList
+import nativex.gmodule.WrappedList.Companion.asMutableList
 import nativex.gobject.KObject
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.Widget.Companion.wrap
 import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -47,8 +48,12 @@ class WindowGroup(val windowGroupPointer: CPointer<GtkWindowGroup>) : KObject(wi
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-list-windows">
 	 *     gtk_window_group_list_windows</a>
 	 */
-	val windowList: KGList<Window>
-		get() = gtk_window_group_list_windows(windowGroupPointer).wrapNotNull()
+	val windowList: WrappedList<Window>
+		get() = gtk_window_group_list_windows(windowGroupPointer)!!
+			.asMutableList(
+				{ reinterpret<GtkWindow>().wrap() },
+				{ pointer }
+			)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-get-current-grab">
@@ -64,7 +69,7 @@ class WindowGroup(val windowGroupPointer: CPointer<GtkWindowGroup>) : KObject(wi
 	fun getCurrentDeviceGrab(device: Device): Widget? =
 		gtk_window_group_get_current_device_grab(windowGroupPointer, device.pointer).wrap()
 
-	companion object{
+	companion object {
 		inline fun CPointer<GtkWindowGroup>?.wrap() =
 			this?.wrap()
 

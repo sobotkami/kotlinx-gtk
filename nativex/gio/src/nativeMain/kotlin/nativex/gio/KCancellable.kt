@@ -1,10 +1,8 @@
 package nativex.gio
 
 import gio.*
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
-import kotlinx.cinterop.memScoped
-import kotlinx.cinterop.reinterpret
+import glib.GError
+import kotlinx.cinterop.*
 import nativex.glib.KGError
 import nativex.glib.bool
 import nativex.gobject.KObject
@@ -40,7 +38,12 @@ class KCancellable(
 	 *     g_cancellable_set_error_if_cancelled</a>
 	 */
 	fun setErrorIfCancelled(error: KGError): Boolean =
-		g_cancellable_set_error_if_cancelled(cancellablePointer, error.pointer).bool
+		memScoped {
+			val v: CPointer<GError> = error.pointer
+			val b = allocPointerTo<GError>()
+			b.value = v
+			g_cancellable_set_error_if_cancelled(cancellablePointer, b.ptr).bool
+		}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GCancellable.html#g-cancellable-get-fd">

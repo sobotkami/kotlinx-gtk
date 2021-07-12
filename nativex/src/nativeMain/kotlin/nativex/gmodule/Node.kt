@@ -9,7 +9,9 @@ package nativex.gmodule
  */
 ;
 
+import nativex.glib.VoidPointer
+
 /**
  * @see <a href="https://developer.gnome.org/glib/unstable/glib-N-ary-Trees.html#GCopyFunc">GCopyFunc</a>
  */
-//typealias CopyFunction<T> = (T) -> T
+typealias CopyFunction = (VoidPointer) -> VoidPointer
