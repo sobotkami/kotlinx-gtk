@@ -13,7 +13,7 @@ Guide
 | ------------------- | --------- | --------- | ------------- | --- |
 | Window              | 🟩 | 🟩 | 🟩 |
 | OffscreenWindow     | 🟩 | 🟫 | 🟩 |
-| ApplicationWindow   |           |           |               |
+| ApplicationWindow   | 🟩 | 🟫 | 🟩 |
 | Dialog              | 🟩 | 🟩 | 🟩 |
 | AboutDialog         | 🟩 | 🟩 | 🟩 |
 | FileChooserDialog   |           |           |               |

@@ -10,5 +10,11 @@ import kotlinx.cinterop.reinterpret
  */
 class ShortcutsWindow(
 	@Suppress("MemberVisibilityCanBePrivate")
-	 val shortCutsWindowPointer: CPointer<GtkShortcutsWindow>
-) : Window(shortCutsWindowPointer.reinterpret())
+	val shortCutsWindowPointer: CPointer<GtkShortcutsWindow>
+) : Window(shortCutsWindowPointer.reinterpret()) {
+
+	companion object {
+		inline fun CPointer<GtkShortcutsWindow>.wrap() = ShortcutsWindow(this)
+		inline fun CPointer<GtkShortcutsWindow>?.wrap() = this?.wrap()
+	}
+}
