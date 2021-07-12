@@ -19,3 +19,4 @@ include("demos:gtk-demo")
 // Tests
 include("tests:packing")
 include("tests:combobox")
+include("tests:application-window")
