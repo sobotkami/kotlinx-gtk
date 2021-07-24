@@ -4,6 +4,7 @@ import gtk.GtkTextBuffer
 import gtk.gtk_text_buffer_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import nativex.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
@@ -17,4 +18,12 @@ class TextBuffer(
 			textTagTable.textTagTablePointer
 		)!!.reinterpret()
 	)
+
+	companion object{
+		inline fun CPointer<GtkTextBuffer>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkTextBuffer>.wrap() =
+			TextBuffer(this)
+	}
 }

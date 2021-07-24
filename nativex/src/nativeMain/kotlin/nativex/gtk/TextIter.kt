@@ -9,4 +9,13 @@ import kotlinx.cinterop.CPointer
  */
 class TextIter(
 	val pointer: CPointer<GtkTextIter>
-)
+){
+
+	companion object{
+		inline fun CPointer<GtkTextIter>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkTextIter>.wrap() =
+			TextIter(this)
+	}
+}

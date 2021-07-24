@@ -259,6 +259,12 @@ class KList(val listPointer: CPointer<GList>) {
 
 		inline fun CPointer<GList>.wrap() =
 			KList(this)
+
+		/**
+		 * Use the [KList], Then free it while returning the result
+		 */
+		inline fun <R> KList.use(use: (KList) -> R): R =
+			use(this).also { free() }
 	}
 }
 

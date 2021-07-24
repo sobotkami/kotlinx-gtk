@@ -3,8 +3,10 @@ package nativex.gmodule
 import glib.GList
 import kotlinx.cinterop.CPointer
 import nativex.glib.VoidPointer
+import nativex.gmodule.KList.Companion.use
 import nativex.gmodule.KList.Companion.wrap
 import nativex.gmodule.KWrappedList.Companion.wrap
+import nativex.gmodule.WrappedList.Companion.asMutableList
 
 /**
  * kotlinx-gtk
@@ -45,5 +47,12 @@ class WrappedList<T>(val kWrappedList: KWrappedList<T>) : AbstractMutableList<T>
 			noinline wrapPointer: VoidPointer.() -> T,
 			noinline getPointer: T.() -> VoidPointer
 		): WrappedList<T> = wrap().wrap(wrapPointer, getPointer).asMutableList()
+
+		inline fun <T> CPointer<GList>.toList(
+			noinline wrapPointer: VoidPointer.() -> T,
+			noinline getPointer: T.() -> VoidPointer
+		): List<T> = wrap().use { kList ->
+			kList.wrap(wrapPointer, getPointer).asMutableList().toList()
+		}
 	}
 }
