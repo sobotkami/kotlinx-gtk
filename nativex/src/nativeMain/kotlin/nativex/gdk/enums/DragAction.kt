@@ -1,4 +1,4 @@
-package nativex.gdk.dragndrop
+package nativex.gdk.enums
 
 import gtk.*
 
@@ -7,14 +7,15 @@ import gtk.*
  *
  * 30 / 06 / 2021
  *
- * @see <a href="https://developer.gnome.org/gdk3/stable/gdk3-Drag-and-Drop.html#GdkDragAction">GdkDragAction</a>
+ * @see <a href="https://docs.gtk.org/gdk3/flags.DragAction.html">GdkDragAction</a>
  */
 enum class DragAction(val gdk: GdkDragAction) {
-	DEFAULT(GDK_ACTION_DEFAULT),
+	//DEFAULT(GDK_ACTION_DEFAULT),
 	COPY(GDK_ACTION_COPY),
 	MOVE(GDK_ACTION_MOVE),
 	LINK(GDK_ACTION_LINK),
-	PRIVATE(GDK_ACTION_PRIVATE),
+
+	//PRIVATE(GDK_ACTION_PRIVATE),
 	ASK(GDK_ACTION_ASK);
 
 	companion object {

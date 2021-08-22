@@ -49,19 +49,6 @@ class MessageDialog(
 			)!!.reinterpret()
 	)
 
-
-	var image: Widget?
-		get() =
-			gtk_message_dialog_get_image(messageDialogPointer)?.let {
-				Widget(it)
-			}
-		set(value) =
-			gtk_message_dialog_set_image(
-				messageDialogPointer,
-				value?.widgetPointer
-			)
-
-
 	fun setMarkup(markup: String) {
 		gtk_message_dialog_set_markup(messageDialogPointer, markup)
 	}

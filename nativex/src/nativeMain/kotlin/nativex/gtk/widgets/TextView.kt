@@ -17,11 +17,9 @@ import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
 import nativex.gdk.Rectangle
 import nativex.gdk.Rectangle.Companion.wrap
-import nativex.gdk.Window
-import nativex.gdk.Window.Companion.wrap
+import nativex.glib.MutableWrappedKList.Companion.toList
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.glib.MutableWrappedKList.Companion.toList
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
@@ -177,18 +175,6 @@ class TextView(
 			x.ptr.pointed.value to y.ptr.pointed.value
 		}
 
-	fun getWindow(window: TextWindowType): Window? =
-		gtk_text_view_get_window(textViewPointer, window.gtk).wrap()
-
-	fun getWindowType(window: Window): TextWindowType =
-		TextWindowType.valueOf(gtk_text_view_get_window_type(textViewPointer, window.windowPointer))!!
-
-	fun setBorderWindowSize(winType: TextWindowType, size: Int) {
-		gtk_text_view_set_border_window_size(textViewPointer, winType.gtk, size)
-	}
-
-	fun getBorderWindowSize(winType: TextWindowType): Int =
-		gtk_text_view_get_border_window_size(textViewPointer, winType.gtk)
 
 	fun forwardDisplayLine(iter: TextIter): Boolean =
 		gtk_text_view_forward_display_line(textViewPointer, iter.pointer).bool
@@ -363,13 +349,10 @@ class TextView(
 	 * <a href=""></a>
 	 */
 	enum class Layer(
-		val key: Int,
 		val gtk: GtkTextViewLayer
 	) {
-		BELOW(0, GTK_TEXT_VIEW_LAYER_BELOW),
-		ABOVE(1, GTK_TEXT_VIEW_LAYER_ABOVE),
-		BELOW_TEXT(2, GTK_TEXT_VIEW_LAYER_BELOW_TEXT),
-		ABOVE_TEXT(3, GTK_TEXT_VIEW_LAYER_ABOVE_TEXT);
+		BELOW_TEXT( GTK_TEXT_VIEW_LAYER_BELOW_TEXT),
+		ABOVE_TEXT( GTK_TEXT_VIEW_LAYER_ABOVE_TEXT);
 
 		companion object {
 			fun valueOf(key: Int) =
@@ -384,16 +367,14 @@ class TextView(
 	 * <a href=""></a>
 	 */
 	enum class TextWindowType(
-		val key: Int,
 		val gtk: GtkTextWindowType
 	) {
-		PRIVATE(0, GTK_TEXT_WINDOW_PRIVATE),
-		WIDGET(1, GTK_TEXT_WINDOW_WIDGET),
-		TEXT(2, GTK_TEXT_WINDOW_TEXT),
-		LEFT(3, GTK_TEXT_WINDOW_LEFT),
-		RIGHT(4, GTK_TEXT_WINDOW_RIGHT),
-		TOP(5, GTK_TEXT_WINDOW_TOP),
-		BOTTOM(6, GTK_TEXT_WINDOW_BOTTOM);
+		WIDGET(GTK_TEXT_WINDOW_WIDGET),
+		TEXT(GTK_TEXT_WINDOW_TEXT),
+		LEFT(GTK_TEXT_WINDOW_LEFT),
+		RIGHT(GTK_TEXT_WINDOW_RIGHT),
+		TOP(GTK_TEXT_WINDOW_TOP),
+		BOTTOM(GTK_TEXT_WINDOW_BOTTOM);
 
 		companion object {
 			fun valueOf(key: Int) =

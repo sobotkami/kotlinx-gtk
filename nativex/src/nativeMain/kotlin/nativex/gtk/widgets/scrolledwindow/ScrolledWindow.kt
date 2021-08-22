@@ -37,15 +37,7 @@ class ScrolledWindow(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-new">
 	 *     gtk_scrolled_window_new</a>
 	 */
-	constructor(
-		verticalAdjustment: Adjustment? = null,
-		horizontalAdjustment: Adjustment? = null
-	) : this(
-		gtk_scrolled_window_new(
-			horizontalAdjustment?.adjustmentPointer,
-			verticalAdjustment?.adjustmentPointer
-		)!!.reinterpret()
-	)
+	constructor() : this(gtk_scrolled_window_new()!!.reinterpret())
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-get-vadjustment">
@@ -148,22 +140,6 @@ class ScrolledWindow(
 		gtk_scrolled_window_unset_placement(scrolledWindowPointer)
 	}
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-get-shadow-type">
-	 *     gtk_scrolled_window_get_shadow_type</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-set-shadow-type">
-	 *     gtk_scrolled_window_set_shadow_type</a>
-	 */
-	var shadowType: ShadowType
-		get() = ShadowType.valueOf(
-			gtk_scrolled_window_get_shadow_type(
-				scrolledWindowPointer
-			)
-		)!!
-		set(value) = gtk_scrolled_window_set_shadow_type(
-			scrolledWindowPointer,
-			value.gtk
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-get-kinetic-scrolling">
@@ -181,21 +157,7 @@ class ScrolledWindow(
 			value.gtk
 		)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-get-capture-button-press">
-	 *     gtk_scrolled_window_get_capture_button_press</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-set-capture-button-press">
-	 *     gtk_scrolled_window_set_capture_button_press</a>
-	 */
-	var captureButtonPress: Boolean
-		get() = gtk_scrolled_window_get_capture_button_press(
-			scrolledWindowPointer
-		)
-			.bool
-		set(value) = gtk_scrolled_window_set_capture_button_press(
-			scrolledWindowPointer,
-			value.gtk
-		)
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#gtk-scrolled-window-get-overlay-scrolling">

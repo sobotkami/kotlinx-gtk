@@ -2,7 +2,6 @@ package nativex.gtk.widgets.combobox
 
 import gtk.*
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.async.staticCStringCallback
@@ -10,6 +9,7 @@ import nativex.gio.Icon
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -85,12 +85,7 @@ class AppChooserButton(val appChooserButton: CPointer<GtkAppChooserButton>) : Co
 	 *     custom-item-activated</a>
 	 */
 	fun addOnCustomItemActivatedCallback(action: (String) -> Unit) {
-		addSignalCallback(
-			Signals.CUSTOM_ITEM_ACTIVATED,
-			StableRef.create(action).asCPointer(),
-			staticCStringCallback,
-			0u
-		)
+		addSignalCallback(Signals.CUSTOM_ITEM_ACTIVATED, action, staticCStringCallback,)
 	}
 
 }

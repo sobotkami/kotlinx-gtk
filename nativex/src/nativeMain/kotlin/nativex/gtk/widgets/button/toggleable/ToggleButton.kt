@@ -1,14 +1,14 @@
 package nativex.gtk.widgets.button.toggleable
+
 import gtk.*
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.Signals
-import nativex.gtk.widgets.button.Button
-import nativex.gobject.connectSignal
 import nativex.gobject.SignalManager
+import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
+import nativex.gtk.widgets.button.Button
 
 /**
  * kotlinx-gtk
@@ -21,18 +21,6 @@ open class ToggleButton(
 	val toggleButtonPointer: CPointer<GtkToggleButton>
 ) : Button(toggleButtonPointer.reinterpret()) {
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-get-mode">
-	 *     gtk_toggle_button_get_mode</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-set-mode">
-	 *     gtk_toggle_button_set_mode</a>
-	 */
-	var mode: Boolean
-		get() = gtk_toggle_button_get_mode(toggleButtonPointer).bool
-		set(value) = gtk_toggle_button_set_mode(
-			toggleButtonPointer,
-			value.gtk
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-get-active">
@@ -47,21 +35,6 @@ open class ToggleButton(
 			value.gtk
 		)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-get-inconsistent">
-	 *     gtk_toggle_button_get_inconsistent</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-set-inconsistent">
-	 *     gtk_toggle_button_set_inconsistent</a>
-	 */
-	var isInconsistent: Boolean
-		get() = gtk_toggle_button_get_inconsistent(
-			toggleButtonPointer
-		)
-			.bool
-		set(value) = gtk_toggle_button_set_inconsistent(
-			toggleButtonPointer,
-			value.gtk
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#gtk-toggle-button-new">gtk_toggle_button_new</a>
@@ -96,11 +69,5 @@ open class ToggleButton(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkToggleButton.html#GtkToggleButton-toggled">toggled</a>
 	 */
 	fun addOnToggledCallback(action: () -> Unit): SignalManager =
-		SignalManager(
-			toggleButtonPointer,
-			toggleButtonPointer.connectSignal(
-				Signals.TOGGLED,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
-		)
+		addSignalCallback(Signals.TOGGLED, action)
 }

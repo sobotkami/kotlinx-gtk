@@ -30,7 +30,7 @@ class Fixed(
 	 *
 	 * @return [FixedWidget] with direct management functions
 	 */
-	fun put(widget: Widget, x: Int, y: Int): FixedWidget {
+	fun put(widget: Widget, x: Double, y: Double): FixedWidget {
 		gtk_fixed_put(fixedPointer, widget.widgetPointer, x, y)
 		return FixedWidget(widget)
 	}
@@ -38,7 +38,7 @@ class Fixed(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFixed.html#gtk-fixed-move">gtk_fixed_move</a>
 	 */
-	fun move(widget: Widget, x: Int, y: Int) {
+	fun move(widget: Widget, x: Double, y: Double) {
 		gtk_fixed_move(fixedPointer, widget.widgetPointer, x, y)
 	}
 
@@ -46,12 +46,8 @@ class Fixed(
 	 * Wraps a [Widget] to make it easy to manage a widget that is inside a [Fixed]
 	 */
 	inner class FixedWidget(val widget: Widget) {
-		fun move(x: Int, y: Int) {
+		fun move(x: Double, y: Double) {
 			move(widget, x, y)
-		}
-
-		fun remove() {
-			this@Fixed.remove(widget)
 		}
 	}
 }

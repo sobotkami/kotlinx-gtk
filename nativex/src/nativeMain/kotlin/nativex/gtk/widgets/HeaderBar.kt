@@ -25,51 +25,6 @@ open class HeaderBar(
 
 	constructor(headerBar: HeaderBar) : this(headerBar.headerBarPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-title">
-	 *     gtk_header_bar_get_title</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-set-title">
-	 *     gtk_header_bar_set_title</a>
-	 */
-	var title: String?
-		get() = gtk_header_bar_get_title(headerBarPointer)?.toKString()
-		set(value) = gtk_header_bar_set_title(headerBarPointer, value)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-subtitle">
-	 *     gtk_header_bar_get_subtitle</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-set-subtitle">
-	 *     gtk_header_bar_set_subtitle</a>
-	 */
-	var subTitle: String?
-		get() = gtk_header_bar_get_subtitle(headerBarPointer)?.toKString()
-		set(value) = gtk_header_bar_set_subtitle(headerBarPointer, value)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-has-subtitle">
-	 *     gtk_header_bar_get_has_subtitle</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-set-has-subtitle">
-	 *     gtk_header_bar_set_has_subtitle</a>
-	 */
-	var hasSubtitle: Boolean
-		get() = gtk_header_bar_get_has_subtitle(headerBarPointer).bool
-		set(value) = gtk_header_bar_set_has_subtitle(
-			headerBarPointer,
-			value.gtk
-		)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-custom-title">
-	 *     gtk_header_bar_get_custom_title</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-set-custom-title">
-	 *     gtk_header_bar_set_custom_title</a>
-	 */
-	var customTitle: Widget?
-		get() = gtk_header_bar_get_custom_title(headerBarPointer).asWidgetOrNull()
-		set(value) = gtk_header_bar_set_custom_title(
-			headerBarPointer,
-			value?.widgetPointer
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-pack-start">
@@ -86,19 +41,6 @@ open class HeaderBar(
 	fun packEnd(child: Widget) {
 		gtk_header_bar_pack_end(headerBarPointer, child.widgetPointer)
 	}
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-show-close-button">
-	 *     gtk_header_bar_get_show_close_button</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-set-show-close-button">
-	 *     gtk_header_bar_set_show_close_button</a>
-	 */
-	var showCloseButton: Boolean
-		get() = gtk_header_bar_get_show_close_button(headerBarPointer).bool
-		set(value) = gtk_header_bar_set_show_close_button(
-			headerBarPointer,
-			value.gtk
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkHeaderBar.html#gtk-header-bar-get-decoration-layout">

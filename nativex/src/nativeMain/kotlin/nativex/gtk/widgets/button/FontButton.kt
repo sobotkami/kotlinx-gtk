@@ -9,6 +9,8 @@ import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
+import nativex.gobject.staticNoArgGCallback
 import nativex.gtk.FontChooser
 
 /**
@@ -76,5 +78,5 @@ class FontButton(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFontButton.html#GtkFontButton-font-set">font-set</a>
 	 */
 	fun addOnFontSetCallback(action: () -> Unit): SignalManager =
-		addSignalCallback(Signals.FONT_SET, StableRef.create(action).asCPointer(), staticNoArgGCallback, 0u)
+		addSignalCallback(Signals.FONT_SET, action)
 }

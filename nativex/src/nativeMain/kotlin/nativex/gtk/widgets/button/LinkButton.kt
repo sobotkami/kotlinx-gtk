@@ -2,13 +2,13 @@ package nativex.gtk.widgets.button
 
 import gtk.*
 import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -63,5 +63,5 @@ class LinkButton(
 	 *     activate-link</a>
 	 */
 	fun addOnActivateLinkCallback(action: () -> Unit): SignalManager =
-		addSignalCallback(Signals.ACTIVATE_LINK, StableRef.create(action).asCPointer(), staticNoArgGCallback, 0u)
+		addSignalCallback(Signals.ACTIVATE_LINK, action)
 }

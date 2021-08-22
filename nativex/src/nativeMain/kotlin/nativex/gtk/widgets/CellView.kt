@@ -32,8 +32,6 @@ class CellView(
 		))!!.reinterpret()
 	)
 
-	constructor(pixBuf: Pixbuf) : this(gtk_cell_view_new_with_pixbuf(pixBuf.pixbufPointer)!!.reinterpret())
-
 	var model: TreeModel?
 		get() = gtk_cell_view_get_model(cellViewPointer)?.let { TreeModel(it) }
 		set(value) = gtk_cell_view_set_model(cellViewPointer, value?.treeModelPointer)
@@ -49,9 +47,6 @@ class CellView(
 			value?.treePathPointer
 		)
 
-	fun setBackgroundRgba(rgba: RGBA) {
-		gtk_cell_view_set_background_rgba(cellViewPointer, rgba.rgbaPointer)
-	}
 
 	var drawSensitive: Boolean
 		get() = gtk_cell_view_get_draw_sensitive(cellViewPointer).bool

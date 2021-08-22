@@ -12,11 +12,9 @@ import nativex.async.populatePopupSignalManager
 import nativex.async.staticCStringCallback
 import nativex.gdk.Event
 import nativex.gdk.Event.Companion.wrap
-import nativex.gdk.Pixbuf
-import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gdk.Rectangle
 import nativex.gdk.Rectangle.Companion.wrap
-import nativex.gdk.dragndrop.DragAction
+import nativex.gdk.enums.DragAction
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
 import nativex.glib.bool
@@ -24,13 +22,10 @@ import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
-import nativex.gtk.Adjustment
-import nativex.gtk.Adjustment.Companion.wrap
 import nativex.gtk.EntryBuffer
 import nativex.gtk.EntryBuffer.Companion.wrap
 import nativex.gtk.EntryCompletion
 import nativex.gtk.EntryCompletion.Companion.wrap
-import nativex.gtk.TargetList
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.events.ExtendedMoveCursorFunction
 import nativex.gtk.common.events.staticExtendedMoveCursorFunction
@@ -38,8 +33,6 @@ import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.misc.Image
 import nativex.pango.AttrList
 import nativex.pango.AttrList.Companion.wrap
-import nativex.pango.Layout
-import nativex.pango.Layout.Companion.wrap
 import nativex.pango.TabArray
 import nativex.pango.TabArray.Companion.wrap
 
@@ -82,7 +75,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	 */
 	val textLength: UShort
 		get() = gtk_entry_get_text_length(entryPointer)
-
 
 
 	/**
@@ -145,7 +137,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		set(value) = gtk_entry_set_has_frame(entryPointer, value.gtk)
 
 
-
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-alignment">
 	 *     gtk_entry_get_alignment</a>
@@ -177,7 +168,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		set(value) = gtk_entry_set_overwrite_mode(entryPointer, value.gtk)
 
 
-
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-attributes">
 	 *     gtk_entry_get_attributes</a>
@@ -197,7 +187,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	var completion: EntryCompletion?
 		get() = gtk_entry_get_completion(entryPointer).wrap()
 		set(value) = gtk_entry_set_completion(entryPointer, value?.entryCompletionPointer)
-
 
 
 	/**
@@ -355,7 +344,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-icon-drag-source">
 	 *     gtk_entry_set_icon_drag_source</a>
 	 */
-	fun setIconDragSource(iconPosition: IconPosition, targetList: TargetList, actions: DragAction) {
+	fun setIconDragSource(iconPosition: IconPosition, targetList: ContentProvider, actions: DragAction) {
 		gtk_entry_set_icon_drag_source(entryPointer, iconPosition.gtk, targetList.targetListPointer, actions.gdk)
 	}
 

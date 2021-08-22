@@ -1,19 +1,16 @@
 package nativex.gtk
+
 import glib.gpointer
 import gobject.GCallback
 import gobject.GObject
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import nativex.Closeable
 import nativex.ClosedException
-import nativex.async.callbackSignalFlow
-import nativex.gobject.KGObject
-import nativex.gobject.KGObject.Companion.wrap
 import nativex.glib.asSequence
 import nativex.glib.bool
 import nativex.glib.reinterpretOrNull
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
 
 /**
@@ -21,8 +18,8 @@ import nativex.gobject.Signals
  * 13 / 03 / 2021
  */
 open class TreeModel(
-	 val treeModelPointer: CPointer<GtkTreeModel>
-) {
+	val treeModelPointer: CPointer<GtkTreeModel>
+) : KGObject(treeModelPointer.reinterpret()) {
 	fun getPath(iter: TreeIter): TreePath =
 		TreePath(gtk_tree_model_get_path(treeModelPointer, iter.treeIterPointer)!!)
 
@@ -80,7 +77,7 @@ open class TreeModel(
 		val iter: TreeIter,
 	) {
 		companion object {
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowChanged) -> Unit>()?.get()
 						?.invoke(
@@ -98,7 +95,7 @@ open class TreeModel(
 		val path: TreePath
 	) {
 		companion object {
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, data: gpointer? ->
 					data?.asStableRef<(RowDeleted) -> Unit>()?.get()
 						?.invoke(
@@ -115,7 +112,7 @@ open class TreeModel(
 		val iter: TreeIter
 	) {
 		companion object {
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowHasChildToggled) -> Unit>()
 						?.get()
@@ -135,7 +132,7 @@ open class TreeModel(
 		val iter: TreeIter
 	) {
 		companion object {
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, data: gpointer? ->
 					data?.asStableRef<(RowInserted) -> Unit>()?.get()
 						?.invoke(
@@ -155,7 +152,7 @@ open class TreeModel(
 		val newOrder: Sequence<Pair<Int, Int>>
 	) {
 		companion object {
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, path: CPointer<GtkTreePath>, iter: CPointer<GtkTreeIter>, newOrder: gpointer, data: gpointer? ->
 					data?.asStableRef<(RowsReordered) -> Unit>()
 						?.get()
@@ -176,7 +173,7 @@ open class TreeModel(
 		}
 	}
 
-	enum class Flags(val key: Int,  val gtk: GtkTreeModelFlags) {
+	enum class Flags(val key: Int, val gtk: GtkTreeModelFlags) {
 		ITERS_PERSIST(0, GTK_TREE_MODEL_ITERS_PERSIST),
 		LIST_ONLY(1, GTK_TREE_MODEL_LIST_ONLY);
 
@@ -185,13 +182,13 @@ open class TreeModel(
 				values().find { it.key == key }
 
 
-			 fun valueOf(gtk: GtkTreeModelFlags) =
+			fun valueOf(gtk: GtkTreeModelFlags) =
 				values().find { it.gtk == gtk }
 		}
 	}
 
 	data class TreeIter(
-		 val treeIterPointer: CPointer<GtkTreeIter>
+		val treeIterPointer: CPointer<GtkTreeIter>
 	) {
 		constructor() : this(memScoped { alloc<GtkTreeIter>().ptr })
 
@@ -204,7 +201,7 @@ open class TreeModel(
 	}
 
 	class TreePath(
-		 val treePathPointer: CPointer<GtkTreePath>
+		val treePathPointer: CPointer<GtkTreePath>
 	) : Closeable {
 		private var isClosed = false
 		private inline fun getCloseException() =

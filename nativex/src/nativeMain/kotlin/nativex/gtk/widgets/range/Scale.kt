@@ -8,6 +8,7 @@ import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gtk.Adjustment
 import nativex.gtk.Orientable
 import nativex.gtk.common.enums.Orientation
@@ -146,9 +147,8 @@ class Scale(
 	fun addOnFormatValueCallback(action: ScaleFormatValueFunction): SignalManager =
 		addSignalCallback(
 			Signals.FORMAT_VALUE,
-			StableRef.create(action).asCPointer(),
+			action,
 			staticFormatValueCallback,
-			0u
 		)
 
 	companion object {

@@ -441,7 +441,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.Widget.get_width.html"></a>
 	 */
-	val widget: Int
+	val width: Int
 		get() = gtk_widget_get_width(widgetPointer)
 
 	/**

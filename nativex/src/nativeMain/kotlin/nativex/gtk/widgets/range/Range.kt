@@ -61,23 +61,6 @@ open class Range(
 		get() = gtk_range_get_round_digits(rangePointer)
 		set(value) = gtk_range_set_round_digits(rangePointer, value)
 
-	var lowerStepperSensitivity: SensitivityType
-		get() = SensitivityType.valueOf(
-			gtk_range_get_lower_stepper_sensitivity(rangePointer)
-		)!!
-		set(value) = gtk_range_set_lower_stepper_sensitivity(
-			rangePointer,
-			value.gtk
-		)
-
-	var upperStepperSensitivity: SensitivityType
-		get() = SensitivityType.valueOf(
-			gtk_range_get_upper_stepper_sensitivity(rangePointer)
-		)!!
-		set(value) = gtk_range_set_upper_stepper_sensitivity(
-			rangePointer,
-			value.gtk
-		)
 	var isFlippable: Boolean
 		get() = gtk_range_get_flippable(rangePointer).bool
 		set(value) = gtk_range_set_flippable(

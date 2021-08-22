@@ -28,13 +28,6 @@ class SearchEntry(val searchEntryPointer: CPointer<GtkSearchEntry>) : Entry(sear
 	constructor() : this(gtk_search_entry_new()!!.reinterpret())
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html#gtk-search-entry-handle-event">
-	 *     gtk_search_entry_handle_event</a>
-	 */
-	fun handleEvent(event: Event): Boolean =
-		gtk_search_entry_handle_event(searchEntryPointer, event.eventPointer).bool
-
-	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html#GtkSearchEntry-next-match">
 	 *     next-match</a>
 	 */

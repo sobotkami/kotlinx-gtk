@@ -5,7 +5,6 @@ import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_GTK
 import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_OTHER
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlinx.coroutines.flow.Flow
 import nativex.async.staticCStringCallback
 import nativex.gdk.Window
 import nativex.glib.bool
@@ -39,19 +38,20 @@ open class CellRenderer(
 			}
 		}
 
-		val accelClearedSignal: Flow<String>
-			get() = TODO("accel-cleared")
+		fun addOnAccelClearedCallback() {
+			TODO("accel-cleared")
+		}
 
 
 		data class AccelEditedData(
 			val path: String,
 			val key: UInt,
-			val mods: Window.ModifierType,
 			val hardwareKeycode: UInt
 		)
 
-		val accelEditedSignal: Flow<AccelEditedData>
-			get() = TODO("accel-edited")
+		fun addOnAccelEditedCallback() {
+			TODO("accel-edited")
+		}
 	}
 
 	class Combo : CellRenderer(gtk_cell_renderer_combo_new()!!) {
@@ -60,8 +60,9 @@ open class CellRenderer(
 			val newIter: TreeModel.TreeIter
 		)
 
-		val changedSignal: Flow<ChangedData>
-			get() = TODO("changed")
+		fun addOnChangedCallback() {
+			TODO("changed")
+		}
 	}
 
 	class Pixbuf : CellRenderer(gtk_cell_renderer_pixbuf_new()!!)
@@ -80,8 +81,9 @@ open class CellRenderer(
 			val newText: String
 		)
 
-		val editedSignal: Flow<EditedData>
-			get() = TODO("edited")
+		fun addOnEditedCallback() {
+			TODO("edited")
+		}
 	}
 
 	class Toggle : CellRenderer(gtk_cell_renderer_toggle_new()!!) {

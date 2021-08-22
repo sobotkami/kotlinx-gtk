@@ -10,8 +10,8 @@ import nativex.async.staticDoubleCallback
 import nativex.glib.toNullTermCStringArray
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gtk.Adjustment
-import nativex.gtk.IconSize
 import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.button.Button
 
@@ -31,14 +31,12 @@ open class ScaleButton(
 	 *     gtk_scale_button_new</a>
 	 */
 	constructor(
-		iconSize: IconSize,
 		min: Double = 0.0,
 		max: Double = 100.0,
 		step: Double = 2.0,
 		icons: List<String>? = null
 	) : this(
 		gtk_scale_button_new(
-			iconSize.gtk,
 			min,
 			max,
 			step,
@@ -124,8 +122,6 @@ open class ScaleButton(
 	fun addOnValueChangedCallback(action: (Double) -> Unit): SignalManager =
 		addSignalCallback(
 			Signals.VALUE_CHANGED,
-			StableRef.create(action).asCPointer(),
-			staticDoubleCallback,
-			0u
+			action
 		)
 }

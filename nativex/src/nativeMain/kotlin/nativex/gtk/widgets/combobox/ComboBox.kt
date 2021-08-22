@@ -6,8 +6,6 @@ import gtk.*
 import kotlinx.cinterop.*
 import nativex.async.popdownSignalManager
 import nativex.async.popupSignalManager
-import nativex.atk.KAtkObject
-import nativex.atk.KAtkObject.Companion.wrap
 import nativex.gdk.Device
 import nativex.glib.CString
 import nativex.glib.bool
@@ -16,13 +14,12 @@ import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
 import nativex.gobject.staticDestroyStableRefFunction
-import nativex.gtk.CellArea
 import nativex.gtk.CellLayout
 import nativex.gtk.TreeModel
 import nativex.gtk.common.enums.ScrollType
-import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.TreeView.Companion.staticTreeViewRowSeparatorFunc
 import nativex.gtk.widgets.TreeViewRowSeparatorFunc
+import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.range.Range
 
 /**
@@ -61,54 +58,6 @@ open class ComboBox(
 			gtk_combo_box_new_with_model_and_entry(model.treeModelPointer)
 		else gtk_combo_box_new_with_model(model.treeModelPointer))!!.reinterpret()
 	)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-new-with-area">
-	 *     gtk_combo_box_new_with_area</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-new-with-area-and-entry">
-	 *     gtk_combo_box_new_with_area_and_entry</a>
-	 */
-	constructor(
-		area: CellArea,
-		withEntry: Boolean = false
-	) : this(
-		(if (withEntry)
-			gtk_combo_box_new_with_area_and_entry(area.pointer)
-		else gtk_combo_box_new_with_area(area.pointer))!!.reinterpret()
-	)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-wrap-width">
-	 *     gtk_combo_box_get_wrap_width</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-set-wrap-width">
-	 *     gtk_combo_box_set_wrap_width</a>
-	 */
-	var wrapWidth: Int
-		get() = gtk_combo_box_get_wrap_width(comboBoxPointer)
-		set(value) = gtk_combo_box_set_wrap_width(comboBoxPointer, value)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-row-span-column">
-	 *     gtk_combo_box_get_row_span_column</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-set-row-span-column">
-	 *     gtk_combo_box_set_row_span_column</a>
-	 */
-	var rowSpanColumn: Int
-		get() = gtk_combo_box_get_row_span_column(comboBoxPointer)
-		set(value) = gtk_combo_box_set_row_span_column(comboBoxPointer, value)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-column-span-column">
-	 *     gtk_combo_box_get_column_span_column</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-set-column-span-column">
-	 *     gtk_combo_box_set_column_span_column</a>
-	 */
-	var columnSpanColumn: Int
-		get() = gtk_combo_box_get_column_span_column(comboBoxPointer)
-		set(value) = gtk_combo_box_set_column_span_column(
-			comboBoxPointer,
-			value
-		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-active">
@@ -193,13 +142,6 @@ open class ComboBox(
 	fun popdown() {
 		gtk_combo_box_popdown(comboBoxPointer)
 	}
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-popup-accessible">
-	 *     gtk_combo_box_get_popup_accessible</a>
-	 */
-	val popupAccessible: KAtkObject
-		get() = gtk_combo_box_get_popup_accessible(comboBoxPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-button-sensitivity">

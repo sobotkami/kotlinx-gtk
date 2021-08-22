@@ -27,8 +27,8 @@ class SearchBar(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html#gtk-search-bar-connect-entry">gtk_search_bar_connect_entry</a>
 	 */
-	fun connectEntry(entry: Entry) {
-		gtk_search_bar_connect_entry(searchBarPointer, entry.entryPointer)
+	fun connectEntry(entry: Editable) {
+		gtk_search_bar_connect_entry(searchBarPointer, entry.editablePointer)
 	}
 
 	/**
@@ -48,11 +48,5 @@ class SearchBar(
 	var showCloseButton: Boolean
 		get() = gtk_search_bar_get_show_close_button(searchBarPointer).bool
 		set(value) = gtk_search_bar_set_show_close_button(searchBarPointer, value.gtk)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html#gtk-search-bar-handle-event">gtk_search_bar_handle_event</a>
-	 */
-	fun handleEvent(event: Event): Boolean =
-		gtk_search_bar_handle_event(searchBarPointer, event.eventPointer).bool
 
 }

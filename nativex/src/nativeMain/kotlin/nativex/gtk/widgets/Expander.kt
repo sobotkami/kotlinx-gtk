@@ -94,19 +94,6 @@ class Expander(
 		)
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html#gtk-expander-get-label-fill">
-	 *     gtk_expander_get_label_fill</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html#gtk-expander-set-label-fill">
-	 *     gtk_expander_set_label_fill</a>
-	 */
-	var labelFill: Boolean
-		get() = gtk_expander_get_label_fill(expanderPointer).bool
-		set(value) = gtk_expander_set_label_fill(
-			expanderPointer,
-			value.gtk
-		)
-
-	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html#gtk-expander-get-resize-toplevel">
 	 *     gtk_expander_get_resize_toplevel</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html#gtk-expander-set-resize-toplevel">

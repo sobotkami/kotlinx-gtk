@@ -1,8 +1,9 @@
 package nativex.gtk.widgets.frame
 
 import gtk.*
-import kotlinx.cinterop.*
-import nativex.gtk.common.enums.ShadowType
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.toKString
 import nativex.gtk.widgets.Widget
 
 /**
@@ -13,7 +14,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html">GtkFrame</a>
  */
 open class Frame(
-	 val framePointer: CPointer<GtkFrame>
+	val framePointer: CPointer<GtkFrame>
 ) : Widget(framePointer.reinterpret()) {
 
 	/**
@@ -37,17 +38,9 @@ open class Frame(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html#gtk-frame-get-label-align">gtk_frame_get_label_align</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html#gtk-frame-set-label-align">gtk_frame_set_label_align</a>
 	 */
-	var labelAlign: Pair<Float, Float>
-		get() {
-			val x = cValue<FloatVar>()
-			val y = cValue<FloatVar>()
-			gtk_frame_get_label_align(framePointer, x, y)
-			return memScoped {
-				x.ptr.pointed.value to y.ptr.pointed.value
-			}
-		}
-		set(value) =
-			gtk_frame_set_label_align(framePointer, value.first, value.second)
+	var labelAlign: Float
+		get() = gtk_frame_get_label_align(framePointer)
+		set(value) = gtk_frame_set_label_align(framePointer, value)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html#gtk-frame-get-label-widget">gtk_frame_get_label_widget</a>
@@ -60,18 +53,5 @@ open class Frame(
 			value?.widgetPointer
 		)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html#gtk-frame-get-shadow-type">
-	 *     gtk_frame_get_shadow_type</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFrame.html#gtk-frame-set-shadow-type">
-	 *     gtk_frame_set_shadow_type</a>
-	 */
-	var shadowType: ShadowType
-		get() = ShadowType.valueOf(
-			gtk_frame_get_shadow_type(
-				framePointer
-			)
-		)!!
-		set(value) = gtk_frame_set_shadow_type(framePointer, value.gtk)
 
 }

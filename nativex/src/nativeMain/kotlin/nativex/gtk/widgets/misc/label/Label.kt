@@ -10,18 +10,17 @@ import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.Justification
 import nativex.gtk.common.events.ExtendedMoveCursorFunction
 import nativex.gtk.common.events.staticExtendedMoveCursorFunction
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.misc.Misc
 import nativex.pango.AttrList
 import nativex.pango.AttrList.Companion.wrap
 import nativex.pango.EllipsizeMode
 import nativex.pango.Layout
 import nativex.pango.Layout.Companion.wrap
-import nativex.pango.WrapMode
 
 /**
  * kotlinx-gtk
@@ -32,7 +31,7 @@ import nativex.pango.WrapMode
  */
 open class Label(
 	val labelPointer: CPointer<GtkLabel>
-) : Misc(labelPointer.reinterpret()) {
+) : Widget(labelPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-text">gtk_label_get_text</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-text">gtk_label_set_text</a>
@@ -130,25 +129,6 @@ open class Label(
 	val layout: Layout
 		get() = gtk_label_get_layout(labelPointer)!!.wrap()
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-line-wrap">
-	 *     gtk_label_get_line_wrap</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-line-wrap">
-	 *     gtk_label_set_line_wrap</a>
-	 */
-	var lineWrap: Boolean
-		get() = gtk_label_get_line_wrap(labelPointer).bool
-		set(value) = gtk_label_set_line_wrap(labelPointer, value.gtk)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-line-wrap-mode">
-	 *     gtk_label_get_line_wrap_mode</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-line-wrap-mode">
-	 *     gtk_label_set_line_wrap_mode</a>
-	 */
-	var lineWrapMode: WrapMode
-		get() = WrapMode.valueOf(gtk_label_get_line_wrap_mode(labelPointer))!!
-		set(value) = gtk_label_set_line_wrap_mode(labelPointer, value.pango)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-attributes">
@@ -236,15 +216,6 @@ open class Label(
 		get() = gtk_label_get_single_line_mode(labelPointer).bool
 		set(value) = gtk_label_set_single_line_mode(labelPointer, value.gtk)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-angle">
-	 *     gtk_label_get_angle</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-angle">
-	 *     gtk_label_set_angle</a>
-	 */
-	var angle: Double
-		get() = gtk_label_get_angle(labelPointer)
-		set(value) = gtk_label_set_angle(labelPointer, value)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-current-uri">
@@ -253,15 +224,6 @@ open class Label(
 	val currentUri: String
 		get() = gtk_label_get_current_uri(labelPointer)!!.toKString()
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-track-visited-links">
-	 *     gtk_label_get_line_wrap</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-track-visited-links">
-	 *     gtk_label_set_line_wrap</a>
-	 */
-	var trackVisitedLinks: Boolean
-		get() = gtk_label_get_line_wrap(labelPointer).bool
-		set(value) = gtk_label_set_line_wrap(labelPointer, value.gtk)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-get-selectable">
@@ -280,9 +242,7 @@ open class Label(
 	fun addOnActivateCurrentLinkCallback(action: () -> Unit): SignalManager =
 		addSignalCallback(
 			Signals.ACTIVATE_CURRENT_LINK,
-			StableRef.create(action).asCPointer(),
-			staticNoArgGCallback,
-			0u
+			action
 		)
 
 	/**
@@ -295,13 +255,13 @@ open class Label(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-copy-clipboard">copy-clipboard</a>
 	 */
 	fun addOnCopyClipboardCallback(action: () -> Unit): SignalManager =
-		addSignalCallback(Signals.COPY_CLIPBOARD, StableRef.create(action).asCPointer(), staticNoArgGCallback, 0u)
+		addSignalCallback(Signals.COPY_CLIPBOARD, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-move-cursor">move-cursor</a>
 	 */
 	fun addOnMoveCursorCallback(action: ExtendedMoveCursorFunction): SignalManager =
-		addSignalCallback(Signals.MOVE_CURSOR, staticExtendedMoveCursorFunction, staticNoArgGCallback, 0u)
+		addSignalCallback(Signals.MOVE_CURSOR, action, staticExtendedMoveCursorFunction)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-populate-popup">populate-popup</a>
@@ -334,13 +294,6 @@ open class Label(
 		else gtk_label_set_markup_with_mnemonic(labelPointer, string)
 	}
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-pattern">
-	 *     gtk_label_set_pattern</a>
-	 */
-	fun setPattern(pattern: String) {
-		gtk_label_set_pattern(labelPointer, pattern)
-	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-text-with-mnemonic">

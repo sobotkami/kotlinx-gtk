@@ -76,14 +76,6 @@ class Stack(
 	}
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-get-homogeneous">gtk_stack_get_homogeneous</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-set-homogeneous">gtk_stack_set_homogeneous</a>
-	 */
-	var isHomogeneous: Boolean
-		get() = gtk_stack_get_homogeneous(stackPointer).bool
-		set(value) = gtk_stack_set_homogeneous(stackPointer, value.gtk)
-
-	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-get-hhomogeneous">gtk_stack_get_hhomogeneous</a>
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkStack.html#gtk-stack-set-hhomogeneous">gtk_stack_set_hhomogeneous</a>
 	 */

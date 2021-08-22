@@ -32,51 +32,7 @@ open class Paned(
 	 */
 	constructor(paned: Paned) : this(paned.panedPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-add1">gtk_paned_add1</a>
-	 */
-	fun add1(widget: Widget) =
-		gtk_paned_add1(panedPointer, widget.widgetPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-add2">gtk_paned_add2</a>
-	 */
-	fun add2(widget: Widget) =
-		gtk_paned_add2(panedPointer, widget.widgetPointer)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-pack1">gtk_paned_pack1</a>
-	 */
-	fun pack1(widget: Widget, resize: Boolean, shrink: Boolean) =
-		gtk_paned_pack1(
-			panedPointer,
-			widget.widgetPointer,
-			resize.gtk,
-			shrink.gtk
-		)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-pack2">gtk_paned_pack2</a>
-	 */
-	fun pack2(widget: Widget, resize: Boolean, shrink: Boolean) =
-		gtk_paned_pack2(
-			panedPointer,
-			widget.widgetPointer,
-			resize.gtk,
-			shrink.gtk
-		)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-get-child1">gtk_paned_get_child1</a>
-	 */
-	val child1: Widget?
-		get() = gtk_paned_get_child1(panedPointer).asWidgetOrNull()
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-get-child2">gtk_paned_get_child2</a>
-	 */
-	val child2: Widget?
-		get() = gtk_paned_get_child2(panedPointer).asWidgetOrNull()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-get-position">gtk_paned_get_position</a>
@@ -85,12 +41,6 @@ open class Paned(
 	var position: Int
 		get() = gtk_paned_get_position(panedPointer)
 		set(value) = gtk_paned_set_position(panedPointer, value)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-get-handle-window">gtk_paned_get_handle_window</a>
-	 */
-	val handleWindow: Window
-		get() = Window(gtk_paned_get_handle_window(panedPointer)!!)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPaned.html#gtk-paned-get-wide-handle">gtk_paned_get_wide_handle</a>

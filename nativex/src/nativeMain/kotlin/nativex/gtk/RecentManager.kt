@@ -1,16 +1,16 @@
 package nativex.gtk
 
+import glib.GDateTime
 import glib.GError
 import gtk.*
 import gtk.GtkRecentManagerError.*
 import kotlinx.cinterop.*
-import nativex.gdk.Pixbuf
-import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gio.AppInfo
 import nativex.gio.AppInfo.Companion.wrap
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
 import nativex.glib.*
+import nativex.glib.DateTime.Companion.wrap
 import nativex.gobject.KGObject
 import nativex.gobject.Signals
 import nativex.gobject.addSignalCallback
@@ -83,12 +83,12 @@ class RecentManager(
 			get() = gtk_recent_info_get_description(struct)!!.toKString()
 		val mimeType: String
 			get() = gtk_recent_info_get_mime_type(struct)!!.toKString()
-		val added: Long
-			get() = gtk_recent_info_get_added(struct)
-		val modified: Long
-			get() = gtk_recent_info_get_modified(struct)
-		val visited: Long
-			get() = gtk_recent_info_get_visited(struct)
+		val added: DateTime
+			get() = gtk_recent_info_get_added(struct)!!.wrap()
+		val modified: DateTime
+			get() = gtk_recent_info_get_modified(struct)!!.wrap()
+		val visited: DateTime
+			get() = gtk_recent_info_get_visited(struct)!!.wrap()
 		val privateHint: Boolean
 			get() = gtk_recent_info_get_private_hint(struct).bool
 
@@ -135,7 +135,7 @@ class RecentManager(
 			memScoped {
 				val appExec = cValue<CPointerVar<ByteVarOf<Byte>>>()
 				val count = cValue<UIntVar>()
-				val time = cValue<LongVar>()
+				val time = cValue<CPointerVar<GDateTime>>()
 				val b = gtk_recent_info_get_application_info(
 					struct,
 					appName,
@@ -147,7 +147,7 @@ class RecentManager(
 					ApplicationInfo(
 						appExec.ptr.pointed.value!!.toKString(),
 						count.ptr.pointed.value,
-						time.ptr.pointed.value
+						time.ptr.pointed.value!!.wrap()
 					)
 				else null
 			}
@@ -166,8 +166,6 @@ class RecentManager(
 		fun hasGroup(groupName: String): Boolean =
 			gtk_recent_info_has_group(struct, groupName).bool
 
-		fun getIcon(size: Int): Pixbuf? =
-			gtk_recent_info_get_icon(struct, size).wrap()
 
 		override fun equals(other: Any?): Boolean {
 			if (this === other) return true
@@ -180,10 +178,10 @@ class RecentManager(
 			return struct.hashCode()
 		}
 
-		data class ApplicationInfo constructor(
+		data class ApplicationInfo(
 			val appExec: String,
 			val count: UInt,
-			val time: Long
+			val time: DateTime
 		)
 
 		companion object {
