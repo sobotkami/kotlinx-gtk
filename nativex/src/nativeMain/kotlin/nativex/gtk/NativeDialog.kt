@@ -6,9 +6,9 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.KObject
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
+import nativex.gobject.KGObject
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.windows.Window.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -18,7 +18,7 @@ import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
  * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkNativeDialog.html#gtk-native-dialog-run">
  *     GtkNativeDialog</a>
  */
-class NativeDialog(val nativeDialogPointer: CPointer<GtkNativeDialog>) : KObject(nativeDialogPointer.reinterpret()) {
+class NativeDialog(val nativeDialogPointer: CPointer<GtkNativeDialog>) : KGObject(nativeDialogPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkNativeDialog.html#gtk-native-dialog-show">
@@ -80,14 +80,6 @@ class NativeDialog(val nativeDialogPointer: CPointer<GtkNativeDialog>) : KObject
 	var transientFor: Window?
 		get() = gtk_native_dialog_get_transient_for(nativeDialogPointer).wrap()
 		set(value) = gtk_native_dialog_set_transient_for(nativeDialogPointer, value?.windowPointer)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkNativeDialog.html#gtk-native-dialog-run">
-	 *     gtk_native_dialog_run</a>
-	 */
-	fun run(): Int =
-		gtk_native_dialog_run(nativeDialogPointer)
-
 
 	companion object {
 		/**

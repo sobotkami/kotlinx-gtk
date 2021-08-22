@@ -1,4 +1,4 @@
-import nativex.gobject.KGBinding
+import nativex.gobject.Binding
 import nativex.gobject.KGType
 import nativex.gobject.KGValue
 import nativex.gtk.CellLayout
@@ -11,11 +11,11 @@ import nativex.gtk.TreeStore
 import nativex.gtk.cellrenderer.CellRenderer
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.container.bin.combobox.ComboBox
-import nativex.gtk.widgets.container.bin.combobox.ComboBoxText
-import nativex.gtk.widgets.container.bin.frame.Frame
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.box.Box
+import nativex.gtk.widgets.combobox.ComboBox
+import nativex.gtk.widgets.combobox.ComboBoxText
+import nativex.gtk.widgets.frame.Frame
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.entry.Entry
 import nativex.use
 
@@ -271,7 +271,7 @@ fun doCombobox(doWidget: Widget): Widget {
 		}
 
 		val entry = Entry()
-		entry.asKGBinding()?.bind("active-id", entry.pointer, "text", KGBinding.Flags.BIDIRECTIONAL)
+		entry.asKGBinding()?.bind("active-id", entry.pointer, "text", Binding.Flags.BIDIRECTIONAL)
 		box.add(entry)
 	}
 

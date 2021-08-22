@@ -3,7 +3,7 @@ package nativex.gio
 import gio.GApplicationCommandLine
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -13,7 +13,7 @@ import nativex.gobject.KObject
  * @see <a href="https://developer.gnome.org/gio/stable/GApplicationCommandLine.html">GApplicationCommandLine</a>
  */
 class ApplicationCommandLine(val applicationCommandLinePointer: CPointer<GApplicationCommandLine>) :
-	KObject(applicationCommandLinePointer.reinterpret()) {
+	KGObject(applicationCommandLinePointer.reinterpret()) {
 
 	companion object {
 		inline fun CPointer<GApplicationCommandLine>?.wrap() =

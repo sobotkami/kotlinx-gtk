@@ -2,13 +2,12 @@ package nativex.gio
 
 import gio.*
 import glib.gpointer
+import gobject.GCallback
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.asStableRef
+import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
-import nativex.gobject.KObject.Companion.wrap
-import nativex.gobject.KGType
-import nativex.gobject.KObject
-import nativex.gobject.SignalManager
+import nativex.gobject.*
 
 /**
  * kotlinx-gtk
@@ -18,7 +17,7 @@ import nativex.gobject.SignalManager
  */
 open class ListModel(
 	val listModelPointer: CPointer<GListModel>
-) {
+) : KGObject(listModelPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#g-list-model-get-item-type">g_list_model_get_item_type</a>
@@ -35,12 +34,15 @@ open class ListModel(
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#GListModel-items-changed">items-changed</a>
 	 */
-	fun addOnItemChangedCallback(): SignalManager = TODO("items-changed")
+	fun addOnItemChangedCallback(action: (ItemsChanged) -> Unit): SignalManager =
+		addSignalCallback(Signals.ITEMS_CHANGED, action, staticItemsChangedCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#g-list-model-get-object">g_list_model_get_object</a>
 	 */
-	operator fun get(position: UInt): KObject? =
+	operator
+
+	fun get(position: UInt): KGObject? =
 		g_list_model_get_object(listModelPointer, position).wrap()
 
 	/**
@@ -57,10 +59,16 @@ open class ListModel(
 	)
 
 	companion object {
-		val staticItemsChangedCallback =
+		val staticItemsChangedCallback: GCallback =
 			staticCFunction { _: GListModel?, position: UInt, removed: UInt, added: UInt, data: gpointer? ->
 				data?.asStableRef<(ItemsChanged) -> Unit>()?.get()?.invoke(ItemsChanged(position, removed, added))
 				Unit
-			}
+			}.reinterpret()
+
+		inline fun CPointer<GListModel>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GListModel>.wrap() =
+			ListModel(this)
 	}
 }

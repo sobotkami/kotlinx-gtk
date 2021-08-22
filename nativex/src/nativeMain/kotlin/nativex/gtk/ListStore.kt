@@ -2,7 +2,7 @@ package nativex.gtk
 
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.glib.bool
 import nativex.glib.toCArray
 import nativex.gobject.KGType
@@ -12,7 +12,7 @@ import nativex.gtk.TreeModel.TreeIter
 
 class ListStore constructor(
 	val listStorePointer: CPointer<GtkListStore>
-) : KObject(listStorePointer.reinterpret()) {
+) : KGObject(listStorePointer.reinterpret()) {
 	constructor(vararg types: KGType) : this(
 		memScoped {
 			gtk_list_store_newv(

@@ -6,7 +6,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gtk.TextBuffer.Companion.wrap
 
 /**
@@ -16,7 +16,7 @@ import nativex.gtk.TextBuffer.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkTextMark.html>GtkTextMark</a>
  */
-class TextMark(val markPointer: CPointer<GtkTextMark>) : KObject(markPointer.reinterpret()) {
+class TextMark(val markPointer: CPointer<GtkTextMark>) : KGObject(markPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkTextMark.html#gtk-text-mark-new">

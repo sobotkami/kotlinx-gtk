@@ -4,8 +4,8 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
-import nativex.gobject.KObject
-import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gobject.KGObject
+import nativex.gtk.widgets.windows.Window
 
 /**
  * kotlinx-gtk
@@ -15,7 +15,7 @@ import nativex.gtk.widgets.container.bin.windows.Window
  * @see <a href="https://developer.gnome.org/gtk3/stable/gtk3-GtkFileChooserNative.html">GtkFileChooserNative</a>
  */
 class FileChooserNative(val fileChooserNativePointer: CPointer<GtkFileChooserNative>) :
-	KObject(fileChooserNativePointer.reinterpret()), FileChooser {
+	KGObject(fileChooserNativePointer.reinterpret()), FileChooser {
 	override val fileChooserPointer: CPointer<GtkFileChooser> by lazy { fileChooserNativePointer.reinterpret() }
 
 	/**

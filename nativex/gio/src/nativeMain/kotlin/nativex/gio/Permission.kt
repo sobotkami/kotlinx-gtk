@@ -43,7 +43,7 @@ class Permission(val permissionPointer: CPointer<GPermission>) {
 	 * @throws KGError
 	 */
 	@Throws(KGError::class)
-	fun acquire(cancellable: KCancellable? = null): Boolean = memScoped {
+	fun acquire(cancellable: KGCancellable? = null): Boolean = memScoped {
 		val err = allocPointerTo<GError>().ptr
 		val result = g_permission_acquire(permissionPointer, cancellable?.cancellablePointer, err)
 		err.unwrap()
@@ -54,7 +54,7 @@ class Permission(val permissionPointer: CPointer<GPermission>) {
 	 * @see <a href="https://developer.gnome.org/gio/stable/GPermission.html#g-permission-acquire-async">
 	 *     g_permission_acquire_async</a>
 	 */
-	fun acquireAsync(cancellable: KCancellable? = null, callback: AsyncReadyCallback) {
+	fun acquireAsync(cancellable: KGCancellable? = null, callback: AsyncReadyCallback) {
 		g_permission_acquire_async(
 			permissionPointer,
 			cancellable?.cancellablePointer,
@@ -82,7 +82,7 @@ class Permission(val permissionPointer: CPointer<GPermission>) {
 	 * @throws KGError
 	 */
 	@Throws(KGError::class)
-	fun release(cancellable: KCancellable? = null): Boolean = memScoped {
+	fun release(cancellable: KGCancellable? = null): Boolean = memScoped {
 		val err = allocPointerTo<GError>().ptr
 		val result = g_permission_release(permissionPointer, cancellable?.cancellablePointer, err)
 		err.unwrap()
@@ -93,7 +93,7 @@ class Permission(val permissionPointer: CPointer<GPermission>) {
 	 * @see <a href="https://developer.gnome.org/gio/stable/GPermission.html#g-permission-release-async">
 	 *     g_permission_release_async</a>
 	 */
-	fun releaseAsync(cancellable: KCancellable? = null, callback: AsyncReadyCallback) {
+	fun releaseAsync(cancellable: KGCancellable? = null, callback: AsyncReadyCallback) {
 		g_permission_release_async(
 			permissionPointer,
 			cancellable?.cancellablePointer,

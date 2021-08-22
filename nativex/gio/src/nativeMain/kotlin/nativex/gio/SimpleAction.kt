@@ -7,14 +7,14 @@ import kotlinx.cinterop.reinterpret
 import nativex.glib.Variant
 import nativex.glib.VariantType
 import nativex.glib.gtk
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk
  * 23 / 03 / 2021
  */
-class SimpleAction(val simpleActionPointer: CPointer<GSimpleAction>) : KObject(simpleActionPointer.reinterpret()),
+class SimpleAction(val simpleActionPointer: CPointer<GSimpleAction>) : KGObject(simpleActionPointer.reinterpret()),
 	Action {
 	companion object {
 		/**

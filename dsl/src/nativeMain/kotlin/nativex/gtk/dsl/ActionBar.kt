@@ -2,7 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.container.bin.ActionBar
+import nativex.gtk.widgets.ActionBar
 
 
 class ActionBarPackStart internal constructor(actionBar: ActionBar) :

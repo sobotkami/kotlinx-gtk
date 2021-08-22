@@ -2,7 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.container.HeaderBar
+import nativex.gtk.widgets.HeaderBar
 
 /**
  * kotlinx-gtk

@@ -1,27 +1,91 @@
 package nativex.gdk
 
 import glib.gpointer
+import glib.guintVar
 import gobject.GCallback
+import gobject.GValue
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import nativex.Closeable
-import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
-import nativex.gdk.Event.Companion.wrap
+import nativex.async.staticCStringCallback
+import nativex.gdk.AppLaunchContext.Companion.wrap
+import nativex.gdk.Clipboard.Companion.wrap
 import nativex.gdk.Seat.Companion.wrap
-import nativex.gdk.Window.Companion.wrap
 import nativex.gdk.wayland.Monitor
 import nativex.gdk.wayland.Monitor.Companion.wrap
-import nativex.gobject.KObject
-import nativex.glib.asKSequence
-import nativex.glib.bool
+import nativex.gio.ListModel
+import nativex.gio.ListModel.Companion.wrap
+import nativex.glib.*
+import nativex.gobject.KGObject
+import nativex.gobject.KGValue
+import nativex.gobject.KGValue.Companion.wrap
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
+/**
+ * @see <a href="https://docs.gtk.org/gdk4/class.Display.html">GdkDisplay</a>
+ */
 class Display(
 	val displayPointer: CPointer<GdkDisplay>
-) : KObject(displayPointer.reinterpret()), Closeable {
+) : KGObject(displayPointer.reinterpret()), Closeable {
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.beep.html"></a>
+	 */
+	fun beep() {
+		gdk_display_beep(displayPointer)
+	}
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.close.html"></a>
+	 */
+	override fun close() {
+		gdk_display_close(displayPointer)
+	}
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.device_is_grabbed.html"></a>
+	 */
+	fun isDeviceGrabbed(device: Device): Boolean =
+		gdk_display_device_is_grabbed(displayPointer, device.pointer).bool
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.flush.html"></a>
+	 */
+	fun flush() {
+		gdk_display_flush(displayPointer)
+	}
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.get_clipboard.html"></a>
+	 */
+	val appLaunchContext: AppLaunchContext
+		get() = gdk_display_get_app_launch_context(displayPointer)!!.wrap()
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val clipboard: Clipboard
+		get() = gdk_display_get_clipboard(displayPointer)!!.wrap()
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.get_default_seat.html"></a>
+	 */
+	val defaultSeat: Seat
+		get() = gdk_display_get_default_seat(displayPointer)!!.wrap()
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	fun getMonitorAtSurface(surface: Surface): Monitor =
+		gdk_display_get_monitor_at_surface(displayPointer, surface.surfacePointer)!!.wrap()
+
+	/**
+	 * @see <a href=""></a>
+	 */
+	val monitors: ListModel
+		get() = gdk_display_get_monitors(displayPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gdk3/stable/GdkDisplay.html#gdk-display-get-name">
@@ -30,144 +94,190 @@ class Display(
 	val name: String
 		get() = gdk_display_get_name(displayPointer)!!.toKString()
 
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.get_primary_clipboard.html"></a>
+	 */
+	val primaryClipboard: Clipboard
+		get() = gdk_display_get_primary_clipboard(displayPointer)!!.wrap()
 
-	fun isDeviceGrabbed(device: Device): Boolean =
-		gdk_display_device_is_grabbed(displayPointer, device.pointer).bool
-
-	fun beep() {
-		gdk_display_beep(displayPointer)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.get_setting.html"></a>
+	 */
+	fun getSetting(name: String): KGValue? = memScoped {
+		val value = cValue<GValue>()
+		if (gdk_display_get_setting(displayPointer, name, value).bool)
+			value.ptr.wrap()
+		else null
 	}
 
-	fun sync() {
-		gdk_display_sync(displayPointer)
-	}
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.get_startup_notification_id.html"></a>
+	 */
+	val startupNotificationId: String?
+		get() = gdk_display_get_startup_notification_id(displayPointer)?.toKString()
 
-	fun flush() {
-		gdk_display_flush(displayPointer)
-	}
-
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.is_closed.html"></a>
+	 */
 	val isClosed: Boolean
 		get() = gdk_display_is_closed(displayPointer).bool
 
-	val event: Event?
-		get() = gdk_display_get_event(displayPointer).wrap()
-
-	fun peekEvent(): Event? =
-		gdk_display_peek_event(displayPointer).wrap()
-
-	fun putEvent(event: Event) =
-		gdk_display_put_event(displayPointer, event.eventPointer)
-
-	val hasPending: Boolean
-		get() = gdk_display_has_pending(displayPointer).bool
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.is_composited.html"></a>
+	 */
+	val isComposited: Boolean
+		get() = gdk_display_is_composited(displayPointer).bool
 
 	/**
-	 * Field will be 0 on default, setting a new value will update the field.
-	 * Field getter is not tied with gtk
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.is_rgba.html"></a>
 	 */
-	var doubleClickTime: UInt = 0u
-		set(value) {
-			gdk_display_set_double_click_time(displayPointer, value)
-			field = value
-		}
+	val isRGBA: Boolean
+		get() = gdk_display_is_rgba(displayPointer).bool
+
 
 	/**
-	 * Field will be 0 on default, setting a new value will update the field.
-	 * Field getter is not tied with gtk
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.list_seats.html"></a>
 	 */
-	var doubleClickDistance: UInt = 0u
-		set(value) {
-			gdk_display_set_double_click_distance(displayPointer, value)
-			field = value
-		}
-
-	val supportsCursorColor: Boolean
-		get() = gdk_display_supports_cursor_color(displayPointer).bool
-
-	val supportsCursorAlpha: Boolean
-		get() = gdk_display_supports_cursor_alpha(displayPointer).bool
-
-	val supportsCursorSize: UInt
-		get() = gdk_display_get_default_cursor_size(displayPointer)
-
-	val maximalCursorSize: Pair<UInt, UInt>
-		get() = memScoped {
-			val w = cValue<UIntVar>()
-			val h = cValue<UIntVar>()
-			gdk_display_get_maximal_cursor_size(displayPointer, w, h)
-			w.ptr.pointed.value to h.ptr.pointed.value
-		}
-
-	val defaultGroup: Window
-		get() = gdk_display_get_default_group(displayPointer)!!.wrap()
-
-	val supportsSelectionNotification: Boolean
-		get() = gdk_display_supports_selection_notification(displayPointer).bool
-
-	val supportsClipboardPersistence: Boolean
-		get() = gdk_display_supports_clipboard_persistence(displayPointer).bool
-
-	val supportsShapes: Boolean
-		get() = gdk_display_supports_shapes(displayPointer).bool
-
-	val supportsInputShapes: Boolean
-		get() = gdk_display_supports_input_shapes(displayPointer).bool
-
-	fun notifyStartupComplete(startupId: String) {
-		gdk_display_notify_startup_complete(displayPointer, startupId)
-	}
-
-	val defaultSeat: Seat
-		get() = gdk_display_get_default_seat(displayPointer)!!.wrap()
-
 	val seats: Sequence<Seat>
 		get() = gdk_display_list_seats(displayPointer).asKSequence<GdkSeat, Seat> {
 			it.wrap()
 		}
 
-	val monitorCount: Int
-		get() = gdk_display_get_n_monitors(displayPointer)
+	data class MappedKeycodeValues(
+		val array: List<KeymapKey>,
+		val keyvals: List<UInt>
+	)
 
-	fun getMonitor(monitorNum: Int): Monitor? =
-		gdk_display_get_monitor(displayPointer, monitorNum).wrap()
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.map_keycode.html"></a>
+	 */
+	fun mapKeycode(keycode: UInt): MappedKeycodeValues? = memScoped {
+		val keys = cValue<CPointerVar<GdkKeymapKey>>()
+		val keyvals = cValue<CPointerVar<guintVar>>()
+		val nEntries = cValue<IntVar>()
 
-	val primaryMonitor: Monitor?
-		get() = gdk_display_get_primary_monitor(displayPointer).wrap()
+		if (gdk_display_map_keycode(displayPointer, keycode, keys, keyvals, nEntries).bool) {
+			val size = nEntries.ptr.pointed.value
+			MappedKeycodeValues(
+				keys.ptr.toWrappedList(size) { KeymapKey(it) },
+				keyvals.ptr.toList(size)
+			)
+		} else
+			null
+	}
 
-	fun getMonitor(x: Int, y: Int): Monitor =
-		gdk_display_get_monitor_at_point(displayPointer, x, y)!!.wrap()
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.map_keyval.html"></a>
+	 */
+	fun mapKeyval(keyval: UInt): List<KeymapKey> = memScoped {
+		val keys = cValue<CPointerVar<GdkKeymapKey>>()
+		val nKeys = cValue<IntVar>()
 
-	fun getMonitor(window: Window): Monitor =
-		gdk_display_get_monitor_at_window(displayPointer, window.windowPointer)!!.wrap()
+		return if (gdk_display_map_keyval(displayPointer, keyval, keys, nKeys).bool) {
+			val size = nKeys.ptr.pointed.value
+			val r = keys.ptr.toWrappedList(size) { KeymapKey(it) }
+			keys.ptr.free()
+			r
+		} else listOf()
+	}
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.notify_startup_complete.html"></a>
+	 */
+	fun notifyStartupComplete(startupId: String) {
+		gdk_display_notify_startup_complete(displayPointer, startupId)
+	}
+
+	// @Throws(KGError::class) fun prepareGL(): Boolean{}
+	// Documentation specifies that this function never needs to be called
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.put_event.html"></a>
+	 */
+	fun putEvent(event: Event) =
+		gdk_display_put_event(displayPointer, event.eventPointer)
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.supports_input_shapes.html"></a>
+	 */
+	val supportsInputShapes: Boolean
+		get() = gdk_display_supports_input_shapes(displayPointer).bool
 
 
-	@ExperimentalCoroutinesApi
-	val closedSignal: Flow<Boolean> by signalFlow(Signals.CLOSE, staticBooleanCallback)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.sync.html"></a>
+	 */
+	fun sync() {
+		gdk_display_sync(displayPointer)
+	}
 
-	@ExperimentalCoroutinesApi
-	val monitorAddedSignal: Flow<Monitor> by signalFlow(Signals.MONITOR_ADDED, staticMonitorCallback)
+	data class TranslatedKey(
+		val keyval: UInt,
+		val effectiveGroup: Int,
+		val level: Int,
+		val consumed: ModifierType
+	)
 
-	@ExperimentalCoroutinesApi
-	val monitorRemovedSignal: Flow<Monitor> by signalFlow(Signals.MONITOR_REMOVED, staticMonitorCallback)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/method.Display.translate_key.html"></a>
+	 */
+	fun translateKey(keycode: UInt, modifierType: ModifierType, group: Int): TranslatedKey? =
+		memScoped {
+			val keyval = cValue<guintVar>()
+			val effectiveGroup = cValue<IntVar>()
+			val level = cValue<IntVar>()
+			val consumed = cValue<GdkModifierTypeVar>()
+			if (gdk_display_translate_key(
+					displayPointer,
+					keycode,
+					modifierType.gdk,
+					group,
+					keyval,
+					effectiveGroup,
+					level,
+					consumed
+				).bool
+			) {
+				TranslatedKey(
+					keyval.ptr.pointed.value,
+					effectiveGroup.ptr.pointed.value,
+					level.ptr.pointed.value,
+					ModifierType.valueOf(consumed.ptr.pointed.value)!!
+				)
+			} else null
+		}
 
-	@ExperimentalCoroutinesApi
-	val openedSignal: Flow<Unit> by signalFlow(Signals.OPENED)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/signal.Display.closed.html"></a>
+	 */
+	fun addOnClosedCallback(action: (@ParameterName("isError") Boolean) -> Unit) =
+		addSignalCallback(Signals.CLOSED, action, staticBooleanCallback)
 
-	@ExperimentalCoroutinesApi
-	val seatAddedSignal: Flow<Seat> by signalFlow(Signals.SEAT_ADDED, staticSeatCallback)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/signal.Display.opened.html"></a>
+	 */
+	fun addOnOpenedCallback(action: () -> Unit) =
+		addSignalCallback(Signals.OPENED, action)
 
-	@ExperimentalCoroutinesApi
-	val seatRemovedSignal: Flow<Seat> by signalFlow(Signals.SEAT_REMOVED, staticSeatCallback)
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/signal.Display.seat-added.html"></a>
+	 */
+	fun addOnSeatAddedCallback(action: (Seat) -> Unit) =
+		addSignalCallback(Signals.SEAT_ADDED, action, staticSeatCallback)
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/signal.Display.seat-removed.html"></a>
+	 */
+	fun addOnSeatRemovedCallback(action: (Seat) -> Unit) =
+		addSignalCallback(Signals.SEAT_REMOVED, action, staticSeatCallback)
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gdk4/signal.Display.setting-changed.html"></a>
+	 */
+	fun addOnSettingChangedCallback(action: (@ParameterName("setting") String) -> Unit) =
+		addSignalCallback(Signals.SETTING_CHANGED, action, staticCStringCallback)
 
 	companion object {
-		val staticMonitorCallback: GCallback =
-			staticCFunction { _: gpointer?, arg1: CPointer<GdkMonitor>, data: gpointer? ->
-				data?.asStableRef<(Monitor) -> Unit>()
-					?.get()
-					?.invoke(arg1.wrap())
-				Unit
-			}.reinterpret()
-
 		val staticSeatCallback: GCallback =
 			staticCFunction { _: gpointer?, arg1: CPointer<GdkSeat>, data: gpointer? ->
 				data?.asStableRef<(Seat) -> Unit>()
@@ -176,7 +286,6 @@ class Display(
 				Unit
 			}.reinterpret()
 
-
 		/**
 		 * @see <a href="https://developer.gnome.org/gdk3/stable/GdkDisplay.html#gdk-display-get-default>
 		 *     gdk_display_get_default</a>
@@ -184,17 +293,10 @@ class Display(
 		val default: Display?
 			get() = gdk_display_get_default().wrap()
 
-
 		inline fun CPointer<GdkDisplay>?.wrap() =
-			this?.let { Display(it) }
+			this?.wrap()
 
 		inline fun CPointer<GdkDisplay>.wrap() =
 			Display(this)
 	}
-
-	override fun close() {
-		gdk_display_close(displayPointer)
-	}
-
-
 }

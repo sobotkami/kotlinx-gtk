@@ -3,12 +3,12 @@ package nativex.gtk.dsl
 import nativex.GtkDsl
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PositionType
-import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.*
 import nativex.gtk.widgets.container.*
-import nativex.gtk.widgets.container.bin.ActionBar
-import nativex.gtk.widgets.container.bin.Overlay
-import nativex.gtk.widgets.container.bin.frame.AspectFrame
-import nativex.gtk.widgets.container.box.Box
+import nativex.gtk.widgets.ActionBar
+import nativex.gtk.widgets.Overlay
+import nativex.gtk.widgets.frame.AspectFrame
+import nativex.gtk.widgets.box.Box
 
 
 @GtkDsl
@@ -59,7 +59,7 @@ inline fun AspectFrame.box(
 	orientation: Orientation,
 	spacing: Int,
 	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = (this as Container).box(orientation, spacing, buttonBoxBuilder)
+): Box = (this as Widget).box(orientation, spacing, buttonBoxBuilder)
 
 /**
  * Similar to [SimplePacking], except specifically for [Box]
@@ -67,7 +67,7 @@ inline fun AspectFrame.box(
  * @see SimplePacking
  */
 interface BoxPackable {
-	
+
 	fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -77,7 +77,7 @@ interface BoxPackable {
 }
 
 class BoxPackStart internal constructor(box: Box) : Box(box), BoxPackable {
-	
+
 	override fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -88,7 +88,7 @@ class BoxPackStart internal constructor(box: Box) : Box(box), BoxPackable {
 }
 
 class BoxPackEnd internal constructor(box: Box) : Box(box), BoxPackable {
-	
+
 	override fun pack(
 		child: Widget,
 		expand: Boolean,
@@ -271,11 +271,8 @@ inline fun NumeralPane.boxPack(
 }
 
 
-
-
-
 @GtkDsl
-inline fun Container.box(
+inline fun Widget.box(
 	orientation: Orientation,
 	spacing: Int,
 	buttonBoxBuilder: Box.() -> Unit

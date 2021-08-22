@@ -1,20 +1,19 @@
 package nativex.gtk
+
 import glib.GError
 import gtk.*
 import gtk.GtkRecentManagerError.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gio.AppInfo
 import nativex.gio.AppInfo.Companion.wrap
 import nativex.gio.Icon
 import nativex.gio.ImplIcon.Companion.wrap
-import nativex.gobject.KObject
 import nativex.glib.*
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gtk.RecentManager.RecentInfo.Companion.wrap
 
 /**
@@ -22,16 +21,16 @@ import nativex.gtk.RecentManager.RecentInfo.Companion.wrap
  * 27 / 03 / 2021
  */
 class RecentManager(
-	 val managerPointer: CPointer<GtkRecentManager>
-) : KObject(managerPointer.reinterpret()) {
+	val managerPointer: CPointer<GtkRecentManager>
+) : KGObject(managerPointer.reinterpret()) {
 
 	val items: Sequence<RecentInfo>
 		get() = gtk_recent_manager_get_items(managerPointer)
 			.asKSequence<GtkRecentInfo, RecentInfo> { RecentInfo(it) }
 
-	
-	@ExperimentalCoroutinesApi
-	val changedSignal: Flow<Unit> by signalFlow(Signals.CHANGED)
+
+	fun addOnChangedCallback(action: () -> Unit) =
+		addSignalCallback(Signals.CHANGED, action)
 
 	constructor() : this(gtk_recent_manager_new()!!)
 
@@ -74,7 +73,7 @@ class RecentManager(
 	}
 
 	class RecentInfo(
-		 val struct: CPointer<GtkRecentInfo>
+		val struct: CPointer<GtkRecentInfo>
 	) {
 
 
@@ -93,7 +92,7 @@ class RecentManager(
 		val privateHint: Boolean
 			get() = gtk_recent_info_get_private_hint(struct).bool
 
-		
+
 		val applications: List<String>
 			get() = memScoped {
 				val cSize = cValue<ULongVar>()
@@ -107,7 +106,7 @@ class RecentManager(
 		val lastApplication: String
 			get() = gtk_recent_info_last_application(struct)!!.toKString()
 
-		
+
 		val groups: List<String>
 			get() = memScoped {
 				val cSize = cValue<ULongVar>()
@@ -131,7 +130,7 @@ class RecentManager(
 		val exists: Boolean
 			get() = gtk_recent_info_exists(struct).bool
 
-		
+
 		fun getApplicationInfo(appName: String): ApplicationInfo? =
 			memScoped {
 				val appExec = cValue<CPointerVar<ByteVarOf<Byte>>>()
@@ -181,23 +180,23 @@ class RecentManager(
 			return struct.hashCode()
 		}
 
-		data class ApplicationInfo  constructor(
+		data class ApplicationInfo constructor(
 			val appExec: String,
 			val count: UInt,
 			val time: Long
 		)
 
 		companion object {
-			 inline fun CPointer<GtkRecentInfo>?.wrap() =
+			inline fun CPointer<GtkRecentInfo>?.wrap() =
 				this?.let { RecentInfo(this) }
 
-			 inline fun CPointer<GtkRecentInfo>.wrap() =
+			inline fun CPointer<GtkRecentInfo>.wrap() =
 				RecentInfo(this)
 		}
 	}
 
 	class RecentData(
-		 val struct: CPointer<GtkRecentData>
+		val struct: CPointer<GtkRecentData>
 	) {
 
 		var displayName: String?
@@ -236,7 +235,7 @@ class RecentManager(
 		constructor () : this(memScoped { cValue<GtkRecentData>().ptr })
 	}
 
-	enum class Error(val key: Int,  val gtk: GtkRecentManagerError) {
+	enum class Error(val key: Int, val gtk: GtkRecentManagerError) {
 		NOT_FOUND(0, GTK_RECENT_MANAGER_ERROR_NOT_FOUND),
 		INVALID_URI(1, GTK_RECENT_MANAGER_ERROR_INVALID_URI),
 		INVALID_ENCODING(2, GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING),
@@ -246,7 +245,7 @@ class RecentManager(
 		ERROR_UNKNOWN(6, GTK_RECENT_MANAGER_ERROR_UNKNOWN);
 
 		companion object {
-			 fun valueOf(gtk: GtkRecentManagerError) =
+			fun valueOf(gtk: GtkRecentManagerError) =
 				values().find { it.gtk == gtk }!!
 		}
 	}

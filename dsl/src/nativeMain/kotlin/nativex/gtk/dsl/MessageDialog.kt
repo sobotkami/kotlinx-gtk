@@ -1,9 +1,9 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
-import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.windows.dialog.Dialog
+import nativex.gtk.widgets.windows.dialog.MessageDialog
 
 /**
  * kotlinx-gtk

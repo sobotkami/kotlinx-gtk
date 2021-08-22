@@ -27,7 +27,7 @@ kotlin {
 		val nativeMain by getting {
 			dependencies {
 				implementation(project(":nativex:glib"))
-				implementation(project(":nativex:glib-object"))
+				implementation(project(":nativex:gobject"))
 			}
 		}
 	}

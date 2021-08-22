@@ -9,24 +9,25 @@ import nativex.glib.CString
 import nativex.glib.KGError
 import nativex.glib.bool
 import nativex.glib.unwrap
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
  * 08 / 03 / 2021
  */
 class File(
-	val pointer: CPointer<GFile>
-) {
+	val filePointer: CPointer<GFile>
+) : KGObject(filePointer.reinterpret()) {
 
 	@Throws(KGError::class)
-	fun loadContents(cancellable: KCancellable? = null): String? {
+	fun loadContents(cancellable: KGCancellable? = null): String? {
 		memScoped {
 			val contents: CValue<CPointerVarOf<CString>> = cValue()
 			val cLength = cValue<ULongVar>()
 			val err = allocPointerTo<GError>().ptr
 
 			val r = g_file_load_contents(
-				pointer,
+				filePointer,
 				cancellable?.cancellablePointer,
 				contents,
 				cLength,
@@ -48,7 +49,7 @@ class File(
 
 		fun Array<File>.toCArray(): CPointer<CPointerVar<GFile>> =
 			memScoped {
-				allocArrayOf(this@toCArray.map { it.pointer })
+				allocArrayOf(this@toCArray.map { it.filePointer })
 			}
 	}
 }

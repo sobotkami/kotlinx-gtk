@@ -4,7 +4,7 @@ import gio.GIcon
 import gtk.*
 import gtk.GtkImageType.*
 import kotlinx.cinterop.*
-import nativex.cairo.CairoSurfaceT
+import nativex.cairo.Surface
 import nativex.gdk.Pixbuf
 import nativex.gdk.Pixbuf.Companion.wrap
 import nativex.gdk.PixbufAnimation
@@ -92,7 +92,7 @@ class Image(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkImage.html#gtk-image-new-from-surface">
 	 *     gtk_image_new_from_surface</a>
 	 */
-	constructor(surfaceT: CairoSurfaceT) : this(gtk_image_new_from_surface(surfaceT.cPointer)!!.reinterpret())
+	constructor(surfaceT: Surface) : this(gtk_image_new_from_surface(surfaceT.cPointer)!!.reinterpret())
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkImage.html#gtk-image-new">gtk_image_new</a>
@@ -186,7 +186,7 @@ class Image(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkImage.html#gtk-image-set-from-surface">
 	 *     gtk_image_set_from_surface</a>
 	 */
-	fun setImage(surfaceT: CairoSurfaceT) {
+	fun setImage(surfaceT: Surface) {
 		gtk_image_set_from_surface(imagePointer, surfaceT.cPointer)
 	}
 

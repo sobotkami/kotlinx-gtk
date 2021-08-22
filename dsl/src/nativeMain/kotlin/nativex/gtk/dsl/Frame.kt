@@ -1,20 +1,19 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.frame.Frame
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.frame.Frame
 
 /**
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
 @GtkDsl
-fun Container.frame(
+fun Widget.frame(
 	label: String? = null,
 	frameBuilder: Frame.() -> Unit = {}
 ) =
 	Frame(label).apply(frameBuilder).also { add(it) }
-
 
 
 @GtkDsl

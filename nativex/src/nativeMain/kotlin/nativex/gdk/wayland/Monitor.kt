@@ -9,7 +9,7 @@ import nativex.async.signalFlow
 import nativex.gdk.Display
 import nativex.gdk.Display.Companion.wrap
 import nativex.gdk.Rectangle
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.glib.bool
 import nativex.gobject.Signals
 
@@ -18,7 +18,7 @@ import nativex.gobject.Signals
  */
 class Monitor(
 	 val monitorPointer: CPointer<GdkMonitor>
-) : KObject(monitorPointer.reinterpret()) {
+) : KGObject(monitorPointer.reinterpret()) {
 	val display: Display
 		get() = gdk_monitor_get_display(monitorPointer)!!.wrap()
 

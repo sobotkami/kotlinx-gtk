@@ -5,20 +5,19 @@ import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_GTK
 import gtk.GtkCellRendererAccelMode.GTK_CELL_RENDERER_ACCEL_MODE_OTHER
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.async.staticCStringCallback
 import nativex.gdk.Window
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gtk.TreeModel
 
 open class CellRenderer(
 	val cellRendererPointer: CPointer<GtkCellRenderer>
-) : KObject(cellRendererPointer.reinterpret()) {
+) : KGObject(cellRendererPointer.reinterpret()) {
 
 
 	companion object {
@@ -104,8 +103,8 @@ open class CellRenderer(
 			set(value) = gtk_cell_renderer_toggle_set_activatable(cellRendererTogglePointer, value.gtk)
 
 
-		@ExperimentalCoroutinesApi
-		val toggledSignal: Flow<String> by signalFlow(Signals.TOGGLED, staticCStringCallback)
+		fun addOnToggledCallback(action: (String) -> Unit) =
+			addSignalCallback(Signals.TOGGLED, action, staticCStringCallback)
 	}
 
 	class Spinner : CellRenderer(gtk_cell_renderer_spinner_new()!!)

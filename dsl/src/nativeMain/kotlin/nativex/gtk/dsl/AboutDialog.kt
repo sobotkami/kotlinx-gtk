@@ -1,7 +1,7 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.bin.windows.dialog.AboutDialog
+import nativex.gtk.widgets.windows.dialog.AboutDialog
 
 @GtkDsl
 inline fun aboutDialog(builder: AboutDialog.() -> Unit) = AboutDialog().apply(builder)

@@ -1,15 +1,15 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.Fixed
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.Fixed
 
 /**
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
 @GtkDsl
-fun Container.fixed(
+fun Widget.fixed(
 	fixedBuilder: Fixed.() -> Unit
 ): Fixed {
 	val fixed = Fixed()

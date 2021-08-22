@@ -4,7 +4,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
 import nativex.async.launchUnconfined
-import nativex.gtk.widgets.container.Container
+import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.entry.SearchEntry
 
 /**
@@ -12,13 +12,13 @@ import nativex.gtk.widgets.entry.SearchEntry
  * 19 / 03 / 2021
  */
 @GtkDsl
-inline fun Container.searchEntry(
+inline fun Widget.searchEntry(
 	searchEntryBuilder: SearchEntry.() -> Unit = {}
 ) = add(SearchEntry().apply(searchEntryBuilder))
 
 
 @GtkDsl
-inline fun SearchEntry.onPreviousMatch(noinline onPreviousMatch:  () -> Unit) {
+inline fun SearchEntry.onPreviousMatch(noinline onPreviousMatch: () -> Unit) {
 	addOnPreviousMatchCallback(onPreviousMatch)
 }
 
@@ -30,6 +30,6 @@ inline fun SearchEntry.onSearchChanged(noinline onSearchChanged: () -> Unit) {
 
 
 @GtkDsl
-inline fun SearchEntry.onStopSearch(noinline onStopSearch:  () -> Unit) {
+inline fun SearchEntry.onStopSearch(noinline onStopSearch: () -> Unit) {
 	addOnStopSearchCallback(onStopSearch)
 }

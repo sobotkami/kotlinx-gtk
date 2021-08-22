@@ -10,7 +10,7 @@ import nativex.gio.ApplicationCommandLine.Companion.wrap
 import nativex.gio.DBusConnection.Companion.wrap
 import nativex.gio.File.Companion.toCArray
 import nativex.glib.*
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
@@ -21,7 +21,7 @@ import nativex.gobject.connectSignal
  */
 open class Application(
 	private val gApplicationPointer: CPointer<GApplication>
-) : KObject(gApplicationPointer.reinterpret()), ActionMap {
+) : KGObject(gApplicationPointer.reinterpret()), ActionMap {
 	// TODO g_application_bind_busy_property
 	// TODO g_application_unbind_busy_property
 
@@ -130,7 +130,7 @@ open class Application(
 		)!!.reinterpret()
 	)
 
-	fun register(cancellable: KCancellable): Boolean = memScoped {
+	fun register(cancellable: KGCancellable): Boolean = memScoped {
 		val err = allocPointerTo<GError>().ptr
 		val r = g_application_register(
 			gApplicationPointer,

@@ -2,7 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.Application
-import nativex.gtk.widgets.container.bin.windows.ApplicationWindow
+import nativex.gtk.widgets.windows.ApplicationWindow
 
 /**
  * kotlinx-gtk

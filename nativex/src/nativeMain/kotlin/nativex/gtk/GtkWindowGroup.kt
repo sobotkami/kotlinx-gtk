@@ -3,14 +3,11 @@ package nativex.gtk
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gdk.Device
-import nativex.gmodule.WrappedList
-import nativex.gmodule.WrappedList.Companion.asMutableList
-import nativex.gobject.KObject
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.Widget.Companion.wrap
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
+import nativex.glib.MutableWrappedKList
+import nativex.glib.MutableWrappedKList.Companion.asMutableList
+import nativex.gobject.KGObject
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.windows.Window.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -19,7 +16,7 @@ import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html">GtkWindowGroup</a>
  */
-class WindowGroup(val windowGroupPointer: CPointer<GtkWindowGroup>) : KObject(windowGroupPointer.reinterpret()) {
+class WindowGroup(val windowGroupPointer: CPointer<GtkWindowGroup>) : KGObject(windowGroupPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-new">
@@ -48,26 +45,12 @@ class WindowGroup(val windowGroupPointer: CPointer<GtkWindowGroup>) : KObject(wi
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-list-windows">
 	 *     gtk_window_group_list_windows</a>
 	 */
-	val windowList: WrappedList<Window>
+	val windowList: MutableWrappedKList<Window>
 		get() = gtk_window_group_list_windows(windowGroupPointer)!!
 			.asMutableList(
 				{ reinterpret<GtkWindow>().wrap() },
 				{ pointer }
 			)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-get-current-grab">
-	 *     gtk_window_group_get_current_grab</a>
-	 */
-	val currentGrab: Widget
-		get() = gtk_window_group_get_current_grab(windowGroupPointer)!!.wrap()
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindowGroup.html#gtk-window-group-get-current-device-grab">
-	 *     gtk_window_group_get_current_device_grab</a>
-	 */
-	fun getCurrentDeviceGrab(device: Device): Widget? =
-		gtk_window_group_get_current_device_grab(windowGroupPointer, device.pointer).wrap()
 
 	companion object {
 		inline fun CPointer<GtkWindowGroup>?.wrap() =

@@ -1,8 +1,8 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.Grid
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.Grid
 
 @GtkDsl
 inline fun grid(
@@ -10,7 +10,7 @@ inline fun grid(
 ) = Grid().apply(gridBuilder)
 
 @GtkDsl
-inline fun Container.grid(
+inline fun Widget.grid(
 	gridBuilder: Grid.() -> Unit = {}
 ) = nativex.gtk.dsl.grid(gridBuilder).also { add(it) }
 

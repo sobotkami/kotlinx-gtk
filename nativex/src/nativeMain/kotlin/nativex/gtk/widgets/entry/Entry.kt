@@ -71,13 +71,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		get() = gtk_entry_get_buffer(entryPointer)!!.wrap()
 		set(value) = gtk_entry_set_buffer(entryPointer, value.entryBufferPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-text">gtk_entry_get_text</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-text">gtk_entry_set_text</a>
-	 */
-	var text: String?
-		get() = gtk_entry_get_text(entryPointer)?.toKString()
-		set(value) = gtk_entry_set_text(entryPointer, value)
+
 	/**
 	 * @see <a href=""></a>
 	 */
@@ -89,16 +83,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	val textLength: UShort
 		get() = gtk_entry_get_text_length(entryPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-text-area">
-	 *     gtk_entry_get_text_area</a>
-	 */
-	val textArea: Rectangle
-		get() = memScoped {
-			val ta = cValue<GdkRectangle>()
-			gtk_entry_get_text_area(entryPointer, ta)
-			ta.ptr.wrap()
-		}
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-visibility">
@@ -159,25 +144,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		get() = gtk_entry_get_has_frame(entryPointer).bool
 		set(value) = gtk_entry_set_has_frame(entryPointer, value.gtk)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-width-chars">
-	 *     gtk_entry_get_width_chars</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-width-chars">
-	 *     gtk_entry_set_width_chars</a>
-	 */
-	var widthChars: Int
-		get() = gtk_entry_get_width_chars(entryPointer)
-		set(value) = gtk_entry_set_width_chars(entryPointer, value)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-max-width-chars">
-	 *     gtk_entry_get_max_width_chars</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-max-width-chars">
-	 *     gtk_entry_set_max_width_chars</a>
-	 */
-	var maxWidthChars: Int
-		get() = gtk_entry_get_max_width_chars(entryPointer)
-		set(value) = gtk_entry_set_max_width_chars(entryPointer, value)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-alignment">
@@ -209,37 +176,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		get() = gtk_entry_get_overwrite_mode(entryPointer).bool
 		set(value) = gtk_entry_set_overwrite_mode(entryPointer, value.gtk)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-layout">gtk_entry_get_layout</a>
-	 */
-	val layout: Layout
-		get() = gtk_entry_get_layout(entryPointer)!!.wrap()
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-layout-offsets">
-	 *     gtk_entry_get_layout_offsets</a>
-	 */
-	val layoutOffsets: Pair<Int, Int>
-		get() = memScoped {
-			val x = cValue<IntVar>()
-			val y = cValue<IntVar>()
-			gtk_entry_get_layout_offsets(entryPointer, x, y)
-			x.ptr.pointed.value to y.ptr.pointed.value
-		}
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-layout-index-to-text-index">
-	 *     gtk_entry_layout_index_to_text_index</a>
-	 */
-	fun layoutIndexToTextIndex(layoutIndex: Int): Int =
-		gtk_entry_layout_index_to_text_index(entryPointer, layoutIndex)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-text-index-to-layout-index">
-	 *     gtk_entry_text_index_to_layout_index</a>
-	 */
-	fun textIndexToLayoutIndex(textIndex: Int): Int =
-		gtk_entry_text_index_to_layout_index(entryPointer, textIndex)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-attributes">
@@ -261,15 +198,7 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		get() = gtk_entry_get_completion(entryPointer).wrap()
 		set(value) = gtk_entry_set_completion(entryPointer, value?.entryCompletionPointer)
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-cursor-hadjustment">
-	 *     gtk_entry_get_cursor_hadjustment</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-cursor-hadjustment">
-	 *     gtk_entry_set_cursor_hadjustment</a>
-	 */
-	var cursorHorizontalAdjustment: Adjustment?
-		get() = gtk_entry_get_cursor_hadjustment(entryPointer).wrap()
-		set(value) = gtk_entry_set_cursor_hadjustment(entryPointer, value?.adjustmentPointer)
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-progress-fraction">
@@ -299,12 +228,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		gtk_entry_progress_pulse(entryPointer)
 	}
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-im-context-filter-keypress">
-	 *     gtk_entry_im_context_filter_keypress</a>
-	 */
-	fun imContextFilterKeypress(event: Event.Key): Boolean =
-		gtk_entry_im_context_filter_keypress(entryPointer, event.eventKeyPointer).bool
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-reset-im-context">
@@ -322,16 +245,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 		get() = gtk_entry_get_tabs(entryPointer)?.wrap()
 		set(value) = gtk_entry_set_tabs(entryPointer, value?.tabArrayPointer)
 
-	/**
-	 * @see <a href=""></a>
-	 */
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-icon-from-pixbuf">
-	 *     gtk_entry_set_icon_from_pixbuf</a>
-	 */
-	fun setIconFromPixbuf(iconPosition: IconPosition, pixbuf: Pixbuf?) {
-		gtk_entry_set_icon_from_pixbuf(entryPointer, iconPosition.gtk, pixbuf?.pixbufPointer)
-	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-icon-from-icon-name">
@@ -356,12 +269,6 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	fun getIconStorageType(iconPosition: IconPosition): Image.Type =
 		Image.Type.valueOf(gtk_entry_get_icon_storage_type(entryPointer, iconPosition.gtk))!!
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-icon-pixbuf">
-	 *     gtk_entry_get_icon_pixbuf</a>
-	 */
-	fun getIconPixbuf(iconPosition: IconPosition): Pixbuf? =
-		gtk_entry_get_icon_pixbuf(entryPointer, iconPosition.gtk).wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-get-icon-name">

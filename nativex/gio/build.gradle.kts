@@ -8,7 +8,7 @@ repositories {
 }
 
 group = "org.gnome.kotlinx-gtk"
-version = "0.1.0-alpha"
+version = "2.68"
 
 kotlin {
 
@@ -27,7 +27,7 @@ kotlin {
 		val nativeMain by getting {
 			dependencies {
 				implementation(project(":nativex:glib"))
-				implementation(project(":nativex:glib-object"))
+				implementation(project(":nativex:gobject"))
 			}
 		}
 	}

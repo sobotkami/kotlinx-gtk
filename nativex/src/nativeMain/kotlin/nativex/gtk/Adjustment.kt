@@ -3,17 +3,15 @@ package nativex.gtk
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
  * 07 / 03 / 2021
  */
-class Adjustment(val adjustmentPointer: CPointer<GtkAdjustment>) : KObject(adjustmentPointer.reinterpret()) {
+class Adjustment(val adjustmentPointer: CPointer<GtkAdjustment>) : KGObject(adjustmentPointer.reinterpret()) {
 	var value: Double
 		get() = gtk_adjustment_get_value(adjustmentPointer)
 		set(value) = gtk_adjustment_set_value(adjustmentPointer, value)
@@ -38,15 +36,11 @@ class Adjustment(val adjustmentPointer: CPointer<GtkAdjustment>) : KObject(adjus
 		get() = gtk_adjustment_get_lower(adjustmentPointer)
 		set(value) = gtk_adjustment_set_lower(adjustmentPointer, value)
 
-	
-	@ExperimentalCoroutinesApi
-	val changed: Flow<Unit> by signalFlow(Signals.CHANGED)
+	fun addOnChangedCallback(action: () -> Unit) =
+		addSignalCallback(Signals.CHANGED, action)
 
-
-	
-	@ExperimentalCoroutinesApi
-	val valueChanged: Flow<Unit> by signalFlow(Signals.VALUE_CHANGED)
-
+	fun addOnValueChangedCallback(action: () -> Unit) =
+		addSignalCallback(Signals.VALUE_CHANGED, action)
 
 	constructor(
 		value: Double,

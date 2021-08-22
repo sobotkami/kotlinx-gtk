@@ -3,7 +3,7 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.glib.CString
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
@@ -16,7 +16,7 @@ import nativex.gobject.connectSignal
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntryBuffer.html">GtkEntryBuffer</a>
  */
-class EntryBuffer(val entryBufferPointer: CPointer<GtkEntryBuffer>) : KObject(entryBufferPointer.reinterpret()) {
+class EntryBuffer(val entryBufferPointer: CPointer<GtkEntryBuffer>) : KGObject(entryBufferPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntryBuffer.html#gtk-entry-buffer-new">

@@ -10,8 +10,8 @@ import nativex.gtk.FileChooser
 import nativex.gtk.IconSize
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
-import nativex.gtk.widgets.container.ButtonBox
-import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.ButtonBox
+import nativex.gtk.widgets.windows.Window
 import nativex.gtk.widgets.container.bin.windows.dialog.*
 
 /**

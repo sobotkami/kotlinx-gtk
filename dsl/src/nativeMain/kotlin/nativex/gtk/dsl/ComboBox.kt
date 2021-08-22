@@ -2,18 +2,18 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.TreeModel
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.Grid
-import nativex.gtk.widgets.container.bin.combobox.ComboBox
-import nativex.gtk.widgets.container.bin.combobox.ComboBoxText
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.Grid
+import nativex.gtk.widgets.combobox.ComboBox
+import nativex.gtk.widgets.combobox.ComboBoxText
 
 @GtkDsl
-inline fun Container.comboBox(
+inline fun Widget.comboBox(
 	buttonBuilder: ComboBox.() -> Unit = {}
 ) = ComboBox().apply(buttonBuilder).also { add(it) }
 
 @GtkDsl
-inline fun Container.comboBox(
+inline fun Widget.comboBox(
 	treeModel: TreeModel,
 	withEntry: Boolean = false,
 	buttonBuilder: ComboBox.() -> Unit = {}

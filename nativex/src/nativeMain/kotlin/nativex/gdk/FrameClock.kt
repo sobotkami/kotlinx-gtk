@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import nativex.async.signalFlow
 import nativex.gdk.FrameTimings.Companion.wrap
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
 
 /**
@@ -17,7 +17,7 @@ import nativex.gobject.Signals
  */
 class FrameClock(
 	val frameClockPointer: CPointer<GdkFrameClock>
-) : KObject(frameClockPointer.reinterpret()) {
+) : KGObject(frameClockPointer.reinterpret()) {
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#gdk-frame-clock-get-frame-time">gdk_frame_clock_get_frame_time</a>
 	 */
@@ -161,10 +161,10 @@ class FrameClock(
 	}
 
 	companion object{
-		 inline fun CPointer<GdkFrameClock>?.wrap() =
-			this?.let { FrameClock(it) }
+		 inline fun CPointer<GdkFrameClock>?.wrap(): FrameClock? =
+			this?.wrap()
 
-		 inline fun CPointer<GdkFrameClock>.wrap() =
+		 inline fun CPointer<GdkFrameClock>.wrap(): FrameClock =
 			FrameClock(this)
 	}
 }

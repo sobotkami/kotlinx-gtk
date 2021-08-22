@@ -8,7 +8,7 @@ import nativex.gio.SimpleAction
 import nativex.gio.dsl.onCreateUI
 import nativex.glib.KGError
 import nativex.glib.Variant
-import nativex.gobject.KObject.Companion.staticUnrefFunction
+import nativex.gobject.KGObject.Companion.staticUnrefFunction
 import nativex.gtk.FileChooser
 import nativex.gtk.FileChooserNative
 import nativex.gtk.NativeDialog
@@ -18,10 +18,10 @@ import nativex.gtk.dsl.applicationWindow
 import nativex.gtk.dsl.button
 import nativex.gtk.dsl.onClicked
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.container.bin.windows.ApplicationWindow
-import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
-import nativex.gtk.widgets.container.bin.windows.dialog.MessageDialog
-import nativex.gtk.widgets.container.box.InfoBar
+import nativex.gtk.widgets.windows.ApplicationWindow
+import nativex.gtk.widgets.windows.dialog.Dialog
+import nativex.gtk.widgets.windows.dialog.MessageDialog
+import nativex.gtk.widgets.box.InfoBar
 import nativex.gtk.widgets.misc.label.Label
 
 /*

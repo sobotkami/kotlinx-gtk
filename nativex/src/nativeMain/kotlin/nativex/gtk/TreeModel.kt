@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import nativex.Closeable
 import nativex.ClosedException
 import nativex.async.callbackSignalFlow
-import nativex.gobject.KObject
-import nativex.gobject.KObject.Companion.wrap
+import nativex.gobject.KGObject
+import nativex.gobject.KGObject.Companion.wrap
 import nativex.glib.asSequence
 import nativex.glib.bool
 import nativex.glib.reinterpretOrNull
@@ -244,7 +244,7 @@ open class TreeModel(
 	}
 
 	companion object {
-		fun TreeModel.asKObject(): KObject? =
+		fun TreeModel.asKObject(): KGObject? =
 			this.treeModelPointer.reinterpretOrNull<GObject>().wrap()
 	}
 }

@@ -1,21 +1,21 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.box.Box
-import nativex.gtk.widgets.container.ButtonBox
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.Fixed
-import nativex.gtk.widgets.container.bin.ListBox
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
+import nativex.gtk.widgets.ButtonBox
+import nativex.gtk.widgets.Fixed
+import nativex.gtk.widgets.ListBox
 
 // Container
 
 @GtkDsl
-inline fun Container.verticalButtonBox(
+inline fun Widget.verticalButtonBox(
 	buttonBoxBuilder: ButtonBox.VerticalButtonBox.() -> Unit
 ) = add(ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder))
 
 @GtkDsl
-inline fun Container.horizontalButtonBox(
+inline fun Widget.horizontalButtonBox(
 	buttonBoxBuilder: ButtonBox.HorizontalButtonBox.() -> Unit
 ) = add(ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder))
 
@@ -40,25 +40,25 @@ inline fun Fixed.horizontalButtonBox(
 @GtkDsl
 inline fun ListBox.verticalButtonBox(
 	buttonBoxBuilder: ButtonBox.VerticalButtonBox.() -> Unit
-) = prepend(ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder))
+) = prepend(nativex.gtk.widgets.ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder))
 
 @GtkDsl
 inline fun ListBox.horizontalButtonBox(
 	buttonBoxBuilder: ButtonBox.HorizontalButtonBox.() -> Unit
-) = prepend(ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder))
+) = prepend(nativex.gtk.widgets.ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder))
 
 
 @GtkDsl
 inline fun ListBox.verticalButtonBox(
 	buttonBoxBuilder: ButtonBox.VerticalButtonBox.() -> Unit,
 	position: Int
-) = insert(ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder), position)
+) = insert(nativex.gtk.widgets.ButtonBox.VerticalButtonBox().apply(buttonBoxBuilder), position)
 
 @GtkDsl
 inline fun ListBox.horizontalButtonBox(
 	buttonBoxBuilder: ButtonBox.HorizontalButtonBox.() -> Unit,
 	position: Int
-) = insert(ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder), position)
+) = insert(nativex.gtk.widgets.ButtonBox.HorizontalButtonBox().apply(buttonBoxBuilder), position)
 
 // Box
 

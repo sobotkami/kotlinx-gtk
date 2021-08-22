@@ -4,7 +4,6 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.flow.Flow
 import nativex.gdk.RGBA
 import nativex.glib.bool
 import nativex.glib.gtk
@@ -62,7 +61,8 @@ interface ColorChooser {
 			colorChooserPointer,
 			Signals.COLOR_ACTIVATED,
 			StableRef.create(action).asCPointer(),
-			staticColorActivatedFunction
+			staticColorActivatedFunction,
+			0u
 		)
 
 	companion object {

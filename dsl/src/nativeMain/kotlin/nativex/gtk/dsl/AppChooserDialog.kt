@@ -2,9 +2,9 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gio.File
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.dialog.AppChooserDialog
-import nativex.gtk.widgets.container.bin.windows.dialog.Dialog
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.windows.dialog.AppChooserDialog
+import nativex.gtk.widgets.windows.dialog.Dialog
 
 @GtkDsl
 inline fun Window.appChooserDialog(

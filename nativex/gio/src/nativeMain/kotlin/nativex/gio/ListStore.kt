@@ -9,7 +9,7 @@ import kotlinx.cinterop.*
 import nativex.glib.bool
 import nativex.gobject.KGType
 import nativex.gobject.KGValue
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -70,7 +70,7 @@ class ListStore(
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListStore.html#g-list-store-splice">g_list_store_splice</a>
 	 */
-	fun splice(position: UInt, numberRemovals: UInt, vararg additions: KObject) {
+	fun splice(position: UInt, numberRemovals: UInt, vararg additions: KGObject) {
 		memScoped {
 			val values = allocArray<CPointerVar<GObject>>(additions.size)
 			additions.forEachIndexed { index, kObject ->

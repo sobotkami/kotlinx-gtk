@@ -3,7 +3,7 @@ package nativex.gio
 import gio.GDBusConnection
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -11,7 +11,7 @@ import nativex.gobject.KObject
  */
 class DBusConnection(
 	 val dBussConnectionPointer: CPointer<GDBusConnection>
-) : KObject(dBussConnectionPointer.reinterpret()) {
+) : KGObject(dBussConnectionPointer.reinterpret()) {
 
 	companion object {
 		 inline fun CPointer<GDBusConnection>.wrap() =

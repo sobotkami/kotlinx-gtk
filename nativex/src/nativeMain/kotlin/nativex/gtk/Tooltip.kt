@@ -3,7 +3,7 @@ package nativex.gtk
 import gtk.GtkTooltip
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -11,7 +11,7 @@ import nativex.gobject.KObject
  */
 class Tooltip(
 	 val tooltipPointer: CPointer<GtkTooltip>
-) : KObject(tooltipPointer.reinterpret()) {
+) : KGObject(tooltipPointer.reinterpret()) {
 	companion object{
 		 inline fun CPointer<GtkTooltip>?.wrap() =
 			this?.wrap()

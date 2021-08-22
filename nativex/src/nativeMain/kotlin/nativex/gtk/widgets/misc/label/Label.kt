@@ -10,7 +10,6 @@ import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
-import nativex.gobject.signalManager
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.Justification
 import nativex.gtk.common.events.ExtendedMoveCursorFunction
@@ -279,7 +278,12 @@ open class Label(
 	 *     activate-current-link</a>
 	 */
 	fun addOnActivateCurrentLinkCallback(action: () -> Unit): SignalManager =
-		signalManager(labelPointer, Signals.ACTIVATE_CURRENT_LINK, StableRef.create(action).asCPointer())
+		addSignalCallback(
+			Signals.ACTIVATE_CURRENT_LINK,
+			StableRef.create(action).asCPointer(),
+			staticNoArgGCallback,
+			0u
+		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-activate-link">activate-link</a>
@@ -291,13 +295,13 @@ open class Label(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-copy-clipboard">copy-clipboard</a>
 	 */
 	fun addOnCopyClipboardCallback(action: () -> Unit): SignalManager =
-		signalManager(labelPointer, Signals.COPY_CLIPBOARD, StableRef.create(action).asCPointer())
+		addSignalCallback(Signals.COPY_CLIPBOARD, StableRef.create(action).asCPointer(), staticNoArgGCallback, 0u)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-move-cursor">move-cursor</a>
 	 */
 	fun addOnMoveCursorCallback(action: ExtendedMoveCursorFunction): SignalManager =
-		signalManager(labelPointer, Signals.MOVE_CURSOR, staticExtendedMoveCursorFunction)
+		addSignalCallback(Signals.MOVE_CURSOR, staticExtendedMoveCursorFunction, staticNoArgGCallback, 0u)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLabel.html#GtkLabel-populate-popup">populate-popup</a>

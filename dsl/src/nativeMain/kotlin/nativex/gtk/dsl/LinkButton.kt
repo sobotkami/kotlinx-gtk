@@ -1,22 +1,22 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.button.LinkButton
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.button.LinkButton
 
 /**
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
 @GtkDsl
-inline fun Container.linkButton(
+inline fun Widget.linkButton(
 	uri: String,
 	buttonBuilder: LinkButton.() -> Unit = {}
 ) = add(LinkButton(uri).apply(buttonBuilder))
 
 
 @GtkDsl
-inline fun Container.linkButton(
+inline fun Widget.linkButton(
 	uri: String,
 	label: String,
 	buttonBuilder: LinkButton.() -> Unit = {}

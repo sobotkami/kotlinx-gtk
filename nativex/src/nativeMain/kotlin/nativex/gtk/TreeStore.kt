@@ -7,7 +7,7 @@ import gtk.gtk_tree_store_set_value
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.reinterpret
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.KGType
 import nativex.gobject.KGType.Companion.toCArray
 import nativex.gobject.KGValue
@@ -15,7 +15,7 @@ import nativex.gtk.TreeModel.TreeIter
 
 class TreeStore(
 	val treeStorePointer: CPointer<GtkTreeStore>
-) : KObject(treeStorePointer.reinterpret()) {
+) : KGObject(treeStorePointer.reinterpret()) {
 	constructor(vararg types: KGType) : this(
 		memScoped {
 			gtk_tree_store_newv(

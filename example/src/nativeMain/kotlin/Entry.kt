@@ -1,7 +1,7 @@
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.box
 import nativex.gtk.dsl.frame
-import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.windows.Window
 import nativex.gtk.widgets.entry.Entry
 import nativex.gtk.widgets.entry.Entry.InputHints.*
 import nativex.gtk.widgets.entry.Entry.InputHints.Companion.and

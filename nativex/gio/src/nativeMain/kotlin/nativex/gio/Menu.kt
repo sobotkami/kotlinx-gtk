@@ -6,7 +6,7 @@ import kotlinx.cinterop.reinterpret
 import nativex.glib.Variant
 import nativex.glib.VariantType
 import nativex.glib.reinterpretOrNull
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -110,7 +110,7 @@ class Menu(
 
 	open class Item(
 		val menuItemPointer: CPointer<GMenuItem>
-	) : KObject(menuItemPointer.reinterpret()) {
+	) : KGObject(menuItemPointer.reinterpret()) {
 		constructor(label: String? = null, detailedAction: String? = null) : this(
 			g_menu_item_new(label, detailedAction)!!.reinterpret()
 		)

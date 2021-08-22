@@ -10,8 +10,8 @@ import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.staticCFunction
 import nativex.gio.AsyncResult.Companion.wrap
-import nativex.gobject.KObject
-import nativex.gobject.KObject.Companion.wrap
+import nativex.gobject.KGObject
+import nativex.gobject.KGObject.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -43,6 +43,6 @@ internal val staticAsyncReadyCallback: GAsyncReadyCallback =
 	}
 
 typealias AsyncReadyCallback = (
-	@ParameterName("source") KObject?,
+	@ParameterName("source") KGObject?,
 	@ParameterName("result") AsyncResult
 ) -> Unit

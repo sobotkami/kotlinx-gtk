@@ -17,8 +17,8 @@ import nativex.glib.toNullTermCStringArray
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
-import nativex.gtk.widgets.container.bin.windows.Window
-import nativex.gtk.widgets.container.bin.windows.Window.Companion.wrap
+import nativex.gtk.widgets.windows.Window
+import nativex.gtk.widgets.windows.Window.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -34,18 +34,7 @@ class Application(val applicationPointer: CPointer<GtkApplication>) : Applicatio
 		get() = gtk_application_get_windows(applicationPointer)
 			.asKSequence<GtkWindow, Window> { Window(it) }
 
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-app-menu">gtk_application_get_app_menu</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-set-app-menu">gtk_application_set_app_menu</a>
-	 */
-	var appMenu: MenuModel?
-		get() = gtk_application_get_app_menu(applicationPointer).wrap()
-		set(value) {
-			gtk_application_set_app_menu(
-				applicationPointer,
-				value?.menuModelPointer
-			)
-		}
+
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-menubar">gtk_application_get_menubar</a>
@@ -66,12 +55,6 @@ class Application(val applicationPointer: CPointer<GtkApplication>) : Applicatio
 	 */
 	val activeWindow: Window?
 		get() = gtk_application_get_active_window(applicationPointer).wrap()
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-prefers-app-menu">gtk_application_prefers_app_menu</a>
-	 */
-	val prefersAppMenu: Boolean
-		get() = gtk_application_prefers_app_menu(applicationPointer).bool
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-list-action-descriptions">gtk_application_list_action_descriptions</a>
@@ -151,12 +134,6 @@ class Application(val applicationPointer: CPointer<GtkApplication>) : Applicatio
 			flags.gtk,
 			reason
 		)
-
-	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-is-inhibited">gtk_application_is_inhibited</a>
-	 */
-	fun isInhibited(flags: InhibitFlags): Boolean =
-		gtk_application_is_inhibited(applicationPointer, flags.gtk).bool
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-uninhibit">gtk_application_uninhibit</a>

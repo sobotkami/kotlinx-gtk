@@ -7,7 +7,7 @@ repositories {
 	mavenCentral()
 }
 
-group = "org.gnome.kotlinx-gtk"
+group = "org.gnome.kotlin.gtk"
 version = "0.1.0-alpha"
 
 kotlin {
@@ -27,7 +27,6 @@ kotlin {
 	sourceSets {
 		val nativeMain by getting {
 			dependencies {
-				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 				implementation(project(":nativex:gio"))
 				implementation(project(":nativex:cairo"))
 				implementation(project(":nativex:pango"))

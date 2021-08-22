@@ -4,7 +4,7 @@ import gio.GMenuModel
 import glib.gpointer
 import gobject.GCallback
 import kotlinx.cinterop.*
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
@@ -15,7 +15,7 @@ import nativex.gobject.connectSignal
  */
 abstract class MenuModel(
 	val menuModelPointer: CPointer<GMenuModel>
-) : KObject(menuModelPointer.reinterpret()) {
+) : KGObject(menuModelPointer.reinterpret()) {
 
 	data class ItemsChangedEvent(
 		val position: Int,

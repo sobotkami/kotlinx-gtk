@@ -2,15 +2,15 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.IconSize
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.button.scalable.ScaleButton
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.button.scalable.ScaleButton
 
 /**
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
 @GtkDsl
-fun Container.scaleButton(
+fun Widget.scaleButton(
 	iconSize: IconSize,
 	min: Double = 0.0,
 	max: Double = 100.0,

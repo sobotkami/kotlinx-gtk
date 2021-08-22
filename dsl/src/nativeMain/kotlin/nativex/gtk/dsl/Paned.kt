@@ -1,7 +1,7 @@
 package nativex.gtk.dsl
 
 import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.container.Paned
+import nativex.gtk.widgets.Paned
 
 /**
  * Interface that abstracts packing to make DSL easier

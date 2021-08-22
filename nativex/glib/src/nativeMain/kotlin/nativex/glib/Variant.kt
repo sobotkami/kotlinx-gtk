@@ -160,6 +160,14 @@ open class Variant(
 
 		inline fun CPointer<GVariant>.wrap() =
 			Variant(this)
+
+		inline fun Array<Variant>.toCArray() = memScoped {
+			allocArrayOf(this@toCArray.map { it.variantPointer } + null)
+		}
+
+		inline fun Array<out Variant>.toCArray() = memScoped {
+			allocArrayOf(this@toCArray.map { it.variantPointer } + null)
+		}
 	}
 
 }

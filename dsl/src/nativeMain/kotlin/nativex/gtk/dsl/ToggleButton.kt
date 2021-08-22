@@ -1,16 +1,15 @@
 package nativex.gtk.dsl
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import nativex.GtkDsl
-import nativex.gtk.widgets.container.Container
-import nativex.gtk.widgets.container.bin.button.toggleable.ToggleButton
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.button.toggleable.ToggleButton
 
 /**
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
 @GtkDsl
-fun Container.toggleButton(
+fun Widget.toggleButton(
 	label: String? = null,
 	mnemonic: Boolean = false,
 	buttonBuilder: ToggleButton.() -> Unit = {}

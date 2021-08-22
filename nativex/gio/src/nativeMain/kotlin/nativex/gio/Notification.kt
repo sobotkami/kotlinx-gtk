@@ -5,7 +5,7 @@ import gio.GNotificationPriority.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import nativex.glib.Variant
-import nativex.gobject.KObject
+import nativex.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -13,7 +13,7 @@ import nativex.gobject.KObject
  */
 class Notification(
 	val notificationPointer: CPointer<GNotification>
-) : KObject(notificationPointer.reinterpret()) {
+) : KGObject(notificationPointer.reinterpret()) {
 	constructor(title: String) : this(g_notification_new(title)!!.reinterpret())
 
 	fun setTitle(title: String) {

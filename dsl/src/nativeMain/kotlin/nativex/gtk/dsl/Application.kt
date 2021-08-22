@@ -3,7 +3,7 @@ package nativex.gtk.dsl
 import nativex.GtkDsl
 import nativex.gio.Application.Flags
 import nativex.gtk.Application
-import nativex.gtk.widgets.container.bin.windows.Window
+import nativex.gtk.widgets.windows.Window
 
 /**
  * kotlinx-gtk
