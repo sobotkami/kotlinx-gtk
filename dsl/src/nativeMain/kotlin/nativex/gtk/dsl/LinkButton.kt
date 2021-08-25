@@ -2,6 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.button.LinkButton
 
 /**
@@ -9,18 +10,18 @@ import nativex.gtk.widgets.button.LinkButton
  * 16 / 03 / 2021
  */
 @GtkDsl
-inline fun Widget.linkButton(
+inline fun Box.appendLinkButton(
 	uri: String,
 	buttonBuilder: LinkButton.() -> Unit = {}
-) = add(LinkButton(uri).apply(buttonBuilder))
+) = append(LinkButton(uri).apply(buttonBuilder))
 
 
 @GtkDsl
-inline fun Widget.linkButton(
+inline fun Box.appendLinkButton(
 	uri: String,
 	label: String,
 	buttonBuilder: LinkButton.() -> Unit = {}
-) = add(LinkButton(uri, label).apply(buttonBuilder))
+) = append(LinkButton(uri, label).apply(buttonBuilder))
 
 
 @GtkDsl

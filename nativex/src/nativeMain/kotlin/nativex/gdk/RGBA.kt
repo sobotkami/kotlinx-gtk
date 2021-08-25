@@ -11,25 +11,25 @@ import kotlinx.cinterop.pointed
 class RGBA(
 	 val rgbaPointer: CPointer<GdkRGBA>
 ) {
-	var red: Double
+	var red: Float
 		get() = rgbaPointer.pointed.red
 		set(value) {
 			rgbaPointer.pointed.red = value
 		}
 
-	var green: Double
+	var green: Float
 		get() = rgbaPointer.pointed.green
 		set(value) {
 			rgbaPointer.pointed.green = value
 		}
 
-	var blue: Double
+	var blue: Float
 		get() = rgbaPointer.pointed.blue
 		set(value) {
 			rgbaPointer.pointed.blue = value
 		}
 
-	var alpha: Double
+	var alpha: Float
 		get() = rgbaPointer.pointed.alpha
 		set(value) {
 			rgbaPointer.pointed.alpha = value

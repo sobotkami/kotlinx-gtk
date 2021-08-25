@@ -2,6 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.frame.Frame
 
 /**
@@ -9,11 +10,11 @@ import nativex.gtk.widgets.frame.Frame
  * 16 / 03 / 2021
  */
 @GtkDsl
-fun Widget.frame(
+fun Box.frame(
 	label: String? = null,
 	frameBuilder: Frame.() -> Unit = {}
 ) =
-	Frame(label).apply(frameBuilder).also { add(it) }
+	Frame(label).apply(frameBuilder).also { append(it) }
 
 
 @GtkDsl

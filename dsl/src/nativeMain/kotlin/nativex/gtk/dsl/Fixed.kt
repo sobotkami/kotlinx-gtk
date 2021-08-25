@@ -1,19 +1,19 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.Fixed
+import nativex.gtk.widgets.box.Box
 
 /**
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
 @GtkDsl
-fun Widget.fixed(
+fun Box.appendFixed(
 	fixedBuilder: Fixed.() -> Unit
 ): Fixed {
 	val fixed = Fixed()
-	add(fixed.apply(fixedBuilder))
+	append(fixed.apply(fixedBuilder))
 	return fixed
 }
 
@@ -28,9 +28,9 @@ infix fun Fixed.move(
 
 
 @GtkDsl
-infix fun FixedMoving.to(coordinates: Pair<Int, Int>) =
+infix fun FixedMoving.to(coordinates: Pair<Double, Double>) =
 	widget.move(coordinates.first, coordinates.second)
 
 @GtkDsl
-infix fun Fixed.FixedWidget.moveTo(coordinates: Pair<Int, Int>) =
+infix fun Fixed.FixedWidget.moveTo(coordinates: Pair<Double, Double>) =
 	move(coordinates.first, coordinates.second)

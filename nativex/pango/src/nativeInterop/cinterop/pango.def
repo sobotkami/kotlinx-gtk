@@ -19,4 +19,5 @@ compilerOpts.linux =\
  -I/usr/include/libpng16
 
 # pkg-config --libs pango
-linkerOpts.linux = -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz
+linkerOpts.linux = -L/usr/local/lib -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lharfbuzz
+linkerOpts.linux_x64 = -L/usr/lib/x86_64-linux-gnu

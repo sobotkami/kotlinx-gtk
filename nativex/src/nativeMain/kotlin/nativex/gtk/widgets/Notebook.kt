@@ -1,18 +1,15 @@
 package nativex.gtk.widgets
+
 import glib.gboolean
 import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.Signals.PAGE_REORDERED
-import nativex.gobject.connectSignal
+import nativex.gobject.addSignalCallback
 import nativex.gtk.WidgetPointer
 import nativex.gtk.asWidgetOrNull
 import nativex.gtk.common.enums.DirectionType
@@ -26,7 +23,7 @@ import nativex.gtk.common.enums.PositionType
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html">GtkNotebook</a>
  */
 class Notebook(
-	 val noteBookPointer: CPointer<GtkNotebook>
+	val noteBookPointer: CPointer<GtkNotebook>
 ) : Widget(noteBookPointer.reinterpret()) {
 
 	/**
@@ -94,135 +91,88 @@ class Notebook(
 
 
 	/**
-	 * [SignalManager] for [setChangeCurrentPageCallback]
-	 */
-	private var changeCurrentPageManager: SignalManager? = null
-
-	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-change-current-page">change-current-page</a>
 	 */
-	fun setChangeCurrentPageCallback(createWindow: ChangeCurrentPageFunction) {
-		changeCurrentPageManager?.disconnect()
-		changeCurrentPageManager = SignalManager(
-			noteBookPointer,
-			noteBookPointer.connectSignal(
-				Signals.CHANGE_CURRENT_PAGE,
-				callbackWrapper = StableRef.create(createWindow).asCPointer(),
-				handler = staticChangeCurrentPageFunction
-			)
+	fun setChangeCurrentPageCallback(createWindow: ChangeCurrentPageFunction) =
+		addSignalCallback(
+			Signals.CHANGE_CURRENT_PAGE,
+			createWindow,
+			handler = staticChangeCurrentPageFunction
 		)
-	}
-
-	/**
-	 * [SignalManager] for [setOnCreateWindowCallback]
-	 */
-	private var createWindowManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-create-window">create-window</a>
 	 */
-	fun setOnCreateWindowCallback(createWindow: CreateWindowFunction) {
-		createWindowManager?.disconnect()
-		createWindowManager = SignalManager(
-			noteBookPointer,
-			noteBookPointer.connectSignal(
-				Signals.CREATE_WINDOW,
-				callbackWrapper = StableRef.create(createWindow).asCPointer(),
-				handler = staticCreateWindowFunction
-			)
+	fun setOnCreateWindowCallback(createWindow: CreateWindowFunction) =
+		addSignalCallback(
+			Signals.CREATE_WINDOW,
+			createWindow,
+			handler = staticCreateWindowFunction
 		)
-	}
-
-	/**
-	 * [SignalManager] for [setFocusTabCallback]
-	 */
-	private var focusTabManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-focus-tab">focus-tab</a>
 	 */
-	fun setFocusTabCallback(action: FocusTabFunction) {
-		focusTabManager?.disconnect()
-		focusTabManager = SignalManager(
-			noteBookPointer,
-			noteBookPointer.connectSignal(
-				signal = Signals.FOCUS_TAB,
-				callbackWrapper = StableRef.create(action).asCPointer(),
-				handler = staticFocusTabFunction
-			)
+	fun setFocusTabCallback(action: FocusTabFunction) =
+		addSignalCallback(
+			signal = Signals.FOCUS_TAB,
+			action,
+			handler = staticFocusTabFunction
 		)
-	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-move-focus-out">move-focus-out</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveFocusOutSignal: Flow<GtkDirectionType> by signalFlow(Signals.MOVE_FOCUS_OUT, DirectionType.staticDirectionTypeCallback)
+	fun addOnMoveFocusOutCallback(action: (DirectionType) -> Unit) = addSignalCallback(
+		Signals.MOVE_FOCUS_OUT,
+		action,
+		DirectionType.staticDirectionTypeCallback
+	)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-page-added">create-window</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val pageAddedSignal: Flow<PageAddedEvent> by signalFlow(Signals.PAGE_ADDED, PageAddedEvent.staticCallback)
+	fun addOnPageAddedCallback(action: (PageAddedEvent) -> Unit) =
+		addSignalCallback(Signals.PAGE_ADDED, action, PageAddedEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-page-removed">create-window</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val pageRemovedSignal: Flow<PageRemovedEvent> by signalFlow(Signals.PAGE_REMOVED, PageRemovedEvent.staticCallback)
+	fun addOnPageRemovedCallback(action: (PageRemovedEvent) -> Unit) =
+		addSignalCallback(Signals.PAGE_REMOVED, action, PageRemovedEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-page-reordered">create-window</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val pageReorderedSignal: Flow<PageReorderedEvent> by signalFlow(PAGE_REORDERED, PageReorderedEvent.staticCallback)
-
-	/**
-	 * [SignalManager] for [setReorderTabCallback]
-	 */
-	private var reorderTabManager: SignalManager? = null
+	fun addOnPageReorderedCallback(action:(PageReorderedEvent)->Unit) =
+		addSignalCallback(Signals.PAGE_REORDERED,action,PageReorderedEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-reorder-tab">reorder-tab</a>
 	 */
-	fun setReorderTabCallback(action: ReorderTabFunction) {
-		reorderTabManager?.disconnect()
-		reorderTabManager = SignalManager(
-			noteBookPointer,
-			noteBookPointer.connectSignal(
-				signal = Signals.REORDER_TAB,
-				callbackWrapper = StableRef.create(action).asCPointer(),
-				handler = staticReorderTabFunction
-			)
+	fun setReorderTabCallback(action: ReorderTabFunction) =
+		addSignalCallback(
+			signal = Signals.REORDER_TAB,
+			action,
+			handler = staticReorderTabFunction
 		)
-	}
-
-	/**
-	 * [SignalManager] for [setSelectPageCallback]
-	 */
-	private var selectPageManager: SignalManager? = null
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-select-page">select-page</a>
 	 */
-	fun setSelectPageCallback(action: SelectPageFunction) {
-		selectPageManager?.disconnect()
-		selectPageManager = SignalManager(
-			noteBookPointer,
-			noteBookPointer.connectSignal(
-				signal = Signals.SELECT_PAGE,
-				callbackWrapper = StableRef.create(action).asCPointer(),
-				handler = staticSelectPageFunction
-			)
+	fun setSelectPageCallback(action: SelectPageFunction) =
+		addSignalCallback(
+			signal = Signals.SELECT_PAGE,
+			action,
+
+			handler = staticSelectPageFunction
 		)
-	}
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#GtkNotebook-switch-page">switch-page</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val switchPageSignal: Flow<SwitchPageEvent> by signalFlow(Signals.SWITCH_PAGE, SwitchPageEvent.staticCallback)
-
+	fun addOnSwitchPageCallback(action: (SwitchPageEvent) -> Unit) =
+		addSignalCallback(Signals.SWITCH_PAGE, action, SwitchPageEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkNotebook.html#gtk-notebook-append-page">gtk_notebook_append_page</a>
@@ -518,7 +468,7 @@ class Notebook(
 	) {
 		companion object {
 
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageAddedEvent) -> Unit>()
 						?.get()
@@ -544,7 +494,7 @@ class Notebook(
 	) {
 		companion object {
 
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, widget: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageRemovedEvent) -> Unit>()
 						?.get()
@@ -570,7 +520,7 @@ class Notebook(
 	) {
 		companion object {
 
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, child: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(PageReorderedEvent) -> Unit>()
 						?.get()
@@ -596,7 +546,7 @@ class Notebook(
 	) {
 		companion object {
 
-			 val staticCallback: GCallback =
+			val staticCallback: GCallback =
 				staticCFunction { _: gpointer?, page: WidgetPointer, pageNum: UInt, data: gpointer? ->
 					data?.asStableRef<(SwitchPageEvent) -> Unit>()
 						?.get()
@@ -611,26 +561,26 @@ class Notebook(
 		}
 	}
 
-	enum class Tab(val key: Int,  val gtk: GtkNotebookTab) {
+	enum class Tab(val key: Int, val gtk: GtkNotebookTab) {
 		FIRST(0, GtkNotebookTab.GTK_NOTEBOOK_TAB_FIRST),
 		LAST(1, GtkNotebookTab.GTK_NOTEBOOK_TAB_LAST);
 
 		companion object {
 			fun valueOf(key: Int) = values().find { it.key == key }
-			 fun valueOf(gtk: GtkNotebookTab) = values().find { it.gtk == gtk }
+			fun valueOf(gtk: GtkNotebookTab) = values().find { it.gtk == gtk }
 		}
 	}
 
 	companion object {
 
-		 val staticChangeCurrentPageFunction: GCallback =
+		val staticChangeCurrentPageFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: Int, data: gpointer? ->
 				data?.asStableRef<ChangeCurrentPageFunction>()
 					?.get()
 					?.invoke(arg1).gtk
 			}.reinterpret()
 
-		 val staticCreateWindowFunction: GCallback =
+		val staticCreateWindowFunction: GCallback =
 			staticCFunction { _: gpointer,
 			                  page: CPointer<GtkWidget>,
 			                  x: Int,
@@ -640,21 +590,21 @@ class Notebook(
 					?.invoke(Widget(page), x, y)?.widgetPointer
 			}.reinterpret()
 
-		 val staticFocusTabFunction: GCallback =
+		val staticFocusTabFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: GtkNotebookTab, data: gpointer? ->
 				data?.asStableRef<FocusTabFunction>()
 					?.get()
 					?.invoke(Tab.valueOf(arg1)!!).gtk
 			}.reinterpret()
 
-		 val staticReorderTabFunction: GCallback =
+		val staticReorderTabFunction: GCallback =
 			staticCFunction { _: gpointer?, arg1: GtkDirectionType, arg2: gboolean, data: gpointer? ->
 				data?.asStableRef<ReorderTabFunction>()
 					?.get()
 					?.invoke(DirectionType.valueOf(arg1)!!, arg2.bool).gtk
 			}.reinterpret()
 
-		 val staticSelectPageFunction: GCallback =
+		val staticSelectPageFunction: GCallback =
 			staticCFunction { _: gpointer?, arg2: gboolean, data: gpointer? ->
 				data?.asStableRef<SelectPageFunction>()
 					?.get()

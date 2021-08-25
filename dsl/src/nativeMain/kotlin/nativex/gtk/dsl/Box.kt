@@ -4,10 +4,6 @@ import nativex.GtkDsl
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.widgets.*
-import nativex.gtk.widgets.container.*
-import nativex.gtk.widgets.ActionBar
-import nativex.gtk.widgets.Overlay
-import nativex.gtk.widgets.frame.AspectFrame
 import nativex.gtk.widgets.box.Box
 
 
@@ -55,12 +51,6 @@ inline fun ActionBarPackEnd.box(
 	packEnd(it)
 }
 
-inline fun AspectFrame.box(
-	orientation: Orientation,
-	spacing: Int,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = (this as Widget).box(orientation, spacing, buttonBoxBuilder)
-
 /**
  * Similar to [SimplePacking], except specifically for [Box]
  *
@@ -76,34 +66,6 @@ interface BoxPackable {
 	)
 }
 
-class BoxPackStart internal constructor(box: Box) : Box(box), BoxPackable {
-
-	override fun pack(
-		child: Widget,
-		expand: Boolean,
-		fill: Boolean,
-		padding: UInt
-	) = packStart(child, expand, fill, padding)
-
-}
-
-class BoxPackEnd internal constructor(box: Box) : Box(box), BoxPackable {
-
-	override fun pack(
-		child: Widget,
-		expand: Boolean,
-		fill: Boolean,
-		padding: UInt
-	) = packEnd(child, expand, fill, padding)
-}
-
-@GtkDsl
-fun Box.start(builder: BoxPackStart.() -> Unit): BoxPackStart =
-	BoxPackStart(this).apply(builder)
-
-@GtkDsl
-fun Box.end(builder: BoxPackEnd.() -> Unit): BoxPackEnd =
-	BoxPackEnd(this).apply(builder)
 
 @GtkDsl
 
@@ -116,16 +78,6 @@ inline fun BoxPackable.box(
 	buttonBoxBuilder: Box.() -> Unit
 ): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
 	pack(it, expand, fill, padding)
-}
-
-@GtkDsl
-inline fun Fixed.box(
-	orientation: Orientation,
-	spacing: Int,
-	coordinates: Pair<Int, Int>,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	put(it, coordinates.first, coordinates.second)
 }
 
 @GtkDsl
@@ -209,72 +161,3 @@ inline fun Overlay.boxOverlay(
 ): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
 	addOverlay(it)
 }
-
-@GtkDsl
-inline fun Paned.boxAddFirst(
-	orientation: Orientation,
-	spacing: Int,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	add1(it)
-}
-
-@GtkDsl
-inline fun Paned.boxAddSecond(
-	orientation: Orientation,
-	spacing: Int,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	add2(it)
-}
-
-@GtkDsl
-inline fun Paned.boxPackFirst(
-	orientation: Orientation,
-	spacing: Int,
-	resize: Boolean,
-	shrink: Boolean,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	pack1(it, resize, shrink)
-}
-
-@GtkDsl
-inline fun Paned.boxPackSecond(
-	orientation: Orientation,
-	spacing: Int,
-	resize: Boolean,
-	shrink: Boolean,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	pack2(it, resize, shrink)
-}
-
-@GtkDsl
-inline fun NumeralPane.boxAdd(
-	orientation: Orientation,
-	spacing: Int,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	add(it)
-}
-
-@GtkDsl
-inline fun NumeralPane.boxPack(
-	orientation: Orientation,
-	spacing: Int,
-	resize: Boolean,
-	shrink: Boolean,
-	buttonBoxBuilder: Box.() -> Unit = {}
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	pack(it, resize, shrink)
-}
-
-
-@GtkDsl
-inline fun Widget.box(
-	orientation: Orientation,
-	spacing: Int,
-	buttonBoxBuilder: Box.() -> Unit
-) = Box(orientation, spacing).apply(buttonBoxBuilder).also { add(it) }
-

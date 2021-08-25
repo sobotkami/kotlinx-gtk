@@ -10,6 +10,7 @@ import kotlinx.cinterop.*
 import nativex.async.PopulatePopupFunction
 import nativex.async.populatePopupSignalManager
 import nativex.async.staticCStringCallback
+import nativex.gdk.ContentProvider
 import nativex.gdk.Event
 import nativex.gdk.Event.Companion.wrap
 import nativex.gdk.Rectangle
@@ -344,8 +345,13 @@ open class Entry(val entryPointer: CPointer<GtkEntry>) : Widget(entryPointer.rei
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkEntry.html#gtk-entry-set-icon-drag-source">
 	 *     gtk_entry_set_icon_drag_source</a>
 	 */
-	fun setIconDragSource(iconPosition: IconPosition, targetList: ContentProvider, actions: DragAction) {
-		gtk_entry_set_icon_drag_source(entryPointer, iconPosition.gtk, targetList.targetListPointer, actions.gdk)
+	fun setIconDragSource(iconPosition: IconPosition, contentProvider: ContentProvider, actions: DragAction) {
+		gtk_entry_set_icon_drag_source(
+			entryPointer,
+			iconPosition.gtk,
+			contentProvider.contentProviderPointer,
+			actions.gdk
+		)
 	}
 
 	/**

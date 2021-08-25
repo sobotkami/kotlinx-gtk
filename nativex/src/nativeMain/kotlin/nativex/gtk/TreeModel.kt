@@ -12,6 +12,7 @@ import nativex.glib.bool
 import nativex.glib.reinterpretOrNull
 import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -26,45 +27,20 @@ open class TreeModel(
 	fun iterHasChild(iter: TreeIter): Boolean =
 		gtk_tree_model_iter_has_child(treeModelPointer, iter.treeIterPointer).bool
 
-	@ExperimentalCoroutinesApi
-	val rowChangedSignal: Flow<RowChanged> by lazy {
-		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
-			Signals.ROW_CHANGED,
-			RowChanged.staticCallback
-		)
-	}
+	fun addOnRowChangedCallback(action: (RowChanged) -> Unit) =
+		addSignalCallback(Signals.ROW_CHANGED, action, RowChanged.staticCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowDeletedSignal: Flow<RowDeleted> by lazy {
-		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
-			Signals.ROW_DELETED,
-			RowDeleted.staticCallback
-		)
-	}
+	fun addOnRowDeletedCallback(action: (RowDeleted) -> Unit) =
+		addSignalCallback(Signals.ROW_DELETED, action, RowDeleted.staticCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowHasChildToggled: Flow<RowHasChildToggled> by lazy {
-		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
-			Signals.ROW_HAS_CHILD_TOGGLED,
-			RowHasChildToggled.staticCallback
-		)
-	}
+	fun addOnRowHasChildToggledCallback(action: (RowHasChildToggled) -> Unit) =
+		addSignalCallback(Signals.ROW_HAS_CHILD_TOGGLED, action, RowHasChildToggled.staticCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowInsertedSignal: Flow<RowInserted> by lazy {
-		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
-			Signals.ROW_INSERTED,
-			RowInserted.staticCallback
-		)
-	}
+	fun addOnRowInsertedCallback(action:(RowInserted)->Unit) =
+		addSignalCallback(Signals.ROW_INSERTED,action,RowInserted.staticCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowsReordered: Flow<RowsReordered> by lazy {
-		treeModelPointer.reinterpret<GObject>().callbackSignalFlow(
-			Signals.ROWS_REORDERED,
-			RowsReordered.staticCallback
-		)
-	}
+	fun addOnReorderedCallback(action:(RowsReordered)->Unit) =
+		addSignalCallback(Signals.ROWS_REORDERED,action,RowsReordered.staticCallback)
 
 	fun getIter(path: TreePath): TreeIter = TreeIter(memScoped {
 		val iter = cValue<GtkTreeIter>()

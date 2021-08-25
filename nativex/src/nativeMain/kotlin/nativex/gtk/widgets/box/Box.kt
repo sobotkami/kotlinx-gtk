@@ -1,7 +1,8 @@
 package nativex.gtk.widgets.box
 
 import gtk.*
-import kotlinx.cinterop.*
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gtk.Accessible
@@ -10,7 +11,6 @@ import nativex.gtk.ConstraintTarget
 import nativex.gtk.Orientable
 import nativex.gtk.common.enums.BaselinePosition
 import nativex.gtk.common.enums.Orientation
-import nativex.gtk.common.enums.PackType
 import nativex.gtk.widgets.Widget
 
 /**
@@ -23,10 +23,10 @@ import nativex.gtk.widgets.Widget
 open class Box(
 	val boxPointer: CPointer<GtkBox>
 ) : Widget(boxPointer.reinterpret()), Accessible, Buildable, ConstraintTarget, Orientable {
-
+	override val accessiblePointer: CPointer<GtkAccessible> by lazy { boxPointer.reinterpret() }
+	override val buildablePointer: CPointer<GtkBuildable> by lazy { boxPointer.reinterpret() }
+	override val constraintTargetPointer: CPointer<GtkConstraintTarget> by lazy { boxPointer.reinterpret() }
 	override val orientablePointer: CPointer<GtkOrientable> by lazy { boxPointer.reinterpret() }
-
-	constructor(other: Box) : this(other.boxPointer)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-new">gtk_box_new</a>
@@ -37,9 +37,25 @@ open class Box(
 	) : this(gtk_box_new(orientation.gtk, spacing)!!.reinterpret())
 
 	/**
-	 * Cast constructor
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Box.append.html">gtk_box_append</a>
 	 */
-	constructor(widget: Widget) : this(widget.widgetPointer.reinterpret())
+	fun append(widget: Widget) {
+		gtk_box_append(boxPointer, widget.widgetPointer)
+	}
+
+	/**
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-get-baseline-position">
+	 *     gtk_box_get_baseline_position</a>
+	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-set-baseline-position">
+	 *     gtk_box_set_baseline_position</a>
+	 */
+	var baselinePosition: BaselinePosition
+		get() = BaselinePosition.valueOf(
+			gtk_box_get_baseline_position(
+				boxPointer
+			)
+		)!!
+		set(value) = gtk_box_set_baseline_position(boxPointer, value.gtk)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-get-homogeneous">
@@ -59,30 +75,34 @@ open class Box(
 		get() = gtk_box_get_spacing(boxPointer)
 		set(value) = gtk_box_set_spacing(boxPointer, value)
 
+	/**
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Box.insert_child_after.html">gtk_box_insert_child_after</a>
+	 */
+	fun insertChildAfter(child: Widget, sibling: Widget) {
+		gtk_box_insert_child_after(boxPointer, child.widgetPointer, sibling.widgetPointer)
+	}
 
 	/**
-	 * Data returned from [queryChildPacking]
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Box.prepend.html">gtk_box_prepend</a>
 	 */
-	data class ChildPacking constructor(
-		val expand: Boolean,
-		val fill: Boolean,
-		val padding: UInt,
-		val packType: PackType
-	)
+	fun prepend(widget: Widget) {
+		gtk_box_prepend(boxPointer, widget.widgetPointer)
+	}
 
 	/**
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-get-baseline-position">
-	 *     gtk_box_get_baseline_position</a>
-	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkBox.html#gtk-box-set-baseline-position">
-	 *     gtk_box_set_baseline_position</a>
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Box.remove.html">gtk_box_remove</a>
 	 */
-	var baselinePosition: BaselinePosition
-		get() = BaselinePosition.valueOf(
-			gtk_box_get_baseline_position(
-				boxPointer
-			)
-		)!!
-		set(value) = gtk_box_set_baseline_position(boxPointer, value.gtk)
+	fun remove(widget: Widget) {
+		gtk_box_remove(boxPointer, widget.widgetPointer)
+	}
+
+	/**
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Box.reorder_child_after.html">gtk_box_reorder_child_after</a>
+	 */
+	fun reorderChildAfter(child: Widget, sibling: Widget) {
+		gtk_box_reorder_child_after(boxPointer, child.widgetPointer, sibling.widgetPointer)
+	}
+
 
 	companion object {
 		inline fun CPointer<GtkBox>?.wrap() =
@@ -91,8 +111,4 @@ open class Box(
 		inline fun CPointer<GtkBox>.wrap() =
 			Box(this)
 	}
-
-	override val accessiblePointer: CPointer<GtkAccessible> by lazy { boxPointer.reinterpret() }
-	override val buildablePointer: CPointer<GtkBuildable> by lazy { boxPointer.reinterpret() }
-	override val constraintTargetPointer: CPointer<GtkConstraintTarget> by lazy { boxPointer.reinterpret() }
 }

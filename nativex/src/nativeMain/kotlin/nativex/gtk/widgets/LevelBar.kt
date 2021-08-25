@@ -9,6 +9,7 @@ import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -147,9 +148,8 @@ class LevelBar(
 	fun addOnOffsetChangedCallback(action: (String) -> Unit): SignalManager =
 		addSignalCallback(
 			Signals.OFFSET_CHANGED,
-			StableRef.create(action).asCPointer(),
+			action,
 			staticCStringCallback,
-			0u
 		)
 
 	companion object {

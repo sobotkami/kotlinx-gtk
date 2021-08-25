@@ -97,7 +97,7 @@ open class Popover(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkPopover.html#GtkPopover-closed">closed</a>
 	 */
 	fun addOnClosedCallback(action: () -> Unit) =
-		addSignalCallback(Signals.CLOSED)
+		addSignalCallback(Signals.CLOSED,action)
 
 	companion object {
 		inline fun CPointer<GtkPopover>?.wrap() =

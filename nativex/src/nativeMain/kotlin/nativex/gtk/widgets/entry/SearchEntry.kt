@@ -1,16 +1,13 @@
 package nativex.gtk.widgets.entry
 
 import gtk.GtkSearchEntry
-import gtk.gtk_search_entry_handle_event
 import gtk.gtk_search_entry_new
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.StableRef
 import kotlinx.cinterop.reinterpret
-import nativex.gdk.Event
-import nativex.glib.bool
+import nativex.gobject.SignalManager
 import nativex.gobject.Signals
 import nativex.gobject.connectSignal
-import nativex.gobject.SignalManager
 
 /**
  * kotlinx-gtk

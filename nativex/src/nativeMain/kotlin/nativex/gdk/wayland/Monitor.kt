@@ -2,35 +2,26 @@ package nativex.gdk.wayland
 
 import gtk.*
 import gtk.GdkSubpixelLayout.*
-import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.toKString
 import nativex.gdk.Display
 import nativex.gdk.Display.Companion.wrap
-import nativex.gdk.Rectangle
 import nativex.gobject.KGObject
-import nativex.glib.bool
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * Question why such details are needed by a program, ever?
  */
 class Monitor(
-	 val monitorPointer: CPointer<GdkMonitor>
+	val monitorPointer: CPointer<GdkMonitor>
 ) : KGObject(monitorPointer.reinterpret()) {
 	val display: Display
 		get() = gdk_monitor_get_display(monitorPointer)!!.wrap()
 
 	val geometry: Any
 		get() = TODO("gdk_monitor_get_geometry")
-
-	val workarea: Rectangle
-		get() = memScoped {
-			val cWorkArea = cValue<GdkRectangle>()
-			gdk_monitor_get_workarea(monitorPointer, cWorkArea)
-			Rectangle(cWorkArea.ptr)
-		}
 
 	val widthMM: Int
 		get() = gdk_monitor_get_width_mm(monitorPointer)
@@ -53,13 +44,9 @@ class Monitor(
 	val subpixelLayout: SubpixelLayout
 		get() = SubpixelLayout.valueOf(gdk_monitor_get_subpixel_layout(monitorPointer))
 
-	val isPrimary: Boolean
-		get() = gdk_monitor_is_primary(monitorPointer).bool
+	fun addOnInvalidateCallback(action: () -> Unit) = addSignalCallback(Signals.INVALIDATE, action)
 
-	@ExperimentalCoroutinesApi
-	val invalidateSignal: Flow<Unit> by signalFlow(Signals.INVALIDATE)
-
-	enum class SubpixelLayout(val key: Int,  val gdk: GdkSubpixelLayout) {
+	enum class SubpixelLayout(val key: Int, val gdk: GdkSubpixelLayout) {
 		UNKNOWN(0, GDK_SUBPIXEL_LAYOUT_UNKNOWN),
 		NONE(1, GDK_SUBPIXEL_LAYOUT_NONE),
 		HORIZONTAL_RGB(2, GDK_SUBPIXEL_LAYOUT_HORIZONTAL_RGB),
@@ -73,12 +60,12 @@ class Monitor(
 		}
 	}
 
-	companion object{
+	companion object {
 
-		 inline fun CPointer<GdkMonitor>?.wrap() =
+		inline fun CPointer<GdkMonitor>?.wrap() =
 			this?.let { Monitor(it) }
 
-		 inline fun CPointer<GdkMonitor>.wrap() =
+		inline fun CPointer<GdkMonitor>.wrap() =
 			Monitor(this)
 	}
 

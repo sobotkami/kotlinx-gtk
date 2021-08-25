@@ -3,11 +3,8 @@ package nativex.gtk.widgets
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
-import nativex.gdk.Event
 import nativex.glib.bool
 import nativex.glib.gtk
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.entry.Entry
 
 /**
  * kotlinx-gtk
@@ -17,7 +14,7 @@ import nativex.gtk.widgets.entry.Entry
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html">GtkSearchBar</a>
  */
 class SearchBar(
-	 val searchBarPointer: CPointer<GtkSearchBar>
+	val searchBarPointer: CPointer<GtkSearchBar>
 ) : Widget(searchBarPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchBar.html#gtk-search-bar-new">gtk_search_bar_new</a>

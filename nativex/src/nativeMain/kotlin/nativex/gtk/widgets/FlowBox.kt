@@ -1,17 +1,16 @@
 package nativex.gtk.widgets
+
 import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
-import nativex.gobject.KGObject
 import nativex.gio.ListModel
 import nativex.glib.asKSequence
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gobject.staticDestroyStableRefFunction
 import nativex.gtk.Adjustment
 import nativex.gtk.Orientable
@@ -25,8 +24,8 @@ import nativex.gtk.widgets.FlowBox.Child.Companion.wrap
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html">GtkFlowBox</a>
  */
 class FlowBox(
-	 val flowBoxPointer: CPointer<GtkFlowBox>
-) : Widget(flowBoxPointer.reinterpret()),Orientable {
+	val flowBoxPointer: CPointer<GtkFlowBox>
+) : Widget(flowBoxPointer.reinterpret()), Orientable {
 
 	override val orientablePointer: CPointer<GtkOrientable> by lazy { flowBoxPointer.reinterpret() }
 
@@ -254,7 +253,7 @@ class FlowBox(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBoxChild-struct">GtkFlowBoxChild</a>
 	 */
 	class Child(
-		 val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
+		val flowBoxChildPointer: CPointer<GtkFlowBoxChild>
 	) : Widget(flowBoxChildPointer.reinterpret()) {
 
 		/**
@@ -285,94 +284,91 @@ class FlowBox(
 
 		companion object {
 
-			 inline fun CPointer<GtkFlowBoxChild>?.wrap() =
+			inline fun CPointer<GtkFlowBoxChild>?.wrap() =
 				this?.wrap()
 
-			 inline fun CPointer<GtkFlowBoxChild>.wrap() =
+			inline fun CPointer<GtkFlowBoxChild>.wrap() =
 				Child(this)
 		}
 
 		/**
 		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBoxChild-activate">activate</a>
 		 */
-		@ExperimentalCoroutinesApi
-		val activateSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+		fun addOnActivateCallback(action: () -> Unit) =
+			addSignalCallback(Signals.ACTIVATE, action)
 	}
 
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-activate-cursor-child">activate-cursor-child</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val activateCursorChildSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_CURSOR_CHILD)
+	fun addOnActivateCursorChildCallback(action: () -> Unit) =
+		addSignalCallback(Signals.ACTIVATE_CURSOR_CHILD, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-child-activated">child-activated</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val childActivatedSignal: Flow<Child> by signalFlow(Signals.CHILD_ACTIVATED, staticChildActivatedCallback)
+	fun addOnChildActivatedCallback(action: (Child) -> Unit) =
+		addSignalCallback(Signals.CHILD_ACTIVATED, action, staticChildActivatedCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-move-cursor">move-cursor</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveCursor: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback)
+	fun addOnMoveCursorCallback(action: (MoveCursorEvent) -> Unit) =
+		addSignalCallback(Signals.MOVE_CURSOR, action, MoveCursorEvent.staticCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-select-all">select-all</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL)
+	fun addOnSelectAllCallback(action: () -> Unit) = addSignalCallback(Signals.SELECT_ALL, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-selected-children-changed">selected-children-changed</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val selectedChildrenChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_CHILDREN_CHANGED)
+	fun addOnSelectedChildrenChangedCallback(action: () -> Unit) =
+		addSignalCallback(Signals.SELECTED_CHILDREN_CHANGED, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-toggle-cursor-child">toggle-cursor-child</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val toggleCursorChild: Flow<Unit> by signalFlow(Signals.TOGGLE_CURSOR_CHILD)
+	fun addOnToggleCursorChildCallback(action: () -> Unit) = addSignalCallback(Signals.TOGGLE_CURSOR_CHILD, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkFlowBox.html#GtkFlowBox-unselect-all">unselect-all</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val unselectAllSignal: Flow<Unit> by signalFlow(Signals.UNSELECT_ALL)
+	fun addOnUnselectAllCallback(action: () -> Unit) = addSignalCallback(Signals.UNSELECT_ALL, action)
 
 	companion object {
-		 val staticChildActivatedCallback: GCallback =
+		val staticChildActivatedCallback: GCallback =
 			staticCFunction { _: CPointer<GtkFlowBox>, child: CPointer<GtkFlowBoxChild>, data: gpointer? ->
 				data?.asStableRef<(Child) -> Unit>()?.get()?.invoke(child.wrap())
 				Unit
 			}.reinterpret()
 
 
-		 val staticFlowBoxForeachFunction: GtkFlowBoxForeachFunc = staticCFunction { _, child, data ->
+		val staticFlowBoxForeachFunction: GtkFlowBoxForeachFunc = staticCFunction { _, child, data ->
 			data?.asStableRef<FlowBoxForEachFunction>()?.get()?.invoke(child!!.wrap())
 			Unit
 		}
 
-		 val staticFlowBoxFilterFunction: GtkFlowBoxFilterFunc = staticCFunction { child, data ->
+		val staticFlowBoxFilterFunction: GtkFlowBoxFilterFunc = staticCFunction { child, data ->
 			data?.asStableRef<FlowBoxFilterFunction>()?.get()?.invoke(child!!.wrap())?.gtk ?: 0
 		}
 
-		 val staticFlowBoxSortFunction: GtkFlowBoxSortFunc = staticCFunction { child1, child2, data ->
+		val staticFlowBoxSortFunction: GtkFlowBoxSortFunc = staticCFunction { child1, child2, data ->
 			data?.asStableRef<FlowBoxSortFunction>()?.get()?.invoke(child1!!.wrap(), child2!!.wrap())!!
 		}
 
-		 val staticFlowBoxCreateWidgetFunction: GtkFlowBoxCreateWidgetFunc = staticCFunction { item, data ->
+		val staticFlowBoxCreateWidgetFunction: GtkFlowBoxCreateWidgetFunc = staticCFunction { item, data ->
 			data?.asStableRef<FlowBoxCreateWidgetFunction>()?.get()
 				?.invoke(KGObject(item!!.reinterpret()))?.widgetPointer
 		}
 
 
-		 inline fun CPointer<GtkFlowBox>?.wrap() =
+		inline fun CPointer<GtkFlowBox>?.wrap() =
 			this?.wrap()
 
-		 inline fun CPointer<GtkFlowBox>.wrap() =
+		inline fun CPointer<GtkFlowBox>.wrap() =
 			FlowBox(this)
 	}
 }

@@ -2,6 +2,7 @@ package nativex.gtk.dsl
 
 import nativex.GtkDsl
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.button.toggleable.ToggleButton
 
 /**
@@ -9,14 +10,14 @@ import nativex.gtk.widgets.button.toggleable.ToggleButton
  * 16 / 03 / 2021
  */
 @GtkDsl
-fun Widget.toggleButton(
+fun Box.toggleButton(
 	label: String? = null,
 	mnemonic: Boolean = false,
 	buttonBuilder: ToggleButton.() -> Unit = {}
 ): ToggleButton =
 	(if (label != null) ToggleButton(label, mnemonic) else ToggleButton())
 		.apply(buttonBuilder)
-		.also { add(it) }
+		.also { append(it) }
 
 
 @GtkDsl

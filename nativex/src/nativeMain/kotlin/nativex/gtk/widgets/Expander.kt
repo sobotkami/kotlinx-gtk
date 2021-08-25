@@ -4,12 +4,10 @@ import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.toKString
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -17,7 +15,7 @@ import nativex.gobject.Signals
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html">GtkExpander</a>
  */
 class Expander(
-	 val expanderPointer: CPointer<GtkExpander>
+	val expanderPointer: CPointer<GtkExpander>
 ) : Widget(expanderPointer.reinterpret()) {
 
 	/**
@@ -109,6 +107,6 @@ class Expander(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkExpander.html#GtkExpander-activate">activate</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val activate: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+	fun addOnActivateCallback(action: () -> Unit) =
+		addSignalCallback(Signals.ACTIVATE, action)
 }

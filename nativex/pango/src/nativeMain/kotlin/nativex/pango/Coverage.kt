@@ -68,7 +68,7 @@ class Coverage(val coveragePointer: CPointer<PangoCoverage>) : KGObject(coverage
 
 			val size = nBytes.ptr.pointed.value
 
-			UByteArray(size) { index ->
+			Array(size) { index ->
 				cByteArray.ptr[index]!!.pointed.value
 			}
 		}
@@ -122,7 +122,7 @@ class Coverage(val coveragePointer: CPointer<PangoCoverage>) : KGObject(coverage
 		@ExperimentalUnsignedTypes
 		@Suppress("DeprecatedCallableAddReplaceWith")
 		@Deprecated("Since 1.44, This returns null.")
-		fun fromBytes(bytes: UByteArray): Coverage? =
+		fun fromBytes(bytes: Array<UByte>): Coverage? =
 			memScoped {
 				pango_coverage_from_bytes(
 					allocArray(bytes.size) { index ->

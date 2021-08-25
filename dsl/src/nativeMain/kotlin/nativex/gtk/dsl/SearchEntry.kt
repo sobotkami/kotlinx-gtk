@@ -1,10 +1,8 @@
 package nativex.gtk.dsl
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
 import nativex.GtkDsl
-import nativex.async.launchUnconfined
 import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.entry.SearchEntry
 
 /**
@@ -12,9 +10,9 @@ import nativex.gtk.widgets.entry.SearchEntry
  * 19 / 03 / 2021
  */
 @GtkDsl
-inline fun Widget.searchEntry(
+inline fun Box.searchEntry(
 	searchEntryBuilder: SearchEntry.() -> Unit = {}
-) = add(SearchEntry().apply(searchEntryBuilder))
+) = append(SearchEntry().apply(searchEntryBuilder))
 
 
 @GtkDsl

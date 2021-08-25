@@ -10,14 +10,13 @@ import nativex.gtk.widgets.windows.Window
  * 07 / 03 / 2021
  */
 @GtkDsl
-inline fun window(type: Window.Type, builder: Window.() -> Unit) =
-	Window(type).apply(builder)
+inline fun window( builder: Window.() -> Unit) =
+	Window().apply(builder)
 
 @GtkDsl
 /**
  * Creates a window, adds it to the application
  */
 inline fun Application.addWindow(
-	type: Window.Type,
 	builder: Window.() -> Unit
-) = Window(type).apply(builder).also { this.addWindow(it) }
+) = Window().apply(builder).also { this.addWindow(it) }

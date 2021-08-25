@@ -1,15 +1,21 @@
 package nativex.gtk.dsl
 
 import nativex.GtkDsl
-import nativex.gtk.widgets.Widget
 import nativex.gtk.widgets.Grid
+import nativex.gtk.widgets.box.Box
 import nativex.gtk.widgets.button.Button
 
 @GtkDsl
-inline fun Widget.button(
+inline fun Box.appendButton(
 	label: String,
 	buttonBuilder: Button.() -> Unit = {}
-) = Button(label).apply(buttonBuilder).also { add(it) }
+) = Button(label).apply(buttonBuilder).also { append(it) }
+
+@GtkDsl
+inline fun Box.prependButton(
+	label: String,
+	buttonBuilder: Button.() -> Unit = {}
+) = Button(label).apply(buttonBuilder).also { prepend(it) }
 
 @GtkDsl
 inline fun Grid.button(

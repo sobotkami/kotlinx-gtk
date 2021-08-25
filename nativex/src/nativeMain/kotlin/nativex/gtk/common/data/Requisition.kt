@@ -18,7 +18,7 @@ import nativex.ClosedException
  * After being used, should be closed
  */
 class Requisition(
-	 val requisitionPointer: CPointer<GtkRequisition>
+	val requisitionPointer: CPointer<GtkRequisition>
 ) : Closeable {
 	constructor() : this(gtk_requisition_new()!!)
 
@@ -39,10 +39,7 @@ class Requisition(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#gtk-requisition-copy">gtk_requisition_copy</a>
 	 */
-	fun copy(
-		width: Int? = null,
-		height: Int? = null
-	): Requisition {
+	fun copy(): Requisition {
 		if (isClosed) throw ClosedException("Requisition pointer has been freed")
 		return Requisition(gtk_requisition_copy(requisitionPointer)!!)
 	}
@@ -61,10 +58,10 @@ class Requisition(
 	}
 
 	companion object {
-		 inline fun CPointer<GtkRequisition>?.wrap() =
+		inline fun CPointer<GtkRequisition>?.wrap() =
 			this?.wrap()
 
-		 inline fun CPointer<GtkRequisition>.wrap() =
+		inline fun CPointer<GtkRequisition>.wrap() =
 			Requisition(this)
 
 	}

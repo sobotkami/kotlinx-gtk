@@ -61,3 +61,6 @@ inline fun CArray<UIntVar>.toList(): List<UInt> =
 
 inline fun CArray<UIntVar>.toList(size: Int): List<UInt> =
 	toWrappedList(size) { it.pointed.value }
+
+inline fun CStringList.toList(): List<String> =
+	toWrappedList { it.toKString() }

@@ -43,7 +43,7 @@ class LinkButton(
 	 */
 	var uri: String
 		get() = gtk_link_button_get_uri(linkButtonPointer)!!.toKString()
-		set(value) = gtk_link_button_set_uri(linkButtonPointer, uri)
+		set(value) = gtk_link_button_set_uri(linkButtonPointer, value)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkLinkButton.html#gtk-link-button-get-visited">

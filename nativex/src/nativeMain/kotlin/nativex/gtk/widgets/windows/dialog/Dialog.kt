@@ -3,18 +3,22 @@ package nativex.gtk.widgets.windows.dialog
 import glib.gpointer
 import gobject.GCallback
 import gtk.*
-import kotlinx.cinterop.*
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.asStableRef
+import kotlinx.cinterop.reinterpret
+import kotlinx.cinterop.staticCFunction
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
-import nativex.gtk.widgets.Widget
+import nativex.gobject.addSignalCallback
 import nativex.gtk.widgets.HeaderBar
 import nativex.gtk.widgets.HeaderBar.Companion.wrap
+import nativex.gtk.widgets.Widget
+import nativex.gtk.widgets.box.Box
+import nativex.gtk.widgets.box.Box.Companion.wrap
 import nativex.gtk.widgets.button.Button
 import nativex.gtk.widgets.button.Button.Companion.wrap
 import nativex.gtk.widgets.windows.Window
-import nativex.gtk.widgets.box.Box
-import nativex.gtk.widgets.box.Box.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -101,13 +105,13 @@ open class Dialog(val dialogPointer: CPointer<GtkDialog>) : Window(dialogPointer
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkDialog.html#GtkDialog-close">close</a>
 	 */
 	fun addOnCloseCallback(action: () -> Unit): SignalManager =
-		addSignalCallback(Signals.CLOSE, StableRef.create(action).asCPointer(), staticNoArgGCallback, 0u)
+		addSignalCallback(Signals.CLOSE, action)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkDialog.html#GtkDialog-response">response</a>
 	 */
 	fun addOnResponseCallback(action: (ResponseType) -> Unit): SignalManager =
-		addSignalCallback(Signals.RESPONSE, StableRef.create(action).asCPointer(), staticResponseCallback, 0u)
+		addSignalCallback(Signals.RESPONSE, action, staticResponseCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkDialog.html#GtkDialogFlags">GtkDialogFlags</a>

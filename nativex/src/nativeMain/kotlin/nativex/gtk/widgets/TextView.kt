@@ -1,28 +1,27 @@
 package nativex.gtk.widgets
 
 import glib.gpointer
+import glib.guintVar
 import gobject.GCallback
 import gtk.*
 import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_LINE
 import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_WORD
-import gtk.GtkTextViewLayer.*
-import gtk.GtkTextWindowType.*
+import gtk.GtkTextViewLayer.GTK_TEXT_VIEW_LAYER_ABOVE_TEXT
+import gtk.GtkTextViewLayer.GTK_TEXT_VIEW_LAYER_BELOW_TEXT
 import gtk.GtkWrapMode.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
 import nativex.async.PopulatePopupFunction
 import nativex.async.populatePopupSignalManager
-import nativex.async.signalFlow
 import nativex.async.staticBooleanCallback
+import nativex.async.staticCStringCallback
 import nativex.gdk.Rectangle
 import nativex.gdk.Rectangle.Companion.wrap
-import nativex.glib.MutableWrappedKList.Companion.toList
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.glib.toWrappedList
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
-import nativex.gobject.connectSignal
+import nativex.gobject.addSignalCallback
 import nativex.gtk.Scrollable
 import nativex.gtk.TextBuffer
 import nativex.gtk.TextIter
@@ -30,7 +29,8 @@ import nativex.gtk.TextIter.Companion.wrap
 import nativex.gtk.TextMark
 import nativex.gtk.common.enums.DeleteType
 import nativex.gtk.common.enums.ScrollStep
-import nativex.gtk.common.events.ExtenedMoveCursorEvent
+import nativex.gtk.common.events.ExtendedMoveCursorFunction
+import nativex.gtk.common.events.staticExtendedMoveCursorFunction
 
 /**
  * kotlinx-gtk
@@ -202,26 +202,23 @@ class TextView(
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val backSpaceSignal: Flow<Unit> by signalFlow(Signals.BACKSPACE)
+	fun addOnBackspaceCallback(action: () -> Unit) =
+		addSignalCallback(Signals.BACKSPACE, action)
 
 	/**
 	 * <a href=""></a>
 	 */
 	fun addOnCopyClipboardCallback(action: () -> Unit): SignalManager =
-		SignalManager(
-			textViewPointer,
-			textViewPointer.connectSignal(
-				Signals.COPY_CLIPBOARD,
-				callbackWrapper = StableRef.create(action).asCPointer()
-			)
+		addSignalCallback(
+			Signals.COPY_CLIPBOARD,
+			action
 		)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val cutClipBoardSignal: Flow<Unit> by signalFlow(Signals.CUT_CLIPBOARD)
+	fun addOnCutClipboardCallback(action: () -> Unit) =
+		addSignalCallback(Signals.CUT_CLIPBOARD, action)
 
 	/**
 	 * <a href=""></a>
@@ -234,11 +231,8 @@ class TextView(
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val deleteFromCursorSignal: Flow<DeleteFromCursorEvent> by signalFlow(
-		Signals.DELETE_FROM_CURSOR,
-		staticDeleteFromCursorCallback
-	)
+	fun addOnDeleteFromCursorCallback(action: (DeleteFromCursorEvent) -> Unit) =
+		addSignalCallback(Signals.DELETE_FROM_CURSOR, action, staticDeleteFromCursorCallback)
 
 	data class ExtendSelectionEvent(
 		val granularity: TextExtendSelection,
@@ -250,40 +244,26 @@ class TextView(
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val extentSelectionSignal: Flow<ExtendSelectionEvent> by signalFlow(
-		Signals.EXTEND_SELECTION,
-		staticExtendSelectionCallback
-	)
+	fun addOnExtendSelectionCallback(action: (ExtendSelectionEvent) -> Unit) =
+		addSignalCallback(Signals.EXTEND_SELECTION, action, staticExtendSelectionCallback)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val insertAtCursorSignal: Flow<Char> by lazy {
-		//callbackSignalFlow(
-		//	Signals.INSERT_AT_CURSOR,
-		//	staticInsertAtCursorCallback
-		//)
-		TODO("How to figure out char")
-	}
-
+	fun addOnInsertAtCursorCallback(action: (String) -> Unit) =
+		addSignalCallback(Signals.INSERT_AT_CURSOR, action, staticCStringCallback)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val insertEmojiSignal: Flow<Unit> by signalFlow(Signals.INSERT_EMOJI)
-
+	fun addOnInsertEmojiCallback(action: () -> Unit) =
+		addSignalCallback(Signals.INSERT_EMOJI, action)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveCursorSignal: Flow<ExtenedMoveCursorEvent> by signalFlow(
-		Signals.MOVE_CURSOR,
-		ExtenedMoveCursorEvent.staticMoveCursorCallback
-	)
+	fun addOnMoveCursorCallback(action: ExtendedMoveCursorFunction) =
+		addSignalCallback(Signals.MOVE_CURSOR, action, staticExtendedMoveCursorFunction)
 
 	data class MoveViewPortEvent(
 		val step: ScrollStep,
@@ -293,15 +273,14 @@ class TextView(
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveViewPortSignal: Flow<MoveViewPortEvent> by signalFlow(Signals.MOVE_VIEWPORT, staticMoveViewportCallback)
-
+	fun addOnMoveViewPortCallback(action: (MoveViewPortEvent) -> Unit) =
+		addSignalCallback(Signals.MOVE_VIEWPORT, action,staticMoveViewportCallback)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val pasteClipboardSignal: Flow<Unit> by signalFlow(Signals.PASTE_CLIPBOARD)
+	fun addOnPasteClipboardCallback(action: () -> Unit) =
+		addSignalCallback(Signals.PASTE_CLIPBOARD,action)
 
 	/**
 	 * <a href=""></a>
@@ -312,38 +291,33 @@ class TextView(
 	/**
 	 * <a href=""></a>
 	 */
-	val preeditChangedSignal: Flow<Char>
-		get() {
-			TODO("Figure out C Char")
-		}
+	fun addOnPreeditChangedCallback(action: (String) -> Unit) =
+		addSignalCallback(Signals.PREEDIT_CHANGED, action, staticCStringCallback)
 
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Boolean> by signalFlow(Signals.SELECT_ALL, staticBooleanCallback)
-
-
-	/**
-	 * <a href=""></a>
-	 */
-	@ExperimentalCoroutinesApi
-	val setAnchorSignal: Flow<Unit> by signalFlow(Signals.SET_ANCHOR)
-
+	fun addOnSelectAllCallback(action: (Boolean) -> Unit) =
+		addSignalCallback(Signals.SELECT_ALL, action, staticBooleanCallback)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val toggleCursorVisibleSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_CURSOR_VISIBLE)
-
+	fun addOnSetAnchorCallback(action: () -> Unit) =
+		addSignalCallback(Signals.SET_ANCHOR,action)
 
 	/**
 	 * <a href=""></a>
 	 */
-	@ExperimentalCoroutinesApi
-	val toggleOverwriteSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_OVERWRITE)
+	fun addOnToggleCursorVisibleCallback(action: () -> Unit) =
+		addSignalCallback(Signals.TOGGLE_CURSOR_VISIBLE,action)
+
+	/**
+	 * <a href=""></a>
+	 */
+	fun addOnToggleOverwriteCallback(action: () -> Unit) =
+		addSignalCallback(Signals.TOGGLE_OVERWRITE,action)
 
 	/**
 	 * <a href=""></a>
@@ -351,12 +325,10 @@ class TextView(
 	enum class Layer(
 		val gtk: GtkTextViewLayer
 	) {
-		BELOW_TEXT( GTK_TEXT_VIEW_LAYER_BELOW_TEXT),
-		ABOVE_TEXT( GTK_TEXT_VIEW_LAYER_ABOVE_TEXT);
+		BELOW_TEXT(GTK_TEXT_VIEW_LAYER_BELOW_TEXT),
+		ABOVE_TEXT(GTK_TEXT_VIEW_LAYER_ABOVE_TEXT);
 
 		companion object {
-			fun valueOf(key: Int) =
-				values().find { it.key == key }
 
 			fun valueOf(gtk: GtkTextViewLayer) =
 				values().find { it.gtk == gtk }
@@ -377,9 +349,6 @@ class TextView(
 		BOTTOM(GTK_TEXT_WINDOW_BOTTOM);
 
 		companion object {
-			fun valueOf(key: Int) =
-				values()
-					.find { it.key == key }
 
 			fun valueOf(gtk: GtkTextWindowType) =
 				values()
@@ -435,11 +404,15 @@ class TextView(
 
 		constructor() : this(gtk_text_child_anchor_new()!!)
 
-		val widgets: List<Widget> =
-			gtk_text_child_anchor_get_widgets(pointer)!!.toList(
-				{ reinterpret<GtkWidget>().wrap() },
-				{ widgetPointer }
-			)
+		val widgets: List<Widget>
+			get() = memScoped {
+				val outLen = cValue<guintVar>()
+				gtk_text_child_anchor_get_widgets(
+					pointer,
+					outLen
+				)!!.toWrappedList(outLen.ptr.pointed.value.toInt()) { it.wrap() }
+			}
+
 	}
 
 	companion object {

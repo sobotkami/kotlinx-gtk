@@ -37,6 +37,7 @@ compilerOpts.linux_x64 = \
 
 # pkg-config --libs gtk4
 linkerOpts.linux =\
+    -L/usr/local/lib \
     -lgtk-4 \
     -lpangocairo-1.0 \
     -lpango-1.0 \
@@ -49,3 +50,5 @@ linkerOpts.linux =\
     -lgio-2.0 \
     -lgobject-2.0 \
     -lglib-2.0
+
+linkerOpts.linux_x64 = -L/usr/lib/x86_64-linux-gnu

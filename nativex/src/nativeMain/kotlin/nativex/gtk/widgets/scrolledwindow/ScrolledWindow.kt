@@ -1,4 +1,5 @@
 package nativex.gtk.widgets.scrolledwindow
+
 import glib.gboolean
 import glib.gpointer
 import gobject.GCallback
@@ -7,19 +8,16 @@ import gtk.GtkCornerType.*
 import gtk.GtkPolicyType.*
 import gtk.GtkPolicyType.Var
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.glib.bool
 import nativex.glib.gtk
 import nativex.gobject.SignalManager
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gobject.connectSignal
 import nativex.gtk.Adjustment
 import nativex.gtk.common.enums.DirectionType
 import nativex.gtk.common.enums.PositionType
 import nativex.gtk.common.enums.ScrollType
-import nativex.gtk.common.enums.ShadowType
 import nativex.gtk.widgets.Widget
 
 /**
@@ -30,7 +28,7 @@ import nativex.gtk.widgets.Widget
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html">GtkScrolledWindow</a>
  */
 class ScrolledWindow(
-	 val scrolledWindowPointer: CPointer<GtkScrolledWindow>
+	val scrolledWindowPointer: CPointer<GtkScrolledWindow>
 ) : Widget(scrolledWindowPointer.reinterpret()) {
 
 	/**
@@ -156,7 +154,6 @@ class ScrolledWindow(
 			scrolledWindowPointer,
 			value.gtk
 		)
-
 
 
 	/**
@@ -298,7 +295,7 @@ class ScrolledWindow(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			 fun valueOf(gtk: GtkPolicyType) =
+			fun valueOf(gtk: GtkPolicyType) =
 				values().find { it.gtk == gtk }
 		}
 	}
@@ -324,7 +321,7 @@ class ScrolledWindow(
 			fun valueOf(key: Int) =
 				values().find { it.key == key }
 
-			 fun valueOf(gtk: GtkCornerType) =
+			fun valueOf(gtk: GtkCornerType) =
 				values().find { it.gtk == gtk }
 		}
 	}
@@ -333,29 +330,20 @@ class ScrolledWindow(
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#GtkScrolledWindow-edge-overshot">edge-overshot</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val edgeOvershotSignal: Flow<PositionType> by signalFlow(
-		Signals.EDGE_OVERSHOT,
-		PositionType.staticPositionTypeCallback
-	)
+	fun addOnEdgeOvershotCallback(action: (PositionType) -> Unit) =
+		addSignalCallback(Signals.EDGE_OVERSHOT, action, PositionType.staticPositionTypeCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#GtkScrolledWindow-edge-reached">edge-reached</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val edgeReachedSignal: Flow<PositionType> by signalFlow(
-		Signals.EDGE_REACHED,
-		PositionType.staticPositionTypeCallback
-	)
+	fun addOnEdgeReachedCallback(action: (PositionType) -> Unit) =
+		addSignalCallback(Signals.EDGE_REACHED, action, PositionType.staticPositionTypeCallback)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScrolledWindow.html#GtkScrolledWindow-move-focus-out">move-focus-out</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val moveFocusOutSignal: Flow<DirectionType> by signalFlow(
-		Signals.MOVE_FOCUS_OUT,
-		DirectionType.staticDirectionTypeCallback
-	)
+	fun addOnMoveFocusOutCallback(action: (DirectionType) -> Unit) =
+		addSignalCallback(Signals.MOVE_FOCUS_OUT, action, DirectionType.staticDirectionTypeCallback)
 
 	private var scrollChildManager: SignalManager? = null
 

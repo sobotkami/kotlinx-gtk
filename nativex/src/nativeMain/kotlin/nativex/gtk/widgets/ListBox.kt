@@ -4,15 +4,13 @@ import glib.gpointer
 import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
-import nativex.gobject.KGObject
 import nativex.gio.ListModel
 import nativex.glib.asKSequence
 import nativex.glib.bool
 import nativex.glib.gtk
+import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 import nativex.gobject.staticDestroyStableRefFunction
 import nativex.gtk.Adjustment
 import nativex.gtk.common.enums.SelectionMode
@@ -24,7 +22,7 @@ import nativex.gtk.common.events.MoveCursorEvent
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html">GtkListBox</a>
  */
 class ListBox(
-	 val listBoxPointer: CPointer<GtkListBox>
+	val listBoxPointer: CPointer<GtkListBox>
 ) : Widget(listBoxPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-new">gtk_list_box_new</a>
@@ -233,7 +231,7 @@ class ListBox(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-row-new">GtkListBoxRow</a>
 	 */
 	class Row(
-		 val rowPointer: CPointer<GtkListBoxRow>
+		val rowPointer: CPointer<GtkListBoxRow>
 	) : Widget(rowPointer.reinterpret()) {
 		/**
 		 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkListBox.html#gtk-list-box-row-new">gtk_list_box_row_new</a>
@@ -296,60 +294,55 @@ class ListBox(
 
 	}
 
-	@ExperimentalCoroutinesApi
-	val activateCursorRowSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE_CURSOR_ROW)
+	fun addOnActivateCursorRowCallback(action: () -> Unit) =
+		addSignalCallback(Signals.ACTIVATE_CURSOR_ROW, action)
 
-	@ExperimentalCoroutinesApi
-	val moveCursorSignal: Flow<MoveCursorEvent> by signalFlow(Signals.MOVE_CURSOR, MoveCursorEvent.staticCallback)
+	fun addOnMoveCursorCallback(action: (MoveCursorEvent) -> Unit) =
+		addSignalCallback(Signals.MOVE_CURSOR, action, MoveCursorEvent.staticCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowActivatedSignal: Flow<Row> by signalFlow(Signals.ROW_ACTIVATED, staticRowEventCallback)
+	fun addOnRowActivatedCallback(action: (Row) -> Unit) =
+		addSignalCallback(Signals.ROW_ACTIVATED, action, staticRowEventCallback)
 
-	@ExperimentalCoroutinesApi
-	val rowSelectedSignal: Flow<Row> by signalFlow(Signals.ROW_SELECTED, staticRowEventCallback)
+	fun addOnRowSelectedCallback(action: (Row) -> Unit) =
+		addSignalCallback(Signals.ROW_SELECTED, action, staticRowEventCallback)
 
-	@ExperimentalCoroutinesApi
-	val selectAllSignal: Flow<Unit> by signalFlow(Signals.SELECT_ALL)
+	fun addOnSelectAllCallback(action: () -> Unit) = addSignalCallback(Signals.SELECT_ALL, action)
 
-	@ExperimentalCoroutinesApi
-	val selectedRowsChangedSignal: Flow<Unit> by signalFlow(Signals.SELECTED_ROWS_CHANGED)
+	fun addOnSelectedRowsChangedCallback(action: () -> Unit) = addSignalCallback(Signals.SELECTED_ROWS_CHANGED, action)
 
-	@ExperimentalCoroutinesApi
-	val toggleCursorRowSignal: Flow<Unit> by signalFlow(Signals.TOGGLE_CURSOR_ROW)
+	fun addOnToggleCursorRowCallback(action: () -> Unit) = addSignalCallback(Signals.TOGGLE_CURSOR_ROW, action)
 
-	@ExperimentalCoroutinesApi
-	val unselectAllSignal: Flow<Unit> by signalFlow(Signals.UNSELECT_ALL)
+	fun addOnUnselectAllCallback(action: () -> Unit) = addSignalCallback(Signals.UNSELECT_ALL, action)
 
-	@ExperimentalCoroutinesApi
-	val activateSignal: Flow<Unit> by signalFlow(Signals.ACTIVATE)
+	fun addOnActivateCallback(action: () -> Unit) = addSignalCallback(Signals.ACTIVATE, action)
 
 	companion object {
-		 val staticRowEventCallback: GCallback =
+		val staticRowEventCallback: GCallback =
 			staticCFunction { _: CPointer<GtkListBox>, row: CPointer<GtkListBoxRow>, data: gpointer ->
-				data.asStableRef<(Row)->Unit>().get().invoke(Row(row))
+				data.asStableRef<(Row) -> Unit>().get().invoke(Row(row))
 				Unit
 			}.reinterpret()
 
-		 val staticListBoxFilterFunction: GtkListBoxFilterFunc = staticCFunction { row, data ->
+		val staticListBoxFilterFunction: GtkListBoxFilterFunc = staticCFunction { row, data ->
 			data?.asStableRef<ListBoxFilterFunction>()?.get()?.invoke(Row(row!!))?.gtk ?: 0
 		}
 
-		 val staticListBoxForEachFunction: GtkListBoxForeachFunc = staticCFunction { _, row, data ->
+		val staticListBoxForEachFunction: GtkListBoxForeachFunc = staticCFunction { _, row, data ->
 			data?.asStableRef<ListBoxForEachFunction>()?.get()?.invoke(Row(row!!))
 			Unit
 		}
 
-		 val staticListBoxSortFunction: GtkListBoxSortFunc = staticCFunction { row1, row2, data ->
+		val staticListBoxSortFunction: GtkListBoxSortFunc = staticCFunction { row1, row2, data ->
 			data?.asStableRef<ListBoxSortFunction>()?.get()?.invoke(Row(row1!!), Row(row2!!)) ?: 0
 		}
 
-		 val staticListBoxUpdateHeaderFunction: GtkListBoxUpdateHeaderFunc =
+		val staticListBoxUpdateHeaderFunction: GtkListBoxUpdateHeaderFunc =
 			staticCFunction { row, before, data ->
 				data?.asStableRef<ListBoxUpdateHeaderFunction>()?.get()?.invoke(Row(row!!), Row(before!!))
 				Unit
 			}
 
-		 val staticListBoxCreateWidgetFunction: GtkListBoxCreateWidgetFunc = staticCFunction { item, data ->
+		val staticListBoxCreateWidgetFunction: GtkListBoxCreateWidgetFunc = staticCFunction { item, data ->
 			data?.asStableRef<ListBoxCreateWidgetFunction>()?.get()
 				?.invoke(KGObject(item!!.reinterpret()))?.widgetPointer
 		}

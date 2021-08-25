@@ -37,8 +37,8 @@ class RecentManager(
 	fun addItem(uri: String): Boolean =
 		gtk_recent_manager_add_item(managerPointer, uri).bool
 
-	fun addFull(uri: String, recentData: Any): Boolean =
-		gtk_recent_manager_add_full(managerPointer, uri, null).bool
+	fun addFull(uri: String, recentData: KRecentData): Boolean =
+		gtk_recent_manager_add_full(managerPointer, uri, RecentData(recentData).pointer).bool
 
 	fun removeItem(uri: String): Boolean = memScoped {
 		val err = allocPointerTo<GError>().ptr
@@ -233,14 +233,14 @@ class RecentManager(
 		constructor () : this(memScoped { cValue<GtkRecentData>().ptr })
 	}
 
-	enum class Error(val key: Int, val gtk: GtkRecentManagerError) {
-		NOT_FOUND(0, GTK_RECENT_MANAGER_ERROR_NOT_FOUND),
-		INVALID_URI(1, GTK_RECENT_MANAGER_ERROR_INVALID_URI),
-		INVALID_ENCODING(2, GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING),
-		NOT_REGISTERED(3, GTK_RECENT_MANAGER_ERROR_NOT_REGISTERED),
-		ERROR_READ(4, GTK_RECENT_MANAGER_ERROR_READ),
-		ERROR_WRITE(5, GTK_RECENT_MANAGER_ERROR_WRITE),
-		ERROR_UNKNOWN(6, GTK_RECENT_MANAGER_ERROR_UNKNOWN);
+	enum class Error(val gtk: GtkRecentManagerError) {
+		NOT_FOUND(GTK_RECENT_MANAGER_ERROR_NOT_FOUND),
+		INVALID_URI(GTK_RECENT_MANAGER_ERROR_INVALID_URI),
+		INVALID_ENCODING(GTK_RECENT_MANAGER_ERROR_INVALID_ENCODING),
+		NOT_REGISTERED(GTK_RECENT_MANAGER_ERROR_NOT_REGISTERED),
+		ERROR_READ(GTK_RECENT_MANAGER_ERROR_READ),
+		ERROR_WRITE(GTK_RECENT_MANAGER_ERROR_WRITE),
+		ERROR_UNKNOWN(GTK_RECENT_MANAGER_ERROR_UNKNOWN);
 
 		companion object {
 			fun valueOf(gtk: GtkRecentManagerError) =

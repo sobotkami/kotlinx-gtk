@@ -2,12 +2,10 @@ package nativex.gdk
 
 import gtk.*
 import kotlinx.cinterop.*
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import nativex.async.signalFlow
 import nativex.gdk.FrameTimings.Companion.wrap
 import nativex.gobject.KGObject
 import nativex.gobject.Signals
+import nativex.gobject.addSignalCallback
 
 /**
  * kotlinx-gtk
@@ -45,45 +43,44 @@ class FrameClock(
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-after-paint">after-paint</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val afterPaintSignal: Flow<Unit> by signalFlow(Signals.AFTER_PAINT)
-
+	fun addOnAfterPaintCallback(action: () -> Unit) =
+		addSignalCallback(Signals.AFTER_PAINT, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-before-paint">before-paint</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val beforePaintSignal: Flow<Unit> by signalFlow(Signals.BEFORE_PAINT)
+	fun addOnBeforePaintCallback(action: () -> Unit) =
+		addSignalCallback(Signals.BEFORE_PAINT, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-flush-events">flush-events</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val flushEvents: Flow<Unit> by signalFlow(Signals.FLUSH_EVENTS)
+	fun addOnFlushEventsCallback(action: () -> Unit) =
+		addSignalCallback(Signals.FLUSH_EVENTS, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-layout">layout</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val layoutSignal: Flow<Unit> by signalFlow(Signals.LAYOUT)
+	fun addOnLayoutCallback(action: () -> Unit) =
+		addSignalCallback(Signals.LAYOUT, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-paint">paint</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val paintSignal: Flow<Unit> by signalFlow(Signals.PAINT)
+	fun addOnPaintCallback(action: () -> Unit) =
+		addSignalCallback(Signals.PAINT, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-resume-events">resume-events</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val resumeEventsSignal: Flow<Unit> by signalFlow(Signals.RESUME_EVENTS)
+	fun addOnResumeEventsCallback(action: () -> Unit) =
+		addSignalCallback(Signals.RESUME_EVENTS, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#GdkFrameClock-update">update</a>
 	 */
-	@ExperimentalCoroutinesApi
-	val updateSignal: Flow<Unit> by signalFlow(Signals.UPDATE)
+	fun addOnUpdateCallback(action: () -> Unit) =
+		addSignalCallback(Signals.UPDATE, action)
 
 	/**
 	 * <a href="https://developer.gnome.org/gdk3/stable/GdkFrameClock.html#gdk-frame-clock-request-phase">gdk_frame_clock_request_phase</a>
@@ -155,16 +152,16 @@ class FrameClock(
 
 		companion object {
 
-			 fun valueOf(gdk: GdkFrameClockPhase) =
+			fun valueOf(gdk: GdkFrameClockPhase) =
 				values().find { it.gdk == gdk }!!
 		}
 	}
 
-	companion object{
-		 inline fun CPointer<GdkFrameClock>?.wrap(): FrameClock? =
+	companion object {
+		inline fun CPointer<GdkFrameClock>?.wrap(): FrameClock? =
 			this?.wrap()
 
-		 inline fun CPointer<GdkFrameClock>.wrap(): FrameClock =
+		inline fun CPointer<GdkFrameClock>.wrap(): FrameClock =
 			FrameClock(this)
 	}
 }
