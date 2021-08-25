@@ -2,12 +2,10 @@
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import nativex.async.launchDefault
-import nativex.gio.dsl.*
-import nativex.glib.Variant
-import nativex.gtk.dsl.*
-import org.gtk.dsl.gtk.application
-import org.gtk.dsl.gtk.x
+import org.gnome.gtkx.coroutines.launchDefault
+import org.gtk.dsl.gio.*
+import org.gtk.dsl.gtk.*
+import org.gtk.glib.Variant
 import kotlin.system.measureTimeMillis
 
 /**
@@ -126,7 +124,7 @@ fun main() {
 					//entryPurposeTest()
 					//entryHintTest()
 					//entryCallbackTest()
-				}.showAll()
+				}.show()
 			}.also {
 				println("Created UI in $it ms")
 			}

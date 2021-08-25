@@ -1,9 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.SearchBar
-import nativex.gtk.widgets.box.Box
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.widgets.SearchBar
+import org.gtk.gtk.widgets.box.Box
 
 /**
  * kotlinx-gtk

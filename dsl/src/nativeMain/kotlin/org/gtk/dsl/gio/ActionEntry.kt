@@ -1,7 +1,7 @@
 package org.gtk.dsl.gio
 
-import nativex.gio.ActionMap
-import nativex.gio.ActionMapEntryFunction
+import org.gtk.gio.ActionMap
+import org.gtk.gio.ActionMapEntryFunction
 
 
 fun actionEntry(

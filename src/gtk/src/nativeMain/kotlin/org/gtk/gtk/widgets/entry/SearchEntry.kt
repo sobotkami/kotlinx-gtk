@@ -1,5 +1,6 @@
 package org.gtk.gtk.widgets.entry
 
+import gtk.GtkEditable
 import gtk.GtkSearchEntry
 import gtk.gtk_search_entry_new
 import kotlinx.cinterop.CPointer
@@ -8,6 +9,7 @@ import kotlinx.cinterop.reinterpret
 import org.gtk.gobject.SignalManager
 import org.gtk.gobject.Signals
 import org.gtk.gobject.connectSignal
+import org.gtk.gtk.widgets.Editable
 
 /**
  * kotlinx-gtk
@@ -16,7 +18,8 @@ import org.gtk.gobject.connectSignal
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html">GtkSearchEntry</a>
  */
-class SearchEntry(val searchEntryPointer: CPointer<GtkSearchEntry>) : Entry(searchEntryPointer.reinterpret()) {
+class SearchEntry(val searchEntryPointer: CPointer<GtkSearchEntry>) : Entry(searchEntryPointer.reinterpret()),
+	Editable {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html#gtk-search-entry-new">
@@ -75,4 +78,6 @@ class SearchEntry(val searchEntryPointer: CPointer<GtkSearchEntry>) : Entry(sear
 				callbackWrapper = StableRef.create(action).asCPointer()
 			)
 		)
+
+	override val editablePointer: CPointer<GtkEditable> by lazy { searchEntryPointer.reinterpret() }
 }

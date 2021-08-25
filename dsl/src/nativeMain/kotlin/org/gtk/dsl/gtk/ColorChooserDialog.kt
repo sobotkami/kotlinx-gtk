@@ -1,8 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.widgets.windows.Window
-import nativex.gtk.widgets.windows.dialog.ColorChooserDialog
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.widgets.windows.Window
+import org.gtk.gtk.widgets.windows.dialog.ColorChooserDialog
 
 /**
  * kotlinx-gtk

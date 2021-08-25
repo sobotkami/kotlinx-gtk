@@ -1,10 +1,11 @@
-import nativex.gtk.common.enums.Orientation
+
 import org.gtk.dsl.gtk.box
 import org.gtk.dsl.gtk.frame
-import nativex.gtk.widgets.windows.Window
-import nativex.gtk.widgets.entry.Entry
-import nativex.gtk.widgets.entry.Entry.InputHints.*
-import nativex.gtk.widgets.entry.Entry.InputHints.Companion.and
+import org.gtk.gtk.common.enums.Orientation
+import org.gtk.gtk.widgets.entry.Entry
+import org.gtk.gtk.widgets.entry.Entry.InputHints.*
+import org.gtk.gtk.widgets.entry.Entry.InputHints.Companion.and
+import org.gtk.gtk.widgets.windows.Window
 
 /**
  * Test an [Entry] purpose
@@ -15,77 +16,77 @@ internal fun Window.entryPurposeTest() =
 			Entry().apply {
 				purpose = Entry.InputPurpose.FREE_FORM
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Alpha") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.ALPHA
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Digits") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.DIGITS
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Number") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.NUMBER
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Phone") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.PHONE
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("URL") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.URL
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Email") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.FREE_FORM
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Name") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.NAME
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Password") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.PASSWORD
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Pin") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.PIN
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Terminal") {
 			Entry().apply {
 				purpose = Entry.InputPurpose.TERMINAL
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 	}
@@ -99,77 +100,77 @@ internal fun Window.entryHintTest() =
 			Entry().apply {
 				setInputHint(SPELLCHECK)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("No Spellcheck") {
 			Entry().apply {
 				setInputHint(NO_SPELLCHECK)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Word completion") {
 			Entry().apply {
 				setInputHint(WORD_COMPLETION)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Lowercase") {
 			Entry().apply {
 				setInputHint(LOWERCASE)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Uppercase chars") {
 			Entry().apply {
 				setInputHint(UPPERCASE_CHARS)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Uppercase words") {
 			Entry().apply {
 				setInputHint(UPPERCASE_WORDS)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Uppercase sentence") {
 			Entry().apply {
 				setInputHint(UPPERCASE_SENTENCES)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Inhibit OSK") {
 			Entry().apply {
 				setInputHint(INHIBIT_OSK)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Vertical Writing") {
 			Entry().apply {
 				setInputHint(VERTICAL_WRITING)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("Emoji") {
 			Entry().apply {
 				setInputHint(EMOJI)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 		frame("No emoji") {
 			Entry().apply {
 				setInputHint(NO_EMOJI)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 
@@ -177,7 +178,7 @@ internal fun Window.entryHintTest() =
 			Entry().apply {
 				setInputHints(EMOJI and SPELLCHECK and UPPERCASE_SENTENCES)
 			}.also {
-				add(it)
+				append(it)
 			}
 		}
 
@@ -232,7 +233,7 @@ internal fun Window.entryCallbackTest() {
 				println("Entry: toggle-overwrite")
 			}
 		}.also {
-			add(it)
+			append(it)
 		}
 	}
 }

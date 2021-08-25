@@ -1,8 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.widgets.box.Box
-import nativex.gtk.widgets.frame.Frame
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.widgets.box.Box
+import org.gtk.gtk.widgets.frame.Frame
 
 /**
  * kotlinx-gtk
@@ -11,21 +11,6 @@ import nativex.gtk.widgets.frame.Frame
 @GtkDsl
 fun Box.frame(
 	label: String? = null,
+	append: Boolean = true,
 	frameBuilder: Frame.() -> Unit = {}
-) =
-	Frame(label).apply(frameBuilder).also { append(it) }
-
-
-@GtkDsl
-inline fun BoxPackable.frame(
-	label: String? = null,
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	frameBuilder: Frame.() -> Unit,
-) = pack(
-	Frame(label).apply(frameBuilder),
-	expand,
-	fill,
-	padding
-)
+) = Frame(label).apply(frameBuilder).also { if (append) append(it) else prepend(it) }

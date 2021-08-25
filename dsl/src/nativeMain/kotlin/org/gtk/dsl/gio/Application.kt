@@ -1,30 +1,30 @@
 package org.gtk.dsl.gio
 
-import org.gtk.GtkDsl
-import nativex.gio.Application
-import nativex.gio.Icon
-import nativex.gio.Notification
+import org.gtk.dsl.GtkDsl
+import org.gtk.gio.Application
+import org.gtk.gio.Icon
+import org.gtk.gio.Notification
 
 
-@org.gtk.GtkDsl
+@GtkDsl
 inline fun Application.onStartup(noinline onStartup: () -> Unit) {
 	addOnStartupCallback(onStartup)
 }
 
 
-@org.gtk.GtkDsl
+@GtkDsl
 inline fun Application.onShutdown(noinline onShutdown: () -> Unit) {
 	addOnShutdownCallback(onShutdown)
 }
 
 
-@org.gtk.GtkDsl
+@GtkDsl
 inline fun Application.onNameLost(noinline onNameLost: () -> Unit) {
 	addOnNameLostCallback(onNameLost)
 }
 
 
-@org.gtk.GtkDsl
+@GtkDsl
 /**
  * Invokes [uiBuilder] when [Application.onActivate] occurs
  *
@@ -38,7 +38,7 @@ inline fun <T> T.onCreateUI(crossinline uiBuilder: T.() -> Unit) where T : Appli
 }
 
 
-@org.gtk.GtkDsl
+@GtkDsl
 inline fun Application.sendNotification(
 	title: String,
 	id: String? = null,

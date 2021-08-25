@@ -1,10 +1,11 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.common.enums.Orientation
-import nativex.gtk.common.enums.PositionType
-import nativex.gtk.widgets.*
-import nativex.gtk.widgets.box.Box
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.common.enums.Orientation
+import org.gtk.gtk.common.enums.PositionType
+import org.gtk.gtk.widgets.*
+import org.gtk.gtk.widgets.box.Box
+import org.gtk.gtk.widgets.windows.Window
 
 
 @GtkDsl
@@ -13,6 +14,22 @@ inline fun box(
 	spacing: Int,
 	buttonBoxBuilder: Box.() -> Unit = {}
 ): Box = Box(orientation, spacing).apply(buttonBoxBuilder)
+
+
+@GtkDsl
+inline fun Window.box(
+	orientation: Orientation,
+	spacing: Int,
+	buttonBoxBuilder: Box.() -> Unit = {}
+): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also { child = it }
+
+
+@GtkDsl
+inline fun Box.box(
+	orientation: Orientation,
+	spacing: Int,
+	buttonBoxBuilder: Box.() -> Unit = {}
+): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also { append(it) }
 
 
 @GtkDsl
@@ -49,35 +66,6 @@ inline fun ActionBarPackEnd.box(
 	buttonBoxBuilder: Box.() -> Unit = {}
 ) = Box(orientation, spacing).apply(buttonBoxBuilder).also {
 	packEnd(it)
-}
-
-/**
- * Similar to [SimplePacking], except specifically for [Box]
- *
- * @see SimplePacking
- */
-interface BoxPackable {
-
-	fun pack(
-		child: Widget,
-		expand: Boolean,
-		fill: Boolean,
-		padding: UInt
-	)
-}
-
-
-@GtkDsl
-
-inline fun BoxPackable.box(
-	orientation: Orientation,
-	spacing: Int,
-	expand: Boolean,
-	fill: Boolean,
-	padding: UInt,
-	buttonBoxBuilder: Box.() -> Unit
-): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also {
-	pack(it, expand, fill, padding)
 }
 
 @GtkDsl

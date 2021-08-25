@@ -1,8 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.HeaderBar
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.widgets.HeaderBar
+import org.gtk.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk

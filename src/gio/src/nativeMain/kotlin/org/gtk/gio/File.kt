@@ -2,6 +2,7 @@ package org.gtk.gio
 
 import gio.GFile
 import gio.g_file_load_contents
+import gio.g_file_peek_path
 import glib.GError
 import glib.g_free
 import kotlinx.cinterop.*
@@ -18,6 +19,9 @@ import org.gtk.gobject.KGObject
 class File(
 	val filePointer: CPointer<GFile>
 ) : KGObject(filePointer.reinterpret()) {
+
+	fun peekPath(): String? =
+		g_file_peek_path(filePointer)?.toKString()
 
 	@Throws(KGError::class)
 	fun loadContents(cancellable: KGCancellable? = null): String? {

@@ -1,8 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.widgets.box.Box
-import nativex.gtk.widgets.button.scalable.ScaleButton
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.widgets.box.Box
+import org.gtk.gtk.widgets.button.scalable.ScaleButton
 
 /**
  * kotlinx-gtk

@@ -1,14 +1,14 @@
 package org.gtk.dsl.gio
 
-import org.gtk.GtkDsl
-import nativex.gio.Icon
-import nativex.gio.Notification
+import org.gtk.dsl.GtkDsl
+import org.gtk.gio.Icon
+import org.gtk.gio.Notification
 
 /**
  * kotlinx-gtk
  * 14 / 04 / 2021
  */
-@org.gtk.GtkDsl
+@GtkDsl
 inline fun notification(
 	title: String,
 	body: String = "",

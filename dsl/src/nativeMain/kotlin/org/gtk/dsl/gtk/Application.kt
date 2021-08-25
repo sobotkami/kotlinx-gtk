@@ -1,9 +1,9 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gio.Application.Flags
-import nativex.gtk.Application
-import nativex.gtk.widgets.windows.Window
+import org.gtk.dsl.GtkDsl
+import org.gtk.gio.Application.Flags
+import org.gtk.gtk.Application
+import org.gtk.gtk.widgets.windows.Window
 
 /**
  * kotlinx-gtk

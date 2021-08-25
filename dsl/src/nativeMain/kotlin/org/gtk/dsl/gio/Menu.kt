@@ -1,24 +1,24 @@
 package org.gtk.dsl.gio
 
-import org.gtk.GtkDsl
-import nativex.gio.Menu
-import nativex.gio.MenuModel
-import nativex.gtk.Application
+import org.gtk.dsl.GtkDsl
+import org.gtk.gio.Menu
+import org.gtk.gio.MenuModel
+import org.gtk.gtk.Application
 
 /**
  * kotlinx-gtk
  * 28 / 03 / 2021
  */
-@org.gtk.GtkDsl
+@GtkDsl
 fun Application.menuBar(menuBuilder: Menu.() -> Unit): Menu =
 	Menu().apply(menuBuilder).also { menuBar = it }
 
-@org.gtk.GtkDsl
+@GtkDsl
 fun menu(
 	builder: Menu.() -> Unit
 ): Menu = Menu().apply(builder)
 
-@org.gtk.GtkDsl
+@GtkDsl
 fun Menu.item(
 	label: String,
 	detailedAction: String? = null,
@@ -26,7 +26,7 @@ fun Menu.item(
 ): Menu.Item =
 	Menu.Item(label, detailedAction).apply(builder).also { appendItem(it) }
 
-@org.gtk.GtkDsl
+@GtkDsl
 fun Menu.submenu(
 	label: String?,
 	menu: MenuModel,
@@ -34,7 +34,7 @@ fun Menu.submenu(
 ): Menu.Item.Submenu =
 	Menu.Item.Submenu(label, menu).apply(builder).also { appendItem(it) }
 
-@org.gtk.GtkDsl
+@GtkDsl
 fun Menu.section(
 	label: String?,
 	menu: MenuModel,

@@ -1,12 +1,11 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.TreeModel
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.Grid
-import nativex.gtk.widgets.box.Box
-import nativex.gtk.widgets.combobox.ComboBox
-import nativex.gtk.widgets.combobox.ComboBoxText
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.TreeModel
+import org.gtk.gtk.widgets.Grid
+import org.gtk.gtk.widgets.box.Box
+import org.gtk.gtk.widgets.combobox.ComboBox
+import org.gtk.gtk.widgets.combobox.ComboBoxText
 
 @GtkDsl
 inline fun Box.comboBox(

@@ -6,9 +6,9 @@ import gobject.GCallback
 import gtk.*
 import kotlinx.cinterop.*
 import org.gtk.gdk.wayland.Monitor
+import org.gtk.glib.MutableWrappedKList.Companion.asMutableList
 import org.gtk.glib.bool
 import org.gtk.glib.gtk
-import org.gtk.glib.MutableWrappedKList.Companion.asMutableList
 import org.gtk.gobject.SignalManager
 import org.gtk.gobject.Signals
 import org.gtk.gobject.addSignalCallback
@@ -227,6 +227,9 @@ open class Window(val windowPointer: CPointer<GtkWindow>) : Widget(windowPointer
 		get() = gtk_window_get_mnemonics_visible(windowPointer).bool
 		set(value) = gtk_window_set_mnemonics_visible(windowPointer, value.gtk)
 
+	var child: Widget?
+		get() = gtk_window_get_child(windowPointer)?.wrap()
+		set(value) = gtk_window_set_child(windowPointer, value?.widgetPointer)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-is-active">

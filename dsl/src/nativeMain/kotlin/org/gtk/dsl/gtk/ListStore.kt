@@ -1,10 +1,10 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gobject.KGType
-import nativex.gobject.KGValue
-import nativex.gtk.ListStore
-import nativex.gtk.TreeModel.TreeIter
+import org.gtk.dsl.GtkDsl
+import org.gtk.gobject.KGType
+import org.gtk.gobject.KGValue
+import org.gtk.gtk.ListStore
+import org.gtk.gtk.TreeModel.TreeIter
 
 
 /**

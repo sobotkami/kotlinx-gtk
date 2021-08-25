@@ -1,8 +1,8 @@
 package org.gtk.dsl.gtk
 
-import nativex.GtkDsl
-import nativex.gtk.Application
-import nativex.gtk.widgets.windows.Window
+import org.gtk.dsl.GtkDsl
+import org.gtk.gtk.Application
+import org.gtk.gtk.widgets.windows.Window
 
 
 /**
@@ -10,7 +10,7 @@ import nativex.gtk.widgets.windows.Window
  * 07 / 03 / 2021
  */
 @GtkDsl
-inline fun window( builder: Window.() -> Unit) =
+inline fun window(builder: Window.() -> Unit) =
 	Window().apply(builder)
 
 @GtkDsl

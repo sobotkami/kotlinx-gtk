@@ -1,6 +1,6 @@
 package org.gtk.dsl.gtk
 
-import nativex.gtk.widgets.Widget
+import org.gtk.gtk.widgets.Widget
 
 /**
  * kotlinx-gtk
