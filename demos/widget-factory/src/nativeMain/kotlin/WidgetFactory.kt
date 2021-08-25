@@ -1,9 +1,9 @@
 import nativex.gio.Application
 import nativex.gio.ActionMap
 import nativex.gio.dsl.*
-import nativex.gtk.dsl.application
-import nativex.gtk.dsl.applicationWindow
-import nativex.gtk.dsl.button
+import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gtk.applicationWindow
+import org.gtk.dsl.gtk.button
 import nativex.gtk.dsl.onCreateUI
 
 val appEntries: List<ActionMap.Entry> = listOf(

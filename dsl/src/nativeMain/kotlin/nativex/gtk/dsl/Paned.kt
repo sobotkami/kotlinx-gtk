@@ -1,2 +1,0 @@
-package nativex.gtk.dsl
-

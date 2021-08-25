@@ -1,5 +1,6 @@
 import nativex.gio.dsl.onCreateUI
 import nativex.gtk.dsl.*
+import org.gtk.dsl.gtk.application
 
 /**
  * this correlates to the GTK3 packing tutorial

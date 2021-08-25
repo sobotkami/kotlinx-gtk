@@ -1,8 +1,8 @@
 import nativex.gio.dsl.onCreateUI
-import nativex.gtk.dsl.application
-import nativex.gtk.dsl.applicationWindow
-import nativex.gtk.dsl.comboBoxText
-import nativex.gtk.dsl.grid
+import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gtk.applicationWindow
+import org.gtk.dsl.gtk.comboBoxText
+import org.gtk.dsl.gtk.grid
 
 fun main() {
 	application("com.github.doomsdayrs.test") {

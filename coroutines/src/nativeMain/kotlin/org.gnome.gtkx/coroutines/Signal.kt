@@ -8,8 +8,8 @@ import kotlinx.cinterop.StableRef
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import nativex.gobject.KGObject
-import nativex.gobject.connectSignal
+import org.gtk.gobject.KGObject
+import org.gtk.gobject.connectSignal
 
 
 @Deprecated("Use callbacks instead")

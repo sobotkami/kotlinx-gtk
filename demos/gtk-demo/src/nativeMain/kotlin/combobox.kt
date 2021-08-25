@@ -1,6 +1,6 @@
-import nativex.gobject.Binding
-import nativex.gobject.KGType
-import nativex.gobject.KGValue
+import org.gtk.gobject.Binding
+import org.gtk.gobject.KGType
+import org.gtk.gobject.KGValue
 import nativex.gtk.CellLayout
 import nativex.gtk.ListStore
 import nativex.gtk.TreeModel

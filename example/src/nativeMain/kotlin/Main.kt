@@ -6,6 +6,8 @@ import nativex.async.launchDefault
 import nativex.gio.dsl.*
 import nativex.glib.Variant
 import nativex.gtk.dsl.*
+import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gtk.x
 import kotlin.system.measureTimeMillis
 
 /**

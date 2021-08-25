@@ -1,12 +1,12 @@
 rootProject.name = "kotlinx-gtk"
 
 // Core libraries
-include("nativex")
-include("nativex:gio")
-include("nativex:gobject")
-include("nativex:glib")
-include("nativex:cairo")
-include("nativex:pango")
+include("src:gtk")
+include("src:gio")
+include("src:gobject")
+include("src:glib")
+include("src:cairo")
+include("src:pango")
 
 // Built on-top libraries
 include("dsl")

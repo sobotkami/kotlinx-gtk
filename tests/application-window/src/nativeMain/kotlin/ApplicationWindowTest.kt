@@ -1,6 +1,8 @@
 import nativex.gio.dsl.*
 import nativex.gtk.common.enums.Orientation
 import nativex.gtk.dsl.*
+import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gtk.x
 
 /**
  * this correlates to the GTK3 packing tutorial
