@@ -52,7 +52,7 @@ inline fun <T : CPointed> signalManager(
  */
 inline fun KGObject.addSignalCallback(
 	signal: String,
-	callbackWrapper: COpaquePointer? = null,
+	callbackWrapper: COpaquePointer?,
 	handler: GCallback = staticNoArgGCallback,
 	flags: UInt = 0u
 ): SignalManager =
