@@ -1,4 +1,4 @@
-rootProject.name = "kotlinx-gtk"
+rootProject.name = "gtk-kt"
 
 // Core libraries
 include("src:gtk")
