@@ -24,7 +24,7 @@ import org.gtk.gtk.widgets.windows.Window
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html">GtkAboutDialog</a>
  */
-class AboutDialog(val aboutDialogPointer: CPointer<GtkAboutDialog>) : Dialog(aboutDialogPointer.reinterpret()) {
+class AboutDialog(val aboutDialogPointer: CPointer<GtkAboutDialog>) : Window(aboutDialogPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html#gtk-about-dialog-get-program-name">
