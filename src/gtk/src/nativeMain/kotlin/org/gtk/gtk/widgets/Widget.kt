@@ -979,7 +979,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.destroy.html"></a>
 	 */
-	fun addOnDestroyCallback(action: (Unit) -> Unit) =
+	fun addOnDestroyCallback(action: () -> Unit) =
 		addSignalCallback(Signals.DESTROY, action)
 
 	/**
@@ -991,7 +991,7 @@ open class Widget(
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.hide.html"></a>
 	 */
-	fun addOnHideCallback(action: (Unit) -> Unit) =
+	fun addOnHideCallback(action: () -> Unit) =
 		addSignalCallback(Signals.HIDE, action)
 
 	/**
@@ -1027,13 +1027,13 @@ open class Widget(
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.realize.html"></a>
 	 */
-	fun addOnRealizeCallback(action: (Unit) -> Unit) =
+	fun addOnRealizeCallback(action: () -> Unit) =
 		addSignalCallback(Signals.REALIZE, action)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.show.html"></a>
 	 */
-	fun addOnShowCallback(action: (Unit) -> Unit) =
+	fun addOnShowCallback(action: () -> Unit) =
 		addSignalCallback(Signals.SHOW, action)
 
 	/**
@@ -1045,13 +1045,13 @@ open class Widget(
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.unmap.html"></a>
 	 */
-	fun addOnUnmapCallback(action: (Unit) -> Unit) =
+	fun addOnUnmapCallback(action: () -> Unit) =
 		addSignalCallback(Signals.UNMAP, action)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/signal.Widget.unrealize.html"></a>
 	 */
-	fun addOnUnrealizeCallback(action: (Unit) -> Unit) =
+	fun addOnUnrealizeCallback(action: () -> Unit) =
 		addSignalCallback(Signals.UNREALIZE, action)
 
 	/**
