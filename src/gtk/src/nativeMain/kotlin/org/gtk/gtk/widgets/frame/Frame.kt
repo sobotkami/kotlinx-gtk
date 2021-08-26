@@ -53,5 +53,11 @@ open class Frame(
 			value?.widgetPointer
 		)
 
-
+	/**
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Frame.get_child.html">gtk_frame_get_child</a>
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Frame.set_child.html">gtk_frame_set_child</a>
+	 */
+	var child: Widget?
+		get() = gtk_frame_get_child(framePointer)?.wrap()
+		set(value) = gtk_frame_set_child(framePointer, value?.widgetPointer)
 }

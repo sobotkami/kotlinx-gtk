@@ -5,6 +5,7 @@ import org.gtk.gtk.common.enums.Orientation
 import org.gtk.gtk.common.enums.PositionType
 import org.gtk.gtk.widgets.*
 import org.gtk.gtk.widgets.box.Box
+import org.gtk.gtk.widgets.frame.Frame
 import org.gtk.gtk.widgets.windows.Window
 
 
@@ -30,6 +31,14 @@ inline fun Box.box(
 	spacing: Int,
 	buttonBoxBuilder: Box.() -> Unit = {}
 ): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also { append(it) }
+
+
+@GtkDsl
+inline fun Frame.box(
+	orientation: Orientation,
+	spacing: Int,
+	buttonBoxBuilder: Box.() -> Unit = {}
+): Box = Box(orientation, spacing).apply(buttonBoxBuilder).also { child = it }
 
 
 @GtkDsl
