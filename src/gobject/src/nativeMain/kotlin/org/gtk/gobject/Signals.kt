@@ -407,6 +407,9 @@ object Signals {
 	const val LAUNCH_FAILED = "launch-failed"
 	const val LAUNCHED = "launched"
 
+	// GtkATContext
+	const val STATE_CHANGE = "state-change"
+
 }
 
 
