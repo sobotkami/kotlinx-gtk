@@ -19,15 +19,3 @@ inline fun application(
 	Application(id, flags).apply {
 		builder()
 	}.run()
-
-@GtkDsl
-inline fun Application.onQueryEnd(noinline onQueryEnd: () -> Unit) =
-	addOnQueryEndCallback(onQueryEnd)
-
-@GtkDsl
-inline fun Application.onWindowAdded(noinline onWindowAdded: (Window) -> Unit) =
-	addOnWindowAddedCallback(onWindowAdded)
-
-@GtkDsl
-inline fun Application.onWindowRemoved(noinline onWindowRemoved: (Window) -> Unit) =
-	addOnWindowRemovedCallback(onWindowRemoved)

@@ -1,6 +1,7 @@
-
 import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.gnome.gtkx.coroutines.launchIO
 import org.gnome.gtkx.coroutines.launchUI
 import org.gtk.dsl.gio.sendNotification
@@ -150,18 +151,38 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 				button("File Chooser Dialog") {
 					onClicked {
 						launchUI {
-							val dialog = FileChooserDialog(
-								FileChooser.Action.ACTION_OPEN,
-								this@mainKotlinTestBox,
-								"Select",
-								"Open",
-								"Cancel"
-							)
-							dialog.show()
-							println(dialog.file.peekPath())
-							dialog.close()
-						}
+								val dialog = FileChooserDialog(
+									FileChooser.Action.ACTION_OPEN,
+									this@mainKotlinTestBox,
+									"Select",
+									"Open",
+									"Cancel"
+								)
 
+								dialog.addOnCloseCallback {
+									println("Closed")
+								}
+								dialog.addOnShowCallback {
+									println("Shown")
+								}
+
+								dialog.addOnResponseCallback {
+									println("Received response: $it")
+									when (it) {
+										Dialog.ResponseType.ACCEPT -> {
+											println("File selected: `${dialog.file.peekPath()}`")
+											dialog.close()
+										}
+										Dialog.ResponseType.CANCEL -> {
+											println("Cancelled")
+											dialog.close()
+										}
+										else -> println("Unhandled response")
+									}
+								}
+
+								dialog.show()
+						}
 					}
 				}
 
@@ -231,6 +252,7 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 
 					addOnValueChangedCallback {
 						println("ScaleButton value changed, now: $it")
+						// TODO Figure out why `TypeInfo.cpp:41: runtime assert: Unknown open method` occurs here
 					}
 				}
 

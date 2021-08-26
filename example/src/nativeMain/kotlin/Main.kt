@@ -1,10 +1,11 @@
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.gnome.gtkx.coroutines.launchDefault
 import org.gtk.dsl.gio.*
-import org.gtk.dsl.gtk.*
+import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gtk.applicationWindow
+import org.gtk.dsl.gtk.x
 import org.gtk.glib.Variant
 import kotlin.system.measureTimeMillis
 
@@ -74,20 +75,17 @@ const val ACTION_QUIT = "actionquit"
 @ExperimentalCoroutinesApi
 fun main() {
 	application("com.github.doomsdayrs.lib.kotlinx-gtk.test") {
-		onQueryEnd {
+		addOnQueryEndCallback {
 			println("Query ended")
 		}
 
-		onWindowAdded {
+		addOnWindowAddedCallback {
 			println("Added new window ${it.title}")
 		}
 
-		onWindowRemoved {
+		addOnWindowRemovedCallback {
 			println("Removed window ${it.title}")
 		}
-
-
-
 
 		onCreateUI {
 			menuBar {
