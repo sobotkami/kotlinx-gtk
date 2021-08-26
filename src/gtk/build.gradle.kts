@@ -8,7 +8,7 @@ repositories {
 }
 
 group = "org.gnome.kotlin.gtk"
-version = "0.1.0-alpha"
+version = "4.0.0"
 
 kotlin {
 
