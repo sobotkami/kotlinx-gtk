@@ -3,10 +3,11 @@ package = cairo
 headerFilter = cairo.h
 
 # pkg-config --cflags cairo
-compilerOpts.linux =\
+compilerOpts.linux = -pthread \
  -I/usr/include/cairo \
  -I/usr/include/glib-2.0 \
  -I/usr/lib/x86_64-linux-gnu/glib-2.0/include \
+ -I/usr/lib64/glib-2.0/include \
  -I/usr/include/pixman-1 \
  -I/usr/include/uuid \
  -I/usr/include/freetype2 \
