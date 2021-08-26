@@ -24,14 +24,14 @@ import org.gtk.gtk.widgets.windows.Window.Companion.wrap
  *
  * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html">GtkApplication</a>
  */
-class Application(val applicationPointer: CPointer<GtkApplication>) : org.gtk.gio.Application(applicationPointer.reinterpret()) {
+class Application(val applicationPointer: CPointer<GtkApplication>) :
+	org.gtk.gio.Application(applicationPointer.reinterpret()) {
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#gtk-application-get-windows">gtk_application_get_windows</a>
 	 */
 	val windows: Sequence<Window>
 		get() = gtk_application_get_windows(applicationPointer)
 			.asKSequence<GtkWindow, Window> { Window(it) }
-
 
 
 	/**
@@ -86,7 +86,6 @@ class Application(val applicationPointer: CPointer<GtkApplication>) : org.gtk.gi
 				staticWindowAddedCallback
 			)
 		)
-
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkApplication.html#GtkApplication-window-removed">window-removed</a>
