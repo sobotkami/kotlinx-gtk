@@ -23,7 +23,7 @@ import org.gtk.gtk.widgets.Widget.Companion.wrap
  * @see <a href="https://developer.gnome.org/gtk4/stable/GtkEventController.html#GtkEventController-struct">
  *     GtkEventController</a>
  */
-class EventController(val eventControllerPointer: CPointer<GtkEventController>) :
+open class EventController(val eventControllerPointer: CPointer<GtkEventController>) :
 	KGObject(eventControllerPointer.reinterpret()) {
 
 	/**
