@@ -14,6 +14,7 @@ import org.gtk.gobject.addSignalCallback
 import org.gtk.gtk.Adjustment
 import org.gtk.gtk.widgets.Widget
 import org.gtk.gtk.widgets.button.Button
+import org.gtk.gtk.widgets.button.Button.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -24,7 +25,7 @@ import org.gtk.gtk.widgets.button.Button
  */
 open class ScaleButton(
 	val scaleButtonPointer: CPointer<GtkScaleButton>
-) : Button(scaleButtonPointer.reinterpret()) {
+) : Widget(scaleButtonPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScaleButton.html#gtk-scale-button-new">
@@ -93,14 +94,14 @@ open class ScaleButton(
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScaleButton.html#gtk-scale-button-get-plus-button">
 	 *     gtk_scale_button_get_plus_button</a>
 	 */
-	val plusButton: Button
+	val plusButton: Widget
 		get() = gtk_scale_button_get_plus_button(scaleButtonPointer)!!.reinterpret<GtkButton>().wrap()
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkScaleButton.html#gtk-scale-button-get-minus-button">
 	 *     gtk_scale_button_get_minus_button</a>
 	 */
-	val minusButton: Button
+	val minusButton: Widget
 		get() = gtk_scale_button_get_minus_button(scaleButtonPointer)!!.reinterpret<GtkButton>().wrap()
 
 	/**

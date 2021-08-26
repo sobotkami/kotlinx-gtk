@@ -221,8 +221,16 @@ internal fun Window.mainKotlinTestBox(application: Application) =
 			box(Orientation.VERTICAL, 10) {
 
 				scaleButton() {
-					onClicked {
-						println("Clicked scale button")
+					addOnPopupCallback {
+						println("ScaleButton popup")
+					}
+
+					addOnPopdownCallback {
+						println("ScaleButton popdown")
+					}
+
+					addOnValueChangedCallback {
+						println("ScaleButton value changed, now: $it")
 					}
 				}
 
