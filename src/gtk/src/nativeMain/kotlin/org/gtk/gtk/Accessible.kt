@@ -414,3 +414,5 @@ interface Accessible {
 		}
 	}
 }
+
+internal class ImplAccessible(override val accessiblePointer: CPointer<GtkAccessible>) : Accessible
