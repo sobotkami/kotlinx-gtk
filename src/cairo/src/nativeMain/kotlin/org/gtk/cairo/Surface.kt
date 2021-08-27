@@ -1,5 +1,6 @@
 package org.gtk.cairo
 
+import cairo.cairo_surface_destroy
 import cairo.cairo_surface_t
 import kotlinx.cinterop.CPointer
 
@@ -12,6 +13,10 @@ import kotlinx.cinterop.CPointer
 class Surface(
 	val cPointer: CPointer<cairo_surface_t>
 ) {
+	fun destroy() {
+		cairo_surface_destroy(cPointer)
+	}
+
 	companion object {
 		inline fun CPointer<cairo_surface_t>.wrap() = Surface(this)
 		inline fun CPointer<cairo_surface_t>?.wrap() = this?.wrap()

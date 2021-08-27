@@ -18,7 +18,6 @@ kotlin {
 
 		val nativeMain by getting {
 			dependencies {
-				implementation(project(":src"))
 				implementation(project(":dsl"))
 				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 			}

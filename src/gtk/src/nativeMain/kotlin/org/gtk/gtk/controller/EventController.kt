@@ -1,4 +1,4 @@
-package org.gtk.gtk
+package org.gtk.gtk.controller
 
 import gtk.*
 import gtk.GtkPropagationLimit.GTK_LIMIT_NONE

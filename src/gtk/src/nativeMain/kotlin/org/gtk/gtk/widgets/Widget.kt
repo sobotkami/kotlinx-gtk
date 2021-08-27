@@ -47,7 +47,7 @@ import org.gtk.pango.FontMap
 import org.gtk.pango.FontMap.Companion.wrap
 import org.gtk.pango.Layout
 import org.gtk.pango.Layout.Companion.wrap
-import org.gtk.gobject.*
+import org.gtk.gtk.controller.EventController
 
 /**
  * kotlinx-gtk

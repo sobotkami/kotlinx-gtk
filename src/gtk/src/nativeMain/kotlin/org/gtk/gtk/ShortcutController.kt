@@ -3,6 +3,7 @@ package org.gtk.gtk
 import gtk.GtkShortcutController
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
+import org.gtk.gtk.controller.EventController
 
 /**
  * gtk-kt

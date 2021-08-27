@@ -323,7 +323,6 @@ object Signals {
 	const val DRAG_DATA_DELETE = "drag-data-delete"
 	const val DRAG_DATA_RECEIVED = "drag-data-received"
 	const val DRAG_DROP = "drag-drop"
-	const val DRAG_END = "drag-end"
 	const val EVENT_AFTER = "event-after"
 	const val GRAB_NOTIFY = "grab-notify"
 	const val HIDE = "hide"
@@ -410,6 +409,19 @@ object Signals {
 	// GtkATContext
 	const val STATE_CHANGE = "state-change"
 
+	// GtkGestureClick
+	const val PRESSED = "pressed"
+	const val RELEASED = "released"
+	const val STOPPED = "stopped"
+	const val UNPAIRED_RELEASE = "unpaired-release"
+
+	// GtkGestureDrag
+	const val DRAG_BEGIN = "drag-begin"
+	const val DRAG_END = "drag-end"
+	const val DRAG_UPDATE = "drag-update"
+
+	// GtkDrawingArea
+	const val RESIZE = "resize"
 }
 
 

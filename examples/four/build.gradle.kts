@@ -2,6 +2,8 @@ plugins {
 	kotlin("multiplatform")
 }
 
+description = "Custom drawing example"
+
 repositories {
 	mavenCentral()
 }
@@ -15,11 +17,9 @@ kotlin {
 	}
 
 	sourceSets {
-
 		val nativeMain by getting {
 			dependencies {
 				implementation(project(":dsl"))
-				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0-native-mt")
 			}
 		}
 	}
