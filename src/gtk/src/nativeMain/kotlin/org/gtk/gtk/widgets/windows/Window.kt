@@ -271,6 +271,13 @@ open class Window(val windowPointer: CPointer<GtkWindow>) : Widget(windowPointer
 	}
 
 	/**
+	 * @see <a href="https://docs.gtk.org/gtk4/method.Window.destroy.html">gtk_window_destroy</a>
+	 */
+	fun destroy() {
+		gtk_window_destroy(windowPointer)
+	}
+
+	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-maximize">
 	 *     gtk_window_maximize</a>
 	 */

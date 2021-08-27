@@ -5,6 +5,7 @@ import org.gtk.gtk.widgets.Grid
 import org.gtk.gtk.widgets.box.Box
 import org.gtk.gtk.widgets.button.Button
 import org.gtk.gtk.widgets.frame.Frame
+import org.gtk.gtk.widgets.windows.Window
 
 @GtkDsl
 inline fun Box.button(
@@ -15,6 +16,12 @@ inline fun Box.button(
 
 @GtkDsl
 inline fun Frame.button(
+	label: String,
+	buttonBuilder: Button .() -> Unit = {}
+) = Button(label).apply(buttonBuilder).also { child = it }
+
+@GtkDsl
+inline fun Window.button(
 	label: String,
 	buttonBuilder: Button .() -> Unit = {}
 ) = Button(label).apply(buttonBuilder).also { child = it }

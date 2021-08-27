@@ -22,4 +22,9 @@ include("tests:packing")
 include("tests:combobox")
 include("tests:application-window")
 include("tests:glib")
-include("examples:four")
+
+// Examples
+include("examples:0")
+include("examples:1")
+include("examples:2")
+include("examples:4")

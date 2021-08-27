@@ -46,12 +46,13 @@ open class Button(val buttonPointer: CPointer<GtkButton>) : Widget(buttonPointer
 	/**
 	 * @see <a href="https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton-clicked"></a>
 	 */
-	fun addOnClickedCallback(action: () -> Unit) =
+	fun addOnClickedCallback(flags: UInt = 0u, action: () -> Unit) =
 		SignalManager(
 			buttonPointer,
 			buttonPointer.connectSignal(
 				Signals.CLICKED,
-				callbackWrapper = StableRef.create(action).asCPointer()
+				callbackWrapper = StableRef.create(action).asCPointer(),
+				flags = flags
 			)
 		)
 
