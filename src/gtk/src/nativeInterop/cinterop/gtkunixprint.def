@@ -28,8 +28,8 @@ compilerOpts.linux = \
     -I/usr/include/libmount \
     -I/usr/include/blkid \
     -I/usr/include/glib-2.0 \
-    -I/usr/lib/x86_64-linux-gnu/glib-2.0/include
-
+    -I/usr/lib/x86_64-linux-gnu/glib-2.0/include \
+    -I/usr/lib64/glib-2.0/include
 
 # pkg-config --libs gtk+-unix-print-3.0
 linkerOpts.linux = \
