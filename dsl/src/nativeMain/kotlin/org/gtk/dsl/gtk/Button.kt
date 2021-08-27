@@ -4,6 +4,7 @@ import org.gtk.dsl.GtkDsl
 import org.gtk.gtk.widgets.Grid
 import org.gtk.gtk.widgets.box.Box
 import org.gtk.gtk.widgets.button.Button
+import org.gtk.gtk.widgets.frame.Frame
 
 @GtkDsl
 inline fun Box.button(
@@ -11,6 +12,12 @@ inline fun Box.button(
 	append: Boolean = true,
 	buttonBuilder: Button .() -> Unit = {}
 ) = Button(label).apply(buttonBuilder).also { if (append) append(it) else prepend(it) }
+
+@GtkDsl
+inline fun Frame.button(
+	label: String,
+	buttonBuilder: Button .() -> Unit = {}
+) = Button(label).apply(buttonBuilder).also { child = it }
 
 @GtkDsl
 inline fun Grid.button(

@@ -1,10 +1,10 @@
-import nativex.gio.Application
-import nativex.gio.ActionMap
-import nativex.gio.dsl.*
+import org.gtk.dsl.gio.*
 import org.gtk.dsl.gtk.application
 import org.gtk.dsl.gtk.applicationWindow
 import org.gtk.dsl.gtk.button
-import nativex.gtk.dsl.onCreateUI
+import org.gtk.dsl.gtk.frame
+import org.gtk.gio.ActionMap
+import org.gtk.gio.Application
 
 val appEntries: List<ActionMap.Entry> = listOf(
 	actionEntry("about"),
@@ -50,7 +50,7 @@ val appEntries: List<ActionMap.Entry> = listOf(
 fun main() {
 	application("org.gtk.WidgetFactory4", Application.Flags.NONE) {
 		//addActionEntries(appEntries, this)
-		lookUpSimpleAction("wine"){
+		lookUpSimpleAction("wine") {
 			disable()
 		}
 
@@ -70,7 +70,9 @@ fun main() {
 
 		onCreateUI {
 			applicationWindow {
-				button("Test")
+				frame {
+					button("Test")
+				}
 			}
 		}
 		//TODO ENV AUTO QUIT

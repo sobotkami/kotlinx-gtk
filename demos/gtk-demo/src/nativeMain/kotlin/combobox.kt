@@ -1,23 +1,14 @@
-import org.gtk.gobject.Binding
 import org.gtk.gobject.KGType
 import org.gtk.gobject.KGValue
-import nativex.gtk.CellLayout
-import nativex.gtk.ListStore
-import nativex.gtk.TreeModel
-import nativex.gtk.TreeModel.Companion.asKObject
-import nativex.gtk.TreeModel.TreeIter
-import nativex.gtk.TreeModel.TreePath
-import nativex.gtk.TreeStore
-import nativex.gtk.cellrenderer.CellRenderer
-import nativex.gtk.common.enums.Orientation
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.combobox.ComboBox
-import nativex.gtk.widgets.combobox.ComboBoxText
-import nativex.gtk.widgets.frame.Frame
-import nativex.gtk.widgets.windows.Window
-import nativex.gtk.widgets.box.Box
-import nativex.gtk.widgets.entry.Entry
-import nativex.use
+import org.gtk.gtk.CellLayout
+import org.gtk.gtk.ListStore
+import org.gtk.gtk.TreeModel
+import org.gtk.gtk.TreeModel.TreeIter
+import org.gtk.gtk.TreeStore
+import org.gtk.gtk.cellrenderer.CellRenderer
+import org.gtk.gtk.widgets.Widget
+import org.gtk.gtk.widgets.combobox.ComboBoxText
+import org.gtk.gtk.widgets.windows.Window
 
 const val ICON_NAME_COL = 0
 const val TEXT_COL = 1
@@ -58,7 +49,7 @@ fun setSensitive(
 	treeModel: TreeModel,
 	iter: TreeIter
 ) {
-	val path: TreePath = treeModel.getPath(iter)
+	val path: TreeModel.TreePath = treeModel.getPath(iter)
 	val indices: Sequence<Int> = path.indices
 	val sensitive: Boolean = indices.first() != 1
 	path.free()
@@ -170,114 +161,5 @@ fun fillComboEntry(combo: ComboBoxText) {
 private var window: Window? = null
 
 fun doCombobox(doWidget: Widget): Widget {
-
-	if (window == null) {
-		window = Window(Window.Type.TOP_LEVEL)
-
-		window?.windowScreen = doWidget.screen
-		window?.title = "Combo Boxes"
-
-		// TODO Destroy signal
-
-		window?.borderWidth = 10u
-
-		val vbox = Box(Orientation.VERTICAL, 2)
-		window?.add(vbox)
-
-		var frame = Frame("Items with icons")
-		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
-
-		var box = Box(Orientation.VERTICAL, 0)
-		box.borderWidth = 5u
-		frame.add(box)
-
-		var model = createIconStore()
-		var combo = ComboBox(model)
-		model.asKObject()?.unref()
-		box.add(combo)
-
-		var renderer: CellRenderer = CellRenderer.Pixbuf()
-		combo.apply {
-			packStart(renderer, false)
-			addAttribute(renderer, "icon-name", ICON_NAME_COL)
-			setCellDataFunc(renderer, ::setSensitive)
-		}
-
-
-		renderer = CellRenderer.Text()
-		combo.apply {
-			packStart(renderer, true)
-			addAttribute(renderer, "text", TEXT_COL)
-			setCellDataFunc(renderer, ::setSensitive)
-			setRowSeparatorFunc(::isSeparator)
-			combo.active = 0
-		}
-
-		// A combobox demonstrating trees
-		frame = Frame("Where are we ?")
-		vbox.packStart(frame, false, fill = false, padding = 0u)
-
-		box = Box(Orientation.VERTICAL, 0)
-		box.borderWidth = 5u
-		frame.add(box)
-
-		model = createCapitalStore()
-		combo = ComboBox(model)
-		model.asKObject()?.unref()
-		box.add(combo)
-
-		renderer = CellRenderer.Text()
-		combo.apply {
-			packStart(renderer, true)
-			addAttribute(renderer, "text", 0)
-			setCellDataFunc(renderer, ::isCapitalSensitive)
-		}
-
-		TreePath(0, 8, -1).use {
-			combo.setActiveIter(model.getIter(it))
-		}
-
-		// A ComboBoxEntry with validation
-		frame = Frame("Editable")
-		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
-
-		box = Box(Orientation.VERTICAL, 0)
-		box.borderWidth = 5u
-		frame.add(box)
-
-		combo = ComboBoxText(true)
-		fillComboEntry(combo)
-		box.add(combo)
-
-		// ENTRY
-		// MASK ENTRY
-
-		// REMOVE
-		// ADD
-
-		/// A combobox with string IDs
-		frame = Frame("String IDs")
-		vbox.packStart(frame, expand = false, fill = false, padding = 0u)
-
-		box = Box(Orientation.VERTICAL, 0)
-		box.borderWidth = 5u
-		frame.add(box)
-
-		combo = ComboBoxText().apply {
-			append("never", "Not visible")
-			append("when-active", "Visible when active")
-			append("always", "Always visible")
-			box.add(this)
-		}
-
-		val entry = Entry()
-		entry.asKGBinding()?.bind("active-id", entry.pointer, "text", Binding.Flags.BIDIRECTIONAL)
-		box.add(entry)
-	}
-
-	if (!window!!.visible) {
-		window!!.showAll()
-	} else window!!.destroy()
-
 	return window!!
 }

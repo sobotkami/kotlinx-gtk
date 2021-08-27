@@ -1,4 +1,4 @@
-import nativex.gio.dsl.onCreateUI
+import org.gtk.dsl.gio.onCreateUI
 import org.gtk.dsl.gtk.application
 import org.gtk.dsl.gtk.applicationWindow
 import org.gtk.dsl.gtk.comboBoxText
@@ -21,7 +21,7 @@ fun main() {
 						appendText("D")
 					}
 				}
-			}.showAll()
+			}.show()
 		}
 	}
 }

@@ -1,8 +1,6 @@
-import nativex.gio.dsl.*
-import nativex.gtk.common.enums.Orientation
-import nativex.gtk.dsl.*
-import org.gtk.dsl.gtk.application
-import org.gtk.dsl.gtk.x
+import org.gtk.dsl.gio.*
+import org.gtk.dsl.gtk.*
+import org.gtk.gtk.common.enums.Orientation
 
 /**
  * this correlates to the GTK3 packing tutorial
@@ -49,21 +47,16 @@ fun main() {
 
 
 				box(Orientation.HORIZONTAL, 16) {
-					start {
-						box(Orientation.VERTICAL, 8) {
-							button("Toggle menu bar") {
-								this@applicationWindow.showMenuBar = !this@applicationWindow.showMenuBar
-							}
+					box(Orientation.VERTICAL, 8) {
+						button("Toggle menu bar") {
+							this@applicationWindow.showMenuBar = !this@applicationWindow.showMenuBar
 						}
 					}
+					box(Orientation.VERTICAL, 8) {
 
-					end {
-						box(Orientation.VERTICAL, 8) {
-
-						}
 					}
 				}
-			}.showAll()
+			}.show()
 		}
 	}
 	println("Final status: $result")

@@ -2,6 +2,10 @@ plugins {
 	kotlin("multiplatform") version "1.5.0"
 }
 
+repositories {
+	mavenCentral()
+}
+
 kotlin {
 	val hostOs = System.getProperty("os.name")
 	//val isMingwX64 = hostOs.startsWith("Windows")

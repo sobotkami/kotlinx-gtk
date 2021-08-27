@@ -1,6 +1,5 @@
-import nativex.gio.dsl.onCreateUI
-import nativex.gtk.dsl.*
-import org.gtk.dsl.gtk.application
+import org.gtk.dsl.gio.onCreateUI
+import org.gtk.dsl.gtk.*
 
 /**
  * this correlates to the GTK3 packing tutorial
@@ -13,7 +12,6 @@ fun main() {
 		onCreateUI {
 			applicationWindow {
 				title = "Window"
-				borderWidth = 10u
 				grid {
 					button("Button 1", 0, 0, 1, 1) {
 						onClicked { printHello() }
@@ -24,11 +22,11 @@ fun main() {
 					button("Quit", 0, 1, 2, 1) {
 						onClicked {
 							// Be careful of the context when you invoke destroy
-							this@applicationWindow.destroy()
+							this@applicationWindow.close()
 						}
 					}
 				}
-			}.showAll()
+			}.show()
 		}
 	}
 }

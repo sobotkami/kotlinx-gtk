@@ -2,27 +2,20 @@ import gobject.g_object_get_data
 import gobject.g_object_ref
 import gobject.g_object_set_data_full
 import kotlinx.cinterop.reinterpret
-import nativex.gio.Application
-import nativex.gio.MenuModel
-import nativex.gio.SimpleAction
-import nativex.gio.dsl.onCreateUI
-import nativex.glib.KGError
-import nativex.glib.Variant
+import org.gtk.dsl.gio.onCreateUI
+import org.gtk.dsl.gtk.*
+import org.gtk.gio.MenuModel
+import org.gtk.gio.SimpleAction
+import org.gtk.glib.KGError
+import org.gtk.glib.Variant
 import org.gtk.gobject.KGObject.Companion.staticUnrefFunction
-import nativex.gtk.FileChooser
-import nativex.gtk.FileChooserNative
-import nativex.gtk.NativeDialog
-import nativex.gtk.TextBuffer
-import org.gtk.dsl.gtk.application
-import org.gtk.dsl.gtk.applicationWindow
-import org.gtk.dsl.gtk.button
-import org.gtk.dsl.gtk.onClicked
-import nativex.gtk.widgets.Widget
-import nativex.gtk.widgets.windows.ApplicationWindow
-import nativex.gtk.widgets.windows.dialog.Dialog
-import nativex.gtk.widgets.windows.dialog.MessageDialog
-import nativex.gtk.widgets.box.InfoBar
-import nativex.gtk.widgets.misc.label.Label
+import org.gtk.gtk.*
+import org.gtk.gtk.widgets.Widget
+import org.gtk.gtk.widgets.box.InfoBar
+import org.gtk.gtk.widgets.misc.label.Label
+import org.gtk.gtk.widgets.windows.ApplicationWindow
+import org.gtk.gtk.widgets.windows.dialog.Dialog
+import org.gtk.gtk.widgets.windows.dialog.MessageDialog
 
 /*
  * kotlinx-gtk
@@ -46,7 +39,7 @@ fun showActionDialog(action: SimpleAction) {
 		withMarkup = false
 	)
 	dialog.addOnResponseCallback {
-		dialog.destroy()
+		dialog.close()
 	}
 	dialog.show()
 }
@@ -105,7 +98,7 @@ fun openResponse(dialog: NativeDialog, responseId: Int, fileChooser: FileChooser
 				MessageDialog.ButtonsType.CLOSE,
 				"Error loading file: \"$error"
 			)
-			messageDialog.addOnResponseCallback { messageDialog.destroy() }
+			messageDialog.addOnResponseCallback { messageDialog.close() }
 			messageDialog.show()
 			error?.free()
 		}
@@ -129,15 +122,18 @@ fun activateOpen(app: Application) {
 
 
 fun main() {
-	val result = application("org.gtk.Demo2", Application.Flags.HANDLES_OPEN) {
+	val result = application("org.gtk.Demo2", org.gtk.gio.Application.Flags.HANDLES_OPEN) {
 		onCreateUI {
 			applicationWindow {
-				button("Press") {
-					onClicked {
-						showActionDialog(SimpleAction("I am an action"))
+				frame {
+					button("Press") {
+						onClicked {
+							showActionDialog(SimpleAction("I am an action"))
+						}
 					}
 				}
-			}.showAll()
+
+			}.show()
 		}
 	}
 	println("Result: $result")
