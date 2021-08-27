@@ -53,4 +53,6 @@ linkerOpts.linux =\
     -lgobject-2.0 \
     -lglib-2.0
 
-linkerOpts.linux_x64 = -L/usr/lib/x86_64-linux-gnu -L/usr/lib64
+linkerOpts.linux_x64 = \
+    -L/usr/lib/x86_64-linux-gnu \
+    -L/usr/lib64
