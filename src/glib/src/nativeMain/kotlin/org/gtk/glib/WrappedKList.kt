@@ -1,5 +1,9 @@
 package org.gtk.glib
 
+import glib.GList
+import kotlinx.cinterop.CPointer
+import org.gtk.glib.KList.Companion.wrap
+
 /**
  * kotlinx-gtk
  *
@@ -202,5 +206,10 @@ class WrappedKList<T>(
 			noinline wrapPointer: VoidPointer.() -> T,
 			noinline getPointer: T.() -> VoidPointer
 		): WrappedKList<T> = WrappedKList(this, wrapPointer, getPointer)
+
+		inline fun <T> CPointer<GList>.asWrappedKList(
+			noinline wrapPointer: VoidPointer.() -> T,
+			noinline getPointer: T.() -> VoidPointer
+		): WrappedKList<T> = WrappedKList(this.wrap(), wrapPointer, getPointer)
 	}
 }
