@@ -12,7 +12,7 @@ import org.gtk.gobject.KGObject
  *
  * @see <a href=""></a>
  */
-class Paintable(val paintablePointer: CPointer<GdkPaintable>) : KGObject(paintablePointer.reinterpret()) {
+open class Paintable(val paintablePointer: CPointer<GdkPaintable>) : KGObject(paintablePointer.reinterpret()) {
 	companion object {
 		inline fun CPointer<GdkPaintable>?.wrap() =
 			this?.wrap()
