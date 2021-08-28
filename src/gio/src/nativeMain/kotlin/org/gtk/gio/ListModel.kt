@@ -8,7 +8,6 @@ import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import org.gtk.gobject.*
-import org.gtk.gobject.*
 
 /**
  * kotlinx-gtk
@@ -41,9 +40,7 @@ open class ListModel(
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#g-list-model-get-object">g_list_model_get_object</a>
 	 */
-	operator
-
-	fun get(position: UInt): KGObject? =
+	fun getObject(position: UInt): KGObject? =
 		g_list_model_get_object(listModelPointer, position).wrap()
 
 	/**
