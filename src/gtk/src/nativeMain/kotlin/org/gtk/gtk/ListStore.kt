@@ -1,10 +1,12 @@
 package org.gtk.gtk
 
 import gtk.*
-import kotlinx.cinterop.*
-import org.gtk.gobject.KGObject
+import kotlinx.cinterop.CPointer
+import kotlinx.cinterop.memScoped
+import kotlinx.cinterop.reinterpret
 import org.gtk.glib.bool
 import org.gtk.glib.toCArray
+import org.gtk.gobject.KGObject
 import org.gtk.gobject.KGType
 import org.gtk.gobject.KGType.Companion.toCArray
 import org.gtk.gobject.KGValue
@@ -39,7 +41,7 @@ class ListStore constructor(
 
 	fun reorder(newOrder: Array<Int>) {
 		memScoped {
-			gtk_list_store_reorder(listStorePointer, newOrder.toCArray(this).pointed.value)
+			gtk_list_store_reorder(listStorePointer, newOrder.toCArray(this))
 		}
 	}
 

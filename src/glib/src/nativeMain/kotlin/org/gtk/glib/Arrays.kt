@@ -64,3 +64,29 @@ inline fun CArray<UIntVar>.toList(size: Int): List<UInt> =
 
 inline fun CStringList.toList(): List<String> =
 	toWrappedList { it.toKString() }
+
+fun Array<Int>.toCPointerArray(scope: MemScope): CPointer<CPointerVar<IntVar>> =
+	with(scope) {
+		allocArrayOf(this@toCPointerArray.map { value ->
+			cValue<IntVar>().apply {
+				this.ptr.pointed.value = value
+			}.getPointer(this)
+		})
+	}
+
+fun Array<Int>.toCArray(scope: MemScope): CPointer<IntVarOf<Int>> =
+	with(scope) {
+		allocArray(this@toCArray.size) { index ->
+			value = this@toCArray[index]
+		}
+	}
+
+fun Array<String>.toNullTermCStringArray(): CStringList =
+	memScoped {
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+	}
+
+fun Array<out String>.toNullTermCStringArray(): CStringList =
+	memScoped {
+		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
+	}

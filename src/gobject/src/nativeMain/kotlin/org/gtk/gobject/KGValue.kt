@@ -7,7 +7,7 @@ import kotlinx.cinterop.memScoped
 import kotlinx.cinterop.ptr
 import org.gtk.glib.gtk
 
-class KGValue( val pointer: CPointer<GValue>) {
+class KGValue(val pointer: CPointer<GValue>) {
 	constructor(type: KGType) : this(memScoped { g_value_init(alloc<GValue>().ptr, type.glib)!! })
 
 	constructor(value: Int) : this(
@@ -50,7 +50,11 @@ class KGValue( val pointer: CPointer<GValue>) {
 		g_value_unset(pointer)
 	}
 
-	companion object{
+	fun copy(destValue: KGValue) {
+		g_value_copy(pointer, destValue.pointer)
+	}
+
+	companion object {
 		inline fun CPointer<GValue>?.wrap() =
 			this?.wrap()
 

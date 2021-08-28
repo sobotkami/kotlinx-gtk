@@ -138,7 +138,7 @@ fun createCapitalStore(): TreeModel {
 		}
 	}
 
-	return store.asTreeModel()
+	return store
 }
 
 fun isCapitalSensitive(

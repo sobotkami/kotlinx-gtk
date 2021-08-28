@@ -23,24 +23,6 @@ typealias CStringPointer = CPointer<ByteVar>
 typealias CStringList = CPointer<CPointerVar<ByteVar>>
 
 
-fun Array<Int>.toCArray(scope: MemScope): CPointer<CPointerVar<IntVar>> =
-	with(scope) {
-		allocArrayOf(this@toCArray.map { value ->
-			cValue<IntVar>().apply {
-				this.ptr.pointed.value = value
-			}.getPointer(this)
-		})
-	}
-
-fun Array<String>.toNullTermCStringArray(): CStringList =
-	memScoped {
-		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
-	}
-
-fun Array<out String>.toNullTermCStringArray(): CStringList =
-	memScoped {
-		allocArrayOf(this@toNullTermCStringArray.map { it.cstr.getPointer(this) } + null)
-	}
 
 fun List<String>.toNullTermCStringArray(): CStringList =
 	memScoped {
