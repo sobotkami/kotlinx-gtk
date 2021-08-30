@@ -16,9 +16,9 @@ import org.gtk.gobject.addSignalCallback
  * kotlinx-gtk
  * 13 / 03 / 2021
  */
-open class TreeModel(
+interface TreeModel {
 	val treeModelPointer: CPointer<GtkTreeModel>
-) : KGObject(treeModelPointer.reinterpret()) {
+
 	fun getPath(iter: TreeIter): TreePath =
 		TreePath(gtk_tree_model_get_path(treeModelPointer, iter.treeIterPointer)!!)
 
@@ -26,19 +26,24 @@ open class TreeModel(
 		gtk_tree_model_iter_has_child(treeModelPointer, iter.treeIterPointer).bool
 
 	fun addOnRowChangedCallback(action: (RowChanged) -> Unit) =
-		addSignalCallback(Signals.ROW_CHANGED, action, RowChanged.staticCallback)
+		KGObject(treeModelPointer.reinterpret())
+			.addSignalCallback(Signals.ROW_CHANGED, action, RowChanged.staticCallback)
 
 	fun addOnRowDeletedCallback(action: (RowDeleted) -> Unit) =
-		addSignalCallback(Signals.ROW_DELETED, action, RowDeleted.staticCallback)
+		KGObject(treeModelPointer.reinterpret())
+			.addSignalCallback(Signals.ROW_DELETED, action, RowDeleted.staticCallback)
 
 	fun addOnRowHasChildToggledCallback(action: (RowHasChildToggled) -> Unit) =
-		addSignalCallback(Signals.ROW_HAS_CHILD_TOGGLED, action, RowHasChildToggled.staticCallback)
+		KGObject(treeModelPointer.reinterpret())
+			.addSignalCallback(Signals.ROW_HAS_CHILD_TOGGLED, action, RowHasChildToggled.staticCallback)
 
 	fun addOnRowInsertedCallback(action: (RowInserted) -> Unit) =
-		addSignalCallback(Signals.ROW_INSERTED, action, RowInserted.staticCallback)
+		KGObject(treeModelPointer.reinterpret())
+			.addSignalCallback(Signals.ROW_INSERTED, action, RowInserted.staticCallback)
 
 	fun addOnReorderedCallback(action: (RowsReordered) -> Unit) =
-		addSignalCallback(Signals.ROWS_REORDERED, action, RowsReordered.staticCallback)
+		KGObject(treeModelPointer.reinterpret())
+			.addSignalCallback(Signals.ROWS_REORDERED, action, RowsReordered.staticCallback)
 
 	fun getIter(path: TreePath): TreeIter = TreeIter(memScoped {
 		val iter = cValue<GtkTreeIter>()
@@ -234,7 +239,9 @@ open class TreeModel(
 		inline fun CPointer<GtkTreeModel>?.wrap() =
 			this?.wrap()
 
-		inline fun CPointer<GtkTreeModel>.wrap() =
-			TreeModel(this)
+		fun CPointer<GtkTreeModel>.wrap(): TreeModel =
+			ImplTreeModel(this)
 	}
 }
+
+internal class ImplTreeModel(override val treeModelPointer: CPointer<GtkTreeModel>) : TreeModel

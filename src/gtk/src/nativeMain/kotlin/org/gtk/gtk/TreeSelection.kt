@@ -60,7 +60,7 @@ class TreeSelection(val treeSelectionPointer: CPointer<GtkTreeSelection>) :
 			val iter = cValue<GtkTreeIter>()
 			if (gtk_tree_selection_get_selected(treeSelectionPointer, model, iter).bool)
 				Selected(
-					TreeModel(model.ptr.pointed.pointed!!.ptr),
+					model.ptr.pointed.pointed!!.ptr.wrap(),
 					TreeModel.TreeIter(iter.ptr)
 				)
 			else null
@@ -80,7 +80,7 @@ class TreeSelection(val treeSelectionPointer: CPointer<GtkTreeSelection>) :
 			val model = cValue<CPointerVar<GtkTreeModel>>()
 			val gList = gtk_tree_selection_get_selected_rows(treeSelectionPointer, model)
 			SelectedRows(
-				TreeModel(model.ptr.pointed.pointed!!.ptr),
+				model.ptr.pointed.pointed!!.ptr.wrap(),
 				gList!!.asWrappedKList({ TreeModel.TreePath(reinterpret()) }, { treePathPointer })
 			)
 		}

@@ -14,7 +14,8 @@ import org.gtk.gtk.TreeModel.TreeIter
 
 class ListStore constructor(
 	val listStorePointer: CPointer<GtkListStore>
-) : KGObject(listStorePointer.reinterpret()) {
+) : KGObject(listStorePointer.reinterpret()), TreeModel {
+
 	constructor(vararg types: KGType) : this(
 		memScoped {
 			gtk_list_store_newv(
@@ -85,6 +86,6 @@ class ListStore constructor(
 		gtk_list_store_remove(listStorePointer, iter.treeIterPointer)
 	}
 
-	fun asTreeModel(): TreeModel =
-		TreeModel(listStorePointer.reinterpret())
+	override val treeModelPointer: CPointer<GtkTreeModel> by lazy { listStorePointer.reinterpret() }
+
 }

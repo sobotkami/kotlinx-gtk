@@ -8,6 +8,7 @@ import kotlinx.cinterop.staticCFunction
 import org.gtk.glib.asKSequence
 import org.gtk.glib.gtk
 import org.gtk.gtk.CellArea.Companion.wrap
+import org.gtk.gtk.TreeModel.Companion.wrap
 import org.gtk.gtk.TreeModel.TreeIter
 import org.gtk.gtk.cellrenderer.CellRenderer
 import org.gtk.gtk.cellrenderer.CellRenderer.Companion.wrap
@@ -24,7 +25,7 @@ interface CellLayout {
 				data?.asStableRef<(CellLayout, CellRenderer, TreeModel, TreeIter) -> Unit>()?.get()?.invoke(
 					Impl(cellLayout!!),
 					CellRenderer(cell!!),
-					TreeModel(treeModel!!),
+					treeModel!!.wrap(),
 					TreeIter(iter!!)
 				)
 				Unit

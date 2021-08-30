@@ -16,6 +16,7 @@ import org.gtk.gobject.connectSignal
 import org.gtk.gobject.staticDestroyStableRefFunction
 import org.gtk.gtk.CellLayout
 import org.gtk.gtk.TreeModel
+import org.gtk.gtk.TreeModel.Companion.wrap
 import org.gtk.gtk.common.enums.ScrollType
 import org.gtk.gtk.widgets.TreeView.Companion.staticTreeViewRowSeparatorFunc
 import org.gtk.gtk.widgets.TreeViewRowSeparatorFunc
@@ -115,7 +116,7 @@ open class ComboBox(
 	 *     gtk_combo_box_set_model</a>
 	 */
 	var model: TreeModel?
-		get() = gtk_combo_box_get_model(comboBoxPointer)?.let { TreeModel(it) }
+		get() = gtk_combo_box_get_model(comboBoxPointer)?.wrap()
 		set(value) = gtk_combo_box_set_model(comboBoxPointer, value?.treeModelPointer)
 
 

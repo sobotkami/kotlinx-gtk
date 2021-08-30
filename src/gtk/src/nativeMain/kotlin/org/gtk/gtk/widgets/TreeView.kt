@@ -11,6 +11,7 @@ import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import org.gtk.glib.gtk
 import org.gtk.gtk.TreeModel
+import org.gtk.gtk.TreeModel.Companion.wrap
 import org.gtk.gtk.TreeModel.TreeIter
 
 /**
@@ -26,7 +27,7 @@ class TreeView(
 			                  iter: CPointer<GtkTreeIter>?,
 			                  data: gpointer? ->
 				data?.asStableRef<TreeViewRowSeparatorFunc>()?.get()?.invoke(
-					TreeModel(model!!),
+					model!!.wrap(),
 					TreeIter(iter!!)
 				)?.gtk ?: 0
 			}

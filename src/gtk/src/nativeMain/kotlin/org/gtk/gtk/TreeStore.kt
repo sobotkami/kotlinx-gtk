@@ -8,6 +8,7 @@ import org.gtk.gobject.KGType
 import org.gtk.gobject.KGType.Companion.toCArray
 import org.gtk.gobject.KGValue
 import org.gtk.gobject.KGValue.Companion.wrap
+import org.gtk.gtk.TreeModel.TreeIter
 
 /**
  *
@@ -16,7 +17,7 @@ import org.gtk.gobject.KGValue.Companion.wrap
  */
 class TreeStore(
 	val treeStorePointer: CPointer<GtkTreeStore>
-) : TreeModel(treeStorePointer.reinterpret()) {
+) : TreeModel {
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/ctor.TreeStore.newv.html">
@@ -215,4 +216,5 @@ class TreeStore(
 		gtk_tree_store_swap(treeStorePointer, a.treeIterPointer, b.treeIterPointer)
 	}
 
+	override val treeModelPointer: CPointer<GtkTreeModel> by lazy { treeStorePointer.reinterpret() }
 }

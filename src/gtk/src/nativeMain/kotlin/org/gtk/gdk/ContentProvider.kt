@@ -15,4 +15,11 @@ import org.gtk.gobject.KGObject
 class ContentProvider(val contentProviderPointer: CPointer<GdkContentProvider>) :
 	KGObject(contentProviderPointer.reinterpret()) {
 
+	companion object {
+		inline fun CPointer<GdkContentProvider>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GdkContentProvider>.wrap() =
+			ContentProvider(this)
+	}
 }

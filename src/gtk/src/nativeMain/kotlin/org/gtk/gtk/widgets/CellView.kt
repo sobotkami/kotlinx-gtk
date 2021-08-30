@@ -8,6 +8,7 @@ import org.gtk.glib.gtk
 import org.gtk.gtk.CellArea
 import org.gtk.gtk.CellAreaContext
 import org.gtk.gtk.TreeModel
+import org.gtk.gtk.TreeModel.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -31,7 +32,7 @@ class CellView(
 	)
 
 	var model: TreeModel?
-		get() = gtk_cell_view_get_model(cellViewPointer)?.let { TreeModel(it) }
+		get() = gtk_cell_view_get_model(cellViewPointer)?.wrap()
 		set(value) = gtk_cell_view_set_model(cellViewPointer, value?.treeModelPointer)
 
 	var displayedRow: TreeModel.TreePath?
