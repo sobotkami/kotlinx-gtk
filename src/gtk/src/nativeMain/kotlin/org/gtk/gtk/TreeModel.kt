@@ -2,14 +2,12 @@ package org.gtk.gtk
 
 import glib.gpointer
 import gobject.GCallback
-import gobject.GObject
 import gtk.*
 import kotlinx.cinterop.*
 import org.gtk.Closeable
 import org.gtk.ClosedException
 import org.gtk.glib.asSequence
 import org.gtk.glib.bool
-import org.gtk.glib.reinterpretOrNull
 import org.gtk.gobject.KGObject
 import org.gtk.gobject.Signals
 import org.gtk.gobject.addSignalCallback
@@ -36,11 +34,11 @@ open class TreeModel(
 	fun addOnRowHasChildToggledCallback(action: (RowHasChildToggled) -> Unit) =
 		addSignalCallback(Signals.ROW_HAS_CHILD_TOGGLED, action, RowHasChildToggled.staticCallback)
 
-	fun addOnRowInsertedCallback(action:(RowInserted)->Unit) =
-		addSignalCallback(Signals.ROW_INSERTED,action,RowInserted.staticCallback)
+	fun addOnRowInsertedCallback(action: (RowInserted) -> Unit) =
+		addSignalCallback(Signals.ROW_INSERTED, action, RowInserted.staticCallback)
 
-	fun addOnReorderedCallback(action:(RowsReordered)->Unit) =
-		addSignalCallback(Signals.ROWS_REORDERED,action,RowsReordered.staticCallback)
+	fun addOnReorderedCallback(action: (RowsReordered) -> Unit) =
+		addSignalCallback(Signals.ROWS_REORDERED, action, RowsReordered.staticCallback)
 
 	fun getIter(path: TreePath): TreeIter = TreeIter(memScoped {
 		val iter = cValue<GtkTreeIter>()
@@ -174,6 +172,14 @@ open class TreeModel(
 		var userData: Any? = null
 		var userData1: Any? = null
 		var userData3: Any? = null
+
+		companion object {
+			inline fun CPointer<GtkTreeIter>?.wrap() =
+				this?.wrap()
+
+			inline fun CPointer<GtkTreeIter>.wrap() =
+				TreeIter(this)
+		}
 	}
 
 	class TreePath(
@@ -214,10 +220,21 @@ open class TreeModel(
 		override fun close() {
 			free()
 		}
+
+		companion object {
+			inline fun CPointer<GtkTreePath>?.wrap() =
+				this?.wrap()
+
+			inline fun CPointer<GtkTreePath>.wrap() =
+				TreePath(this)
+		}
 	}
 
 	companion object {
-		fun TreeModel.asKObject(): KGObject? =
-			this.treeModelPointer.reinterpretOrNull<GObject>().wrap()
+		inline fun CPointer<GtkTreeModel>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkTreeModel>.wrap() =
+			TreeModel(this)
 	}
 }
