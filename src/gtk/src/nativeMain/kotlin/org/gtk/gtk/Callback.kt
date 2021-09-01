@@ -1,5 +1,7 @@
 package org.gtk.gtk
 
+import org.gtk.gobject.KGValue
+
 /*
  * gtk-kt
  *
@@ -22,3 +24,19 @@ typealias TreeSelectionForEachFunction = (
 	path: TreeModel.TreePath,
 	iter: TreeModel.TreeIter
 ) -> Unit
+
+/**
+ * @see <a href="https://docs.gtk.org/gtk4/callback.TreeModelFilterModifyFunc.html">TreeModelFilterModifyFunc</a>
+ */
+typealias TreeModelFilterModifyFunction = (
+	iter: TreeModel.TreeIter,
+	value: KGValue,
+	column: Int
+) -> Unit
+
+/**
+ * @see <a href="https://docs.gtk.org/gtk4/callback.TreeModelFilterVisibleFunc.html">TreeModelFilterVisibleFunc</a>
+ */
+typealias TreeModelFilterVisibleFunction = (
+	iter: TreeModel.TreeIter,
+) -> Boolean
