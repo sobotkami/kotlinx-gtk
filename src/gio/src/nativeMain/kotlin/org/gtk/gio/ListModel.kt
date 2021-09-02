@@ -8,6 +8,7 @@ import kotlinx.cinterop.asStableRef
 import kotlinx.cinterop.reinterpret
 import kotlinx.cinterop.staticCFunction
 import org.gtk.gobject.*
+import org.gtk.gobject.KGObject.Companion.wrap
 
 /**
  * kotlinx-gtk
@@ -15,9 +16,9 @@ import org.gtk.gobject.*
  *
  * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html">GListModel</a>
  */
-open class ListModel(
+interface ListModel {
+
 	val listModelPointer: CPointer<GListModel>
-) : KGObject(listModelPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#g-list-model-get-item-type">g_list_model_get_item_type</a>
@@ -35,7 +36,11 @@ open class ListModel(
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#GListModel-items-changed">items-changed</a>
 	 */
 	fun addOnItemChangedCallback(action: (ItemsChanged) -> Unit): SignalManager =
-		addSignalCallback(Signals.ITEMS_CHANGED, action, staticItemsChangedCallback)
+		KGObject(listModelPointer.reinterpret())!!.addSignalCallback(
+			Signals.ITEMS_CHANGED,
+			action,
+			staticItemsChangedCallback
+		)
 
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListModel.html#g-list-model-get-object">g_list_model_get_object</a>
@@ -66,7 +71,9 @@ open class ListModel(
 		inline fun CPointer<GListModel>?.wrap() =
 			this?.wrap()
 
-		inline fun CPointer<GListModel>.wrap() =
-			ListModel(this)
+		fun CPointer<GListModel>.wrap(): ListModel =
+			ImplListModel(this)
+
+		internal class ImplListModel(override val listModelPointer: CPointer<GListModel>) : ListModel
 	}
 }

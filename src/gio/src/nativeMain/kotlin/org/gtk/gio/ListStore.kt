@@ -7,9 +7,9 @@ import gobject.GObject
 import gobject.GValue
 import kotlinx.cinterop.*
 import org.gtk.glib.bool
+import org.gtk.gobject.KGObject
 import org.gtk.gobject.KGType
 import org.gtk.gobject.KGValue
-import org.gtk.gobject.KGObject
 
 /**
  * kotlinx-gtk
@@ -19,7 +19,9 @@ import org.gtk.gobject.KGObject
  */
 class ListStore(
 	val listStorePointer: CPointer<GListStore>
-) : ListModel(listStorePointer.reinterpret()) {
+) : KGObject(listStorePointer.reinterpret()), ListModel {
+	override val listModelPointer: CPointer<GListModel> by lazy { listStorePointer.reinterpret() }
+
 	/**
 	 * @see <a href="https://developer.gnome.org/gio/stable/GListStore.html#g-list-store-new">g_list_store_new</a>
 	 */

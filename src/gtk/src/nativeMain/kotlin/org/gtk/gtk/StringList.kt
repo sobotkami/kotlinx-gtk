@@ -1,5 +1,6 @@
 package org.gtk.gtk
 
+import gio.GListModel
 import gtk.*
 import kotlinx.cinterop.CPointer
 import kotlinx.cinterop.reinterpret
@@ -7,6 +8,7 @@ import kotlinx.cinterop.toKString
 import org.gtk.gio.ListModel
 import org.gtk.glib.CStringPointer
 import org.gtk.glib.toNullTermCStringArray
+import org.gtk.gobject.KGObject
 
 /**
  * gtk-kt
@@ -15,7 +17,9 @@ import org.gtk.glib.toNullTermCStringArray
  *
  * @see <a href="https://docs.gtk.org/gtk4/class.StringList.html">GtkStringList</a>
  */
-class StringList(val stringListPointer: CPointer<GtkStringList>) : ListModel(stringListPointer.reinterpret()) {
+class StringList(val stringListPointer: CPointer<GtkStringList>) :
+	KGObject(stringListPointer.reinterpret()), ListModel {
+	override val listModelPointer: CPointer<GListModel> by lazy { stringListPointer.reinterpret() }
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/ctor.StringList.new.html">gtk_string_list_new</a>

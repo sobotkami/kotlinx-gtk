@@ -1,5 +1,7 @@
 package org.gtk.gtk
 
+import org.gtk.gio.ListModel
+import org.gtk.gobject.KGObject
 import org.gtk.gobject.KGValue
 
 /*
@@ -40,3 +42,8 @@ typealias TreeModelFilterModifyFunction = (
 typealias TreeModelFilterVisibleFunction = (
 	iter: TreeModel.TreeIter,
 ) -> Boolean
+
+/**
+ * @see <a href="https://docs.gtk.org/gtk4/callback.TreeListModelCreateModelFunc.html">TreeListModelCreateModelFunc</a>
+ */
+typealias TreeListModelCreateModelFunction = (item: KGObject) -> ListModel?
