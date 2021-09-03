@@ -47,3 +47,10 @@ typealias TreeModelFilterVisibleFunction = (
  * @see <a href="https://docs.gtk.org/gtk4/callback.TreeListModelCreateModelFunc.html">TreeListModelCreateModelFunc</a>
  */
 typealias TreeListModelCreateModelFunction = (item: KGObject) -> ListModel?
+
+/**
+ * @see <a href="https://docs.gtk.org/gtk4/callback.TextTagTableForeach.html">TextTagTableForeach</a>
+ */
+typealias TextTagTableForeachFunction = (TextTag) -> Unit
+
+typealias TextTagTableTagChangedFunction = (tag: TextTag, sizeChanged: Boolean) -> Unit

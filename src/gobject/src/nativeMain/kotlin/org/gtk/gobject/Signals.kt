@@ -422,6 +422,11 @@ object Signals {
 
 	// GtkDrawingArea
 	const val RESIZE = "resize"
+
+	// GtkTextTagTable
+	const val TAG_ADDED = "tag-added"
+	const val TAG_REMOVED = "tag-removed"
+	const val TAG_CHANGED = "tag-changed"
 }
 
 
