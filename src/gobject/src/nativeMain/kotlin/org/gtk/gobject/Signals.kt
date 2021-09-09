@@ -294,6 +294,9 @@ object Signals {
 	const val REDO = "redo"
 	const val REMOVE_TAG = "remove-tag"
 	const val UNDO = "undo"
+
+	// GtkStyleProvider
+	const val GTK_PRIVATE_CHANGED = "gtk-private-changed"
 }
 
 
