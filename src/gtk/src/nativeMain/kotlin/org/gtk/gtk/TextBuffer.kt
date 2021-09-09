@@ -30,8 +30,8 @@ import org.gtk.gtk.TextTagTable.Companion.wrap
  * @see <a href="https://docs.gtk.org/gtk4/class.TextBuffer.html">GtkTextBuffer</a>
  */
 class TextBuffer(
-	val buffer: CPointer<GtkTextBuffer>
-) : KGObject(buffer.reinterpret()) {
+	val textBufferPointer: CPointer<GtkTextBuffer>
+) : KGObject(textBufferPointer.reinterpret()) {
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/ctor.TextBuffer.new.html">
@@ -48,7 +48,7 @@ class TextBuffer(
 	 *     gtk_text_buffer_add_mark</a>
 	 */
 	fun addMark(mark: TextMark, where: TextIter) {
-		gtk_text_buffer_add_mark(buffer, mark.markPointer, where.pointer)
+		gtk_text_buffer_add_mark(textBufferPointer, mark.markPointer, where.pointer)
 	}
 
 	/**
@@ -56,121 +56,121 @@ class TextBuffer(
 	 *     gtk_text_buffer_add_selection_clipboard</a>
 	 */
 	fun addSelectionClipboard(clipboard: Clipboard) {
-		gtk_text_buffer_add_selection_clipboard(buffer, clipboard.clipboardPointer)
+		gtk_text_buffer_add_selection_clipboard(textBufferPointer, clipboard.clipboardPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.apply_tag.html">gtk_text_buffer_apply_tag</a>
 	 */
 	fun applyTag(tag: TextTag, start: TextIter, end: TextIter) {
-		gtk_text_buffer_apply_tag(buffer, tag.textTagPointer, start.pointer, end.pointer)
+		gtk_text_buffer_apply_tag(textBufferPointer, tag.textTagPointer, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.apply_tag_by_name.html">gtk_text_buffer_apply_tag_by_name</a>
 	 */
 	fun applyTagByName(name: String, start: TextIter, end: TextIter) {
-		gtk_text_buffer_apply_tag_by_name(buffer, name, start.pointer, end.pointer)
+		gtk_text_buffer_apply_tag_by_name(textBufferPointer, name, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.backspace.html">gtk_text_buffer_backspace</a>
 	 */
 	fun backspace(iter: TextIter, interactive: Boolean, defaultEditable: Boolean): Boolean =
-		gtk_text_buffer_backspace(buffer, iter.pointer, interactive.gtk, defaultEditable.gtk).bool
+		gtk_text_buffer_backspace(textBufferPointer, iter.pointer, interactive.gtk, defaultEditable.gtk).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.begin_irreversible_action.html">gtk_text_buffer_begin_irreversible_action</a>
 	 */
 	fun beginIrreversibleAction() {
-		gtk_text_buffer_begin_irreversible_action(buffer)
+		gtk_text_buffer_begin_irreversible_action(textBufferPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.begin_user_action.html">gtk_text_buffer_begin_user_action</a>
 	 */
 	fun beginUserAction() {
-		gtk_text_buffer_begin_user_action(buffer)
+		gtk_text_buffer_begin_user_action(textBufferPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.copy_clipboard.html">gtk_text_buffer_copy_clipboard</a>
 	 */
 	fun copyClipboard(clipboard: Clipboard) {
-		gtk_text_buffer_copy_clipboard(buffer, clipboard.clipboardPointer)
+		gtk_text_buffer_copy_clipboard(textBufferPointer, clipboard.clipboardPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.create_child_anchor.html">gtk_text_buffer_create_child_anchor</a>
 	 */
 	fun createChildAnchor(iter: TextIter): TextChildAnchor =
-		gtk_text_buffer_create_child_anchor(buffer, iter.pointer)!!.wrap()
+		gtk_text_buffer_create_child_anchor(textBufferPointer, iter.pointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.create_mark.html">gtk_text_buffer_create_mark</a>
 	 */
 	fun createMark(markName: String?, where: TextIter, leftGravity: Boolean): TextMark =
-		gtk_text_buffer_create_mark(buffer, markName, where.pointer, leftGravity.gtk)!!.wrap()
+		gtk_text_buffer_create_mark(textBufferPointer, markName, where.pointer, leftGravity.gtk)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.create_tag.html">gtk_text_buffer_create_tag</a>
 	 */
 	fun createTag(tagName: String): TextTag =
-		gtk_text_buffer_create_tag(buffer, tagName, null)!!.wrap()
+		gtk_text_buffer_create_tag(textBufferPointer, tagName, null)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.cut_clipboard.html">gtk_text_buffer_cut_clipboard</a>
 	 */
 	fun cutClipboard(clipboard: Clipboard, defaultEditable: Boolean) {
-		gtk_text_buffer_cut_clipboard(buffer, clipboard.clipboardPointer, defaultEditable.gtk)
+		gtk_text_buffer_cut_clipboard(textBufferPointer, clipboard.clipboardPointer, defaultEditable.gtk)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.delete.html">gtk_text_buffer_delete</a>
 	 */
 	fun delete(start: TextIter, end: TextIter) {
-		gtk_text_buffer_delete(buffer, start.pointer, end.pointer)
+		gtk_text_buffer_delete(textBufferPointer, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.delete_interactive.html">gtk_text_buffer_delete_interactive</a>
 	 */
 	fun deleteInteractive(startIter: TextIter, endIter: TextIter, defaultEditable: Boolean) =
-		gtk_text_buffer_delete_interactive(buffer, startIter.pointer, endIter.pointer, defaultEditable.gtk).bool
+		gtk_text_buffer_delete_interactive(textBufferPointer, startIter.pointer, endIter.pointer, defaultEditable.gtk).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.delete_mark.html">gtk_text_buffer_delete_mark</a>
 	 */
 	fun deleteMark(mark: TextMark) {
-		gtk_text_buffer_delete_mark(buffer, mark.markPointer)
+		gtk_text_buffer_delete_mark(textBufferPointer, mark.markPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.delete_mark_by_name.html">gtk_text_buffer_delete_mark_by_name</a>
 	 */
 	fun deleteMarkByName(name: String) {
-		gtk_text_buffer_delete_mark_by_name(buffer, name)
+		gtk_text_buffer_delete_mark_by_name(textBufferPointer, name)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.delete_selection.html">gtk_text_buffer_delete_selection</a>
 	 */
 	fun deleteSelection(interactive: Boolean, defaultEditable: Boolean) {
-		gtk_text_buffer_delete_selection(buffer, interactive.gtk, defaultEditable.gtk)
+		gtk_text_buffer_delete_selection(textBufferPointer, interactive.gtk, defaultEditable.gtk)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.end_irreversible_action.html">gtk_text_buffer_end_irreversible_action</a>
 	 */
 	fun endIrreversibleAction() {
-		gtk_text_buffer_end_irreversible_action(buffer)
+		gtk_text_buffer_end_irreversible_action(textBufferPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.end_user_action.html">gtk_text_buffer_end_user_action</a>
 	 */
 	fun endUserAction() {
-		gtk_text_buffer_end_user_action(buffer)
+		gtk_text_buffer_end_user_action(textBufferPointer)
 	}
 
 	/**
@@ -180,7 +180,7 @@ class TextBuffer(
 		get() = memScoped {
 			val start = cValue<GtkTextIter>()
 			val end = cValue<GtkTextIter>()
-			gtk_text_buffer_get_bounds(buffer, start, end)
+			gtk_text_buffer_get_bounds(textBufferPointer, start, end)
 			start.ptr.wrap() to end.ptr.wrap()
 		}
 
@@ -189,27 +189,27 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_can_redo.html">gtk_text_buffer_get_can_redo</a>
 	 */
 	val canRedo: Boolean
-		get() = gtk_text_buffer_get_can_redo(buffer).bool
+		get() = gtk_text_buffer_get_can_redo(textBufferPointer).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_can_undo.html">gtk_text_buffer_get_can_undo</a>
 	 */
 	val canUndo: Boolean
-		get() = gtk_text_buffer_get_can_undo(buffer).bool
+		get() = gtk_text_buffer_get_can_undo(textBufferPointer).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_char_count.html">gtk_text_buffer_get_char_count</a>
 	 */
 	val charCount: Int
-		get() = gtk_text_buffer_get_char_count(buffer)
+		get() = gtk_text_buffer_get_char_count(textBufferPointer)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_enable_undo.html">gtk_text_buffer_get_enable_undo</a>
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.set_enable_undo.html">gtk_text_buffer_set_enable_undo</a>
 	 */
 	var enableUndo: Boolean
-		get() = gtk_text_buffer_get_enable_undo(buffer).bool
-		set(value) = gtk_text_buffer_set_enable_undo(buffer, value.gtk)
+		get() = gtk_text_buffer_get_enable_undo(textBufferPointer).bool
+		set(value) = gtk_text_buffer_set_enable_undo(textBufferPointer, value.gtk)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_end_iter.html">gtk_text_buffer_get_end_iter</a>
@@ -217,7 +217,7 @@ class TextBuffer(
 	val endIter: TextIter
 		get() = memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_end_iter(buffer, iter)
+			gtk_text_buffer_get_end_iter(textBufferPointer, iter)
 			iter.ptr.wrap()
 		}
 
@@ -225,13 +225,13 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_has_selection.html">gtk_text_buffer_get_has_selection</a>
 	 */
 	val hasSelection: Boolean
-		get() = gtk_text_buffer_get_has_selection(buffer).bool
+		get() = gtk_text_buffer_get_has_selection(textBufferPointer).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_insert.html">gtk_text_buffer_get_insert</a>
 	 */
 	val insert: TextMark
-		get() = gtk_text_buffer_get_insert(buffer)!!.wrap()
+		get() = gtk_text_buffer_get_insert(textBufferPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_iter_at_child_anchor.html">gtk_text_buffer_get_iter_at_child_anchor</a>
@@ -239,7 +239,7 @@ class TextBuffer(
 	fun getIterAtChildAnchor(anchor: TextChildAnchor) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_child_anchor(buffer, iter, anchor.textChildAnchorPointer)
+			gtk_text_buffer_get_iter_at_child_anchor(textBufferPointer, iter, anchor.textChildAnchorPointer)
 			iter.ptr.wrap()
 		}
 
@@ -249,7 +249,7 @@ class TextBuffer(
 	fun getIterAtLine(lineNumber: Int) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_line(buffer, iter, lineNumber)
+			gtk_text_buffer_get_iter_at_line(textBufferPointer, iter, lineNumber)
 			iter.ptr.wrap()
 		}
 
@@ -259,7 +259,7 @@ class TextBuffer(
 	fun getIterAtLineIndex(lineNumber: Int, byteIndex: Int) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_line_index(buffer, iter, lineNumber, byteIndex)
+			gtk_text_buffer_get_iter_at_line_index(textBufferPointer, iter, lineNumber, byteIndex)
 			iter.ptr.wrap()
 		}
 
@@ -269,7 +269,7 @@ class TextBuffer(
 	fun getIterAtLineOffset(lineNumber: Int, charOffset: Int) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_line_offset(buffer, iter, lineNumber, charOffset)
+			gtk_text_buffer_get_iter_at_line_offset(textBufferPointer, iter, lineNumber, charOffset)
 			iter.ptr.wrap()
 		}
 
@@ -279,7 +279,7 @@ class TextBuffer(
 	fun getIterAtMark(mark: TextMark) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_mark(buffer, iter, mark.markPointer)
+			gtk_text_buffer_get_iter_at_mark(textBufferPointer, iter, mark.markPointer)
 			iter.ptr.wrap()
 		}
 
@@ -289,7 +289,7 @@ class TextBuffer(
 	fun getIterAtOffset(charOffset: Int) =
 		memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_iter_at_offset(buffer, iter, charOffset)
+			gtk_text_buffer_get_iter_at_offset(textBufferPointer, iter, charOffset)
 			iter.ptr.wrap()
 		}
 
@@ -297,13 +297,13 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_line_count.html">gtk_text_buffer_get_line_count</a>
 	 */
 	val lineCount: Int =
-		gtk_text_buffer_get_line_count(buffer)
+		gtk_text_buffer_get_line_count(textBufferPointer)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_mark.html">gtk_text_buffer_get_mark</a>
 	 */
 	fun getMark(name: String): TextMark? =
-		gtk_text_buffer_get_mark(buffer, name).wrap()
+		gtk_text_buffer_get_mark(textBufferPointer, name).wrap()
 
 
 	/**
@@ -311,22 +311,22 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.set_max_undo_levels.html">gtk_text_buffer_set_max_undo_levels</a>
 	 */
 	var maxUndoLevels: UInt
-		get() = gtk_text_buffer_get_max_undo_levels(buffer)
-		set(value) = gtk_text_buffer_set_max_undo_levels(buffer, value)
+		get() = gtk_text_buffer_get_max_undo_levels(textBufferPointer)
+		set(value) = gtk_text_buffer_set_max_undo_levels(textBufferPointer, value)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_modified.html">gtk_text_buffer_get_modified</a>
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.set_modified.html">gtk_text_buffer_set_modified</a>
 	 */
 	var modified: Boolean
-		get() = gtk_text_buffer_get_modified(buffer).bool
-		set(value) = gtk_text_buffer_set_modified(buffer, value.gtk)
+		get() = gtk_text_buffer_get_modified(textBufferPointer).bool
+		set(value) = gtk_text_buffer_set_modified(textBufferPointer, value.gtk)
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_selection_bound.html">gtk_text_buffer_get_selection_bound</a>
 	 */
 	val selectionBound: TextMark
-		get() = gtk_text_buffer_get_selection_bound(buffer)!!.wrap()
+		get() = gtk_text_buffer_get_selection_bound(textBufferPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_selection_bounds.html">gtk_text_buffer_get_selection_bounds</a>
@@ -335,7 +335,7 @@ class TextBuffer(
 		get() = memScoped {
 			val start = cValue<GtkTextIter>()
 			val end = cValue<GtkTextIter>()
-			gtk_text_buffer_get_selection_bounds(buffer, start, end)
+			gtk_text_buffer_get_selection_bounds(textBufferPointer, start, end)
 			start.ptr.wrap() to end.ptr.wrap()
 		}
 
@@ -343,13 +343,13 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_selection_content.html">gtk_text_buffer_get_selection_content</a>
 	 */
 	val selectionContent: ContentProvider
-		get() = gtk_text_buffer_get_selection_content(buffer)!!.wrap()
+		get() = gtk_text_buffer_get_selection_content(textBufferPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_slice.html">gtk_text_buffer_get_slice</a>
 	 */
 	fun getSlice(start: TextIter, end: TextIter, includeHiddenChars: Boolean): String =
-		gtk_text_buffer_get_slice(buffer, start.pointer, end.pointer, includeHiddenChars.gtk)!!.toKString()
+		gtk_text_buffer_get_slice(textBufferPointer, start.pointer, end.pointer, includeHiddenChars.gtk)!!.toKString()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_start_iter.html"></a>
@@ -357,7 +357,7 @@ class TextBuffer(
 	val startIter
 		get() = memScoped {
 			val iter = cValue<GtkTextIter>()
-			gtk_text_buffer_get_start_iter(buffer, iter)
+			gtk_text_buffer_get_start_iter(textBufferPointer, iter)
 			iter.ptr.wrap()
 		}
 
@@ -365,66 +365,66 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_tag_table.html">gtk_text_buffer_get_tag_table</a>
 	 */
 	val tagTable: TextTagTable
-		get() = gtk_text_buffer_get_tag_table(buffer)!!.wrap()
+		get() = gtk_text_buffer_get_tag_table(textBufferPointer)!!.wrap()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.get_text.html">gtk_text_buffer_get_text</a>
 	 */
 	fun getText(start: TextIter, end: TextIter, includeHiddenChars: Boolean): String =
-		gtk_text_buffer_get_text(buffer, start.pointer, end.pointer, includeHiddenChars.gtk)!!.toKString()
+		gtk_text_buffer_get_text(textBufferPointer, start.pointer, end.pointer, includeHiddenChars.gtk)!!.toKString()
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert.html">gtk_text_buffer_insert</a>
 	 */
 	fun insert(iter: TextIter, text: String) {
-		gtk_text_buffer_insert(buffer, iter.pointer, text, -1)
+		gtk_text_buffer_insert(textBufferPointer, iter.pointer, text, -1)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_at_cursor.html">gtk_text_buffer_insert_at_cursor</a>
 	 */
 	fun insertAtCursor(text: String) {
-		gtk_text_buffer_insert_at_cursor(buffer, text, -1)
+		gtk_text_buffer_insert_at_cursor(textBufferPointer, text, -1)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_child_anchor.html">gtk_text_buffer_insert_child_anchor</a>
 	 */
 	fun insertChildAnchor(iter: TextIter, anchor: TextChildAnchor) {
-		gtk_text_buffer_insert_child_anchor(buffer, iter.pointer, anchor.textChildAnchorPointer)
+		gtk_text_buffer_insert_child_anchor(textBufferPointer, iter.pointer, anchor.textChildAnchorPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_interactive.html">gtk_text_buffer_insert_interactive</a>
 	 */
 	fun insertInteractive(iter: TextIter, text: String, defaultEditable: Boolean): Boolean =
-		gtk_text_buffer_insert_interactive(buffer, iter.pointer, text, -1, defaultEditable.gtk).bool
+		gtk_text_buffer_insert_interactive(textBufferPointer, iter.pointer, text, -1, defaultEditable.gtk).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_interactive_at_cursor.html">gtk_text_buffer_insert_interactive_at_cursor</a>
 	 */
 	fun insertInteractiveAtCursor(text: String, defaultEditable: Boolean): Boolean =
-		gtk_text_buffer_insert_interactive_at_cursor(buffer, text, -1, defaultEditable.gtk).bool
+		gtk_text_buffer_insert_interactive_at_cursor(textBufferPointer, text, -1, defaultEditable.gtk).bool
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_markup.html">gtk_text_buffer_insert_markup</a>
 	 */
 	fun insertMarkup(iter: TextIter, markup: String) {
-		gtk_text_buffer_insert_markup(buffer, iter.pointer, markup, -1)
+		gtk_text_buffer_insert_markup(textBufferPointer, iter.pointer, markup, -1)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_paintable.html">gtk_text_buffer_insert_paintable</a>
 	 */
 	fun insertPaintable(iter: TextIter, paintable: Paintable) {
-		gtk_text_buffer_insert_paintable(buffer, iter.pointer, paintable.paintablePointer)
+		gtk_text_buffer_insert_paintable(textBufferPointer, iter.pointer, paintable.paintablePointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.insert_range.html">gtk_text_buffer_insert_range</a>
 	 */
 	fun insertRange(iter: TextIter, startIter: TextIter, endIter: TextIter) {
-		gtk_text_buffer_insert_range(buffer, iter.pointer, startIter.pointer, endIter.pointer)
+		gtk_text_buffer_insert_range(textBufferPointer, iter.pointer, startIter.pointer, endIter.pointer)
 	}
 
 	/**
@@ -432,7 +432,7 @@ class TextBuffer(
 	 */
 	fun insertRangeInteractive(iter: TextIter, start: TextIter, end: TextIter, defaultEditable: Boolean): Boolean =
 		gtk_text_buffer_insert_range_interactive(
-			buffer,
+			textBufferPointer,
 			iter.pointer,
 			start.pointer,
 			end.pointer,
@@ -443,14 +443,14 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.move_mark.html">gtk_text_buffer_move_mark</a>
 	 */
 	fun moveMark(mark: TextMark, where: TextIter) {
-		gtk_text_buffer_move_mark(buffer, mark.markPointer, where.pointer)
+		gtk_text_buffer_move_mark(textBufferPointer, mark.markPointer, where.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.move_mark_by_name.html">gtk_text_buffer_move_mark_by_name</a>
 	 */
 	fun moveMarkByName(name: String, where: TextIter) {
-		gtk_text_buffer_move_mark_by_name(buffer, name, where.pointer)
+		gtk_text_buffer_move_mark_by_name(textBufferPointer, name, where.pointer)
 	}
 
 	/**
@@ -458,7 +458,7 @@ class TextBuffer(
 	 */
 	fun pasteClipboard(clipboard: Clipboard, overrideLocation: TextIter, defaultEditable: Boolean) {
 		gtk_text_buffer_paste_clipboard(
-			buffer,
+			textBufferPointer,
 			clipboard.clipboardPointer,
 			overrideLocation.pointer,
 			defaultEditable.gtk
@@ -469,49 +469,49 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.place_cursor.html">gtk_text_buffer_place_cursor</a>
 	 */
 	fun placeCursor(where: TextIter) {
-		gtk_text_buffer_place_cursor(buffer, where.pointer)
+		gtk_text_buffer_place_cursor(textBufferPointer, where.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.redo.html">gtk_text_buffer_redo</a>
 	 */
 	fun redo() {
-		gtk_text_buffer_redo(buffer)
+		gtk_text_buffer_redo(textBufferPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.remove_all_tags.html">gtk_text_buffer_remove_all_tags</a>
 	 */
 	fun removeAllTags(start: TextIter, end: TextIter) {
-		gtk_text_buffer_remove_all_tags(buffer, start.pointer, end.pointer)
+		gtk_text_buffer_remove_all_tags(textBufferPointer, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.remove_selection_clipboard.html">gtk_text_buffer_remove_selection_clipboard</a>
 	 */
 	fun removeSelectionClipboard(clipboard: Clipboard) {
-		gtk_text_buffer_remove_selection_clipboard(buffer, clipboard.clipboardPointer)
+		gtk_text_buffer_remove_selection_clipboard(textBufferPointer, clipboard.clipboardPointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.remove_tag.html">gtk_text_buffer_remove_tag</a>
 	 */
 	fun removeTag(tag: TextTag, start: TextIter, end: TextIter) {
-		gtk_text_buffer_remove_tag(buffer, tag.textTagPointer, start.pointer, end.pointer)
+		gtk_text_buffer_remove_tag(textBufferPointer, tag.textTagPointer, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.remove_tag_by_name.html">gtk_text_buffer_remove_tag_by_name</a>
 	 */
 	fun removeTagByName(name: String, start: TextIter, end: TextIter) {
-		gtk_text_buffer_remove_tag_by_name(buffer, name, start.pointer, end.pointer)
+		gtk_text_buffer_remove_tag_by_name(textBufferPointer, name, start.pointer, end.pointer)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.select_range.html">gtk_text_buffer_select_range</a>
 	 */
 	fun selectRange(ins: TextIter, bound: TextIter) {
-		gtk_text_buffer_select_range(buffer, ins.pointer, bound.pointer)
+		gtk_text_buffer_select_range(textBufferPointer, ins.pointer, bound.pointer)
 	}
 
 
@@ -519,14 +519,14 @@ class TextBuffer(
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.set_text.html">gtk_text_buffer_set_text</a>
 	 */
 	fun setText(text: String) {
-		gtk_text_buffer_set_text(buffer, text, -1)
+		gtk_text_buffer_set_text(textBufferPointer, text, -1)
 	}
 
 	/**
 	 * @see <a href="https://docs.gtk.org/gtk4/method.TextBuffer.undo.html">gtk_text_buffer_undo</a>
 	 */
 	fun undo() {
-		gtk_text_buffer_undo(buffer)
+		gtk_text_buffer_undo(textBufferPointer)
 	}
 
 	/**

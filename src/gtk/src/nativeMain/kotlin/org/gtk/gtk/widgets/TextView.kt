@@ -51,7 +51,7 @@ class TextView(
 	 */
 	constructor(textBuffer: TextBuffer) : this(
 		gtk_text_view_new_with_buffer(
-			textBuffer.buffer
+			textBuffer.textBufferPointer
 		)!!.reinterpret()
 	)
 
@@ -66,7 +66,7 @@ class TextView(
 		get() = gtk_text_view_get_buffer(textViewPointer)?.let { TextBuffer(it) }
 		set(value) = gtk_text_view_set_buffer(
 			textViewPointer,
-			value?.buffer
+			value?.textBufferPointer
 		)
 
 	fun scrollToMark(mark: TextMark, withinMargin: Double, useAlign: Boolean, xAlign: Double, yAlign: Double) {
