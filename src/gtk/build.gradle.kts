@@ -7,8 +7,8 @@ repositories {
 	mavenCentral()
 }
 
-group = "org.gnome.kotlin.gtk"
-version = "4.0.0"
+group = "org.gnome.gtk"
+version = "4.5.0-alpha"
 
 kotlin {
 
