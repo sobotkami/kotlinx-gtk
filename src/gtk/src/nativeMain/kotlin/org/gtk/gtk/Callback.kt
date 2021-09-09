@@ -1,8 +1,11 @@
 package org.gtk.gtk
 
+import org.gtk.gdk.Clipboard
+import org.gtk.gdk.Paintable
 import org.gtk.gio.ListModel
 import org.gtk.gobject.KGObject
 import org.gtk.gobject.KGValue
+import org.gtk.gtk.widgets.TextView
 
 /*
  * gtk-kt
@@ -54,3 +57,21 @@ typealias TreeListModelCreateModelFunction = (item: KGObject) -> ListModel?
 typealias TextTagTableForeachFunction = (TextTag) -> Unit
 
 typealias TextTagTableTagChangedFunction = (tag: TextTag, sizeChanged: Boolean) -> Unit
+
+typealias TextBufferApplyTagFunction = (tag: TextTag, start: TextIter, end: TextIter) -> Unit
+
+typealias TextBufferDeleteRangeFunction = (start: TextIter, end: TextIter) -> Unit
+
+typealias TextBufferInsertChildAnchorFunction = (location: TextIter, anchor: TextChildAnchor) -> Unit
+
+typealias TextBufferInsertPaintableFunction = (location: TextIter, paintable: Paintable) -> Unit
+
+typealias TextBufferInsertTextFunction = (location: TextIter, text: String, length: Int) -> Unit
+
+typealias TextBufferMarkDeletedFunction = (mark: TextMark) -> Unit
+
+typealias TextBufferMarkSetFunction = (location: TextIter, mark: TextMark) -> Unit
+
+typealias TextBufferPasteDoneFunction = (clipboard: Clipboard) -> Unit
+
+typealias TextBufferRemoveTagFunction = (tag: TextTag, start: TextIter, end: TextIter) -> Unit

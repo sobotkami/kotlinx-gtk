@@ -96,5 +96,11 @@ class TextTagTable(
 			staticCFunction { _: gpointer, tag: CPointer<GtkTextTag>, changed: Boolean, data: gpointer ->
 				data.asStableRef<TextTagTableTagChangedFunction>().get().invoke(tag.wrap(), changed)
 			}.reinterpret()
+
+		inline fun CPointer<GtkTextTagTable>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkTextTagTable>.wrap() =
+			TextTagTable(this)
 	}
 }

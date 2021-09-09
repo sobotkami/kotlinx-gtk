@@ -46,4 +46,11 @@ class TextChildAnchor(val textChildAnchorPointer: CPointer<GtkTextChildAnchor>) 
 			}
 		}
 
+	companion object{
+		inline fun CPointer<GtkTextChildAnchor>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GtkTextChildAnchor>.wrap() =
+			TextChildAnchor(this)
+	}
 }

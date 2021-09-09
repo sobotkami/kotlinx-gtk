@@ -1,7 +1,6 @@
 package org.gtk.gtk.widgets
 
 import glib.gpointer
-import glib.guintVar
 import gobject.GCallback
 import gtk.*
 import gtk.GtkTextExtendSelection.GTK_TEXT_EXTEND_SELECTION_LINE
@@ -18,15 +17,11 @@ import org.gtk.gdk.Rectangle
 import org.gtk.gdk.Rectangle.Companion.wrap
 import org.gtk.glib.bool
 import org.gtk.glib.gtk
-import org.gtk.glib.toWrappedList
 import org.gtk.gobject.SignalManager
 import org.gtk.gobject.Signals
 import org.gtk.gobject.addSignalCallback
-import org.gtk.gtk.Scrollable
-import org.gtk.gtk.TextBuffer
-import org.gtk.gtk.TextIter
+import org.gtk.gtk.*
 import org.gtk.gtk.TextIter.Companion.wrap
-import org.gtk.gtk.TextMark
 import org.gtk.gtk.common.enums.DeleteType
 import org.gtk.gtk.common.enums.ScrollStep
 import org.gtk.gtk.common.events.ExtendedMoveCursorFunction
@@ -56,7 +51,7 @@ class TextView(
 	 */
 	constructor(textBuffer: TextBuffer) : this(
 		gtk_text_view_new_with_buffer(
-			textBuffer.textBufferPointer
+			textBuffer.buffer
 		)!!.reinterpret()
 	)
 
@@ -71,7 +66,7 @@ class TextView(
 		get() = gtk_text_view_get_buffer(textViewPointer)?.let { TextBuffer(it) }
 		set(value) = gtk_text_view_set_buffer(
 			textViewPointer,
-			value?.textBufferPointer
+			value?.buffer
 		)
 
 	fun scrollToMark(mark: TextMark, withinMargin: Double, useAlign: Boolean, xAlign: Double, yAlign: Double) {
@@ -195,7 +190,7 @@ class TextView(
 		gtk_text_view_move_visually(textViewPointer, iter.pointer, count).bool
 
 	fun addChildAtAnchor(child: Widget, anchor: TextChildAnchor) {
-		gtk_text_view_add_child_at_anchor(textViewPointer, child.widgetPointer, anchor.pointer)
+		gtk_text_view_add_child_at_anchor(textViewPointer, child.widgetPointer, anchor.textChildAnchorPointer)
 	}
 
 
@@ -274,13 +269,13 @@ class TextView(
 	 * <a href=""></a>
 	 */
 	fun addOnMoveViewPortCallback(action: (MoveViewPortEvent) -> Unit) =
-		addSignalCallback(Signals.MOVE_VIEWPORT, action,staticMoveViewportCallback)
+		addSignalCallback(Signals.MOVE_VIEWPORT, action, staticMoveViewportCallback)
 
 	/**
 	 * <a href=""></a>
 	 */
 	fun addOnPasteClipboardCallback(action: () -> Unit) =
-		addSignalCallback(Signals.PASTE_CLIPBOARD,action)
+		addSignalCallback(Signals.PASTE_CLIPBOARD, action)
 
 	/**
 	 * <a href=""></a>
@@ -305,19 +300,19 @@ class TextView(
 	 * <a href=""></a>
 	 */
 	fun addOnSetAnchorCallback(action: () -> Unit) =
-		addSignalCallback(Signals.SET_ANCHOR,action)
+		addSignalCallback(Signals.SET_ANCHOR, action)
 
 	/**
 	 * <a href=""></a>
 	 */
 	fun addOnToggleCursorVisibleCallback(action: () -> Unit) =
-		addSignalCallback(Signals.TOGGLE_CURSOR_VISIBLE,action)
+		addSignalCallback(Signals.TOGGLE_CURSOR_VISIBLE, action)
 
 	/**
 	 * <a href=""></a>
 	 */
 	fun addOnToggleOverwriteCallback(action: () -> Unit) =
-		addSignalCallback(Signals.TOGGLE_OVERWRITE,action)
+		addSignalCallback(Signals.TOGGLE_OVERWRITE, action)
 
 	/**
 	 * <a href=""></a>
@@ -398,21 +393,6 @@ class TextView(
 				values()
 					.find { it.gtk == gtk }
 		}
-	}
-
-	class TextChildAnchor(val pointer: CPointer<GtkTextChildAnchor>) {
-
-		constructor() : this(gtk_text_child_anchor_new()!!)
-
-		val widgets: List<Widget>
-			get() = memScoped {
-				val outLen = cValue<guintVar>()
-				gtk_text_child_anchor_get_widgets(
-					pointer,
-					outLen
-				)!!.toWrappedList(outLen.ptr.pointed.value.toInt()) { it.wrap() }
-			}
-
 	}
 
 	companion object {
