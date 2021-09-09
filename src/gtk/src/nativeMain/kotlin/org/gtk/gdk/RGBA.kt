@@ -1,15 +1,14 @@
 package org.gtk.gdk
 
 import gtk.GdkRGBA
-import kotlinx.cinterop.CPointer
-import kotlinx.cinterop.pointed
+import kotlinx.cinterop.*
 
 /**
  * kotlinx-gtk
  * 16 / 03 / 2021
  */
 class RGBA(
-	 val rgbaPointer: CPointer<GdkRGBA>
+	val rgbaPointer: CPointer<GdkRGBA>
 ) {
 	var red: Float
 		get() = rgbaPointer.pointed.red
@@ -37,4 +36,21 @@ class RGBA(
 
 	override fun toString(): String = "RGBA(red=${red}, green=${green}, blue=${blue}, alpha=${alpha})"
 
+	companion object {
+		/**
+		 * Using reflection, wraps the specific function that is reused often
+		 */
+		inline fun <T : CPointed> ((CValuesRef<T>?, CValuesRef<GdkRGBA>?) -> Unit).heavyWrap(pointer: CValuesRef<T>?): RGBA =
+			memScoped {
+				val color = cValue<GdkRGBA>()
+				this@heavyWrap(pointer, color)
+				color.ptr.wrap()
+			}
+
+		inline fun CPointer<GdkRGBA>?.wrap() =
+			this?.wrap()
+
+		inline fun CPointer<GdkRGBA>.wrap() =
+			RGBA(this)
+	}
 }
